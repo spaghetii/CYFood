@@ -82,6 +82,7 @@
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
+                    林培誠 練習merge  Part2
                 </div>
                 {{-- test --}}
                 {{-- test2 --}}
