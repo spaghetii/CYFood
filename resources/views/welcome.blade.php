@@ -86,8 +86,6 @@
                     蔡宗翰 練習
                 </div>
                 {{-- test --}}
-                {{-- test2 --}}
-                {{-- test3 --}}
                 {{-- test 黃冠維 --}}
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
