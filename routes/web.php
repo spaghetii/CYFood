@@ -14,3 +14,7 @@
 Route::get('/', "HomeController@index");
 
 Route::get('/NewOrder',"HomeController@neworder");
+
+Route::resource('coupon','CouponController');
+
+Route::resource('member','MemberController');
