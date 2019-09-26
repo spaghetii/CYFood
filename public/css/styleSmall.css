@@ -1,0 +1,73 @@
+.header{
+    background-color: blue;
+}
+/* 整個畫面 */
+  .wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+} 
+
+#navbarItem > a {
+    color: orange;
+}
+
+ /* 內容 */
+.main {
+    flex: 1;
+}
+
+ /* 內容頭版 */
+.mainHead {
+    background-image: url("../img/banner.png");
+    background-position: center;
+    background-size: fill;
+    width: 100%;
+    height: 415px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+ /* 內容搜尋端div */
+.mainSearchDiv {
+    height: 180px;
+    width: 700px;
+    text-align: center;
+}
+
+#selectArea {
+    float: left;
+}
+
+#selectCategory {
+    float: left;
+}
+
+#SearchAddress {
+    float: left;
+}
+
+ /* 頁尾 背景 */
+.footer {
+    padding: 72px 0px 88px 0px;
+}
+
+/* 頁尾 字體顏色 */
+.footer * {
+    color: #ffa500;
+}
+
+/* 頁尾 滑過超連結 */
+.footer a:hover {
+    color: #ffa500;
+}
+
+/* 頁尾 字體置中 */
+.footerTop {
+    text-align: center;
+}
+
+.footerBottom {
+    text-align: center;
+}
