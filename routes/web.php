@@ -12,3 +12,5 @@
 */
 
 Route::get('/', "HomeController@index");
+
+Route::get('/NewOrder',"HomeController@neworder");
