@@ -10,6 +10,10 @@ class HomeController extends Controller
         return view('home.index');
     }
 
+   function neworder(){
+       return view('home.clientNewOrder');
+   }
+
     function sayHello(Request $request) {
         // return view("home.hello", 
         //     [ "who" => $request->userName ]);    //較常用
