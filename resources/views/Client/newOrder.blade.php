@@ -118,7 +118,7 @@
             #buttomDiv {
                 height: 614px;
             }
-            .rightButtom{
+            #rightButtom{
                 width: 1096px;
                 height: 564px;
             }
