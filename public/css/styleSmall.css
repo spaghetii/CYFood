@@ -1,20 +1,24 @@
-.header{
-    background-color: blue;
-}
 /* 整個畫面 */
-  .wrapper {
+.wrapper {
     height: 100vh;
     display: flex;
     flex-direction: column;
 } 
 
+/* 導覽列滑過超連結 */
 #navbarItem > a {
     color: orange;
+}
+
+/* 隱藏式 header 地址搜尋 */
+#headerSearchLarge {
+    display: none;
 }
 
  /* 內容 */
 .main {
     flex: 1;
+    padding-top: 60px;
 }
 
  /* 內容頭版 */
@@ -48,9 +52,62 @@
     float: left;
 }
 
- /* 頁尾 背景 */
+/* 本日推薦 */
+#todayRecommend {
+    width: 90%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+/* 本日推薦 */
+.todayRecommendImage {
+    background-image: url("../img/drink.jpg");
+    height: 240px;
+    background-position: center;
+    background-size: cover;
+}
+
+.todayRecommendContent {
+    padding: 0px 15px;
+}
+
+.todayRecommendContentItem {
+    background-color: #FFF8DC;
+    padding: 0px 10px;
+    text-align: center;
+}
+
+/* 餐廳加入 */
+.restaurantJoinUs {
+    background-image: url("../img/restaurant.jpg");
+    opacity: 0.75;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 450px;
+    display:flex;
+    align-items: center;
+}
+
+.restaurantJoinUsContent {
+    background-color: white;
+    margin: auto 35px;
+    padding: 20px;
+}
+
+#restaurantJoinBtn {
+    float: right;
+    width: 50%;
+}
+
+/* 分隔線 */
+.separationline {
+    padding-top: 50px;
+}
+
+/* 頁尾 背景 */
 .footer {
-    padding: 72px 0px 88px 0px;
+    padding-bottom:88px;
 }
 
 /* 頁尾 字體顏色 */

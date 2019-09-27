@@ -20,24 +20,31 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    {{-- Vue --}}
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- 網頁 css -->
     {{-- 大於575px --}}
     <link rel="stylesheet" media="screen and (min-width: 576px)" href="css/styleLarge.css">
     {{-- 小於575px --}}
     <link rel="stylesheet" media="screen and (max-width: 576px)" href="css/styleSmall.css">
+    @yield('login')
 </head>
 
 <body>
     <div class="wrapper">
         <!-- header -->
-        <header class="header navbar bg-light navbar-light navbar-expand">
+        <header class="header navbar bg-light navbar-light navbar-expand fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="/">
                     <img src="img/logo.png" alt=""> <!-- logo -->
                 </a>
+
+                {{-- 隱藏式 header 地址搜尋 --}}
+                @yield('headerSearchLarge')
+
                 <div class="collapse navbar-collapse ">
                     <div class="navbar-nav collapse navbar-collapse justify-content-end" id="navbarItem">
-                        <a class="nav-item nav-link ml-4" href=""><img src="img/user.png" alt="">&ensp;登入</a>
+                        <a class="nav-item nav-link ml-4" href="/login"><img src="img/user.png" alt="">&ensp;登入</a>
                         <!-- login -->
                         <!-- <a class="nav-item nav-link ml-4" href=""><img src="img/shopping-bag.png" alt=""></a> -->
                         <!-- 購物袋 -->
@@ -67,15 +74,14 @@
                         <p><a href="">關於我們</a></p>
                     </div>
                 </div>
-                <hr>
                 <div class="row mt-4 footerBottom">
                     <!-- footer 下區 -->
                     <div class="col-sm-5 col-6">
                         <small>Copyright © 2019 CY food</small>
                     </div>
                     <div class="col-sm-3 col-6">
-                        <a href=""><img src="img/facebook.png" alt="" class="mr-3"></a>
-                        <a href=""><img src="img/github.png" alt="" class="mr-3"></a>
+                        <a href="https://www.facebook.com/groups/AI0101/"><img src="img/facebook.png" alt="" class="mr-3"></a>
+                        <a href="https://github.com/spaghetii/CYFood"><img src="img/github.png" alt="" class="mr-3"></a>
                     </div>
                 </div>
             </div>
