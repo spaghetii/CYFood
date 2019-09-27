@@ -108,7 +108,7 @@
             }
             .jumbotron {
                 width: 926px;
-                height: 544px;
+                min-height: 544px;
             }
         }
     </style>
