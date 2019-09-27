@@ -66,7 +66,6 @@
             height: 500px;
             margin: 25px auto;
             position: fixed;
-            border: 2px solid black;
         }
         .jumbotron {
             width: 800px;
@@ -104,12 +103,12 @@
             #buttomDiv {
                 height: 614px;
             }
-            .rightButtom{
-                width: 1096px;
+            #rightButtom{
+                width: 966px;
                 height: 564px;
             }
             .jumbotron {
-                width: 1056px;
+                width: 926px;
                 height: 544px;
             }
         }
