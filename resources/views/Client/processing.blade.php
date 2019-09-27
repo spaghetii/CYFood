@@ -108,7 +108,7 @@
             }
             .jumbotron {
                 width: 926px;
-                height: 544px;
+                min-height: 544px;
             }
         }
     </style>
@@ -164,6 +164,39 @@
                         <hr class="my-4">
                         <!-- 訂單內容 -->
                         <h3  id="detailsItem">
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>@{{detailsCount}}x</span>
+                                </div>
+                                <div class="col-8">
+                                    <span>@{{detailsMeal}}</span>
+                                </div>
+                                <div class="col-2">
+                                    <span>$@{{detailsPrice}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>@{{detailsCount}}x</span>
+                                </div>
+                                <div class="col-8">
+                                    <span>@{{detailsMeal}}</span>
+                                </div>
+                                <div class="col-2">
+                                    <span>$@{{detailsPrice}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>@{{detailsCount}}x</span>
+                                </div>
+                                <div class="col-8">
+                                    <span>@{{detailsMeal}}</span>
+                                </div>
+                                <div class="col-2">
+                                    <span>$@{{detailsPrice}}</span>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-2">
                                     <span>@{{detailsCount}}x</span>
