@@ -1,0 +1,59 @@
+.information-btn {
+    width: 80%;
+    height: 20%;
+}
+
+#buttonleft {
+    width: 100%;
+    height: 500px;
+    text-align: center;
+    padding: 25px 10px;
+}
+
+#divleft {
+    width: 15%;
+    float: left;
+    height: 500px;
+}
+
+#divright {
+    width: 85%;
+    float: left;
+    height: 500px;
+    padding: 50px 30px;
+}
+
+.line1 {
+    text-align: center;
+    line-height: 50px;
+    margin: auto;
+}
+
+.line2 {
+    line-height: 50px;
+    margin: auto;
+}
+
+.line3 {
+    line-height: 50px;
+    margin: auto;
+}
+
+.line4 {
+    line-height: 50px;
+    margin: auto;
+}
+
+.line5 {
+    line-height: 50px;
+    margin: auto;
+}
+
+.line6 {
+    line-height: 50px;
+    margin: auto;
+}
+
+#searchbutton {
+    float: left;
+}

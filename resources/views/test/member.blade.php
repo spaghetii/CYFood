@@ -21,7 +21,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="name">MemberName</label>  
           <div class="col-md-4">
-          <input id="name" name="name" type="text" placeholder="" class="form-control input-md" required="">
+          <input id="name" name="registerName" type="text" placeholder="" class="form-control input-md" required="">
             
           </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="email">MemberE-mail</label>  
           <div class="col-md-4">
-          <input id="email" name="email" type="text" placeholder="" class="form-control input-md" required="">
+          <input id="email" name="registerEmail" type="text" placeholder="" class="form-control input-md" required="">
             
           </div>
         </div>
@@ -39,7 +39,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="phone">MemberPhone</label>  
           <div class="col-md-4">
-          <input id="phone" name="phone" type="text" placeholder="" class="form-control input-md" required="">
+          <input id="phone" name="registerPhone" type="text" placeholder="" class="form-control input-md" required="">
             
           </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="password">MemberPassword</label>
           <div class="col-md-4">
-            <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
+            <input id="password" name="registerPassword" type="password" placeholder="" class="form-control input-md" required="">
             
           </div>
         </div>
