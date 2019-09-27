@@ -39,14 +39,14 @@ class MemberController extends Controller
     {
         //
         $me =new Member();
-        $me->MemberName = $request->name;
-        $me->MemberEmail = $request->email;
-        $me->MemberPhone = $request->phone;
-        $password = $request->password;
+        $me->MemberName = $request->registerName;
+        $me->MemberEmail = $request->registerEmail;
+        $me->MemberPhone = $request->registerPhone;
+        $password = $request->registerPassword;
         $hashed = Hash::make($password);
         $me->MemberPassword = $hashed;
         $me->save();
-        return redirect("/member/create");
+        return redirect("/");
     }
 
     /**
