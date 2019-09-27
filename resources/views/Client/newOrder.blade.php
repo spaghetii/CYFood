@@ -28,55 +28,45 @@
             height: 100%;
             width: 100%;
         }
-
         .container-fuild {
             width: 100%;
             height: 100%;
         }
-
         #fixedDiv {
             height: 140px;
             background-color: white;
         }
-
         .fixedItem {
             background-color: orange;
             width: 300px;
             height: 120px;
             margin: 10px auto;
         }
-
         img {
             width: 70px;
             height: 80px;
             margin: 20px 115px;
         }
-
         #buttomDiv {
             height: 550px;
         }
-
         #leftButtom {
             width: 400px;
             height: 500px;
             margin: 25px auto;
         }
-
         #orderBtn {
             height: 80px;
             font-size: 28px;
             font-weight: bold;
             margin: 10px auto;
         }
-
         #rightButtom {
             width: 840px;
             height: 500px;
             margin: 25px auto;
             position: fixed;
-            border: 2px solid black;
         }
-
         .jumbotron {
             width: 800px;
             height: 480px;
@@ -84,26 +74,22 @@
             font-family: Microsoft JhengHei;
             display: none;
         }
-
         /* 複製 */
         #detailsTitle {
             text-align: center;
             font-size: 36px;
             font-weight: bold;
         }
-
         #detailsItem {
             width: 500px;
             margin: auto;
             max-height: 150px;
             /* overflow: auto; */
         }
-
         #detailsTotal {
             width: 500px;
             margin: auto;
         }
-
         #detailsButton {
             width: 600px;
             margin: auto;
@@ -113,17 +99,16 @@
             margin: auto;
             display: block;
         }
-
         @media (min-width: 1300px) and (max-width: 1600px){
             #buttomDiv {
                 height: 614px;
             }
             #rightButtom{
-                width: 1096px;
+                width: 966px;
                 height: 564px;
             }
             .jumbotron {
-                width: 1056px;
+                width: 926px;
                 height: 544px;
             }
         }
