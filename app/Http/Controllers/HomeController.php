@@ -10,8 +10,11 @@ class HomeController extends Controller
         return view('home.index');
     }
 
-   function neworder(){
-       return view('home.clientNewOrder');
+   function newOrder(){
+       return view('Client.newOrder');
+   }
+   function processing(){
+       return view('Client.processing');
    }
 
     function sayHello(Request $request) {

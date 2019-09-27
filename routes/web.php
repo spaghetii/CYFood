@@ -13,7 +13,8 @@
 
 Route::get('/', "HomeController@index");
 
-Route::get('/NewOrder',"HomeController@neworder");
+Route::get('/newOrder',"HomeController@newOrder");
+Route::get('/processing',"HomeController@processing");
 
 Route::resource('coupon','CouponController');
 
