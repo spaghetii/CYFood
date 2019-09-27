@@ -66,10 +66,11 @@
             height: 500px;
             margin: 25px auto;
             position: fixed;
+            overflow: auto;
         }
         .jumbotron {
             width: 800px;
-            height: 480px;
+            min-height: 480px;
             margin: 10px 20px; 
             font-family: Microsoft JhengHei;
             display: none;
@@ -81,13 +82,11 @@
             font-weight: bold;
         }
         #detailsItem {
-            width: 500px;
+            width: 550px;
             margin: auto;
-            max-height: 150px;
-            /* overflow: auto; */
         }
         #detailsTotal {
-            width: 500px;
+            width: 550px;
             margin: auto;
         }
         #detailsButton {
@@ -182,8 +181,19 @@
                         <h1 class="display-4" id="detailsTitle">@{{detailsTitle}}</h1>
                         <hr class="my-4">
                         <!-- 訂單內容 -->
-                        <h3>
-                            <div class="row" id="detailsItem">
+                        <h3 id="detailsItem">
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>@{{detailsCount}}x</span>
+                                </div>
+                                <div class="col-8">
+                                    <span>@{{detailsMeal}}</span>
+                                </div>
+                                <div class="col-2">
+                                    <span>$@{{detailsPrice}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-2">
                                     <span>@{{detailsCount}}x</span>
                                 </div>
