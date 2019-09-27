@@ -79,7 +79,7 @@
         .jumbotron {
             width: 800px;
             height: 480px;
-            margin: 10px 20px;
+            margin: auto; !important;
             font-family: Microsoft JhengHei;
             display: none;
         }
