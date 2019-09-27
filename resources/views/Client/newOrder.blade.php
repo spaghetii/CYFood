@@ -35,49 +35,51 @@
         }
 
         #fixedDiv {
-            height: 20%;
-            width: 100%;
+            height: 140px;
             background-color: white;
         }
 
         .fixedItem {
             background-color: orange;
-            width: 90%;
-            height: 80%;
-            margin: 3.5% auto;
+            width: 300px;
+            height: 120px;
+            margin: 10px auto;
         }
 
         img {
-            width: 26%;
-            margin: 5% 37%;
+            width: 70px;
+            height: 80px;
+            margin: 20px 115px;
         }
 
         #buttomDiv {
-            height: 80%;
+            height: 550px;
         }
 
         #leftButtom {
-            width: 95%;
-            height: 100%;
-            margin: auto;
+            width: 400px;
+            height: 500px;
+            margin: 25px auto;
         }
 
         #orderBtn {
-            height: 15%;
+            height: 80px;
             font-size: 28px;
             font-weight: bold;
+            margin: 10px auto;
         }
 
         #rightButtom {
-            width: 100%;
-            height: 100%;
+            width: 840px;
+            height: 500px;
+            margin: 25px auto;
             position: fixed;
         }
 
         .jumbotron {
             width: 800px;
-            height: 500px;
-            margin: 2% 2%;
+            height: 480px;
+            margin: 10px 20px;
             font-family: Microsoft JhengHei;
             display: none;
         }
@@ -90,21 +92,20 @@
         }
 
         #detailsItem {
-            width: 60%;
+            width: 500px;
             margin: auto;
             max-height: 150px;
             /* overflow: auto; */
         }
 
         #detailsTotal {
-            width: 60%;
+            width: 500px;
             margin: auto;
         }
 
         #detailsButton {
-            width: 80%;
+            width: 600px;
             margin: auto;
-            /* border: 2px solid palevioletred; */
         }
         .detailsBtn{
             font-size: 28px;
@@ -151,6 +152,24 @@
         <div class="row no-gutters" id="buttomDiv">
             <div class="col-4">
                 <div id="leftButtom">
+                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                        @{{detailsTitle}}
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                        @{{detailsTitle}}
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                        @{{detailsTitle}}
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                        @{{detailsTitle}}
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                        @{{detailsTitle}}
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                        @{{detailsTitle}}
+                    </button>
                     <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
