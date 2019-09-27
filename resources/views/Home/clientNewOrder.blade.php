@@ -139,7 +139,7 @@
             <div class="col-4">
                 <div id="leftButtom">
                     <button type="button" class="btn btn-light btn-block" v-on:click="orderClick">
-                        {{detailsTitle}}
+                        @{{detailsTitle}}
                     </button>
                 </div>
             </div>
@@ -147,19 +147,19 @@
                 <div id="rightButtom">
                     <div class="jumbotron">
                         <!-- 訂單標題 -->
-                        <h1 class="display-4" id="detailsTitle">{{detailsTitle}}</h1>
+                        <h1 class="display-4" id="detailsTitle">@{{detailsTitle}}</h1>
                         <hr class="my-4">
                         <!-- 訂單內容 -->
                         <h3>
                             <div class="row" id="detailsItem">
                                 <div class="col-2">
-                                    <span>{{detailsCount}}x</span>
+                                    <span>@{{detailsCount}}x</span>
                                 </div>
                                 <div class="col-8">
-                                    <span>{{detailsMeal}}</span>
+                                    <span>@{{detailsMeal}}</span>
                                 </div>
                                 <div class="col-2">
-                                    <span>${{detailsPrice}}</span>
+                                    <span>$@{{detailsPrice}}</span>
                                 </div>              
                             </div>
                         </h3>
@@ -168,7 +168,7 @@
                             <div class="row" id="detailsTotal">
                                 <div class="col-7"></div>
                                 <div class="col-3">Total:</div>
-                                <div class="col-2">${{totalPrice}}</div>
+                                <div class="col-2">$@{{totalPrice}}</div>
                             </div>
                         </h3>
                         <hr class="my-4">
