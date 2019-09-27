@@ -74,12 +74,13 @@
             height: 500px;
             margin: 25px auto;
             position: fixed;
+            border: 2px solid black;
         }
 
         .jumbotron {
             width: 800px;
             height: 480px;
-            margin: auto; !important;
+            margin: 10px 20px; 
             font-family: Microsoft JhengHei;
             display: none;
         }
@@ -111,6 +112,20 @@
             font-size: 28px;
             margin: auto;
             display: block;
+        }
+
+        @media (min-width: 1300px) and (max-width: 1600px){
+            #buttomDiv {
+                height: 614px;
+            }
+            .rightButtom{
+                width: 1096px;
+                height: 564px;
+            }
+            .jumbotron {
+                width: 1056px;
+                height: 544px;
+            }
         }
     </style>
 </head>
