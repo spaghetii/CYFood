@@ -19,3 +19,9 @@ Route::get('/processing',"HomeController@processing");
 Route::resource('coupon','CouponController');
 
 Route::resource('member','MemberController');
+
+Route::resource('shop','ShopController');
+
+Route::resource('meal','MealController');
+
+Route::resource('orders','OrdersController');
