@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Member;
+use App\Shop;
+use Storage;
 
-class MemberController extends Controller
+class ShopController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class MemberController extends Controller
     public function create()
     {
         //
-        return view("test.member");
+        return view("test.shop");
     }
 
     /**
@@ -38,15 +38,22 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         //
-        $me =new Member();
-        $me->MemberName = $request->registerName;
-        $me->MemberEmail = $request->registerEmail;
-        $me->MemberPhone = $request->registerPhone;
-        $password = $request->registerPassword;
-        $hashed = Hash::make($password);
-        $me->MemberPassword = $hashed;
-        $me->save();
-        return redirect("/");
+        $shop = new Shop();
+        $shop->ShopName = $request->sname;
+        $shop->ShopType = $request->stype;
+        $shop->ShipTime = $request->stime;
+        $shop->ShopAddress = $request->saddress;
+        $shop->ShopEmail = $request->semail;
+        $shop->ShopPhone = $request->sphone;
+        $shop->ShopPassword = $request->spassword;
+        
+        $avatar = $request->file('simage');
+        if ($avatar->isValid()) {
+            $path = Storage::putFile('public/uploads/shops', $avatar);
+            $shop->ShopImage = Storage::url($path);
+            
+        }
+        $shop->save();
     }
 
     /**

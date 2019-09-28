@@ -20,4 +20,8 @@ class HomeController extends Controller
         return view("home.hello")->withwho($request->userName); //不建議用
     }
 
+    function login(){
+        return view("home.login");
+    }
+
 }

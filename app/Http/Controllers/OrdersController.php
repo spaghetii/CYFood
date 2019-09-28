@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Member;
+use App\Orders;
 
-class MemberController extends Controller
+class OrdersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +25,7 @@ class MemberController extends Controller
     public function create()
     {
         //
-        return view("test.member");
+        return view("test.orders");
     }
 
     /**
@@ -38,15 +37,16 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         //
-        $me =new Member();
-        $me->MemberName = $request->registerName;
-        $me->MemberEmail = $request->registerEmail;
-        $me->MemberPhone = $request->registerPhone;
-        $password = $request->registerPassword;
-        $hashed = Hash::make($password);
-        $me->MemberPassword = $hashed;
-        $me->save();
-        return redirect("/");
+        $orders = new Orders();
+        $orders->OrdersNum = $request->onum;
+        $orders->OrdersDetails = $request->odetails;
+        $orders->OrdersCreate = $request->ocreate;
+        $orders->OrdersUpdate = $request->oupdate;
+        $orders->OrdersFinish = $request->ofinish;
+        $orders->MemberID = $request->meid;
+        $orders->MealID = $request->mealid;
+        $orders->save();
+        return redirect("/orders/create");
     }
 
     /**

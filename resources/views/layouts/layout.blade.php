@@ -25,6 +25,7 @@
     <link rel="stylesheet" media="screen and (min-width: 576px)" href="css/styleLarge.css">
     {{-- 小於575px --}}
     <link rel="stylesheet" media="screen and (max-width: 576px)" href="css/styleSmall.css">
+    @yield('login')
 </head>
 
 <body>
@@ -32,12 +33,12 @@
         <!-- header -->
         <header class="header navbar bg-light navbar-light navbar-expand">
             <div class="container">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="/">
                     <img src="img/logo.png" alt=""> <!-- logo -->
                 </a>
                 <div class="collapse navbar-collapse ">
                     <div class="navbar-nav collapse navbar-collapse justify-content-end" id="navbarItem">
-                        <a class="nav-item nav-link ml-4" href=""><img src="img/user.png" alt="">&ensp;登入</a>
+                        <a class="nav-item nav-link ml-4" href="/login"><img src="img/user.png" alt="">&ensp;登入</a>
                         <!-- login -->
                         <!-- <a class="nav-item nav-link ml-4" href=""><img src="img/shopping-bag.png" alt=""></a> -->
                         <!-- 購物袋 -->

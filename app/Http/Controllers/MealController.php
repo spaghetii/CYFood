@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Member;
+use App\Meal;
+use Storage;
 
-class MemberController extends Controller
+class MealController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class MemberController extends Controller
     public function create()
     {
         //
-        return view("test.member");
+        return view("test.meal");
     }
 
     /**
@@ -38,15 +38,23 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         //
-        $me =new Member();
-        $me->MemberName = $request->registerName;
-        $me->MemberEmail = $request->registerEmail;
-        $me->MemberPhone = $request->registerPhone;
-        $password = $request->registerPassword;
-        $hashed = Hash::make($password);
-        $me->MemberPassword = $hashed;
-        $me->save();
-        return redirect("/");
+        $meal = New Meal();
+        $meal->MealName = $request->mname;
+        $meal->MealDesc = $request->mdesc;
+        $meal->MealPrice = $request->mprice;
+        $meal->MealType = $request->mtype;
+        $meal->MealDetails = $request->mdetails;
+        $meal->MealQuantity = $request->mquantity;
+        $meal->ShopID = $request->sID;
+
+        $avatar = $request->file('mimage');
+        if ($avatar->isValid()) {
+            $path = Storage::putFile('public/uploads/meals', $avatar);
+            $meal->MealImage = Storage::url($path);
+            
+        }
+        $meal->save();
+        return redirect("/meal/create");
     }
 
     /**
