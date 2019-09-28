@@ -75,15 +75,39 @@
             font-family: Microsoft JhengHei;
             display: none;
         }
-        /* 複製 */
-        #detailsTitle {
+        #detailsGroup{
+            display: inline-block;
+            margin: auto;
+        }
+        .btn-warning{
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .dropdown-item{
             text-align: center;
+            font-size: 20px;
+            color: #ffc107;
+            font-weight: bold;
+        }
+        .dropdown-item:hover, .dropdown-item:focus {
+            color: #fd7e14;
+            background-color: white;
+        }
+        .dropdown-item.active, .dropdown-item:active {
+            color: #ffc107;
+            background-color: white;
+        }
+        #detailsTitle {
+            text-align: right;
             font-size: 36px;
             font-weight: bold;
+            display: inline-block;
         }
         #detailsItem {
             width: 550px;
             margin: auto;
+            font-weight: bold;
         }
         #detailsTotal {
             width: 550px;
@@ -115,6 +139,26 @@
 </head>
 
 <body>
+    {{-- 聯絡顧客MODAL --}}
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fuild h-100">
         <!-- top -->
         <div class="row no-gutters sticky-top" id="fixedDiv">
@@ -160,76 +204,25 @@
                 <div id="rightButtom">
                     <div class="jumbotron">
                         <!-- 訂單標題 -->
-                        <h1 class="display-4" id="detailsTitle">@{{detailsTitle}}</h1>
+                        <div class="row" id="rowTop">
+                            <div class="col-10" id="detailsTitle">
+                                @{{detailsTitle}}
+                            </div>
+                            <div class="col-2 btn-group" id="detailsGroup">
+                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    幫助
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#contactModal" href="#">聯絡顧客</a>
+                                    <a class="dropdown-item" href="#">延遲訂單</a>
+                                    <a class="dropdown-item" href="#">取消訂單</a>
+                                </div>
+                            </div>
+                            
+                        </div>
                         <hr class="my-4">
                         <!-- 訂單內容 -->
                         <h3  id="detailsItem">
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-2">
                                     <span>@{{detailsCount}}x</span>
