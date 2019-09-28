@@ -22,7 +22,7 @@ class CreateShopsTable extends Migration
             $table->string('ShopAddress')->unique();
             $table->string('ShopEmail',50)->nullable();
             $table->string('ShopPhone',30)->nullable();
-            $table->string('ShopPassword',60)->nullable();
+            $table->string('ShopPassword')->nullable();
             
         });
     }

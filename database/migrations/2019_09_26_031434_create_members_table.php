@@ -18,7 +18,7 @@ class CreateMembersTable extends Migration
             $table->string('MemberName');
             $table->string('MemberEmail',50)->unique();
             $table->string('MemberPhone',30);
-            $table->string('MemberPassword',50);
+            $table->string('MemberPassword');
             $table->binary('MemberImage')->nullable();
             
         });
