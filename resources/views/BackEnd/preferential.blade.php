@@ -18,10 +18,11 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="css/backendorder.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" >
         <div class="row">
             <!-- Logo -->
             <div class="line1 col">CYFood</div>
@@ -30,8 +31,10 @@
             <div class="line1 col">
                 <div class="select">
                     <select id="selectbasic" name="selectbasic" class="form-control">
-                        <option value="1">代碼、種類、生效日期、結束日期1</option>
-                        <option value="2">代碼、種類、生效日期、結束日期2</option>
+                        <option value="1">代碼</option>
+                        <option value="2">種類</option>
+                        <option value="3">生效日期</option>
+                        <option value="4">結束日期</option>
                     </select>
                 </div>
             </div>
@@ -74,7 +77,6 @@
             <div class="line2 row">
                 <div class="col">優惠代碼</div>
                 <div class="col">優惠種類</div>
-                <div class="col">優惠備註</div>
                 <div class="col">生效日期</div>
                 <div class="col">結束日期</div>
                 <div class="col"></div>
@@ -84,27 +86,27 @@
             </div>
 
             <hr>
-
-            <div class="line3 row">
-                <div class="col">A0001</div>
-                <div class="col">免運費</div>
-                <div class="col">茲民國OO年...</div>
-                <div class="col">YY/MM/DD</div>
-                <div class="col">YY/MM/DD</div>
-                <div class="col">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">修改優惠</button>
+            <div id="CP">
+                <div class="line2 row" >
+                    <div class="col">@{{newsList[0].ymd}}</div>
+                    <div class="col">免運費</div>
+                    <div class="col">YY/MM/DD</div>
+                    <div class="col">YY/MM/DD</div>
+                    <div class="col">
+                        <button id="singlebutton" name="singlebutton" class="btn btn-primary">修改優惠</button>
+                    </div>
+                    <div class="col">
+                        <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除優惠</button>
+                    </div>
                 </div>
-                <div class="col">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除優惠</button>
-                </div>
+    
+                <hr>
             </div>
+            
 
-            <hr>
-
-            <div class="line4 row">
+            {{-- <div class="line4 row">
                 <div class="col">B0003</div>
                 <div class="col">商品折扣</div>
-                <div class="col">同上</div>
                 <div class="col">YY/MM/DD</div>
                 <div class="col">YY/MM/DD</div>
                 <div class="col">
@@ -120,7 +122,6 @@
             <div class="line5 row">
                 <div class="col">C1985</div>
                 <div class="col">商品折扣</div>
-                <div class="col">同上</div>
                 <div class="col">YY/MM/DD</div>
                 <div class="col">YY/MM/DD</div>
                 <div class="col">
@@ -136,7 +137,6 @@
             <div class="line6 row">
                 <div class="col">D6TR9</div>
                 <div class="col">免運費</div>
-                <div class="col">同上</div>
                 <div class="col">YY/MM/DD</div>
                 <div class="col">YY/MM/DD</div>
                 <div class="col">
@@ -145,12 +145,22 @@
                 <div class="col">
                     <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除優惠</button>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
 
-
+<script>
+    var coupon = new Vue({
+        el:"#CP",
+        data:{
+            newsList:[]
+        },
+        methods:{
+            
+        }
+    });
+</script>
 
 </body>
 

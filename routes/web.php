@@ -18,6 +18,7 @@ Route::get('/processing',"HomeController@processing");
 
 Route::get('/login',"HomeController@login");
 
+Route::resource('/BackEnd','CouponController');
 Route::resource('coupon','CouponController');
 
 Route::resource('member','MemberController');

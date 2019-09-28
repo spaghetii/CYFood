@@ -15,7 +15,8 @@ class CouponController extends Controller
      */
     public function index()
     {
-        //
+        $couponList = Coupon::all();
+        return view("BackEnd.preferential", compact('couponList'));
     }
 
     /**
