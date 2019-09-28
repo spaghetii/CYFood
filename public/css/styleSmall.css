@@ -6,12 +6,14 @@
 } 
 
 /* 導覽列滑過超連結 */
-#navbarItem > a {
-    color: orange;
+#navbarItem a {
+    color: #ffa500;
 }
 
-/* 隱藏式 header 地址搜尋 */
-#headerSearchLarge {
+/* 隱藏式 header 搜尋 */
+#headerSearchLarge,
+#headerAreaLarge,
+#headerCategoryLarge {
     display: none;
 }
 
@@ -36,18 +38,12 @@
  /* 內容搜尋端div */
 .mainSearchDiv {
     height: 180px;
-    width: 700px;
+    width: 900px;
     text-align: center;
 }
 
-#selectArea {
-    float: left;
-}
-
-#selectCategory {
-    float: left;
-}
-
+#selectArea,
+#selectCategory,
 #SearchAddress {
     float: left;
 }
@@ -59,22 +55,47 @@
     padding-bottom: 3%;
 }
 
-/* 本日推薦 */
-.todayRecommendImage {
-    background-image: url("../img/drink.jpg");
-    height: 240px;
-    background-position: center;
-    background-size: cover;
+/* 本日推薦,熱門餐廳 */
+#todayRecommend,
+#popularRestaurant {
+    width: 90%;
+    padding-top: 3%;
+    padding-bottom: 3%;
 }
 
-.todayRecommendContent {
+.todayRecommendContent,
+.popularRestaurantContent {
     padding: 0px 15px;
 }
 
-.todayRecommendContentItem {
+.todayRecommendContentItem,
+.popularRestaurantContentItem {
     background-color: #FFF8DC;
     padding: 0px 10px;
     text-align: center;
+}
+
+/* 首頁餐廳圖片css */
+.restaurantImage {
+    object-fit: cover;
+    width: 100%;
+    height: 240px;
+}
+
+/* 分隔線 */
+.separationline {
+    width:88%;
+    margin:0 auto;
+}
+
+/* 餐廳圖片超連結css */
+.restaurantLink {
+    color:black;
+}
+
+.restaurantLink:hover {
+    color:black;
+    text-decoration:none;
 }
 
 /* 餐廳加入 */
@@ -100,14 +121,11 @@
     width: 50%;
 }
 
-/* 分隔線 */
-.separationline {
-    padding-top: 50px;
-}
-
 /* 頁尾 背景 */
 .footer {
-    padding-bottom:88px;
+    padding-bottom: 88px;
+    padding-top: 88px;
+    background-color: #FFF8DC;
 }
 
 /* 頁尾 字體顏色 */
@@ -118,13 +136,11 @@
 /* 頁尾 滑過超連結 */
 .footer a:hover {
     color: #ffa500;
+    text-decoration:none;
 }
 
 /* 頁尾 字體置中 */
-.footerTop {
-    text-align: center;
-}
-
-.footerBottom {
+.footerTop,
+.footerBottom  {
     text-align: center;
 }
