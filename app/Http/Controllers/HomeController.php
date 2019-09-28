@@ -10,6 +10,10 @@ class HomeController extends Controller
         return view('home.index');
     }
 
+    function loginHomepage() {
+        return view('home.loginHomepage');
+    }
+
    function newOrder(){
        return view('Client.newOrder');
    }

@@ -13,6 +13,8 @@
 
 Route::get('/', "HomeController@index");
 
+Route::get('/loginHomepage', "HomeController@loginHomepage");
+
 Route::get('/newOrder',"HomeController@newOrder");
 Route::get('/processing',"HomeController@processing");
 

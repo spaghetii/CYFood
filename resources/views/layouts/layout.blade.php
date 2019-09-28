@@ -34,7 +34,7 @@
     <div class="wrapper">
         <!-- header -->
         <header class="header navbar bg-light navbar-light navbar-expand fixed-top">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="/">
                     <img src="img/logo.png" alt=""> <!-- logo -->
                 </a>
@@ -42,12 +42,22 @@
                 {{-- 隱藏式 header 地址搜尋 --}}
                 @yield('headerSearchLarge')
 
-                <div class="collapse navbar-collapse ">
+                <div class="collapse navbar-collapse">
                     <div class="navbar-nav collapse navbar-collapse justify-content-end" id="navbarItem">
+                        {{-- 登入 --}}
                         <a class="nav-item nav-link ml-4" href="/login"><img src="img/user.png" alt="">&ensp;登入</a>
-                        <!-- login -->
-                        <!-- <a class="nav-item nav-link ml-4" href=""><img src="img/shopping-bag.png" alt=""></a> -->
-                        <!-- 購物袋 -->
+                        {{-- 登入後資訊欄 --}}
+                        <div class="dropdown show">
+                            <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href=""><img src="img/user.png" alt="">&ensp;User</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href=""><img src="img/bill.png" alt="">&emsp;訂單</a>
+                                    <a class="dropdown-item" href=""><img src="img/user.png" alt="">&emsp;帳戶</a>
+                                    <a class="dropdown-item" href=""><img src="img/qa.png" alt="">&emsp;Q&A</a>
+                                    <a class="dropdown-item" href=""><img src="img/logout.png" alt="">&emsp;登出</a>
+                                  </div>
+                        </div>
+                        {{-- 購物袋 --}}
+                        <a class="nav-item nav-link ml-4" href=""><img src="img/shopping-bag.png" alt=""><span style="font-size:1.2rem;">1</span></a>
                     </div>
                 </div>
             </div>
@@ -62,14 +72,14 @@
             <div class="container">
                 <div class="row footerTop">
                     <!-- footer 上區 -->
-                    <div class="col-sm-5 col-12 mt-4">
+                    <div class="col-sm-5 col-12 mt-0 mt-sm-0">
                         <img src="img/logo.png" alt="">
                     </div>
-                    <div class="col-sm-3 col-6 mt-4">
+                    <div class="col-sm-3 col-6 mt-4 mt-sm-0">
                         <p><a href="">關於 CY Food</a></p>
                         <p><a href="">意見箱</a></p>
                     </div>
-                    <div class="col-sm-4 col-6 mt-4">
+                    <div class="col-sm-4 col-6 mt-4 mt-sm-0">
                         <p><a href="">常見 Q&A</a></p>
                         <p><a href="">關於我們</a></p>
                     </div>
