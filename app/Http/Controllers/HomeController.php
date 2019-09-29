@@ -21,9 +21,13 @@ class HomeController extends Controller
        return view('Client.processing');
    }
 
-   function rlogin(){
+   function rLogin(){
        return view("restaurant.login");
    }
+
+   function rRegister(){
+    return view("restaurant.register");
+}
 
     function sayHello(Request $request) {
         // return view("home.hello", 

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="../img/burger.ico" type="image/x-icon">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,7 +27,7 @@
         .login {
             
             margin-top: 18%;
-            padding: 30px;
+            padding: 20px 30px 30px 30px;
             /* border:1px solid rgba(255, 166, 0, 0.856) ; */
             background-color: rgba(255, 255, 255, 0.856) ;
             box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
@@ -59,10 +60,10 @@
 <body>
     <div class="container col-md-6">
         <div class="login">
-            <h3 class=" logintitle">店家端登入</h3>
+            <h3 class=" logintitle">餐廳登入</h3>
             <div class="login-form  w-100  " id="#login-form">
                 <form>
-
+                    @csrf
                     <div class="form-group">
                         <label for="loginEmail">電子郵件</label>
                         <input type="email" class="form-control" id="loginEmail" name="loginEmail">
@@ -73,6 +74,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block btn-lg">登入</button>
+                    
                 </form>
             </div>
 
