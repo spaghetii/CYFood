@@ -34,7 +34,7 @@
     <div class="input-group navbar-nav col-sm-4" id="headerSearchLarge">
         <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
         <div class="input-group-append">
-            <button class="btn btn-warning" type="submit" id="SearchAddressButton">Go</button>
+            <button class="btn btn-warning" type="submit" id="headerSearchAddressButton">Go</button>
         </div>
     </div>
 @endsection
@@ -79,7 +79,7 @@
                 <div class="input-group col-sm-8 col-12" id="SearchAddress">
                     <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
                     <div class="input-group-append">
-                        <button class="btn btn-warning" type="submit" id="SearchAddressButton">Go</button>
+                        <button class="btn btn-warning" type="submit" id="mainSearchAddressButton">Go</button>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
                             <div class="row mt-2">
@@ -108,7 +108,7 @@
                     </a>
                 </div>              
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
                             <div class="row mt-2">
@@ -123,7 +123,7 @@
                     </a>
                 </div>              
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
                             <div class="row mt-2">
@@ -138,7 +138,7 @@
                     </a>
                 </div>              
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
                             <div class="row mt-2">
@@ -153,7 +153,7 @@
                     </a>
                 </div>              
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
                             <div class="row mt-2">
@@ -168,7 +168,7 @@
                     </a>
                 </div>              
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
                             <div class="row mt-2">
@@ -197,7 +197,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
                             <div class="row mt-2">
@@ -212,7 +212,7 @@
                     </a>
                 </div>                 
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
                             <div class="row mt-2">
@@ -227,7 +227,7 @@
                     </a>
                 </div>                 
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
                             <div class="row mt-2">
@@ -242,7 +242,7 @@
                     </a>
                 </div>                 
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
                             <div class="row mt-2">
@@ -257,7 +257,7 @@
                     </a>
                 </div>                 
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
                             <div class="row mt-2">
@@ -272,7 +272,7 @@
                     </a>
                 </div>                 
                 <div class="col-sm-4 col-12 mt-5">
-                    <a href="" class="restaurantLink">
+                    <a href="#" class="restaurantLink">
                         <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
                             <div class="row mt-2">
@@ -288,21 +288,30 @@
                 </div>                 
             </div> <!-- row -->
         </div> <!-- popularRestaurant --> 
+
+        <div class="displayMore container-fluid">
+            <div class="row justify-content-center align-items-center mt-5 mb-5">
+                <button type="button" class="btn btn-lg btn-dark ">顯示更多餐廳</button>
+            </div>
+        </div>
+
+@endsection
+
+@section('script')
+    <script>
+        $("#headerSearchAddressButton,#mainSearchAddressButton").on("click",function(){
+            alert('oops!');
+        });  
         
-        <script>
-            $("#SearchAddressButton").on("click",function(){
-                alert('oops!');
-            });  
-            
-            // 隱藏式 header 地址搜尋 顯示判斷
-            $(document).ready().scroll(function () {
-                var winTop = $("#headerSearchLarge").offset().top;
-                var searchDivTop = $("#SearchAddress").offset().top;
-                if (winTop > searchDivTop) {
-                    $("#headerSearchLarge,#headerAreaLarge,#headerCategoryLarge").css("visibility","visible");
-                }else{
-                    $("#headerSearchLarge,#headerAreaLarge,#headerCategoryLarge").css("visibility","hidden");
-                }
-            })
-        </script>
+        // 隱藏式 header 地址搜尋 顯示判斷
+        $(document).ready().scroll(function () {
+            var winTop = $("#headerSearchLarge").offset().top;
+            var searchDivTop = $("#SearchAddress").offset().top;
+            if (winTop > searchDivTop) {
+                $("#headerSearchLarge,#headerAreaLarge,#headerCategoryLarge").css("visibility","visible");
+            }else{
+                $("#headerSearchLarge,#headerAreaLarge,#headerCategoryLarge").css("visibility","hidden");
+            }
+        });
+    </script>
 @endsection

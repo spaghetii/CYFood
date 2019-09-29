@@ -144,3 +144,68 @@
 .footerBottom  {
     text-align: center;
 }
+
+/* ShoppingBagModal */
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 430px;
+    height: 100%;
+    transform: translate3d(0%, 0, 0);
+}
+
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal.right .modal-title{
+    color: orange;
+}
+
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+#shoppingBagModalBody ul,
+#shoppingBagModalBody li{
+    padding:0; 
+    margin:0;
+}
+
+.shoppingBagModalItemQuantity {
+    width: 20%;
+}
+
+.shoppingBagModalItemDetail {
+    width: 75%;
+    color: black;
+}
+
+.shoppingBagModalItemDetail:hover {
+    color: black;
+}
+
+.modal.right #shoppingBagModalCheckOutDiv {
+    background-color: orange;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    padding: 20px;
+}
+
+.modal.right #shoppingBagModalCheckOutItem {
+    border-color:white;
+    border-style:solid;
+    border-width:1px;
+    padding: 0px 4px;
+}
+
+.modal.right.fade .modal-dialog {
+    right: -430px;
+    transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.right.fade.show .modal-dialog {
+    right: 0;
+}
