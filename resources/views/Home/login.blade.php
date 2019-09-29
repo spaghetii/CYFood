@@ -7,14 +7,14 @@
 
 @section('content')
 
-<div class="container container-fluid">
+<div class="container ">
     
     <!-- Columns are always 50% wide, on mobile and desktop -->
     <div class="login-register">
         <h2 class="title">登入或註冊帳戶前往選購餐點</h2>
-        <div class=" col-md-5 login">
+        <div class=" col-md-5 col-12 w-100  login">
             <h3 class="logintitle">登入</h3>
-            <div class="login-form tab-pane fade show active" id="#login-form">
+            <div class="login-form " id="#login-form">
                 <form>
                     @csrf
                     <div class="form-group">
@@ -32,7 +32,7 @@
 
         </div>
 
-        <div class="col-md-5 register">
+        <div class="col-md-5 col-12 w-100 register">
             <h3 class="registertitle">註冊</h3>
             <div class="register-form" id="#register-form">
                 <form action="/member" method="POST">
