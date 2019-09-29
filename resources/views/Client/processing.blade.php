@@ -75,29 +75,6 @@
             font-family: Microsoft JhengHei;
             display: none;
         }
-        #detailsGroup{
-            display: inline-block;
-            margin: auto;
-        }
-        .btn-warning{
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .dropdown-item{
-            text-align: center;
-            font-size: 20px;
-            color: #ffc107;
-            font-weight: bold;
-        }
-        .dropdown-item:hover, .dropdown-item:focus {
-            color: #fd7e14;
-            background-color: white;
-        }
-        .dropdown-item.active, .dropdown-item:active {
-            color: #ffc107;
-            background-color: white;
-        }
         #detailsTitle {
             text-align: right;
             font-size: 36px;
@@ -107,20 +84,16 @@
         #detailsItem {
             width: 550px;
             margin: auto;
-            font-weight: bold;
         }
         #detailsTotal {
             width: 550px;
-            margin: auto;
-        }
-        #detailsButton {
-            width: 600px;
             margin: auto;
         }
         .detailsBtn{
             font-size: 28px;
             margin: auto;
             display: block;
+            font-weight: bold;
         }
         @media (min-width: 1300px) and (max-width: 1600px){
             #buttomDiv {
@@ -135,57 +108,62 @@
                 min-height: 544px;
             }
         }
+        #detailsGroup{
+            display: inline-block;
+            margin: auto;
+        }
+        .dropdown-toggle{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .dropdown-item{
+            text-align: center;
+            font-size: 20px;
+            color: #212529;
+            font-weight: bold;
+        }
+        .dropdown-item:hover, .dropdown-item:focus {
+            color:#dcdcdc;
+            background-color: white;
+        }
+        .dropdown-item.active, .dropdown-item:active {
+            color:#dcdcdc;
+            background-color: white;
+        }
+        .modal{
+            font-family: Microsoft JhengHei;
+        }
     </style>
 </head>
 
 <body>
-    {{-- 聯絡顧客MODAL --}}
-    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container-fuild h-100">
         <!-- top -->
         <div class="row no-gutters sticky-top" id="fixedDiv">
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/newOrder">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/neworder.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/processing">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/processing.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/takeout">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/takeout.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/user">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/user.png" alt="">
                     </div>
                 </a>
@@ -195,7 +173,7 @@
         <div class="row no-gutters" id="buttomDiv">
             <div class="col-4">
                 <div id="leftButtom">
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
                 </div>
@@ -209,13 +187,13 @@
                                 @{{detailsTitle}}
                             </div>
                             <div class="col-2 btn-group" id="detailsGroup">
-                                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     幫助
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#contactModal" href="#">聯絡顧客</a>
-                                    <a class="dropdown-item" href="#">延遲訂單</a>
-                                    <a class="dropdown-item" href="#">取消訂單</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#contactModal" href="#">✉ 聯絡顧客</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#delayModal" href="#">☹ 延遲訂單</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#cancelModal" href="#">✘ 取消訂單</a>
                                 </div>
                             </div>
                             
@@ -224,24 +202,14 @@
                         <!-- 訂單內容 -->
                         <h3  id="detailsItem">
                             <div class="row">
-                                <div class="col-2">
+                                <div class="col-1 text-center"><span class="badge badge-light">1</span></div>
+                                <div class="col-2 text-left">
                                     <span>@{{detailsCount}}x</span>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-7 text-left">
                                     <span>@{{detailsMeal}}</span>
                                 </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
+                                <div class="col-2 text-right">
                                     <span>$@{{detailsPrice}}</span>
                                 </div>
                             </div>
@@ -249,18 +217,15 @@
                         <hr class="my-4">
                         <h3>
                             <div class="row" id="detailsTotal">
-                                <div class="col-7"></div>
-                                <div class="col-3">Total</div>
-                                <div class="col-2">$@{{totalPrice}}</div>
+                                <div class="col-9 text-right">Total</div>
+                                <div class="col-3 text-right">$@{{totalPrice}}</div>
                             </div>
                         </h3>
                         <hr class="my-4">
-                        <div class="row" id="detailsButton">
-                            <div class="col-2"></div>
-                            <div class="col-8">
-                                <button type="button" class="btn btn-dark detailsBtn">呼叫外送員</button>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-dark detailsBtn">☎ 呼叫外送員</button>
                             </div>
-                            <div class="col-2"></div>
                         </div>
                     </div>
                 </div>
@@ -269,15 +234,119 @@
     </div>
 
 
+    
+    {{-- 聯絡顧客MODAL --}}
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Jennifer</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">輸入訊息:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- 延遲訂單MODAL --}}
+    <div class="modal fade" id="delayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">
+                        請問您需要額外準備幾分鐘？<br>
+                        我們會通知客戶訂單有所延遲。
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">5分鐘</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">10分鐘</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">15分鐘</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">20分鐘</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- 取消訂單MODAL --}}
+    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">
+                        請問您為什麼要取消訂單？
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">提早打烊</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">存貨不足</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">餐廳問題</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
     <script>
             var buttomDiv = new Vue({
                 el:"#buttomDiv",
                 data:{
                     detailsTitle:"CY201909240001—Jennifer",
                     detailsCount:"9",
-                    detailsMeal:"CY超值豪華牛排套餐套餐",
-                    detailsPrice:"1099",
-                    totalPrice:"3297"
+                    detailsMeal:"CY超值豪華A9和牛套餐",
+                    detailsPrice:"1000",
+                    totalPrice:"9000"
                 },
                 methods:{
                     orderClick:function(){
