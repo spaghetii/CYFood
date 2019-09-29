@@ -75,7 +75,7 @@
             font-family: Microsoft JhengHei;
             display: none;
         }
-        /* 複製 */
+        
         #detailsTitle {
             text-align: center;
             font-size: 36px;
@@ -89,14 +89,11 @@
             width: 550px;
             margin: auto;
         }
-        #detailsButton {
-            width: 600px;
-            margin: auto;
-        }
         .detailsBtn{
             font-size: 28px;
             margin: auto;
             display: block;
+            font-weight: bold;
         }
         @media (min-width: 1300px) and (max-width: 1600px){
             #buttomDiv {
@@ -120,28 +117,28 @@
         <div class="row no-gutters sticky-top" id="fixedDiv">
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/newOrder">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/neworder.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/processing">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/processing.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/takeout">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/takeout.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/user">
-                    <div class="fixedItem">
+                    <div class="fixedItem rounded">
                         <img src="/img/client/user.png" alt="">
                     </div>
                 </a>
@@ -151,25 +148,25 @@
         <div class="row no-gutters" id="buttomDiv">
             <div class="col-4">
                 <div id="leftButtom">
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
-                    <button type="button" class="btn btn-secondary btn-light btn-block" id="orderBtn" v-on:click="orderClick">
+                    <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
                         @{{detailsTitle}}
                     </button>
                 </div>
@@ -183,24 +180,14 @@
                         <!-- 訂單內容 -->
                         <h3 id="detailsItem">
                             <div class="row">
-                                <div class="col-2">
+                                <div class="col-1 text-center"><span class="badge badge-light">1</span></div>
+                                <div class="col-2 text-left">
                                     <span>@{{detailsCount}}x</span>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-7 text-left">
                                     <span>@{{detailsMeal}}</span>
                                 </div>
-                                <div class="col-2">
-                                    <span>$@{{detailsPrice}}</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2">
-                                    <span>@{{detailsCount}}x</span>
-                                </div>
-                                <div class="col-8">
-                                    <span>@{{detailsMeal}}</span>
-                                </div>
-                                <div class="col-2">
+                                <div class="col-2 text-right">
                                     <span>$@{{detailsPrice}}</span>
                                 </div>
                             </div>
@@ -208,21 +195,20 @@
                         <hr class="my-4">
                         <h3>
                             <div class="row" id="detailsTotal">
-                                <div class="col-7"></div>
-                                <div class="col-3">Total</div>
-                                <div class="col-2">$@{{totalPrice}}</div>
+                                <div class="col-9 text-right">Total</div>
+                                <div class="col-3 text-right">$@{{totalPrice}}</div>
                             </div>
                         </h3>
                         <hr class="my-4">
                         <div class="row" id="detailsButton">
-                            <div class="col-2"></div>
-                            <div class="col-4">
-                                <button type="button" class="btn btn-dark detailsBtn">拒絕訂單</button>
+                            <div class="col-3"></div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-dark detailsBtn">✘拒絕訂單</button>
                             </div>
-                            <div class="col-4">
-                                <button type="button" class="btn btn-dark detailsBtn">接受訂單</button>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-dark detailsBtn">✔接受訂單</button>
                             </div>
-                            <div class="col-2"></div>
+                            <div class="col-3"></div>
                         </div>
                     </div>
                 </div>
@@ -236,10 +222,10 @@
                 el:"#buttomDiv",
                 data:{
                     detailsTitle:"CY201909240001—Jennifer",
-                    detailsCount:"9",
-                    detailsMeal:"CY超值豪華牛排套餐",
-                    detailsPrice:"1099",
-                    totalPrice:"9891"
+                    detailsCount:"10",
+                    detailsMeal:"CY超值豪華A9和牛套餐",
+                    detailsPrice:"399",
+                    totalPrice:"3990"
                 },
                 methods:{
                     orderClick:function(){
