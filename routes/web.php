@@ -20,6 +20,8 @@ Route::get('/processing',"HomeController@processing");
 
 Route::get('/login',"HomeController@login");
 
+Route::get('/restaurant/login',"HomeController@rlogin");
+
 Route::resource('coupon','CouponController');
 
 Route::resource('member','MemberController');

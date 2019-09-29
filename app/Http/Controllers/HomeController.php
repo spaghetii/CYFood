@@ -21,6 +21,10 @@ class HomeController extends Controller
        return view('Client.processing');
    }
 
+   function rlogin(){
+       return view("restaurant.login");
+   }
+
     function sayHello(Request $request) {
         // return view("home.hello", 
         //     [ "who" => $request->userName ]);    //較常用
