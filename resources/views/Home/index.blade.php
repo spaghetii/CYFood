@@ -5,7 +5,7 @@
     <div class="input-group navbar-nav col-sm-6" id="headerSearchLarge">
         <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
         <div class="input-group-append">
-            <button class="btn btn-warning" type="submit" id="SearchAddressButton">Go</button>
+            <button class="btn btn-warning" type="submit" id="headerSearchAddressButton">Go</button>
         </div>
     </div>
 @endsection
@@ -22,7 +22,7 @@
                 <div class="input-group col-sm-12 col-12" id="SearchAddress">
                     <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
                     <div class="input-group-append">
-                        <button class="btn btn-warning" type="submit" id="SearchAddressButton">Go</button>
+                        <button class="btn btn-warning" type="submit" id="mainSearchAddressButton">Go</button>
                     </div>
                 </div>
             </div>
@@ -35,8 +35,8 @@
         </div>
         <div class="row">
             <div class="col-sm-4 col-12 mt-5">
-                <a href="" class="restaurantLink">
-                    <div class="todayRecommendImage"></div>
+                <a href="#" class="restaurantLink">
+                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
                         <div class="row mt-2">
                             可不可熟成紅茶 中佑店
@@ -50,8 +50,8 @@
                 </a>
             </div>       
             <div class="col-sm-4 col-12 mt-5">
-                <a href="" class="restaurantLink">
-                    <div class="todayRecommendImage"></div>
+                <a href="#" class="restaurantLink">
+                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
                         <div class="row mt-2">
                             可不可熟成紅茶 中佑店
@@ -65,8 +65,8 @@
                 </a>
             </div>       
             <div class="col-sm-4 col-12 mt-5">
-                <a href="" class="restaurantLink">
-                    <div class="todayRecommendImage"></div>
+                <a href="#" class="restaurantLink">
+                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
                         <div class="row mt-2">
                             可不可熟成紅茶 中佑店
@@ -80,8 +80,8 @@
                 </a>
             </div>       
             <div class="col-sm-4 col-12 mt-5">
-                <a href="" class="restaurantLink">
-                    <div class="todayRecommendImage"></div>
+                <a href="#" class="restaurantLink">
+                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
                         <div class="row mt-2">
                             可不可熟成紅茶 中佑店
@@ -95,8 +95,8 @@
                 </a>
             </div>       
             <div class="col-sm-4 col-12 mt-5">
-                <a href="" class="restaurantLink">
-                    <div class="todayRecommendImage"></div>
+                <a href="#" class="restaurantLink">
+                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
                         <div class="row mt-2">
                             可不可熟成紅茶 中佑店
@@ -110,8 +110,8 @@
                 </a>
             </div>       
             <div class="col-sm-4 col-12 mt-5">
-                <a href="" class="restaurantLink">
-                    <div class="todayRecommendImage"></div>
+                <a href="#" class="restaurantLink">
+                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
                         <div class="row mt-2">
                             可不可熟成紅茶 中佑店
@@ -138,13 +138,15 @@
                 <p>還等什麼？一起和我們開啟這個外送美食給大家的旅程吧！</p>
             </div>
             <div>
-                <a href="" class="btn btn-warning" id="restaurantJoinBtn" role="button" aria-pressed="true">立即加入</a>
+                <a href="#" class="btn btn-warning" id="restaurantJoinBtn" role="button" aria-pressed="true">立即加入</a>
             </div>
         </div>
     </div>
+@endsection
 
+@section('script')
     <script>
-        $("#SearchAddressButton").on("click",function(){
+        $("#headerSearchAddressButton,#mainSearchAddressButton").on("click",function(){
             alert('oops!');
         });  
         
