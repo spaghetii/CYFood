@@ -17,7 +17,7 @@
 
 <body>
 
-    <div class="container" >
+    <div class="container-fluid" >
 
         {{-- 上排 --}}
         <div class="row">

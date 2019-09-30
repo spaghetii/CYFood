@@ -21,7 +21,7 @@
             <div class="col">生效日期</div>
             <div class="col">結束日期</div>
             <div class="col"></div>
-            <div id="neworder" class="col">
+            <div id="neworder" class="col row justify-content-end">
                 <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick="location.href='/coupon/create'">新增優惠</button>
             </div>
         </div>
@@ -91,6 +91,14 @@
             mounted: function () {
                 this.init();
             }
+        });
+        $(document).ready(function(){
+            $("#searchinput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myList li").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
         });
     </script>
 @endsection
