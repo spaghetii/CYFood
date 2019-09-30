@@ -20,6 +20,9 @@ class HomeController extends Controller
    function processing(){
        return view('Client.processing');
    }
+   function user(){
+       return view('Client.user');
+   }
 
     function sayHello(Request $request) {
         // return view("home.hello", 
