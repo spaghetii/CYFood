@@ -17,6 +17,11 @@
     display: none;
 }
 
+/* 餐廳細項頁面 header 地址搜尋 */
+#restaurantDetailHeaderSearchLarge {
+    display: none;
+}
+
  /* 內容 */
 .main {
     flex: 1;
@@ -208,4 +213,39 @@
 
 .modal.right.fade.show .modal-dialog {
     right: 0;
+}
+
+/* 餐廳title資訊 */
+.restaurantImgDiv {
+    width: 100%;
+    height: 380px;
+    background-image: url("../img/restaurant1.jpg");
+    background-position: center;
+    background-size: cover;
+    display: flex;
+}
+
+.restaurantDetailDiv{
+    width: fit-content;
+    background: transparent;
+}
+
+.restaurantDetail {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 24px 40px 24px 80px;
+}
+
+.restaurantDetailList div{
+    background-color: #FFF8DC;
+    padding: 0px 10px;
+    text-align: center;
+}
+
+.restaurantDetailAddress {
+    padding-top: 20px;
+    font-size: 0.9rem;
+}
+
+.restaurantDetailAddress a {
+    color: #ffa500;
 }

@@ -17,6 +17,10 @@ class HomeController extends Controller
         return view('home.loginHomepage');
     }
 
+    function restaurantDetail() {
+        return view('home.restaurantDetail');
+    }
+
    function newOrder(){
        return view('Client.newOrder');
    }
