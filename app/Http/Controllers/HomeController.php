@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Crypt;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -24,13 +27,13 @@ class HomeController extends Controller
        return view('Client.user');
    }
 
-   function rLogin(){
-       return view("restaurant.login");
-   }
+    function rLogin(){
+        return view("restaurant.login");
+    }
 
-   function rRegister(){
-    return view("restaurant.register");
-}
+    public function rRegister(){
+        return view("restaurant.register");
+    }
 
     function sayHello(Request $request) {
         // return view("home.hello", 
@@ -42,4 +45,37 @@ class HomeController extends Controller
         return view("home.login");
     }
 
+    function reset(Request $request){
+        
+        $member = DB::table("members")->where("MemberEmail",$request->email)->first();
+        if($member){
+            $memberName =$member->MemberName;
+            $memberID =$member->MemberID;
+            $memberEmail =$member->MemberEmail;
+            $encryptID = Crypt::encrypt($memberID);
+            
+            $to = ['email'=>$memberEmail];
+            
+
+            $data = ['name' => $memberName , 'token' => $encryptID ];
+            Mail::send('email.welcome', $data, function($message) use($memberEmail) {
+            $message->to($memberEmail)->subject('CYFood 會員密碼重置');
+            });
+            return 'Your email has been sent successfully!';
+            
+        }else{
+            echo "請輸入正確的電子信箱";
+        }
+
+    }
+
+    function resetForm($token){
+        return view("home.resetform",compact('token'));
+    }
+
+    function resetPassword(Request $request,$token){
+
+        
+        return view("home.resetform",compact('token'));
+    }
 }
