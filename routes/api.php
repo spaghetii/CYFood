@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/coupon', 'BackEnd@couponAll');
 
-Route::get('/test/{id}', function($id) {
+Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);
 });
 

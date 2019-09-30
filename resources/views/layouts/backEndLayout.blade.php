@@ -45,19 +45,19 @@
         <div id="divleft">
             <div id="buttonleft">
                 <button id="orderbutton" name="orderbutton" class="information-btn"
-                    onclick="location.href='orderBE'">訂單</button>
+                    onclick="location.href='order'">訂單</button>
                 <br>
                 <br>
                 <button id="restaurantbutton" name="restaurantbutton" class="information-btn"
-                    onclick="location.href='restaurantBE'">餐廳</button>
+                    onclick="location.href='restaurant'">餐廳</button>
                 <br>
                 <br>
                 <button id="memberbutton" name="orderbutton" class="information-btn"
-                    onclick="location.href='memberBE'">會員</button>
+                    onclick="location.href='member'">會員</button>
                 <br>
                 <br>
                 <button id="preferentialbutton" name="orderbutton" class="information-btn"
-                    onclick="location.href='couponBE'">優惠</button>
+                    onclick="location.href='coupon'">優惠</button>
                 <br>
                 <br>
             </div>
