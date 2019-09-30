@@ -20,6 +20,9 @@ class HomeController extends Controller
    function processing(){
        return view('Client.processing');
    }
+   function user(){
+       return view('Client.user');
+   }
 
    function rLogin(){
        return view("restaurant.login");

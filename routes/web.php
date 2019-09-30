@@ -17,6 +17,7 @@ Route::get('/loginHomepage', "HomeController@loginHomepage");
 
 Route::get('/newOrder',"HomeController@newOrder");
 Route::get('/processing',"HomeController@processing");
+Route::get('/user',"HomeController@user");
 
 Route::get('/login',"HomeController@login");
 

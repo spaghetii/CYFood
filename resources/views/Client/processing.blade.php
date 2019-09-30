@@ -60,6 +60,7 @@
             font-size: 28px;
             font-weight: bold;
             margin: 10px auto;
+            color:#3c3c3c;
         }
         #rightButtom {
             width: 840px;
@@ -74,20 +75,24 @@
             margin: 10px 20px; 
             font-family: Microsoft JhengHei;
             display: none;
+            background-color: whitesmoke;
         }
         #detailsTitle {
             text-align: right;
             font-size: 36px;
             font-weight: bold;
             display: inline-block;
+            color:#5b5b5b;
         }
         #detailsItem {
             width: 550px;
             margin: auto;
+            color:#5b5b5b;
         }
         #detailsTotal {
             width: 550px;
             margin: auto;
+            color:#5b5b5b;
         }
         .detailsBtn{
             font-size: 28px;
@@ -213,6 +218,18 @@
                                     <span>$@{{detailsPrice}}</span>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-1 text-center"><span class="badge badge-light">2</span></div>
+                                <div class="col-2 text-left">
+                                    <span>@{{detailsCount}}x</span>
+                                </div>
+                                <div class="col-7 text-left">
+                                    <span>@{{detailsMeal}}</span>
+                                </div>
+                                <div class="col-2 text-right">
+                                    <span>$@{{detailsPrice}}</span>
+                                </div>
+                            </div>
                         </h3>
                         <hr class="my-4">
                         <h3>
@@ -283,12 +300,12 @@
                             <label class="form-check-label" for="inlineRadio2">10分鐘</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label" for="inlineRadio2">15分鐘</label>
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option2">
+                            <label class="form-check-label" for="inlineRadio3">15分鐘</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label" for="inlineRadio2">20分鐘</label>
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2">
+                            <label class="form-check-label" for="inlineRadio4">20分鐘</label>
                         </div>
                     </form>
                 </div>
@@ -313,16 +330,16 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                            <label class="form-check-label" for="inlineRadio1">提早打烊</label>
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option1">
+                            <label class="form-check-label" for="inlineRadio5">提早打烊</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label" for="inlineRadio2">存貨不足</label>
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option2">
+                            <label class="form-check-label" for="inlineRadio6">存貨不足</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                            <label class="form-check-label" for="inlineRadio2">餐廳問題</label>
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="option2">
+                            <label class="form-check-label" for="inlineRadio7">餐廳問題</label>
                         </div>
                     </form>
                 </div>
