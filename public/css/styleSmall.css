@@ -231,7 +231,7 @@
 }
 
 .restaurantDetail {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color:white;
     padding: 24px 40px 24px 80px;
 }
 
@@ -248,4 +248,60 @@
 
 .restaurantDetailAddress a {
     color: #ffa500;
+}
+
+/* 分類排 */
+#categoryBar{
+    width: 90%;
+}
+
+#categoryBarList a{
+    font-size: 0.9rem;
+}
+
+/* 分類內容 */
+.categoryListDiv {
+    width: 90%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.media {
+    border: 1px solid #E8E8E8;
+}
+
+.categoryItemImg {
+    width: 45%;
+    height: 158px;
+    object-fit: cover;
+}
+
+.media-body {
+    padding: 5px 0px;
+    height: 158px;
+}
+
+.categoryFoodTitle{
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: -webkit-box; 
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; 
+}
+
+.categoryFoodDesc{
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: -webkit-box; 
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;  
+}
+
+.categoryItem {
+    color: black;
+}
+
+.categoryItem:hover {
+    color: black;
+    text-decoration: none;
 }
