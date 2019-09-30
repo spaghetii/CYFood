@@ -32,3 +32,11 @@ Route::resource('shop','ShopController');
 Route::resource('meal','MealController');
 
 Route::resource('orders','OrdersController');
+
+Route::get('/sendmail', function() {
+    $data = ['name' => 'Test'];
+    Mail::send('email.welcome', $data, function($message) {
+    $message->to('spaded40686@gmail.com')->subject('This is test email');
+    });
+    return 'Your email has been sent successfully!';
+    });
