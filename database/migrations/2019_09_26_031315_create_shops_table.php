@@ -18,7 +18,7 @@ class CreateShopsTable extends Migration
             $table->string('ShopName',50)->unique();
             $table->string('ShopType',20);
             $table->string('ShipTime',20);
-            $table->binary('ShopImage');
+            $table->string('ShopImage');
             $table->string('ShopAddress')->unique();
             $table->string('ShopEmail',50)->nullable();
             $table->string('ShopPhone',30)->nullable();
