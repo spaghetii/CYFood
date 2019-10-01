@@ -58,4 +58,4 @@ Route::post('/reset',"HomeController@reset");
 
 Route::get('/reset/resetform/{token}',"HomeController@resetForm");
 
-Route::get('/reset/resetpassword/{token}',"HomeController@resetPassword");
+Route::post('/reset/resetpassword/{token}',"HomeController@resetPassword");
