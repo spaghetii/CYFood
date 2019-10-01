@@ -20,6 +20,7 @@ Route::get('/restaurantDetail', "HomeController@restaurantDetail");
 
 Route::get('/newOrder',"HomeController@newOrder");
 Route::get('/processing',"HomeController@processing");
+Route::get('/takeout',"HomeController@takeout");
 Route::get('/user',"HomeController@user");
 
 Route::get('/login',"HomeController@login");
