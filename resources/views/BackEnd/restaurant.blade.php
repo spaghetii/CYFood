@@ -1,9 +1,11 @@
 @extends('layouts.backEndLayout')
 
 @section('selectOption')
-    <div class="line1 col">
+    <div class="line1 row">
+        <div class="col"></div>
+        <div class="col"></div>
         <div class="select">
-            <select id="selectbasic" name="selectbasic" class="form-control">
+            <select id="selectbasic" name="selectbasic" class="form-control col">
                 <option value="1">餐廳名稱</option>
                 <option value="2">電子郵件</option>
                 <option value="3">餐廳電話</option>
@@ -14,75 +16,77 @@
 @endsection 
 
 @section('content')
-    <div id="divright">
-        <div class="line2 row">
-            <div class="col">餐廳名稱</div>
-            <div class="col">電子郵件</div>
-            <div class="col">餐廳電話</div>
-            <div class="col">餐廳地址</div>
-            <div class="col"></div>
-            <div id="neworder" class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">新增餐廳</button>
+    <div id="divright" class="col-10">
+        <div>
+            <div class="line2 row">
+                <div class="col text-center">餐廳名稱</div>
+                <div class="col text-center">電子郵件</div>
+                <div class="col text-center">餐廳電話</div>
+                <div class="col text-center">餐廳地址</div>
+                <div class="col"></div>
+                <div id="neworder" class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">新增餐廳</button>
+                </div>
             </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line3 row">
-            <div class="col">海之家</div>
-            <div class="col">CY@CYFood.com</div>
-            <div class="col">09XX-XXX-XXX</div>
-            <div class="col">某一樓</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+            <div class="line3 row">
+                <div class="col text-center">海之家</div>
+                <div class="col text-center">CY@CYFood.com</div>
+                <div class="col text-center">09XX-XXX-XXX</div>
+                <div class="col text-center">某一樓</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除餐廳</button>
+                </div>
             </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除餐廳</button>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line4 row">
-            <div class="col">兩芳</div>
-            <div class="col">CY@CYFood.com</div>
-            <div class="col">09XX-XXX-XXX</div>
-            <div class="col">某條路</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+            <div class="line4 row">
+                <div class="col text-center">兩芳</div>
+                <div class="col text-center">CY@CYFood.com</div>
+                <div class="col text-center">09XX-XXX-XXX</div>
+                <div class="col text-center">某條路</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除餐廳</button>
+                </div>
             </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除餐廳</button>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line5 row">
-            <div class="col">雞大叔</div>
-            <div class="col">CY@CYFood.com</div>
-            <div class="col">09XX-XXX-XXX</div>
-            <div class="col">某一區</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+            <div class="line5 row">
+                <div class="col text-center">雞大叔</div>
+                <div class="col text-center">CY@CYFood.com</div>
+                <div class="col text-center">09XX-XXX-XXX</div>
+                <div class="col text-center">某一區</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除餐廳</button>
+                </div>
             </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除餐廳</button>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line6 row">
-            <div class="col">郭記</div>
-            <div class="col">CY@CYFood.com</div>
-            <div class="col">09XX-XXX-XXX</div>
-            <div class="col">某一市</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
-            </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除餐廳</button>
+            <div class="line6 row">
+                <div class="col text-center">郭記</div>
+                <div class="col text-center">CY@CYFood.com</div>
+                <div class="col text-center">09XX-XXX-XXX</div>
+                <div class="col text-center">某一市</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除餐廳</button>
+                </div>
             </div>
         </div>
     </div>
