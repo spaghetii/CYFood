@@ -16,37 +16,40 @@
 @endsection 
 
 @section('content')
-    <div id="divright" class="col-10 row-3" style="border: 2px solid black">
-        <div class="line2 row">
-            <div class="col text-center">優惠代碼</div>
-            <div class="col text-center">優惠種類</div>
-            <div class="col text-center">生效日期</div>
-            <div class="col text-center">結束日期</div>
-            <div class="col"></div>
-            <div id="neworder" class="col text-right">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary" 
-                onclick="location.href='/coupon/create'">新增優惠</button>
-            </div>
-        </div>
-
-        <hr>
-        <div v-for="item in items">
-            <div class="line2 row " >
-                <div class="col text-center">@{{item.CouponCode}}</div>
-                <div class="col text-center">@{{item.CouponType}}</div>
-                <div class="col text-center">@{{item.CouponStart}}</div>
-                <div class="col text-center">@{{item.CouponDeadline}}</div>
-                <div class="col text-right">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-primary "
-                    >修改優惠</button>
-                </div>
-                <div class="col text-center">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-danger"
-                     v-on:click="remove(item.CouponID)">刪除優惠</button>
+    
+    <div id="divright" class="col-10">
+        <div>
+            <div class="line2 row">
+                <div class="col text-center">優惠代碼</div>
+                <div class="col text-center">優惠種類</div>
+                <div class="col text-center">生效日期</div>
+                <div class="col text-center">結束日期</div>
+                <div class="col"></div>
+                <div id="neworder" class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary" 
+                    onclick="location.href='/coupon/create'">新增優惠</button>
                 </div>
             </div>
 
             <hr>
+            <div v-for="item in items">
+                <div class="line2 row " >
+                    <div class="col text-center">@{{item.CouponCode}}</div>
+                    <div class="col text-center">@{{item.CouponType}}</div>
+                    <div class="col text-center">@{{item.CouponStart}}</div>
+                    <div class="col text-center">@{{item.CouponDeadline}}</div>
+                    <div class="col text-right">
+                        <button id="singlebutton" name="singlebutton" class="btn btn-primary "
+                        >修改優惠</button>
+                    </div>
+                    <div class="col text-center">
+                        <button id="singlebutton" name="singlebutton" class="btn btn-danger"
+                        v-on:click="remove(item.CouponID)">刪除優惠</button>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
         </div>
     </div>
 @endsection

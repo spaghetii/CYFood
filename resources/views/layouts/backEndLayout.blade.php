@@ -41,19 +41,18 @@
         </div>
         <hr>
         {{-- 左側 --}}
-        <div id="divleft" class="col-2" >
-            <div id="buttonleft" class="list-group" >
-                <br><br>
-                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='order'" target="_blank" rel="nofollow noopener">訂&emsp;&emsp;單</a></div>
-                <br>
-                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='restaurant'" target="_blank" rel="nofollow noopener">餐&emsp;&emsp;廳</a></div>
-                <br>
-                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='member'" target="_blank" rel="nofollow noopener">會&emsp;&emsp;員</a></div>
-                <br>
-                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='coupon'" target="_blank" rel="nofollow noopener">優&emsp;&emsp;惠</a></div>              
-            </div>
+        <div id="divleft" class="col-2 text-center" >
+            <br>
+            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='order'" target="_blank" rel="nofollow"><span>訂&emsp;&emsp;單</a></div>
+            <hr>
+            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='restaurant'" target="_blank" rel="nofollow"><span>餐&emsp;&emsp;廳</a></div>
+            <hr>
+            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='member'" target="_blank" rel="nofollow"><span>會&emsp;&emsp;員</a></div>
+            <hr>
+            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='coupon'" target="_blank" rel="nofollow"><span>優&emsp;&emsp;惠</a></div>                    
+            <br>
         </div>
-
+        
         {{-- 右側 --}}
         @yield('content')
 
