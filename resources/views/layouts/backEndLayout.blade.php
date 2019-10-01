@@ -17,13 +17,13 @@
 
 <body>
 
-    <div class="container-fluid" >
+    <div class="container-fluid" id="App">
 
         {{-- 上排 --}}
         <div class="row">
 
             <!-- Logo -->
-            <div class="line1 col">CYFood</div>
+            <div class="line1 col display-4">CY Food</div>
             
             <!-- 下拉式選單 -->
             @yield('selectOption')
@@ -31,35 +31,27 @@
             <!-- 搜索輸入框 -->
             <div class="line1 col">
                 <input id="searchinput" name="searchinput" type="search" placeholder="我是輸入框......"
-                    class="form-control input-md">
+                    class="form-control input-md" v-model="search">
             </div>
 
             <!-- 開始查詢 -->
-            <div class="line1 col">
+            {{-- <div class="line1 col">
                 <button id="searchbutton" name="searchbutton" class="btn btn-primary">開始查詢</button>
-            </div>
+            </div> --}}
         </div>
         <hr>
-
         {{-- 左側 --}}
-        <div id="divleft">
-            <div id="buttonleft">
-                <button id="orderbutton" name="orderbutton" class="information-btn"
-                    onclick="location.href='order'">訂單</button>
-                <br>
-                <br>
-                <button id="restaurantbutton" name="restaurantbutton" class="information-btn"
-                    onclick="location.href='restaurant'">餐廳</button>
-                <br>
-                <br>
-                <button id="memberbutton" name="orderbutton" class="information-btn"
-                    onclick="location.href='member'">會員</button>
-                <br>
-                <br>
-                <button id="preferentialbutton" name="orderbutton" class="information-btn"
-                    onclick="location.href='coupon'">優惠</button>
-                <br>
-                <br>
+        <div id="divleft"  >
+            <div id="buttonleft" class="list-group" >
+                <br><br>
+                <a id="orderbutton" class="list-group-item list-group-item-action" onclick="location.href='order'">訂 單</a>
+                <br><br>
+                <a id="restaurantbutton" class="list-group-item list-group-item-action" onclick="location.href='restaurant'">餐 廳</a>
+                <br><br>
+                <a id="memberbutton" class="list-group-item list-group-item-action" onclick="location.href='member'">會 員</a>
+                <br><br>
+                <a id="preferentialbutton" class="list-group-item list-group-item-action" onclick="location.href='coupon'">優 惠</a>
+                
             </div>
         </div>
 

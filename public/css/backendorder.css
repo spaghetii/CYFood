@@ -57,3 +57,7 @@
 #searchbutton {
     float: left;
 }
+
+#buttonleft a{
+    background-color: gray;
+}
