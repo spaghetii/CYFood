@@ -93,6 +93,48 @@
         td{
             color:#5b5b5b;
         }
+        /* 餐廳資訊 */
+        #information1{
+            width: 40%;
+            margin: 3% auto auto 10% ; 
+            font-size: 20px;
+            /* border: 2px solid black; */
+            display: inline-block;
+        }
+        input:focus {
+            outline: none;
+            border-color:#d0d0d0;
+            border-radius: 15px;
+        }
+        .col-form-label{
+            color:#5b5b5b;
+            font-weight: bold;
+            text-align: right;
+        }
+        .form-control-plaintext{
+            color:#5b5b5b;
+        }
+        #restEdit,#pswdEdit{
+            margin: 5% auto;
+        }
+        #emailHelp{
+            font-size: 12px;
+            color: red;
+            display: none;
+        }
+        #information2{
+            /* border: 2px solid orange; */
+            width: 40%;
+            font-size: 20px;
+            display: inline-block;
+            position: absolute;
+            margin: 3% auto auto auto; 
+        }
+        .form-control:focus {
+            border-color: #5b5b5b;
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+        }
+        
         @media screen and (max-width:1200px) {
             #fixedDiv{
                 height: 15%;
@@ -111,6 +153,7 @@
             .card{
                 width: 90%;
             }
+            
         }
         @media screen and (max-width:576px) {
             #fixedDiv{
@@ -239,10 +282,96 @@
                 </div>
                 {{-- 餐廳資訊 --}}
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    
+                    {{-- 修改資料 --}}
+                    <div id="information1">
+                        <form>
+                            <div class="form-group row">
+                                <label for="restName" class="col-sm-3 col-form-label">餐廳名稱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext" id="restName" value="可不可熟成紅茶 中佑店">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="restAddr" class="col-sm-3 col-form-label">餐廳地址</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext" id="restAddr" value="台中市公益路二段58號">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="restTel" class="col-sm-3 col-form-label">餐廳電話</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext" id="restTel" value="04-12345678">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="restTime" class="col-sm-3 col-form-label">營業時間</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control-plaintext" id="restTime" value="11:00 - 20:00">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="restCategory" class="col-sm-3 col-form-label">餐廳種類</label>
+                                <select class="col-sm-5 form-control">
+                                    <option>中式美食</option>
+                                    <option>台灣美食</option>
+                                    <option>日式美食</option>
+                                    <option>美式美食</option>
+                                    <option>飲料</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="restEmail" class="col-sm-3 col-form-label">電子郵件</label>
+                                <div class="col-sm-9">
+                                    <input type="text" readonly class="form-control-plaintext" id="restEmail" value="email@example.com" v-on:click="emailHelp">
+                                    <div id="emailHelp">如欲修改信箱，請聯絡客服．</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-outline-dark" id="restEdit">確認修改</button>
+                            </div> 
+                        </form>
+                    </div>
+                    {{-- 修改密碼 --}}
+                    <div id="information2">
+                        <form>
+                            <div class="form-group row">
+                                <label for="pswdNow" class="col-sm-3 col-form-label">現有密碼</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="pswdNow" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pswdNew1" class="col-sm-3 col-form-label">更新密碼</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="pswdNew1" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="pswdNew2" class="col-sm-3 col-form-label">確認密碼</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="pswdNew2" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-outline-dark" id="pswdEdit">確認修改</button>
+                            </div> 
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <script>
+        var contact = new Vue({
+            el:"#contact",
+            methods:{
+                emailHelp:function(){
+                    $("#emailHelp").css("display","block")
+                }
+            }
+        })
+    </script>
 </body>
 </html>

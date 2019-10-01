@@ -20,6 +20,7 @@ Route::get('/restaurantDetail', "HomeController@restaurantDetail");
 
 Route::get('/newOrder',"HomeController@newOrder");
 Route::get('/processing',"HomeController@processing");
+Route::get('/takeout',"HomeController@takeout");
 Route::get('/user',"HomeController@user");
 
 Route::get('/login',"HomeController@login");
@@ -46,16 +47,10 @@ Route::resource('meal','MealController');
 
 Route::resource('orders','OrdersController');
 
-// Route::get('/sendmail', function() {
-//     $data = ['name' => 'Test'];
-//     Mail::send('email.welcome', $data, function($message) {
-//     $message->to('spaded40686@gmail.com')->subject('CYFood 會員密碼重置');
-//     });
-//     return 'Your email has been sent successfully!';
-//     });
+// =======會員忘記密碼=======
 
 Route::post('/reset',"HomeController@reset");
 
 Route::get('/reset/resetform/{token}',"HomeController@resetForm");
 
-Route::post('/reset/resetpassword/{token}',"HomeController@resetPassword");
+Route::post('/reset/resetpassword',"HomeController@resetPassword");

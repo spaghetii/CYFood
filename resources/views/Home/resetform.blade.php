@@ -20,6 +20,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+     {{-- Vue --}}
+     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     {{-- axios --}}
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>    
     <style>
         .resetPassword {
             
@@ -37,6 +43,7 @@
             padding: 16px 0;
             text-align: center;
             border-bottom: 1px solid #c2c2c2;
+            margin-bottom: 20px;
         }
 
         .btn {
@@ -44,11 +51,17 @@
             border-color: orange;
             font-weight: bold;
             font-family: fantasy;
+            margin-top: 15px;
         }
 
         .btn:hover {
             background-color: rgba(255, 166, 0, 0.856);
             border-color: rgba(255, 166, 0, 0.856);
+        }
+        .wrongcheck{
+            color:red;
+            font-size: 25px;
+            
         }
 
     </style>
@@ -59,24 +72,90 @@
         <div class="resetPassword">
             <h3 class="title">重置密碼</h3>
             <div class="reset-form  w-100  " id="reset-form">
-                <form method="post" action="/reset/resetpassword/{{$token}}">
+                <form method="post" action="/reset/resetpassword/">
                     @csrf
+                    
                     <div class="form-group">
                         <label for="newPassword">輸入新密碼</label>
-                        <input type="password" class="form-control" id="newPassword" name="newPassword">
+                        <input v-model="newPassword" type="password" class="form-control" id="newPassword" name="newPassword">
                     </div>
                     <div class="form-group">
                         <label for="repeatPassword">再輸入一次新密碼</label>
-                        <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
+                        <input v-model="repeatPassword" type="password" class="form-control" id="repeatPassword" name="repeatPassword">
                     </div>
-
-                    <button type="submit" class="btn btn-primary btn-block btn-lg">送出</button>
+                    <span v-if="wrongcheck" class="wrongcheck">您兩次輸入的密碼不一致</span> <br>
+                    <button type="button" v-on:click="checkpassword" class="btn btn-primary btn-block btn-lg">送出</button>
                     
                 </form>
             </div>
 
         </div>
     </div>
+
+<script>
+
+var resetform = new Vue({
+    el:"#reset-form",
+    data:{
+        newPassword:'',
+        repeatPassword:'',
+        token:"{{$token}}",
+        wrongcheck:false
+    },
+    methods:{
+        checkpassword:function(){
+            let self = this;
+            if(this.newPassword !== this.repeatPassword){
+                this.wrongcheck = true;
+            }else{
+                this.wrongcheck = false;
+                axios.post('/reset/resetpassword', {newPassword:this.newPassword,token:this.token})
+                        .then(function (response) {
+                            console.log(response);
+                            if (response.data['ok']) {
+                                // Swal.fire({
+                                //     type: 'success',
+                                //     title: '密碼修改成功',
+                                //     html:
+                                //         '本畫面於6秒後回到登入頁',
+                                //     showConfirmButton: false,
+                                //     timer: 6000
+                                //     })
+                                //     setTimeout(function () {
+                                //         window.location.href = "/login"; 
+                                //         }, 6000);
+                                        Swal.fire({
+                                            type: 'success',
+                                            title: '密碼修改成功',
+                                            html: '本畫面於<strong></strong>秒後回到登入頁',
+                                            timer: 6000,
+                                            onBeforeOpen: () => {
+                                                Swal.showLoading()
+                                                timerInterval = setInterval(() => {
+                                                Swal.getContent().querySelector('strong')
+                                                    .textContent = parseInt(Math.ceil(Swal.getTimerLeft()/1000))
+                                                }, 100)
+                                            },
+                                            onClose: () => {
+                                                clearInterval(timerInterval)
+                                                window.location.href = "/login"; 
+                                            }     
+                                            })       
+                            }
+                            
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
+            }
+        }
+    }
+
+})
+
+
+</script>
+
 </body>
 
 </html>
