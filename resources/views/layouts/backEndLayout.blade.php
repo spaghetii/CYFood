@@ -23,7 +23,7 @@
         <div class="row">
 
             <!-- Logo -->
-            <div class="line1 col display-4">CY Food</div>
+            <div class="line1 col row text-left"><img src="/img/BElogo.png" class="col"><div class="col"></div></div>
             
             <!-- 下拉式選單 -->
             @yield('selectOption')
@@ -41,17 +41,16 @@
         </div>
         <hr>
         {{-- 左側 --}}
-        <div id="divleft"  >
+        <div id="divleft" class="col-2" >
             <div id="buttonleft" class="list-group" >
                 <br><br>
-                <a id="orderbutton" class="list-group-item list-group-item-action" onclick="location.href='order'">訂 單</a>
-                <br><br>
-                <a id="restaurantbutton" class="list-group-item list-group-item-action" onclick="location.href='restaurant'">餐 廳</a>
-                <br><br>
-                <a id="memberbutton" class="list-group-item list-group-item-action" onclick="location.href='member'">會 員</a>
-                <br><br>
-                <a id="preferentialbutton" class="list-group-item list-group-item-action" onclick="location.href='coupon'">優 惠</a>
-                
+                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='order'" target="_blank" rel="nofollow noopener">訂&emsp;&emsp;單</a></div>
+                <br>
+                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='restaurant'" target="_blank" rel="nofollow noopener">餐&emsp;&emsp;廳</a></div>
+                <br>
+                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='member'" target="_blank" rel="nofollow noopener">會&emsp;&emsp;員</a></div>
+                <br>
+                <div class="button_cont"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='coupon'" target="_blank" rel="nofollow noopener">優&emsp;&emsp;惠</a></div>              
             </div>
         </div>
 

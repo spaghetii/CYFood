@@ -16,7 +16,7 @@
 @endsection 
 
 @section('content')
-    <div id="divright">
+    <div id="divright" class="col-10 row-3" style="border: 2px solid black">
         <div class="line2 row">
             <div class="col text-center">優惠代碼</div>
             <div class="col text-center">優惠種類</div>
