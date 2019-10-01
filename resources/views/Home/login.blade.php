@@ -22,6 +22,10 @@
     </script>
     {{-- Vue --}}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     {{-- axios --}}
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     {{-- sweetalert --}}
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     {{-- 網頁CSS --}}
     <link rel="stylesheet" href="css/login.css">
 </head>
@@ -99,23 +103,58 @@
                         @csrf
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">請輸入電子郵件</label>
-                            <input type="text" class="form-control" id="email" name="email">
+                            <input v-model="email" type="text" class="form-control" id="email" name="email">
+                            <span v-if="checkemail" class="resetalert">請輸入正確的電子郵件</span>
                         </div>
-                    
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">送出</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>                
+                    <button type="button" v-on:click="submit" class="btn btn-primary">送出</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
                 </div>
-            </form>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
         var reset = new Vue({
-            el: "#login-form",
-            
+            el: "#resetModal",
+            data: {
+                email: '',
+                checkemail: false
+            },
+            methods: {
+                submit: function () {
+                    let self = this;
+                    this.checkemail = false;
+                    axios.post('/reset', {email:this.email})
+                        .then(function (response) {
+                            console.log(response);
+                            if (response.data['ok']) {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: '已送出更改密碼的請求',
+                                    html:
+                                        '請貴用戶到您的信箱查看, ' +
+                                        '並執行更改密碼的後續作業<br> ' +
+                                        '本畫面於6秒後回到首頁',
+                                    showConfirmButton: false,
+                                    timer: 6000
+                                    })
+                                    setTimeout(function () {
+                                        window.location.href = "/"; //will redirect to your blog page (an ex: blog.html)
+                                        }, 6000);
+                            }else{
+                                self.checkemail = true;
+                                self.email= '';
+                            }
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
+                }
+            }
+
         })
 
     </script>
