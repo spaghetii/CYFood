@@ -17,6 +17,10 @@ Route::get('/loginHomepage', "HomeController@loginHomepage");
 
 Route::get('/restaurantDetail', "HomeController@restaurantDetail");
 
+Route::get('/orderDetail', "HomeController@orderDetail");
+
+Route::get('/userOrderDetail', "HomeController@userOrderDetail");
+
 
 Route::get('/newOrder',"HomeController@newOrder");
 Route::get('/processing',"HomeController@processing");

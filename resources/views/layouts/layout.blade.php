@@ -137,7 +137,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <small>編輯</small>
+                                            <small class="colorOrange aHoverColor">編輯</small>
                                         </div>
                                     </div>
                                 </a>
