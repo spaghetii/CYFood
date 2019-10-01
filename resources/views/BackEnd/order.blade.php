@@ -1,7 +1,9 @@
 @extends('layouts.backEndLayout')
 
 @section('selectOption')
-    <div class="line1 col">
+    <div class="line1 row">
+        <div class="col"></div>
+        <div class="col"></div>
         <div class="select">
             <select id="selectbasic" name="selectbasic" class="form-control col">
                 <option value="1">會員名稱</option>
@@ -14,75 +16,77 @@
 @endsection 
 
 @section('content')
-    <div id="divright">
-        <div class="line2 row">
-            <div class="col">訂單編號</div>
-            <div class="col">餐廳名稱</div>
-            <div class="col">會員名稱</div>
-            <div class="col">下單日期</div>
-            <div class="col"></div>
-            <div id="neworder" class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">新增訂單</button>
+    <div id="divright" class="col-10">
+        <div>
+            <div class="line2 row">
+                <div class="col text-center">訂單編號</div>
+                <div class="col text-center">餐廳名稱</div>
+                <div class="col text-center">會員名稱</div>
+                <div class="col text-center">下單日期</div>
+                <div class="col"></div>
+                <div id="neworder" class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">新增訂單</button>
+                </div>
             </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line3 row">
-            <div class="col">9846</div>
-            <div class="col">海之家</div>
-            <div class="col">A君</div>
-            <div class="col">YY/MM/DD</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+            <div class="line3 row">
+                <div class="col text-center">9846</div>
+                <div class="col text-center">海之家</div>
+                <div class="col text-center">A君</div>
+                <div class="col text-center">YY/MM/DD</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除訂單</button>
+                </div>
             </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除訂單</button>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line4 row">
-            <div class="col">1235</div>
-            <div class="col">兩芳</div>
-            <div class="col">B君</div>
-            <div class="col">YY/MM/DD</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+            <div class="line4 row">
+                <div class="col text-center">1235</div>
+                <div class="col text-center">兩芳</div>
+                <div class="col text-center">B君</div>
+                <div class="col text-center">YY/MM/DD</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除訂單</button>
+                </div>
             </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除訂單</button>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line5 row">
-            <div class="col">1454</div>
-            <div class="col">雞大叔</div>
-            <div class="col">O君</div>
-            <div class="col">YY/MM/DD</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+            <div class="line5 row">
+                <div class="col text-center">1454</div>
+                <div class="col text-center">雞大叔</div>
+                <div class="col text-center">O君</div>
+                <div class="col text-center">YY/MM/DD</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除訂單</button>
+                </div>
             </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除訂單</button>
-            </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="line6 row">
-            <div class="col">6394</div>
-            <div class="col">郭記</div>
-            <div class="col">AB君</div>
-            <div class="col">YY/MM/DD</div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
-            </div>
-            <div class="col">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">刪除訂單</button>
+            <div class="line6 row">
+                <div class="col text-center">6394</div>
+                <div class="col text-center">郭記</div>
+                <div class="col text-center">AB君</div>
+                <div class="col text-center">YY/MM/DD</div>
+                <div class="col text-right">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                </div>
+                <div class="col text-center">
+                    <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除訂單</button>
+                </div>
             </div>
         </div>
     </div>
@@ -132,7 +136,8 @@
             },
             mounted: function () {
                 this.init();
-            }
+            },
+            
         });
     </script>
 @endsection
