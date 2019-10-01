@@ -16,3 +16,25 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/coupon', 'BackEnd@couponAll');
+
+Route::get('/coupon/{id}', function($id) {
+    return response()->json(App\Coupon::find($id), 200);
+});
+
+// Route::post('/test/', function(Request $request) {
+//     $post = new Coupon;
+//     $post->title = $request->input('title', '沒有標題');
+//     $post->body = $request->input('body', '沒有內文。');
+//     $ok = $post->save();
+
+//     return response()->json(['ok' => $ok], 200);
+// });
+
+Route::delete('/coupon/{id}', "BackEnd@couponDelete");
+
+
+
+
+?>

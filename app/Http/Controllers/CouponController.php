@@ -15,7 +15,7 @@ class CouponController extends Controller
      */
     public function index()
     {
-        //
+        return view("BackEnd.coupon");
     }
 
     /**
@@ -44,7 +44,7 @@ class CouponController extends Controller
         $cou->CouponStart = $request->start;
         $cou->CouponDeadline = $request->deadline;
         $cou->save();
-        return redirect("/coupon/create");
+        return redirect("/BackEnd/coupon");
     }
 
     /**

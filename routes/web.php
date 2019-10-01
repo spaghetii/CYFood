@@ -22,6 +22,13 @@ Route::get('/login',"HomeController@login");
 
 Route::get('/restaurant/login',"HomeController@rLogin");
 Route::get('/restaurant/register',"HomeController@rRegister");
+Route::get('/BackEnd/coupon','BackEnd@couponIndex');
+Route::get('/BackEnd/member','BackEnd@memberIndex');
+Route::get('/BackEnd/order','BackEnd@orderIndex');
+Route::get('/BackEnd/restaurant','BackEnd@restaurantIndex');
+
+
+
 
 Route::resource('coupon','CouponController');
 
