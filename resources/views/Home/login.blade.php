@@ -22,10 +22,10 @@
     </script>
     {{-- Vue --}}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-     {{-- axios --}}
-     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-     {{-- sweetalert --}}
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    {{-- axios --}}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     {{-- 網頁CSS --}}
     <link rel="stylesheet" href="css/login.css">
 </head>
@@ -44,15 +44,20 @@
                             @csrf
                             <div class="form-group">
                                 <label for="loginEmail">電子郵件</label>
-                                <input type="email" class="form-control" id="loginEmail" name="loginEmail">
+                                <input v-model="loginEmail" type="email" class="form-control" id="loginEmail"
+                                    name="loginEmail">
                             </div>
                             <div class="form-group">
                                 <label for="loginEmail">密碼 </label>
-                                <input type="password" class="form-control" id="loginEmail" name="loginPassword">
-                                <a href="#resetModal" data-toggle="modal" data-target="#resetModal" >忘記密碼</a>
+                                <input v-model="loginPassword" type="password" class="form-control" id="loginPassword"
+                                    name="loginPassword">
+                                <a href="#resetModal" data-toggle="modal" data-target="#resetModal">忘記密碼</a><br>
+                                <span v-if="space" class="resetalert">電子郵件或密碼不能為空</span>
+                                <span v-if="checklogin" class="resetalert">電子郵件或密碼錯誤</span>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block btn-lg">登入</button>
+                            <button v-on:click="login" type="button"
+                                class="btn btn-primary btn-block btn-lg btn-login">登入</button>
                         </form>
                     </div>
 
@@ -117,6 +122,65 @@
     </div>
 
     <script>
+        //登入驗證
+        var loginform = new Vue({
+            el: "#login-form",
+            data: {
+                loginEmail: '',
+                loginPassword: '',
+                space: false,
+                checklogin: false
+            },
+            methods: {
+                login: function () {
+                    let self = this;
+                    if (this.loginEmail == '' || this.loginPassword == '') {
+                        this.space = true;
+                    } else {
+                        this.space = false;
+                        this.checklogin = false;
+                        axios.post('/login/check', {
+                                loginEmail: this.loginEmail,
+                                loginPassword: this.loginPassword
+                            })
+                            .then(function (response) {
+                                console.log(response.data['ok']);
+                                if (response.data['ok']) {
+                                    Swal.fire({
+                                        type: 'success',
+                                        title: '登入成功',
+                                        html: '本畫面於<strong></strong>秒後回到首頁',
+                                        timer: 6000,
+                                        onBeforeOpen: () => {
+                                            Swal.showLoading()
+                                            timerInterval = setInterval(() => {
+                                                Swal.getContent().querySelector(
+                                                        'strong')
+                                                    .textContent = parseInt(Math
+                                                        .ceil(Swal.getTimerLeft() /
+                                                            1000))
+                                            }, 100)
+                                        },
+                                        onClose: () => {
+                                            clearInterval(timerInterval)
+                                            window.location.href = "/";
+                                        }
+                                    })
+                                }else{
+                                    self.checklogin = true;
+                                }
+
+                            })
+                            .catch(function (response) {
+                                console.log(response)
+                            });
+                    }
+                }
+            }
+        })
+
+
+        //忘記密碼相關
         var reset = new Vue({
             el: "#resetModal",
             data: {
@@ -127,26 +191,28 @@
                 submit: function () {
                     let self = this;
                     this.checkemail = false;
-                    axios.post('/reset', {email:this.email})
+                    axios.post('/reset', {
+                            email: this.email
+                        })
                         .then(function (response) {
                             console.log(response);
                             if (response.data['ok']) {
                                 Swal.fire({
                                     type: 'success',
                                     title: '已送出更改密碼的請求',
-                                    html:
-                                        '請貴用戶到您的信箱查看, ' +
+                                    html: '請貴用戶到您的信箱查看, ' +
                                         '並執行更改密碼的後續作業<br> ' +
                                         '本畫面於6秒後回到首頁',
                                     showConfirmButton: false,
                                     timer: 6000
-                                    })
-                                    setTimeout(function () {
-                                        window.location.href = "/"; //will redirect to your blog page (an ex: blog.html)
-                                        }, 6000);
-                            }else{
+                                })
+                                setTimeout(function () {
+                                    window.location.href =
+                                    "/"; //will redirect to your blog page (an ex: blog.html)
+                                }, 6000);
+                            } else {
                                 self.checkemail = true;
-                                self.email= '';
+                                self.email = '';
                             }
                         })
                         .catch(function (response) {
