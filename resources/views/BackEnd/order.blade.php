@@ -3,7 +3,7 @@
 @section('selectOption')
     <div class="line1 col">
         <div class="select">
-            <select id="selectbasic" name="selectbasic" class="form-control">
+            <select id="selectbasic" name="selectbasic" class="form-control col">
                 <option value="1">會員名稱</option>
                 <option value="2">餐廳名稱</option>
                 <option value="3">訂單編號</option>

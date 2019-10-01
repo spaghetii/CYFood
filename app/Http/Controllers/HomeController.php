@@ -29,6 +29,9 @@ class HomeController extends Controller
    function processing(){
        return view('Client.processing');
    }
+   function takeout(){
+       return view('Client.takeout');
+   }
    function user(){
        return view('Client.user');
    }
