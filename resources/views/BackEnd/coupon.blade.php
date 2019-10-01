@@ -107,8 +107,8 @@
                     var _selected = this.selected;
                     if (_search) {
                         return this.list.filter(function(item) {
-                            // console.log(item);
-                            // console.log(Object.keys(item));
+                            console.log(item);
+                            console.log(Object.keys(item));
                             return Object.keys(item).some(function(key) {
                                 // console.log(key);
                                 if (_selected == key){              // 下拉式的分類
