@@ -232,12 +232,17 @@
 }
 
 /* 分類排 */
+#categoryBarDiv {
+    background-color: white;
+}
+
 #categoryBar{
     width: 90%;
+    height: 60px;
 }
 
 #categoryBarList a{
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 /* 分類內容 */
@@ -285,4 +290,111 @@
 .categoryItem:hover {
     color: black;
     text-decoration: none;
+}
+
+/* orderModal */
+#orderModalCenterContent {
+    width: 680px;
+    left: -90px;
+}
+
+#orderModalCenterHeader {
+    background-image: url("../img/food5.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    width: 676px;
+    height: 400px;
+}
+
+#orderModalCenterBody{
+    padding: 24px 24px 32px;
+}
+
+.orderModaloodTitle{
+    align-items: center;
+}
+
+.orderModalFoodDesc {
+    padding-top: 16px;
+    font-size: 0.9rem;
+}
+
+#orderModalCenterFooter .badge{
+    font-size: 1.1rem;
+}
+
+#orderModalCenterFooter .btn{
+    color: white;
+    background-color: orange;
+}
+
+.floatRight {
+    float:right;
+}
+
+.bgOrange {
+    background-color: orange;
+}
+
+.colorOrange {
+    color: orange;
+}
+
+.aHoverColor:hover {
+    color: orange;
+}
+
+.alignCenter{
+    display: flex;
+    align-items: center;
+}
+
+.noPad {
+    padding: 0px;
+}
+
+.noMarg {
+    margin: 0px;
+}
+
+/* orderDetail頁面 */
+#orderDetailDiv {
+    padding: 40px 0px 80px;
+    width: 92%;
+}
+
+.orderDetailItemDiv{
+    padding-top: 20px;
+}
+
+.orderSummaryDiv {
+    width: 472px;
+    top: 150px;
+    position: sticky;    
+    padding: 24px;
+    box-shadow: rgba(255, 165, 0, 0.15) 0px 2px 50px;
+    float: right;
+}
+
+.divCenter {
+    margin:0px auto;
+}
+
+.orderConfirmDiv {
+    width: 100%;
+    height: 56px;
+    justify-content: center;
+    color: white;
+}
+
+/* userOrderDetail頁面 */
+#userOrderDetailDiv {
+    width: 92%;
+}
+
+.userOrderDetailrestaurantImg {
+    height: 140px;
+    width: 100%;
+    object-fit: cover;
 }
