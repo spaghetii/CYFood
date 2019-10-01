@@ -63,10 +63,10 @@ class HomeController extends Controller
             
 
             $data = ['name' => $memberName , 'token' => $encryptID ];
-            Mail::send('email.welcome', $data, function($message) use($memberEmail) {
-            $message->to($memberEmail)->subject('CYFood 會員密碼重置');
-            });
-            return 'Your email has been sent successfully!';
+            // Mail::send('email.welcome', $data, function($message) use($memberEmail) {
+            // $message->to($memberEmail)->subject('CYFood 會員密碼重置');
+            // });
+            return response()->json(['ok' => true], 200);
             
         }else{
             echo "請輸入正確的電子信箱";
@@ -78,12 +78,12 @@ class HomeController extends Controller
         return view("home.resetform",compact('token'));
     }
 
-    function resetPassword(Request $request,$token){
-        $decryptID = Crypt::decrypt($token);
+    function resetPassword(Request $request){
+        $decryptID = Crypt::decrypt($request->token);
         $member = Member::find($decryptID);
         $member->MemberPassword = $request->newPassword;
         if($member->save()){
-            return "password change current";
+            return response()->json(['ok' => true], 200);
         }
         
     }
