@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Crypt;
 use Mail;
+use App\Member;
 
 class HomeController extends Controller
 {
@@ -78,8 +79,12 @@ class HomeController extends Controller
     }
 
     function resetPassword(Request $request,$token){
-
+        $decryptID = Crypt::decrypt($token);
+        $member = Member::find($decryptID);
+        $member->MemberPassword = $request->newPassword;
+        if($member->save()){
+            return "password change current";
+        }
         
-        return view("home.resetform",compact('token'));
     }
 }

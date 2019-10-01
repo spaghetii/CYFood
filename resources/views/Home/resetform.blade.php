@@ -63,11 +63,11 @@
                     @csrf
                     <div class="form-group">
                         <label for="newPassword">輸入新密碼</label>
-                        <input type="email" class="form-control" id="newPassword" name="newPassword">
+                        <input type="password" class="form-control" id="newPassword" name="newPassword">
                     </div>
                     <div class="form-group">
                         <label for="repeatPassword">再輸入一次新密碼</label>
-                        <input type="email" class="form-control" id="repeatPassword" name="repeatPassword">
+                        <input type="password" class="form-control" id="repeatPassword" name="repeatPassword">
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block btn-lg">送出</button>
