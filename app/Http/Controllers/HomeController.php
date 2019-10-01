@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use DB;
 use Crypt;
 use Mail;
@@ -53,6 +54,19 @@ class HomeController extends Controller
         return view("home.login");
     }
 
+    function logincheck(Request $request){
+        $member = DB::table("members")->where("MemberEmail",$request->loginEmail)->first();
+        if($member){
+            if(Hash::check($request->loginPassword, $member->MemberPassword)){
+                return response()->json(['ok' => true], 200);
+            }else{
+                return response()->json(['ok' => false], 200);
+            }
+        }else{
+            return response()->json(['ok' => false], 200);
+        }
+    }
+
     function reset(Request $request){
         
         $member = DB::table("members")->where("MemberEmail",$request->email)->first();
@@ -84,7 +98,9 @@ class HomeController extends Controller
     function resetPassword(Request $request){
         $decryptID = Crypt::decrypt($request->token);
         $member = Member::find($decryptID);
-        $member->MemberPassword = $request->newPassword;
+        $password = $request->newPassword;
+        $hashed = Hash::make($password);
+        $member->MemberPassword = $hashed;
         if($member->save()){
             return response()->json(['ok' => true], 200);
         }

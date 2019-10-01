@@ -25,6 +25,8 @@ Route::get('/user',"HomeController@user");
 
 Route::get('/login',"HomeController@login");
 
+Route::post('/login/check',"HomeController@logincheck");
+
 
 
 Route::get('/restaurant/login',"HomeController@rLogin");
