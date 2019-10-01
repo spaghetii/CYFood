@@ -60,6 +60,7 @@
             font-size: 28px;
             font-weight: bold;
             margin: 10px auto;
+            color:#3c3c3c;
         }
         #rightButtom {
             width: 840px;
@@ -74,20 +75,24 @@
             margin: 10px 20px; 
             font-family: Microsoft JhengHei;
             display: none;
+            background-color: whitesmoke;
         }
         
         #detailsTitle {
             text-align: center;
             font-size: 36px;
             font-weight: bold;
+            color:#5b5b5b;
         }
         #detailsItem {
             width: 550px;
             margin: auto;
+            color:#5b5b5b;
         }
         #detailsTotal {
             width: 550px;
             margin: auto;
+            color:#5b5b5b;
         }
         .detailsBtn{
             font-size: 28px;

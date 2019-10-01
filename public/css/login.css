@@ -1,15 +1,21 @@
+body{
+    background: center/cover no-repeat  url("../img/background-beautiful-blue-sky-627823.jpg") ;
+    margin:50px 40px 40px 40px
+}
+
+
 
 .login-register {
     display: flex;
     justify-content: center;
-    padding-top: 64px;
     padding-bottom: 40px;
     flex-flow: wrap;
-    
+    background-color: rgba(255, 255, 255, 0.835) ;
+    box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
 }
 
 .title {
-    margin: 32px 0 32px 0;
+    margin: 25px 0 25px 0;
     font-size: 2rem;
     color: black;
     text-align: center;
@@ -24,7 +30,7 @@
 
 .logintitle {
     color: #333;
-    margin: 32px 0 32px 0;
+    margin: 20px 0 25px 0;
     font-size: 1.5rem;
     line-height: 1em;
     padding: 16px 0;
@@ -37,7 +43,7 @@
 
 .registertitle {
     color: #333;
-    margin: 32px 0 32px 0;
+    margin: 20px 0 25px 0;
     font-size: 1.5rem;
     line-height: 1em;
     padding: 16px 0;
@@ -75,6 +81,21 @@ form {
     padding: 20px 15px;
     box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.3);
 
+}
+
+.form-group a{
+    margin-left: 75%;
+}
+
+
+.modal-header, h4, .close {
+    background-color: #5cb85c;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+}
+.modal-footer {
+    background-color: #f9f9f9;
 }
 
 

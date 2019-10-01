@@ -152,9 +152,10 @@
                         <div>$9,999</div>
                     </a>
                 </div>
-            </div>
-        </div>
-    </div>
+            </div> {{-- modal-content --}}
+        </div> {{-- modal-dialog --}}
+    </div> {{-- shoppingBagModal --}}
+    
    
     @yield('script')
     
