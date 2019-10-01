@@ -54,7 +54,7 @@
 
 @section('script')
 <script>
-    var coupon = new Vue({
+    var shop = new Vue({
         el: "#App",
         data: {
             selected: "ShopName",

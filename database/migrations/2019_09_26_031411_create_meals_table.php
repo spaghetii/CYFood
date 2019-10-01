@@ -19,7 +19,7 @@ class CreateMealsTable extends Migration
             $table->string('MealDesc',100)->nullable();
             $table->string('MealPrice',30);
             $table->string('MealType',50);
-            $table->binary('MealImage')->nullable();
+            $table->string('MealImage')->nullable();
             $table->text('MealDetails')->nullable();
             $table->integer('MealQuantity')->unsigned();
             $table->bigInteger('ShopID')->unsigned();
