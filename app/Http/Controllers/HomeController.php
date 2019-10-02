@@ -31,6 +31,10 @@ class HomeController extends Controller
         return view('home.userOrderDetail');
     }
 
+    function userProfile() {
+        return view('home.userProfile');
+    }
+
    function newOrder(){
        return view('Client.newOrder');
    }

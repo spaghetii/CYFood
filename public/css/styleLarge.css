@@ -333,6 +333,10 @@
     float:right;
 }
 
+.textWhite {
+    color: white;
+}
+
 .bgOrange {
     background-color: orange;
 }
@@ -345,9 +349,13 @@
     color: orange;
 }
 
-.alignCenter{
+.alignCenter {
     display: flex;
     align-items: center;
+}
+
+.textCenter {
+    text-align: center;
 }
 
 .noPad {
@@ -397,4 +405,45 @@
     height: 140px;
     width: 100%;
     object-fit: cover;
+}
+
+#reorderBtn {
+    width:100%;
+    height: 48px;
+    font-size: 1.1rem;
+}
+
+#foodItemQuantity{
+    border: 1px  rgb(197, 197, 197) solid;
+    padding: 0px 8px;
+    height: 26px;
+}
+
+#displayItem {
+    display: none;
+}
+
+/* userProfile頁面 */
+#userProfileOuterDiv {
+    width: 70%;
+    border: 1px  rgb(197, 197, 197) solid;
+    background: center/cover no-repeat  url("../img/coffee.jpg") ;
+}
+
+#userProfileInnerDiv {
+    padding: 50px;
+}
+
+#userImgDiv {
+    height: 250px;
+    width: 100%;
+    text-align: center;
+}
+
+.smallTitleWidth {
+    width:20%;
+}
+
+.smallInputWidth {
+    width:80%;
 }
