@@ -46,13 +46,19 @@ class MealController extends Controller
         $meal->MealDetails = $request->mdetails;
         $meal->MealQuantity = $request->mquantity;
         $meal->ShopID = $request->sID;
-
-        $avatar = $request->file('mimage');
-        if ($avatar->isValid()) {
-            $path = Storage::putFile('public/uploads/meals', $avatar);
-            $meal->MealImage = Storage::url($path);
+        if ($request->hasFile('mimage')) {
+            //
+            $avatar = $request->file('mimage');
             
+            if ($avatar->isValid()) {
+                $path = Storage::putFile('public/uploads/meals/'. $meal->ShopID, $avatar);
+                $meal->MealImage = Storage::url($path);
+
         }
+        }else{
+            $meal->MealImage = null;
+        }
+        
         $meal->save();
         return redirect("/meal/create");
     }
