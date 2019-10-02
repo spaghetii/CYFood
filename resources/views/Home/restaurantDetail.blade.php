@@ -12,6 +12,7 @@
 
 {{-- 網頁內容 --}}
 @section('content')
+<div id="restaurant">
     {{-- 餐廳title資訊 --}}
     <div class="restaurantImgDiv">
         <div class="restaurantDetailDiv d-flex align-items-center">
@@ -20,7 +21,7 @@
                 <p class="mt-3 mb-0">$.中式料理</p>
                 <div class="restaurantDetailList row container">
                     <div class="mt-4 mr-2">10 – 20 分鐘</div>
-                    <div class="mt-4 mr-2"><img src="img/star1.png" class="mr-1">4.8/5</div>
+                    <div class="mt-4 mr-2"><img src="/img/star1.png" class="mr-1">4.8/5</div>
                     <div class="mt-4 mr-2">60TWD 費用</div>
                 </div> 
                 <div class="restaurantDetailAddress">
@@ -42,12 +43,8 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav row align-items-center" id="categoryBarList">
-                            <a class="nav-item nav-link" href="#popular">人氣精選 Popular Items</a>
-                            <a class="nav-item nav-link" href="#xiaolongbao">小籠包 Xiaolongbao</a>
-                            <a class="nav-item nav-link" href="#dumplingsShumai">餃類及燒賣 Dumplings and Shumai</a>
-                            <a class="nav-item nav-link" href="#friedRice">炒飯 Stir-Fried Rice</a>
-                            <a class="nav-item nav-link" href="#soups">湯品 Soups</a>
-                            <a class="nav-item nav-link" href="#desserts">甜點 Desserts</a>
+                            <a class="nav-item nav-link":href="'#'+ type" v-for="type in types">@{{type}}</a>
+                            
                         </div>
                     </div>
                 </nav>
@@ -56,422 +53,31 @@
     </div>
 
     {{-- 分類內容 --}}
-    <div class="container-fluid categoryListDiv" id="popularList">
-        <div id="popular">
-            <h4>人氣精選 Popular Items</h4>
+    <div class="container-fluid categoryListDiv" id="popularList" v-for="type in types">
+        <div :id="type">
+            <h4>@{{type}}</h4>
         </div>
         <div class="row">
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
+            <div class="col-sm-4 col-12 mt-5" v-for="meal in list" v-if="meal.MealType === type">
+                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter" >
                     <div class="media">
                         <div class="media-body d-flex flex-column">
                             <div class="col-10">
-                                <h5 class="categoryFoodTitle">小籠包 Pork Xiaolongbao</h5>
-                                <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 
-                                    Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, 
-                                    restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
+                            <h5 class="categoryFoodTitle">@{{meal.MealName}}</h5>
+                                <h6 class="categoryFoodDesc">@{{meal.MealDesc}}
                                 </h6>
                             </div>
                             <div class="col-2 align-items-end">
-                                $220
+                                $@{{meal.MealPrice}}
                             </div>
                         </div>
-                        <img src="img/food.jpg" class="categoryItemImg" alt="">
+                        <img :src="meal.MealImage" class="categoryItemImg" v-if="meal.MealImage" alt="">
                     </div>
                 </a>
-            </div>             
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                    <div class="media">
-                        <div class="media-body d-flex flex-column">
-                            <div class="col-10">
-                                <h5 class="categoryFoodTitle">小籠包 Pork Xiaolongbao</h5>
-                                <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 
-                                    Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, 
-                                    restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                </h6>
-                            </div>
-                            <div class="col-2 align-items-end">
-                                $220
-                            </div>
-                        </div>
-                        <img src="img/food.jpg" class="categoryItemImg" alt="">
-                    </div>
-                </a>
-            </div>             
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                    <div class="media">
-                        <div class="media-body d-flex flex-column">
-                            <div class="col-10">
-                                <h5 class="categoryFoodTitle">小籠包 Pork Xiaolongbao</h5>
-                                <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 
-                                    Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, 
-                                    restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                </h6>
-                            </div>
-                            <div class="col-2 align-items-end">
-                                $220
-                            </div>
-                        </div>
-                        <img src="img/food.jpg" class="categoryItemImg" alt="">
-                    </div>
-                </a>
-            </div>             
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                    <div class="media">
-                        <div class="media-body d-flex flex-column">
-                            <div class="col-10">
-                                <h5 class="categoryFoodTitle">小籠包 Pork Xiaolongbao</h5>
-                                <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 
-                                    Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, 
-                                    restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                </h6>
-                            </div>
-                            <div class="col-2 align-items-end">
-                                $220
-                            </div>
-                        </div>
-                        <img src="img/food.jpg" class="categoryItemImg" alt="">
-                    </div>
-                </a>
-            </div>             
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                    <div class="media">
-                        <div class="media-body d-flex flex-column">
-                            <div class="col-10">
-                                <h5 class="categoryFoodTitle">小籠包 Pork Xiaolongbao</h5>
-                                <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 
-                                    Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, 
-                                    restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                </h6>
-                            </div>
-                            <div class="col-2 align-items-end">
-                                $220
-                            </div>
-                        </div>
-                        <img src="img/food.jpg" class="categoryItemImg" alt="">
-                    </div>
-                </a>
-            </div>             
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                    <div class="media">
-                        <div class="media-body d-flex flex-column">
-                            <div class="col-10">
-                                <h5 class="categoryFoodTitle">小籠包 Pork Xiaolongbao</h5>
-                                <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 
-                                    Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, 
-                                    restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                </h6>
-                            </div>
-                            <div class="col-2 align-items-end">
-                                $220
-                            </div>
-                        </div>
-                        <img src="img/food.jpg" class="categoryItemImg" alt="">
-                    </div>
-                </a>
-            </div>              
-        </div> <!-- row -->
+            </div>                       
     </div> <!-- popularList -->
 
-    <div class="container-fluid categoryListDiv" id="xiaolongbaoList">
-            <div id="xiaolongbao">
-                <h4>小籠包 Xiaolongbao</h4>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">松露小籠包 Truffle and Pork Xiaolongbao</h5>
-                                    <h6 class="categoryFoodDesc">每份5入。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 5 pieces. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $450
-                                </div>
-                            </div>
-                            <img src="img/food.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>             
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">松露小籠包 Truffle and Pork Xiaolongbao</h5>
-                                    <h6 class="categoryFoodDesc">每份5入。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 5 pieces. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $450
-                                </div>
-                            </div>
-                            <img src="img/food.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>             
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">松露小籠包 Truffle and Pork Xiaolongbao</h5>
-                                    <h6 class="categoryFoodDesc">每份5入。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 5 pieces. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $450
-                                </div>
-                            </div>
-                            <img src="img/food.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>             
-        </div> <!-- row -->
-    </div> <!-- xiaolongbaoList -->
 
-    <div class="container-fluid categoryListDiv" id="dumplingsShumaiList">
-            <div id="dumplingsShumai">
-                <h4>餃類及燒賣 Dumplings and Shumai</h4>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">蝦仁燒賣 Steamed Shrimp and Pork Shao Mai</h5>
-                                    <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $360
-                                </div>
-                            </div>
-                            <img src="img/food1.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                         
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">蝦仁燒賣 Steamed Shrimp and Pork Shao Mai</h5>
-                                    <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $360
-                                </div>
-                            </div>
-                            <img src="img/food1.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                         
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">蝦仁燒賣 Steamed Shrimp and Pork Shao Mai</h5>
-                                    <h6 class="categoryFoodDesc">每份10入。附薑絲及醋包。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 10 pieces. Served with shredded ginger and vinegar. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $360
-                                </div>
-                            </div>
-                            <img src="img/food1.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                         
-            </div> <!-- row -->
-    </div> <!-- dumplingsShumaiList -->
-
-    <div class="container-fluid categoryListDiv" id="friedRiceList">
-                <div id="friedRice">
-                    <h4>炒飯 Stir-Fried Rice</h4>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 col-12 mt-5">
-                        <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                            <div class="media">
-                                <div class="media-body d-flex flex-column">
-                                    <div class="col-10">
-                                        <h5 class="categoryFoodTitle">肉絲蛋炒飯 Shredded Pork Fried Rice with Egg</h5>
-                                        <h6 class="categoryFoodDesc">為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                        </h6>
-                                    </div>
-                                    <div class="col-2 align-items-end">
-                                        $190
-                                    </div>
-                                </div>
-                                <img src="img/food2.jpg" class="categoryItemImg" alt="">
-                            </div>
-                        </a>
-                    </div>                           
-                    <div class="col-sm-4 col-12 mt-5">
-                        <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                            <div class="media">
-                                <div class="media-body d-flex flex-column">
-                                    <div class="col-10">
-                                        <h5 class="categoryFoodTitle">肉絲蛋炒飯 Shredded Pork Fried Rice with Egg</h5>
-                                        <h6 class="categoryFoodDesc">為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                        </h6>
-                                    </div>
-                                    <div class="col-2 align-items-end">
-                                        $190
-                                    </div>
-                                </div>
-                                <img src="img/food2.jpg" class="categoryItemImg" alt="">
-                            </div>
-                        </a>
-                    </div>                           
-                    <div class="col-sm-4 col-12 mt-5">
-                        <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                            <div class="media">
-                                <div class="media-body d-flex flex-column">
-                                    <div class="col-10">
-                                        <h5 class="categoryFoodTitle">肉絲蛋炒飯 Shredded Pork Fried Rice with Egg</h5>
-                                        <h6 class="categoryFoodDesc">為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                        </h6>
-                                    </div>
-                                    <div class="col-2 align-items-end">
-                                        $190
-                                    </div>
-                                </div>
-                                <img src="img/food2.jpg" class="categoryItemImg" alt="">
-                            </div>
-                        </a>
-                    </div>                           
-                </div> <!-- row -->
-    </div> <!-- friedRiceList -->
-
-    <div class="container-fluid categoryListDiv" id="soupsList">
-            <div id="soups">
-                <h4>湯品 Soups</h4>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">紅燒牛肉湯 Braised Beef Soup</h5>
-                                    <h6 class="categoryFoodDesc">為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $230
-                                </div>
-                            </div>
-                            <img src="img/food3.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                          
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">紅燒牛肉湯 Braised Beef Soup</h5>
-                                    <h6 class="categoryFoodDesc">為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $230
-                                </div>
-                            </div>
-                            <img src="img/food3.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                          
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">紅燒牛肉湯 Braised Beef Soup</h5>
-                                    <h6 class="categoryFoodDesc">為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $230
-                                </div>
-                            </div>
-                            <img src="img/food3.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                          
-            </div> <!-- row -->
-    </div> <!-- soupsList -->
-
-    <div class="container-fluid categoryListDiv" id="dessertsList">
-            <div id="desserts">
-                <h4>甜點 Desserts</h4>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">豆沙小籠包 Red Bean Xiaolongbao</h5>
-                                    <h6 class="categoryFoodDesc">每份10入。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 10 pieces. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $170
-                                </div>
-                            </div>
-                            <img src="img/food4.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                      
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">豆沙小籠包 Red Bean Xiaolongbao</h5>
-                                    <h6 class="categoryFoodDesc">每份10入。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 10 pieces. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $170
-                                </div>
-                            </div>
-                            <img src="img/food4.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                      
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter">
-                        <div class="media">
-                            <div class="media-body d-flex flex-column">
-                                <div class="col-10">
-                                    <h5 class="categoryFoodTitle">豆沙小籠包 Red Bean Xiaolongbao</h5>
-                                    <h6 class="categoryFoodDesc">每份10入。為響應環保, 恕不主動提供餐具。基於餐點口味及品質, 調整會影響餐點口味, 恕不提供客制化選項。 Every portion 10 pieces. Respond to the environmental protection, restaurant does not initiative on providing disposable tableware. No customization options are available in order to avoid on affecting the taste and food quality.
-                                    </h6>
-                                </div>
-                                <div class="col-2 align-items-end">
-                                    $170
-                                </div>
-                            </div>
-                            <img src="img/food4.jpg" class="categoryItemImg" alt="">
-                        </div>
-                    </a>
-                </div>                      
-            </div> <!-- row -->
-    </div> <!-- dessertsList -->
 
     <!-- OrderModal -->
     <div class="modal fade" id="orderModalCenter" tabindex="-1" role="dialog" aria-labelledby="orderModalCenterTitle" aria-hidden="true">
@@ -506,7 +112,7 @@
           </div> <!-- modal-content -->
         </div> <!-- modal-dialog -->
     </div> <!-- orderModalCenter -->
-
+</div>
 @endsection
 
 @section('script')
@@ -545,5 +151,39 @@
                 }
             }
         })
+
+        var meal = new Vue({
+        el: "#restaurant",
+        data: {
+            list: [],
+            temp: [],
+            types:[]
+            
+        },
+        methods: {
+            init: function () {
+                let _this = this;
+                
+                axios.get("/api/meal/{{$id}}")
+                    .then(function (response) {
+                        _this.list = response.data;
+                        
+                        for(i= 0;i<_this.list.length;i++){
+                            _this.temp[i] = _this.list[i].MealType;
+                        }
+                        _this.types = _this.temp.filter(function(element, index ,arr){
+                            return arr.indexOf(element) === index;
+                        })
+                        console.log(_this.types);
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+            }
+        },
+        mounted: function () {
+            this.init();
+        }
+    });
     </script>
 @endsection

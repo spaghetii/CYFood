@@ -21,7 +21,7 @@ class CreateMealsTable extends Migration
             $table->string('MealType',50);
             $table->string('MealImage')->nullable();
             $table->text('MealDetails')->nullable();
-            $table->integer('MealQuantity')->unsigned();
+            $table->integer('MealQuantity')->unsigned()->nullable();
             $table->bigInteger('ShopID')->unsigned();
             $table->foreign('ShopID')->references('ShopID')->on('shops');
 

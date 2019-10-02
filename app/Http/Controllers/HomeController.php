@@ -19,8 +19,8 @@ class HomeController extends Controller
         return view('home.loginHomepage');
     }
 
-    function restaurantDetail() {
-        return view('home.restaurantDetail');
+    function restaurantDetail($id) {
+        return view('home.restaurantDetail',compact("id"));
     }
 
     function orderDetail() {

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CYfood</title>
     <!-- 網頁 icon -->
-    <link rel="icon" href="img/burger.ico" type="image/x-icon">
+    <link rel="icon" href="/img/burger.ico" type="image/x-icon">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -26,9 +26,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
     <!-- 網頁 css -->
     {{-- 大於575px --}}
-    <link rel="stylesheet" media="screen and (min-width: 576px)" href="css/styleLarge.css">
+    <link rel="stylesheet" media="screen and (min-width: 576px)" href="/css/styleLarge.css">
     {{-- 小於575px --}}
-    <link rel="stylesheet" media="screen and (max-width: 576px)" href="css/styleSmall.css">
+    <link rel="stylesheet" media="screen and (max-width: 576px)" href="/css/styleSmall.css">
     @yield('login')
 </head>
 
@@ -38,7 +38,7 @@
         <header class="header navbar bg-light navbar-light navbar-expand fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <img src="img/logo.png" alt=""> <!-- logo -->
+                    <img src="/img/logo.png" alt=""> <!-- logo -->
                 </a>
 
                 {{-- 隱藏式 header 地址搜尋 --}}
@@ -47,20 +47,20 @@
                 <div class="collapse navbar-collapse">
                     <div class="navbar-nav collapse navbar-collapse justify-content-end" id="navbarItem">
                         {{-- 登入 --}}
-                        <a class="nav-item nav-link ml-4" href="/login"><img src="img/user.png" alt="">&ensp;登入</a>
+                        <a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;登入</a>
                         {{-- 登入後資訊欄 --}}
                         <div class="dropdown show">
-                            <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="img/user.png" alt="">&ensp;User</a>
+                            <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="">&ensp;User</a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#"><img src="img/bill.png" alt="">&emsp;訂單</a>
-                                    <a class="dropdown-item" href="#"><img src="img/user.png" alt="">&emsp;帳戶</a>
-                                    <a class="dropdown-item" href="#"><img src="img/qa.png" alt="">&emsp;Q&A</a>
-                                    <a class="dropdown-item" href="#"><img src="img/logout.png" alt="">&emsp;登出</a>
+                                    <a class="dropdown-item" href="#"><img src="/img/bill.png" alt="">&emsp;訂單</a>
+                                    <a class="dropdown-item" href="#"><img src="/img/user.png" alt="">&emsp;帳戶</a>
+                                    <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
+                                    <a class="dropdown-item" href="#"><img src="/img/logout.png" alt="">&emsp;登出</a>
                                   </div>
                         </div>
                         {{-- 購物袋 --}}
                         <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal">
-                            <img src="img/shopping-bag.png" alt="">
+                            <img src="/img/shopping-bag.png" alt="">
                             <span style="font-size:1.2rem;">1</span>
                         </a>
                     </div>
@@ -78,7 +78,7 @@
                 <div class="row footerTop">
                     <!-- footer 上區 -->
                     <div class="col-sm-5 col-12 mt-0 mt-sm-0">
-                        <img src="img/logo.png" alt="">
+                        <img src="/img/logo.png" alt="">
                     </div>
                     <div class="col-sm-3 col-6 mt-4 mt-sm-0">
                         <p><a href="#">關於 CY Food</a></p>
@@ -95,8 +95,8 @@
                         <small>Copyright © 2019 CY food</small>
                     </div>
                     <div class="col-sm-3 col-6">
-                        <a href="https://www.facebook.com/groups/AI0101/"><img src="img/facebook.png" alt="" class="mr-3"></a>
-                        <a href="https://github.com/spaghetii/CYFood"><img src="img/github.png" alt="" class="mr-3"></a>
+                        <a href="https://www.facebook.com/groups/AI0101/"><img src="/img/facebook.png" alt="" class="mr-3"></a>
+                        <a href="https://github.com/spaghetii/CYFood"><img src="/img/github.png" alt="" class="mr-3"></a>
                     </div>
                 </div>
             </div>
@@ -109,9 +109,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="shoppingBagModalLabel"><img src="img/shopping-bag.png" alt="">&emsp;您的訂單&nbsp;(1)</h5>
+                    <h5 class="modal-title" id="shoppingBagModalLabel"><img src="/img/shopping-bag.png" alt="">&emsp;您的訂單&nbsp;(1)</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><img src="img/close.png" alt=""></span>
+                    <span aria-hidden="true"><img src="/img/close.png" alt=""></span>
                     </button>
                 </div>
                 <div class="modal-body" id="shoppingBagModalBody">

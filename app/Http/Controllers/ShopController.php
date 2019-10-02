@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Shop;
 use Storage;
+use Illuminate\Support\Facades\Hash;
 
 class ShopController extends Controller
 {
@@ -45,8 +46,12 @@ class ShopController extends Controller
         $shop->ShopAddress = $request->saddress;
         $shop->ShopEmail = $request->semail;
         $shop->ShopPhone = $request->sphone;
-        $shop->ShopPassword = $request->spassword;
         
+        
+        $password = $request->spassword;
+        $hashed = Hash::make($password);
+        $shop->ShopPassword = $hashed;
+
         $avatar = $request->file('simage');
         if ($avatar->isValid()) {
             $path = Storage::putFile('public/uploads/shops', $avatar);
@@ -54,6 +59,7 @@ class ShopController extends Controller
             
         }
         $shop->save();
+        return redirect("/shop/create");
     }
 
     /**

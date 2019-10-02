@@ -33,97 +33,27 @@
         <div>
             <h3>本日推薦</h3>
         </div>
-        <div class="row">
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="restaurantLink">
-                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
+        <div class="row" >
+            <div v-for="item in list" class="col-md-4 col-12 mt-5">
+                <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
+                <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
                         <div class="row mt-2">
-                            可不可熟成紅茶 中佑店
+                            @{{item.ShopName}}
                         </div>
                         <div class="row mt-2">
-                            <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
+                            <div class="mr-1 todayRecommendContentItem"><small>$.@{{item.ShopType}}</small></div>
                             <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
+                            <div class="mr-1 todayRecommendContentItem"><small>15TWD 費用</small></div>
                         </div>
                     </div>
                 </a>
             </div>       
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="restaurantLink">
-                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                    <div class="todayRecommendContent">
-                        <div class="row mt-2">
-                            可不可熟成紅茶 中佑店
-                        </div>
-                        <div class="row mt-2">
-                            <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                        </div>
-                    </div>
-                </a>
-            </div>       
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="restaurantLink">
-                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                    <div class="todayRecommendContent">
-                        <div class="row mt-2">
-                            可不可熟成紅茶 中佑店
-                        </div>
-                        <div class="row mt-2">
-                            <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                        </div>
-                    </div>
-                </a>
-            </div>       
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="restaurantLink">
-                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                    <div class="todayRecommendContent">
-                        <div class="row mt-2">
-                            可不可熟成紅茶 中佑店
-                        </div>
-                        <div class="row mt-2">
-                            <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                        </div>
-                    </div>
-                </a>
-            </div>       
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="restaurantLink">
-                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                    <div class="todayRecommendContent">
-                        <div class="row mt-2">
-                            可不可熟成紅茶 中佑店
-                        </div>
-                        <div class="row mt-2">
-                            <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                        </div>
-                    </div>
-                </a>
-            </div>       
-            <div class="col-sm-4 col-12 mt-5">
-                <a href="#" class="restaurantLink">
-                    <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                    <div class="todayRecommendContent">
-                        <div class="row mt-2">
-                            可不可熟成紅茶 中佑店
-                        </div>
-                        <div class="row mt-2">
-                            <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                            <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                        </div>
-                    </div>
-                </a>
-            </div>       
+             
+                  
+               
+              
+                
         </div> <!-- row -->
     </div> <!-- todayRecommend -->
     
@@ -160,5 +90,29 @@
                     $("#headerSearchLarge").css("visibility","hidden");
                 }
         })
+
+
+        var shop = new Vue({
+        el: "#todayRecommend",
+        data: {
+            list: []
+        },
+        methods: {
+            init: function () {
+                let _this = this;
+                axios.get('/api/shop')
+                    .then(function (response) {
+                        _this.list = response.data;
+                        
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+            }
+        },
+        mounted: function () {
+            this.init();
+        }
+    });
     </script>
 @endsection
