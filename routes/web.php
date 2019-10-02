@@ -13,7 +13,7 @@
 
 Route::get('/', "HomeController@index");
 
-Route::get('/loginHomepage', "HomeController@loginHomepage");
+Route::get('/loginHomepage', "HomeController@loginHomepage")->middleware('check');
 
 Route::get('/restaurantDetail', "HomeController@restaurantDetail");
 

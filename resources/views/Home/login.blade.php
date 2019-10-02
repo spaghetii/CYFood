@@ -150,7 +150,7 @@
                                         type: 'success',
                                         title: '登入成功',
                                         html: '本畫面於<strong></strong>秒後回到首頁',
-                                        timer: 6000,
+                                        timer: 3000,
                                         onBeforeOpen: () => {
                                             Swal.showLoading()
                                             timerInterval = setInterval(() => {
@@ -163,7 +163,7 @@
                                         },
                                         onClose: () => {
                                             clearInterval(timerInterval)
-                                            window.location.href = "/";
+                                            window.location.href = "/loginHomepage";
                                         }
                                     })
                                 }else{

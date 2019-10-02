@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Session;
 
 class BeforeMiddleWare
 {
@@ -15,6 +16,9 @@ class BeforeMiddleWare
      */
     public function handle($request, Closure $next)
     {
+        if (Session::get('userName','Guest') == 'Guest'){
+            return redirect("/login");
+        }
         return $next($request);
     }
 }

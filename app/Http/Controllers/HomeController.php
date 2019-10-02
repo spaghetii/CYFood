@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 use Crypt;
 use Mail;
+use Session;
 use App\Member;
 
 class HomeController extends Controller
@@ -65,6 +66,7 @@ class HomeController extends Controller
     function logincheck(Request $request){
         $member = DB::table("members")->where("MemberEmail",$request->loginEmail)->first();
         if($member){
+            Session::put('userName', $member->MemberName);
             if(Hash::check($request->loginPassword, $member->MemberPassword)){
                 return response()->json(['ok' => true], 200);
             }else{
