@@ -70,23 +70,27 @@
                             @csrf
                             <div class="form-group ">
                                 <label for="registerName">暱稱</label>
-                                <input type="text" class="form-control" id="registerName" name="registerName">
+                                <span v-if="checkName" class="resetalert">@{{errorName}}</span>
+                                <input type="text" class="form-control" v-model="registerName" id="registerName" name="registerName">
                             </div>
                             <div class="form-group ">
                                 <label for="registerEmail">電子郵件</label>
-                                <input type="email" class="form-control" id="registerEmail" name="registerEmail">
+                                <span v-if="checkEmail" class="resetalert">@{{errorEmail}}</span>
+                                <input type="email" class="form-control" v-model="registerEmail" id="registerEmail" name="registerEmail">
                             </div>
                             <div class="form-group ">
                                 <label for="registerPhone">手機號碼</label>
-                                <input type="text" class="form-control" id="registerPhone" name="registerPhone">
+                                <span v-if="checkPhone" class="resetalert">@{{errorPhone}}</span>
+                                <input type="text" class="form-control" v-model="registerPhone" id="registerPhone" name="registerPhone">
                             </div>
                             <div class="form-group">
                                 <label for="registerPassword">密碼</label>
-                                <input type="password" class="form-control" id="registerPassword"
+                                <span v-if="checkPassword" class="resetalert">@{{errorPassword}}</span>
+                                <input type="password" class="form-control" v-model="registerPassword" id="registerPassword"
                                     name="registerPassword">
                             </div>
-
-                            <button type="submit" class="btn btn-primary btn-block btn-lg">註冊</button>
+                            <span v-if="checkRegister" class="resetalert">@{{errorMsg}}</span>
+                            <button type="button" v-on:click="register" class="btn btn-primary btn-block btn-lg">註冊</button>
                         </form>
                     </div>
                 </div>
@@ -121,80 +125,119 @@
         </div>
     </div>
 
-    <script>
-        //登入驗證
-        var loginform = new Vue({
-            el: "#login-form",
-            data: {
-                loginEmail: '',
-                loginPassword: '',
-                space: false,
-                checklogin: false
-            },
-            methods: {
-                login: function () {
-                    let self = this;
-                    if (this.loginEmail == '' || this.loginPassword == '') {
-                        this.space = true;
-                    } else {
-                        this.space = false;
-                        this.checklogin = false;
-                        axios.post('/login/check', {
-                                loginEmail: this.loginEmail,
-                                loginPassword: this.loginPassword
-                            })
-                            .then(function (response) {
-                                console.log(response.data['ok']);
-                                if (response.data['ok']) {
-                                    Swal.fire({
-                                        type: 'success',
-                                        title: '登入成功',
-                                        html: '本畫面於<strong></strong>秒後回到首頁',
-                                        timer: 6000,
-                                        onBeforeOpen: () => {
-                                            Swal.showLoading()
-                                            timerInterval = setInterval(() => {
-                                                Swal.getContent().querySelector(
-                                                        'strong')
-                                                    .textContent = parseInt(Math
-                                                        .ceil(Swal.getTimerLeft() /
-                                                            1000))
-                                            }, 100)
-                                        },
-                                        onClose: () => {
-                                            clearInterval(timerInterval)
-                                            window.location.href = "/";
-                                        }
-                                    })
-                                }else{
-                                    self.checklogin = true;
-                                }
-
-                            })
-                            .catch(function (response) {
-                                console.log(response)
-                            });
-                    }
-                }
-            }
-        })
-
-
-        //忘記密碼相關
-        var reset = new Vue({
-            el: "#resetModal",
-            data: {
-                email: '',
-                checkemail: false
-            },
-            methods: {
-                submit: function () {
-                    let self = this;
-                    this.checkemail = false;
-                    axios.post('/reset', {
-                            email: this.email
+<script>
+    //登入驗證
+    var loginform = new Vue({
+        el: "#login-form",
+        data: {
+            loginEmail: '',
+            loginPassword: '',
+            space: false,
+            checklogin: false
+        },
+        methods: {
+            login: function () {
+                let self = this;
+                if (this.loginEmail == '' || this.loginPassword == '') {
+                    this.space = true;
+                } else {
+                    this.space = false;
+                    this.checklogin = false;
+                    axios.post('/login/check', {
+                            loginEmail: this.loginEmail,
+                            loginPassword: this.loginPassword
                         })
                         .then(function (response) {
+                            console.log(response.data['ok']);
+                            if (response.data['ok']) {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: '登入成功',
+                                    html: '本畫面於<strong></strong>秒後回到首頁',
+                                    timer: 6000,
+                                    onBeforeOpen: () => {
+                                        Swal.showLoading()
+                                        timerInterval = setInterval(() => {
+                                            Swal.getContent().querySelector(
+                                                    'strong')
+                                                .textContent = parseInt(Math
+                                                    .ceil(Swal.getTimerLeft() /
+                                                        1000))
+                                        }, 100)
+                                    },
+                                    onClose: () => {
+                                        clearInterval(timerInterval)
+                                        window.location.href = "/";
+                                    }
+                                })
+                            }else{
+                                self.checklogin = true;
+                            }
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
+                }
+            }
+        }
+    })
+
+    //註冊驗證
+    var registerform = new Vue({
+        el:"#register-form",
+        data: {
+            registerName:'',
+            registerEmail:'',
+            registerPhone:'',
+            registerPassword:'',
+            checkName:false,
+            errorName:'',
+            checkEmail:false,
+            errorEmail:'',
+            checkPhone:false,
+            errorPhone:'',
+            checkPassword:false,
+            errorPassword:'',
+            checkRegister:false,
+            errorMsg:''
+        },
+        methods:{
+            register:function(){
+                this.errorName = "";
+                this.errorEmail = "";
+                this.errorPhone = "";
+                this.errorPassword = "";
+                let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)+$/;
+                    if(!reg.test(this.registerEmail)){
+                    this.checkEmail = true;
+                    this.errorEmail = "請輸入正確的格式";
+                }
+                if (this.registerName == "" || this.registerEmail == "" ||
+                    this.registerPhone == "" ||  this.registerPassword)
+                {
+                    this.checkRegister = true;
+                    this.errorMsg = "欄位不能為空"
+                }
+                
+            }
+        }
+         
+    })
+    //忘記密碼相關
+    var reset = new Vue({
+        el: "#resetModal",
+        data: {
+            email: '',
+            checkemail: false
+        },
+        methods: {
+            submit: function () {
+                let self = this;
+                this.checkemail = false;
+                axios.post('/reset', {
+                        email: this.email
+                    })
+                    .then(function (response) {
                             console.log(response);
                             if (response.data['ok']) {
                                 Swal.fire({
@@ -214,16 +257,14 @@
                                 self.checkemail = true;
                                 self.email = '';
                             }
-                        })
-                        .catch(function (response) {
+                    })
+                    .catch(function (response) {
                             console.log(response)
-                        });
-                }
+                    });
             }
-
-        })
-
-    </script>
+        }
+    })
+</script>
 </body>
 
 
