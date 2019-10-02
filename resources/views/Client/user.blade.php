@@ -122,6 +122,10 @@
             color: red;
             display: none;
         }
+        #delayHelp{
+            font-size: 16px;
+            color: red;
+        }
         #information2{
             /* border: 2px solid orange; */
             width: 40%;
@@ -197,56 +201,71 @@
         <div class="no-gutters" id="buttomDiv">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">暫停接單</a>
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#delay" role="tab" aria-controls="delay" aria-selected="true">暫停接單</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">歷史訂單</a>
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#restOrder" role="tab" aria-controls="restOrder" aria-selected="false">歷史訂單</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">餐廳資訊</a>
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#restInfo" role="tab" aria-controls="restInfo" aria-selected="false">餐廳資訊</a>
                 </li>
             </ul>
             {{-- 標籤內容 --}}
             <div class="tab-content" id="myTabContent">
                 {{-- 暫停接單 --}}
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active" id="delay" role="tabpanel" aria-labelledby="home-tab">
                     {{-- 卡片 --}}
                     <div class="card text-center">
-                        <div class="card-header">
+                        {{-- v-if="headerShow" --}}
+                        <div class="card-header" v-if="headerShow">
                             停止受理新訂單
                         </div>
-                        <div class="card-body">
+                        <div class="card-header" v-if="!headerShow">
+                            您的餐廳將於
+                        </div>
+                        {{-- v-if="bodyShow" --}}
+                        <div class="card-body" v-if="bodyShow">
                             您希望暫停多久？<br><br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">30分鐘</label>
+                                <input class="form-check-input" type="radio" name="delayOptions" id="delay30" v-model="delayOptions" value="30">
+                                <label class="form-check-label" for="delay30">30分鐘</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">60分鐘</label>
+                                <input class="form-check-input" type="radio" name="delayOptions" id="delay60" v-model="delayOptions" value="60">
+                                <label class="form-check-label" for="delay60">60分鐘</label>
                             </div>       
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option2">
-                                <label class="form-check-label" for="inlineRadio3">90分鐘</label>
+                                <input class="form-check-input" type="radio" name="delayOptions" id="delay90" v-model="delayOptions" value="90">
+                                <label class="form-check-label" for="delay90">90分鐘</label>
                             </div>       
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2">
-                                <label class="form-check-label" for="inlineRadio4">120分鐘</label>
-                            </div>       
+                                <input class="form-check-input" type="radio" name="delayOptions" id="delay120" v-model="delayOptions" value="120">
+                                <label class="form-check-label" for="delay120">120分鐘</label>
+                            </div>
+                            <div id="delayHelp" v-if="delayHelpShow">請選取時間</div>       
                         </div>
+                        <div class="card-body" v-if="!bodyShow">
+                            @{{delayOptions}}分鐘後開始營業
+                        </div>
+                        {{--  --}}
                         <div class="card-footer text-muted">
-                            <button type="button" class="btn btn-outline-dark">送出</button>
+                            <button type="button" class="btn btn-outline-dark" id="delaySubmit" v-on:click="delaySubmit" v-if="btnShow">送出</button>
+                            <button type="button" class="btn btn-outline-dark" id="delayReset" v-on:click="delayReset" v-if="!btnShow">重新營業</button>
                         </div>
                     </div>
                 </div>
                 {{-- 歷史訂單 --}}
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" id="restOrder" role="tabpanel" aria-labelledby="profile-tab">
                     {{-- 搜尋 --}}
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="yyyy/mm/dd" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">搜尋</button>
-                        </div>
+                        <select class="col-sm-4 form-control" id="orderSelect" name="orderSelect">
+                            <option value="orderNum">訂單編號</option>
+                            <option value="orderDate">訂單日期</option>
+                            <option value="orderName">客戶名稱</option>
+                            <option value="orderTotal">訂單金額</option>
+                            <option value="orderStatus">訂單狀況</option>
+                        </select>
+                        <input type="text" class="form-control" placeholder="Please Enter Keyword" aria-label="Recipient's username" aria-describedby="button-addon2">
                     </div>
                     {{-- 表格 --}}
                     <table>
@@ -281,7 +300,7 @@
                     </table>
                 </div>
                 {{-- 餐廳資訊 --}}
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="tab-pane fade" id="restInfo" role="tabpanel" aria-labelledby="contact-tab">
                     {{-- 修改資料 --}}
                     <div id="information1">
                         <form>
@@ -364,8 +383,42 @@
 
 
     <script>
-        var contact = new Vue({
-            el:"#contact",
+
+        var delay = new Vue({
+            el:"#delay",
+            data:{
+                delayOptions:"",
+                headerShow:true,
+                bodyShow:true,
+                btnShow:true,
+                delayHelpShow:false
+            },
+            methods:{
+                delaySubmit:function(){
+                    if(this.delayOptions != ""){
+                        this.headerShow = false;
+                        this.bodyShow = false;
+                        this.btnShow = false;
+                        var flag = setInterval(goBack, 100);
+                        function goBack(){
+                            delay.delayOptions--;
+                            if(delay.delayOptions<=0){
+                                clearInterval(flag);
+                                location.reload();
+                            }
+                        }
+                    }else{
+                        this.delayHelpShow=true;
+                    }
+                },
+                delayReset:function(){
+                    location.reload();
+                }
+            }
+        })
+
+        var restInfo = new Vue({
+            el:"#restInfo",
             methods:{
                 emailHelp:function(){
                     $("#emailHelp").css("display","block")

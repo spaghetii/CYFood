@@ -22,6 +22,8 @@
     </script>
     {{-- Vue --}}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    {{-- axios --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
     <!-- 網頁 css -->
     {{-- 大於575px --}}
     <link rel="stylesheet" media="screen and (min-width: 576px)" href="css/styleLarge.css">
@@ -137,7 +139,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <small>編輯</small>
+                                            <small class="colorOrange aHoverColor">編輯</small>
                                         </div>
                                     </div>
                                 </a>
