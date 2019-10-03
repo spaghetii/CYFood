@@ -1,0 +1,68 @@
+#buttomDiv {
+    height: 550px;
+}
+#leftButtom {
+    width: 400px;
+    height: 500px;
+    margin: 25px auto;
+}
+#orderBtn {
+    height: 80px;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px auto;
+    color:#3c3c3c;
+}
+#rightButtom {
+    width: 840px;
+    height: 500px;
+    margin: 25px auto;
+    position: fixed;
+    overflow: auto;
+}
+.jumbotron {
+    width: 800px;
+    min-height: 480px;
+    margin: 10px 20px; 
+    font-family: Microsoft JhengHei;
+    display: none;
+    background-color: whitesmoke;
+}
+
+#detailsTitle {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color:#5b5b5b;
+}
+#detailsItem {
+    width: 550px;
+    margin: auto;
+    color:#5b5b5b;
+}
+#detailsTotal {
+    width: 550px;
+    margin: auto;
+    color:#5b5b5b;
+}
+#takeoutTime{
+    width: 400px;
+    font-size: 28px;
+    margin: auto;
+    display: block;
+    font-weight: bold;
+    text-align: center;
+}
+@media (min-width: 1300px) and (max-width: 1600px){
+    #buttomDiv {
+        height: 614px;
+    }
+    #rightButtom{
+        width: 966px;
+        height: 564px;
+    }
+    .jumbotron {
+        width: 926px;
+        min-height: 544px;
+    }
+}

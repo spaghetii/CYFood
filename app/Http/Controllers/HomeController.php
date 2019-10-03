@@ -47,6 +47,7 @@ class HomeController extends Controller
    function user(){
        return view('Client.user');
    }
+   
 
     function rLogin(){
         return view("restaurant.login");
