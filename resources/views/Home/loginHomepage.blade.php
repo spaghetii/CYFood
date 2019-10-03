@@ -92,96 +92,21 @@
                 <h3>本日推薦</h3>
             </div>
             <div class="row">
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
+                <div v-for="item in recommend" class="col-sm-4 col-12 mt-5">
+                    <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
+                        <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
                             <div class="row mt-2">
-                                可不可熟成紅茶 中佑店
+                                @{{item.ShopName}}
                             </div>
                             <div class="row mt-2">
-                                <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
+                                <div class="mr-1 todayRecommendContentItem"><small>$.@{{item.ShopType}}</small></div>
                                 <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
+                                <div class="mr-1 todayRecommendContentItem"><small>15TWD 費用</small></div>
                             </div>
                         </div>
                     </a>
-                </div>              
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                        <div class="todayRecommendContent">
-                            <div class="row mt-2">
-                                可不可熟成紅茶 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>              
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                        <div class="todayRecommendContent">
-                            <div class="row mt-2">
-                                可不可熟成紅茶 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>              
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                        <div class="todayRecommendContent">
-                            <div class="row mt-2">
-                                可不可熟成紅茶 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>              
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                        <div class="todayRecommendContent">
-                            <div class="row mt-2">
-                                可不可熟成紅茶 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>              
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/drink.jpg" class="restaurantImage" alt=""></div>
-                        <div class="todayRecommendContent">
-                            <div class="row mt-2">
-                                可不可熟成紅茶 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 todayRecommendContentItem"><small>$.飲料</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
-                                <div class="mr-1 todayRecommendContentItem"><small>60TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>              
+                </div>                            
             </div> <!-- row -->
         </div> <!-- todayRecommend --> 
 
@@ -240,27 +165,70 @@
             }
         });
 
-        var loginshop = new Vue({
-        el: "#popularRestaurant",
-        data: {
-            list: []
-        },
-        methods: {
-            init: function () {
-                let _this = this;
-                axios.get('/api/shop')
-                    .then(function (response) {
-                        _this.list = response.data;
-                        
-                    })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
+        var Recommend = new Vue({
+            el: "#todayRecommend",
+            data: {
+                temp: [],
+                recommend:[]
+            },
+            methods: {
+                init: function () {
+                    let _this = this;
+                    axios.get('/api/shop')
+                        .then(function (response) {
+                            _this.temp = response.data;
+                            
+                            //本日推薦(隨機推薦)
+                            for (i = _this.temp.length - 1; i > 0; i--) {
+                                    j = Math.floor(Math.random() * (i + 1));
+                                    temp = _this.temp[i];
+                                    _this.temp[i] = _this.temp[j];
+                                    _this.temp[j] = temp;
+                                }
+                            
+                            //取前3或6筆
+                            _this.recommend = _this.temp.filter(function(item, index, array){
+                                return index < 3;    // 取得陣列中雙數的物件
+                                });
+                            console.log(_this.recommend);
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
+                }
+            },
+            mounted: function () {
+                this.init();
             }
-        },
-        mounted: function () {
-            this.init();
-        }
-    });
+        });
+
+        var loginshop = new Vue({
+            el: "#popularRestaurant",
+            data: {
+                list: [],
+                listtemp:[]
+            },
+            methods: {
+                init: function () {
+                    let _this = this;
+                    axios.get('/api/shop')
+                        .then(function (response) {
+                            _this.listtemp = response.data;
+
+                            //篩選出跟本日推薦不重複的餐廳
+                            _this.list = _this.listtemp.filter(function(element, index, arr){
+                                return arr.indexOf(element) === index;
+                            });
+                            console.log(_this.list);
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
+                }
+            },
+            mounted: function () {
+                this.init();
+            }
+        });
     </script>
 @endsection

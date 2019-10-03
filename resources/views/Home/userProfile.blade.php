@@ -1,58 +1,79 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div class="container mt-5 mb-5" id="userProfileOuterDiv">
-        <div class="container-fluid d-flex flex-row" id="userProfileInnerDiv">
-            <div class="col-sm-2" id="userImgDiv">
-                <img src="img/user1.png" alt="">
-            </div>
-            <div class="col-sm-3">
-                <div class="mt-2 mb-3">
-                    <h6>Leonardo DiCaprio</h6>
+    <div class="container-fluid alignCenter" id="userProfileBgDiv">
+        <div class="col-sm-6" id="blankDiv">
+        </div>
+        <div class="col-sm-4 col-12" id="userProfileOuterDiv">
+            <div class="d-flex flex-column" id="userProfileInnerDiv">
+                <div class="mb-3 ml-2 container">
+                    <h5>基本資料</h5>
+                </div>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4" id="userImgDiv">
+                        <img src="img/user1.png" alt="">
+                    </div>
+                    <div class="col-sm-8 col-8">
+                        <div class="mt-4">
+                            <h6>Leonardo DiCaprio</h6>
+                            <div class="input-group-sm">
+                                <input type="text" class="form-control" id="userProfileName" placeholder="Leonardo DiCaprio">
+                            </div>
+                        </div>
+                        <div>
+                            <h5>·········</h5>
+                            <div class="input-group-sm">
+                                <input type="password" class="form-control" id="userProfilePassword" placeholder="Password" value="123456789">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4">
+                        <h6 class="floatRight">Tel</h6>
+                    </div>
+                    <div class="col-sm-8 col-8">
+                        <h6>0987654321</h6>
+                        <div class="input-group-sm">
+                            <input type="text" class="form-control" id="userProfilePhone" placeholder="0987654321">
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4">
+                        <h6 class="floatRight">E-mail</h6>
+                    </div>
+                    <div class="col-sm-8 col-8">
+                        <h6>a123456789@gmail.com</h6>
+                        <div class="input-group-sm">
+                            <input type="email" class="form-control" id="userProfileEmail" placeholder="a123456789@gmail.com">
+                        </div>
+                        <div class="form-check alignCenter">
+                            <small>
+                                <input class="form-check-input" type="checkbox" value="" id="Check1">
+                                <label class="form-check-label" for="Check1">
+                                    是否訂閱電子報
+                                </label>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4">
+                        <h6 class="floatRight">信用卡號</h6>
+                    </div>
+                    <div class="col-sm-8 col-8">
+                        <h6>1654 - 4654 - 5612 - 1616</h6>
+                        <div class="input-group input-group-sm creditInputWidth" id="creditInputGroup">
+                            <input type=text class="form-control" name=creditInput1 size=4 value="" placeholder="1654" maxlength=4>&nbsp;-&nbsp;
+                            <input type=text class="form-control" name=creditInput2 size=4 value="" placeholder="4654" maxlength=4>&nbsp;-&nbsp;
+                            <input type=text class="form-control" name=creditInput3 size=4 value="" placeholder="5612" maxlength=4>&nbsp;-&nbsp;
+                            <input type=text class="form-control" name=creditInput4 size=4 value="" placeholder="1616" maxlength=4>
+                        </div>
+                    </div>
                 </div>
                 <div>
-                    <h6>0987654321</h6>
-                </div>
-            </div>
-            <div class="col-sm-7 textCenter">
-                <div class="d-flex flex-row alignCenter mt-2 mb-4">
-                    <div class="smallTitleWidth">
-                        <h6>新增卡號</h6>
-                    </div>
-                    <div class="input-group input-group-sm smallInputWidth" id="creditInputGroup">
-                        <input type=text class="form-control" name=creditInput1 size=4 value="" maxlength=4>&nbsp;-&nbsp;
-                        <input type=text class="form-control" name=creditInput2 size=4 value="" maxlength=4>&nbsp;-&nbsp;
-                        <input type=text class="form-control" name=creditInput3 size=4 value="" maxlength=4>&nbsp;-&nbsp;
-                        <input type=text class="form-control" name=creditInput4 size=4 value="" maxlength=4>
-                    </div>
-                </div>
-                <div class="d-flex flex-row alignCenter mb-4">
-                    <div class="smallTitleWidth">
-                        <h6>現有密碼</h6>
-                    </div>
-                    <div class="smallInputWidth input-group-sm">
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                </div>
-                <div class="d-flex flex-row alignCenter mb-4">
-                    <div class="smallTitleWidth">
-                        <h6>新密碼</h6>
-                    </div>
-                    <div class="smallInputWidth input-group-sm">
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                </div>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" value="" id="Check1">
-                    <label class="form-check-label" for="Check1">
-                        是否訂閱電子報
-                    </label>
-                </div>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" value="" id="Check1">
-                    <label class="form-check-label" for="Check1">
-                        是否訂閱電子報
-                    </label>
+                    <button type="button" class="btn btn-warning floatRight" id="changeBtn">變更資料</button>
                 </div>
             </div>
         </div>

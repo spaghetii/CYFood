@@ -27,8 +27,12 @@ Route::get('/shop', 'BackEnd@shopAll');
 
 Route::get('/meal/{id}', function($id) {
     return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
-    
-    
+ 
+});
+
+Route::get('/shop/{id}', function($id) {
+    return response()->json(Shop::where('ShopID', $id)->first(), 200);
+     
 });
 
 Route::post('/coupon', 'BackEnd@couponInsert');
