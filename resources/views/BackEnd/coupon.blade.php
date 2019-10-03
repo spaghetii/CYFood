@@ -32,7 +32,7 @@
             </div>
 
             <hr>
-            <div v-for="item,index in items">
+            <div v-for="item in items">
                 <div class="line2 row " >
                     <div class="col text-center">@{{item.CouponCode}}</div>
                     <div class="col text-center">@{{item.CouponType}}</div>
@@ -40,7 +40,7 @@
                     <div class="col text-center">@{{item.CouponDeadline}}</div>
                     <div class="col text-right">
                         <button name="singlebutton" class="btn btn-primary "
-                        v-on:click="edit(index)">修改優惠</button>
+                        v-on:click="edit(item.CouponID)">修改優惠</button>
                     </div>
                     <div class="col text-center">
                         <button name="singlebutton" class="btn btn-danger"
@@ -61,7 +61,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="col-11 modal-title text-center" id="exampleModalLabel">新增優惠</h4>
+                    <h4 class="col-11 modal-title text-center" id="exampleModalLabel">@{{title}}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -70,14 +70,14 @@
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">優惠代碼: </label>
                             <input type="text" class="form-control col-sm-6" 
-                            :class="{boxBorder:inputBoxBorder}" v-model="CouponCode">
+                             v-model="CouponCode">
                         </div>
                         <div class="invalid-tooltip">
                             請輸入代碼
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">優惠種類: </label>
-                            <select class="custom-select custom-select-lg col-sm-6" v-model="CouponType" :class="{boxBorder:inputBoxBorder}">
+                            <select class="custom-select custom-select-lg col-sm-6" v-model="CouponType" >
                                 <option selected value="freeship">免運送費</option>
                                 <option value="discount">餐點折扣</option>
                               </select>
@@ -88,24 +88,24 @@
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">優惠折扣: </label>
                             <input type="text" class="form-control col-sm-6" 
-                            :class="{boxBorder:inputBoxBorder}" v-model="CouponDiscount">
+                             v-model="CouponDiscount">
                         </div>
                         <div class="invalid-tooltip">
                             請輸入折扣
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">生效日期: </label>
-                            <input type="date" class="form-control col-sm-6" :class="{boxBorder:inputBoxBorder}"
+                            <input type="date" class="form-control col-sm-6" 
                             value="2019-10-02" v-model="CouponStart">
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">結束日期: </label>
-                            <input type="date" class="form-control col-sm-6" :class="{boxBorder:inputBoxBorder}"
+                            <input type="date" class="form-control col-sm-6" 
                             value="2019-10-02" v-model="CouponDeadline">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary form-control" v-on:click="modalOK">修改</button>
+                        <button type="button" class="btn btn-primary form-control" v-on:click="modalOK">確定</button>
                         <button type="button" class="btn btn-secondary form-control" data-dismiss="modal">取消</button>
                     </div>
             </div>
@@ -138,13 +138,14 @@
                 remove: function (id) {
                     let _this = this;
                     Swal.fire({                 // delete form
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '確定要刪除這筆優惠?',
+                        text: "刪除之後就無法復原!!!",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
+                        confirmButtonText: '確定',
+                        cancelButtonText: '取消'
                         }).then((result) => {
                             if (result.value)
                                 axios.delete('/api/coupon/' + id)
@@ -159,7 +160,7 @@
                     });
                 },
                 insertData:function(){
-                    Modal.inputBoxBorder = false;
+                    Modal.title = "新增優惠";
                     Modal.CouponCode = "";
                     Modal.CouponType = "freeship";
                     Modal.CouponDiscount = "";
@@ -169,8 +170,10 @@
                     currentIndex = -1;
                 },
                 edit: function(select){
-                    Modal.inputBoxBorder = true;
-                    currentIndex = select;
+                    Modal.title = "修改優惠";
+                    coupon.list.forEach((element,index) => {
+                        if(element.CouponID == select)currentIndex = index;
+                    });
                     Modal.CouponCode = coupon.list[currentIndex].CouponCode;
                     Modal.CouponType = coupon.list[currentIndex].CouponType;
                     Modal.CouponDiscount = coupon.list[currentIndex].CouponDiscount;
@@ -211,12 +214,12 @@
         var Modal = new Vue({
             el:"#couponModal",
             data:{
+                title:"",
                 CouponCode: "",
                 CouponType: "discount",
                 CouponDiscount: "",
                 CouponStart: "",
                 CouponDeadline: "",
-                inputBoxBorder:false
             },
             methods:{
                 modalOK: function(){
