@@ -196,96 +196,22 @@
                 <h3>熱門餐廳</h3>
             </div>
             <div class="row">
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
+                <div v-for="item in list" class="col-sm-4 col-12 mt-5">
+                    <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
+                        <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
                             <div class="row mt-2">
-                                麥當勞 中佑店
+                                @{{item.ShopName}}
                             </div>
                             <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.美式美食</small></div>
+                                <div class="mr-1 popularRestaurantContentItem"><small>$.$.@{{item.ShopType}}</small></div>
                                 <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><small>30TWD 費用</small></div>
+                                <div class="mr-1 popularRestaurantContentItem"><small>15TWD 費用</small></div>
                             </div>
                         </div>
                     </a>
                 </div>                 
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
-                        <div class="popularRestaurantContent">
-                            <div class="row mt-2">
-                                麥當勞 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.美式美食</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><small>30TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>                 
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
-                        <div class="popularRestaurantContent">
-                            <div class="row mt-2">
-                                麥當勞 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.美式美食</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><small>30TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>                 
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
-                        <div class="popularRestaurantContent">
-                            <div class="row mt-2">
-                                麥當勞 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.美式美食</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><small>30TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>                 
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
-                        <div class="popularRestaurantContent">
-                            <div class="row mt-2">
-                                麥當勞 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.美式美食</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><small>30TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>                 
-                <div class="col-sm-4 col-12 mt-5">
-                    <a href="#" class="restaurantLink">
-                        <div><img src="img/MC.jpg" class="restaurantImage" alt=""></div>
-                        <div class="popularRestaurantContent">
-                            <div class="row mt-2">
-                                麥當勞 中佑店
-                            </div>
-                            <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.美式美食</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
-                                <div class="mr-1 popularRestaurantContentItem"><small>30TWD 費用</small></div>
-                            </div>
-                        </div>
-                    </a>
-                </div>                 
+                                 
             </div> <!-- row -->
         </div> <!-- popularRestaurant --> 
 
@@ -313,5 +239,28 @@
                 $("#headerSearchLarge,#headerAreaLarge,#headerCategoryLarge").css("visibility","hidden");
             }
         });
+
+        var loginshop = new Vue({
+        el: "#popularRestaurant",
+        data: {
+            list: []
+        },
+        methods: {
+            init: function () {
+                let _this = this;
+                axios.get('/api/shop')
+                    .then(function (response) {
+                        _this.list = response.data;
+                        
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+            }
+        },
+        mounted: function () {
+            this.init();
+        }
+    });
     </script>
 @endsection
