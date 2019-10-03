@@ -1,0 +1,90 @@
+#buttomDiv{
+    width: 98%;
+    margin:auto;
+}
+.nav-link{
+    color: black;
+    font-size: 26px;
+    font-weight: bold;
+}
+.nav-link:hover{
+    color:#d0d0d0;
+}
+/* 暫停接單 */
+.card{
+    width: 70%;
+    margin: 5% auto;
+}
+.card-header{
+    font-size: 26px;
+}
+.card-body{
+    font-size: 18px;
+}
+/* 歷史訂單 */
+.input-group{
+    width: 30%;
+    margin: 1% 1% auto auto ;
+}
+table {
+    border-collapse: collapse;
+    width: 98%;
+    margin: 1% auto;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px;
+}
+th{
+    background-color: whitesmoke;
+}
+td{
+    color:#5b5b5b;
+}
+/* 餐廳資訊 */
+#information1{
+    width: 40%;
+    margin: 3% auto auto 10% ; 
+    font-size: 20px;
+    /* border: 2px solid black; */
+    display: inline-block;
+}
+input:focus {
+    outline: none;
+    border-color:#d0d0d0;
+    border-radius: 15px;
+}
+.col-form-label{
+    color:#5b5b5b;
+    font-weight: bold;
+    text-align: right;
+}
+.form-control-plaintext{
+    color:#5b5b5b;
+}
+#restEdit,#pswdEdit{
+    margin: 5% auto;
+}
+#emailHelp{
+    font-size: 12px;
+    color: red;
+    display: none;
+}
+#delayHelp{
+    font-size: 16px;
+    color: red;
+}
+#information2{
+    /* border: 2px solid orange; */
+    width: 40%;
+    font-size: 20px;
+    display: inline-block;
+    position: absolute;
+    margin: 3% auto auto auto; 
+}
+.form-control:focus {
+    border-color: #5b5b5b;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
