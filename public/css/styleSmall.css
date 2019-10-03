@@ -219,7 +219,6 @@
 .restaurantImgDiv {
     width: 100%;
     height: 380px;
-    background-image: url("../img/restaurant1.jpg");
     background-position: center;
     background-size: cover;
     display: flex;
@@ -312,7 +311,7 @@
 
 /* orderModal */
 #orderModalCenterHeader {
-    background-image: url("../img/food5.jpg");
+
     background-repeat: no-repeat;
     background-position: center;
     background-size:cover;

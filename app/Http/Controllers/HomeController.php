@@ -95,9 +95,9 @@ class HomeController extends Controller
             
 
             $data = ['name' => $memberName , 'token' => $encryptID ];
-            Mail::send('email.welcome', $data, function($message) use($memberEmail) {
-            $message->to($memberEmail)->subject('CYFood 會員密碼重置');
-            });
+            // Mail::send('email.welcome', $data, function($message) use($memberEmail) {
+            // $message->to($memberEmail)->subject('CYFood 會員密碼重置');
+            // });
             return response()->json(['ok' => true], 200);
             
         }else{
