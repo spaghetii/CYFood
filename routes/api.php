@@ -18,11 +18,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/coupon', 'BackEnd@couponAll');
+Route::post('/coupon', 'BackEnd@couponInsert');
 
 Route::get('/member', 'BackEnd@memberAll');
 
 Route::get('/shop', 'BackEnd@shopAll');
 
+Route::post('/coupon', 'BackEnd@couponInsert');
+
+Route::put('/coupon/{id}', 'BackEnd@couponUpdate');
+
+// 測試用
 Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);
 });
