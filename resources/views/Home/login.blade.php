@@ -125,58 +125,60 @@
         </div>
     </div>
 
-<script>
-    //登入驗證
-    var loginform = new Vue({
-        el: "#login-form",
-        data: {
-            loginEmail: '',
-            loginPassword: '',
-            space: false,
-            checklogin: false
-        },
-        methods: {
-            login: function () {
-                let self = this;
-                if (this.loginEmail == '' || this.loginPassword == '') {
-                    this.space = true;
-                } else {
-                    this.space = false;
-                    this.checklogin = false;
-                    axios.post('/login/check', {
-                            loginEmail: this.loginEmail,
-                            loginPassword: this.loginPassword
-                        })
-                        .then(function (response) {
-                            console.log(response.data['ok']);
-                            if (response.data['ok']) {
-                                Swal.fire({
-                                    type: 'success',
-                                    title: '登入成功',
-                                    html: '本畫面於<strong></strong>秒後回到首頁',
-                                    timer: 6000,
-                                    onBeforeOpen: () => {
-                                        Swal.showLoading()
-                                        timerInterval = setInterval(() => {
-                                            Swal.getContent().querySelector(
-                                                    'strong')
-                                                .textContent = parseInt(Math
-                                                    .ceil(Swal.getTimerLeft() /
-                                                        1000))
-                                        }, 100)
-                                    },
-                                    onClose: () => {
-                                        clearInterval(timerInterval)
-                                        window.location.href = "/";
-                                    }
-                                })
-                            }else{
-                                self.checklogin = true;
-                            }
-                        })
-                        .catch(function (response) {
-                            console.log(response)
-                        });
+    <script>
+        //登入驗證
+        var loginform = new Vue({
+            el: "#login-form",
+            data: {
+                loginEmail: '',
+                loginPassword: '',
+                space: false,
+                checklogin: false
+            },
+            methods: {
+                login: function () {
+                    let self = this;
+                    if (this.loginEmail == '' || this.loginPassword == '') {
+                        this.space = true;
+                    } else {
+                        this.space = false;
+                        this.checklogin = false;
+                        axios.post('/login/check', {
+                                loginEmail: this.loginEmail,
+                                loginPassword: this.loginPassword
+                            })
+                            .then(function (response) {
+                                console.log(response.data['ok']);
+                                if (response.data['ok']) {
+                                    Swal.fire({
+                                        type: 'success',
+                                        title: '登入成功',
+                                        html: '本畫面於<strong></strong>秒後回到首頁',
+                                        timer: 3000,
+                                        onBeforeOpen: () => {
+                                            Swal.showLoading()
+                                            timerInterval = setInterval(() => {
+                                                Swal.getContent().querySelector(
+                                                        'strong')
+                                                    .textContent = parseInt(Math
+                                                        .ceil(Swal.getTimerLeft() /
+                                                            1000))
+                                            }, 100)
+                                        },
+                                        onClose: () => {
+                                            clearInterval(timerInterval)
+                                            window.location.href = "/loginHomepage";
+                                        }
+                                    })
+                                }else{
+                                    self.checklogin = true;
+                                }
+
+                            })
+                            .catch(function (response) {
+                                console.log(response)
+                            });
+                    }
                 }
             }
         }

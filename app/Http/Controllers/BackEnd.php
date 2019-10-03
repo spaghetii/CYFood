@@ -46,4 +46,35 @@ class BackEnd extends Controller
         $ok = ($rows > 0);
         return response()->json(['ok' => $ok], 200);
     }
+
+    function couponInsert(Request $request) {
+        $coupon = new Coupon;
+        $coupon->CouponCode = $request->CouponCode;
+        $coupon->CouponType = $request->CouponType;
+        $coupon->CouponDiscount = $request->CouponDiscount;
+        $coupon->CouponStart = $request->CouponStart;
+        $coupon->CouponDeadline = $request->CouponDeadline;
+        $ok = $coupon->save();
+        return response()->json(['ok' => $ok], 200);
+    }
+
+    function couponUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $coupon = Coupon::find($id);
+        if ($coupon) {
+            $coupon->CouponCode = $request->CouponCode;
+            $coupon->CouponType = $request->CouponType;
+            $coupon->CouponDiscount = $request->CouponDiscount;
+            $coupon->CouponStart = $request->CouponStart;
+            $coupon->CouponDeadline = $request->CouponDeadline;
+            $ok = $coupon->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
+    
 }
