@@ -44,10 +44,10 @@
                 <div class="row" id="detailsButton">
                     <div class="col-3"></div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="rejectClick(index)">✘拒絕訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn">✘拒絕訂單</button>
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="acceptClick(index)">✔接受訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn">✔接受訂單</button>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -83,7 +83,7 @@
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             });
                         });
-                        // console.log(_this.list);
+                        console.log(_this.list);
                     })
                     .catch(function (response) {
                         console.log(response);
@@ -92,15 +92,6 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block"); 
-            },
-            acceptClick:function(index){
-                // axios.delete('/api/order')
-                //     .then(function (response) {
-                        
-                //     })
-                //     .catch(function (response) {
-                //         console.log(response);
-                // });
             }
         }
     })
