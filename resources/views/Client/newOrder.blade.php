@@ -6,8 +6,8 @@
 <div class="row no-gutters" id="buttomDiv">
     <div class="col-4">
         <div id="leftButtom">
-            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
-                @{{detailsTitle}}
+            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in detailsTitle" v-on:click="orderClick(index)">
+                @{{item.ordersNum}}⎯ @{{item.memberName}}
             </button>
         </div>
     </div>
@@ -58,17 +58,21 @@
 
 @section('script')
 <script>
+
     var buttomDiv = new Vue({
         el:"#buttomDiv",
         data:{
-            detailsTitle:"CY201909240001—Jennifer",
+            detailsTitle:[
+                {ordersNum:"CY20191004001",memberName:"Jennifer"},
+                {ordersNum:"CY20191004002",memberName:"Leonard"},
+            ],
             detailsCount:"10",
             detailsMeal:"CY超值豪華A9和牛套餐",
             detailsPrice:"399",
             totalPrice:"3990"
         },
         methods:{
-            orderClick:function(){
+            orderClick:function(index){
                 $(".jumbotron").css("display","block");
             }
         }
