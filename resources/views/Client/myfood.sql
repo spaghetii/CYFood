@@ -17,3 +17,35 @@ values ('CY20191004003',
     {"memberName":"Bear","mealQuantity":"50","mealName":"超級滷肉飯","mealUnitPrice":"100"},
     {"memberName":"Bear","mealQuantity":"1","mealName":"青菜","mealUnitPrice":"30"}]',
 '2019/10/05','2019/10/05','0',2,33);
+insert into orders 
+(ordersNum,ordersDetails,ordersCreate,ordersUpdate,ordersFinish,memberId,mealId) 
+values ('CY20191004004',
+'[{"memberName":"Lebron","mealQuantity":"2","mealName":"可不可紅茶超級大杯","mealUnitPrice":"66"},
+    {"memberName":"Lebron","mealQuantity":"50","mealName":"超級滷肉飯加滷蛋","mealUnitPrice":"100"},
+    {"memberName":"Lebron","mealQuantity":"1","mealName":"青菜不要高麗菜","mealUnitPrice":"199"}]',
+'2019/10/05','2019/10/05','0',2,33);
+insert into orders 
+(ordersNum,ordersDetails,ordersCreate,ordersUpdate,ordersFinish,memberId,mealId) 
+values ('CY20191004005',
+'[{"memberName":"Chris","mealQuantity":"2","mealName":"可不可紅茶超級大杯中杯小杯","mealUnitPrice":"66"},
+    {"memberName":"Chris","mealQuantity":"50","mealName":"超級滷肉飯加滷蛋","mealUnitPrice":"100"},
+    {"memberName":"Chris","mealQuantity":"1","mealName":"青菜不要高麗菜","mealUnitPrice":"199"}]',
+'2019/10/05','2019/10/05','0',2,33);
+insert into orders 
+(ordersNum,ordersDetails,ordersCreate,ordersUpdate,ordersFinish,memberId,mealId) 
+values ('CY20191004006',
+'[{"memberName":"Chris","mealQuantity":"2","mealName":"可不可紅茶超級大杯中杯小杯","mealUnitPrice":"66"},
+    {"memberName":"Chris","mealQuantity":"50","mealName":"超級滷肉飯加滷蛋","mealUnitPrice":"100"},
+    {"memberName":"Chris","mealQuantity":"50","mealName":"超級滷肉飯加滷蛋","mealUnitPrice":"100"},
+    {"memberName":"Chris","mealQuantity":"1","mealName":"青菜不要高麗菜","mealUnitPrice":"199"}]',
+'2019/10/05','2019/10/05','0',2,33);
+insert into orders 
+(ordersNum,ordersDetails,ordersCreate,ordersUpdate,ordersFinish,memberId,mealId) 
+values ('CY20191004006',
+'[{"memberName":"克里斯伊凡","mealQuantity":"2","mealName":"可不可紅茶超級大杯中杯小杯","mealUnitPrice":"66"},
+    {"memberName":"克里斯伊凡","mealQuantity":"50","mealName":"超級滷肉飯加滷蛋","mealUnitPrice":"100"},
+    {"memberName":"克里斯伊凡","mealQuantity":"50","mealName":"超級滷肉飯加滷蛋","mealUnitPrice":"100"},
+    {"memberName":"克里斯伊凡","mealQuantity":"1","mealName":"青菜不要高麗菜","mealUnitPrice":"199"}]',
+'2019/10/05','2019/10/05','0',2,33);
+
+
