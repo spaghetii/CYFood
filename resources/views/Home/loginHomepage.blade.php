@@ -140,6 +140,7 @@
             </div> <!-- row -->
         </div> <!-- popularRestaurant --> 
 
+        {{-- 顯示更多 btn --}}
         <div class="displayMore container-fluid">
             <div class="row justify-content-center align-items-center mt-5 mb-5">
                 <button type="button" class="btn btn-lg btn-dark ">顯示更多餐廳</button>
@@ -165,7 +166,15 @@
             }
         });
 
-        var Recommend = new Vue({
+        var nav = new Vue({
+            el:"#navbarItem",
+            data:{
+                navlogin:false,
+                navshow:true
+            }
+        })
+
+        var recommendApp = new Vue({
             el: "#todayRecommend",
             data: {
                 temp: [],
@@ -190,7 +199,7 @@
                             _this.recommend = _this.temp.filter(function(item, index, array){
                                 return index < 3;    // 取得陣列中雙數的物件
                                 });
-                            console.log(_this.recommend);
+                            // console.log(_this.recommend);
                         })
                         .catch(function (response) {
                             console.log(response);
@@ -214,12 +223,16 @@
                     axios.get('/api/shop')
                         .then(function (response) {
                             _this.listtemp = response.data;
-
+                            _this.list = _this.listtemp;
                             //篩選出跟本日推薦不重複的餐廳
-                            _this.list = _this.listtemp.filter(function(element, index, arr){
-                                return arr.indexOf(element) === index;
+                            recommendApp.recommend.forEach((r_ele,r_index) => {
+                                _this.list = _this.list.filter(function(element, index, arr){
+                                    console.log(!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
+                                    // console.log(arr.indexOf(element) === index);
+                                    return (!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
+                                });
                             });
-                            console.log(_this.list);
+                            // console.log(_this.list);
                         })
                         .catch(function (response) {
                             console.log(response);

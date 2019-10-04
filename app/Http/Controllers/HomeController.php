@@ -87,6 +87,11 @@ class HomeController extends Controller
         }
     }
 
+    function logout(){
+        Session::forget('userName');
+        return redirect("/");
+    }
+
     function reset(Request $request){
         $member = DB::table("members")->where("MemberEmail",$request->email)->first();
         if($member){
