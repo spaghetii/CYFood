@@ -18,9 +18,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// coupon
+// 顯示全部
 Route::get('/coupon', 'BackEnd@couponAll');
+// 新增資料
 Route::post('/coupon', 'BackEnd@couponInsert');
+// 修改優惠
+Route::put('/coupon/{id}', 'BackEnd@couponUpdate');
+// 刪除
+Route::delete('/coupon/{id}', "BackEnd@couponDelete");
 
+//order
+Route::get('/order', 'BackEnd@orderAll');
+
+
+
+// member
+// 顯示全部
 Route::get('/member', 'BackEnd@memberAll');
 
 Route::get('/shop', 'BackEnd@shopAll');
@@ -35,25 +49,12 @@ Route::get('/shop/{id}', function($id) {
      
 });
 
-Route::post('/coupon', 'BackEnd@couponInsert');
 
-Route::put('/coupon/{id}', 'BackEnd@couponUpdate');
 
 // 測試用
 Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);
 });
-
-// Route::post('/test/', function(Request $request) {
-//     $post = new Coupon;
-//     $post->title = $request->input('title', '沒有標題');
-//     $post->body = $request->input('body', '沒有內文。');
-//     $ok = $post->save();
-
-//     return response()->json(['ok' => $ok], 200);
-// });
-
-Route::delete('/coupon/{id}', "BackEnd@couponDelete");
 
 
 
