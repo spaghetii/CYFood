@@ -144,13 +144,13 @@
                 subButton: function () {
                     if (this.count > 1) {
                         this.count--;
-                        this.totalPrice -= this.meals.MealPrice;
+                        this.totalPrice -= parseInt(this.meals.MealPrice);
                     }
                 },
                 
                 plusButton: function () {
                     this.count++;
-                    this.totalPrice += this.meals.MealPrice;
+                    this.totalPrice += parseInt(this.meals.MealPrice);
                 }
             }
         })
