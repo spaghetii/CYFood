@@ -68,7 +68,7 @@
                 <p>還等什麼？一起和我們開啟這個外送美食給大家的旅程吧！</p>
             </div>
             <div>
-                <a href="#" class="btn btn-warning" id="restaurantJoinBtn" role="button" aria-pressed="true">立即加入</a>
+                <a href="/shop/register" class="btn btn-warning" id="restaurantJoinBtn" role="button" aria-pressed="true">立即加入</a>
             </div>
         </div>
     </div>
@@ -89,6 +89,14 @@
                 }else{
                     $("#headerSearchLarge").css("visibility","hidden");
                 }
+        })
+
+        var nav = new Vue({
+            el:"#navbarItem",
+            data:{
+                navlogin:true,
+                navshow:false
+            }
         })
 
 

@@ -10,15 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-<<<<<<< HEAD
-//===========客戶端====================
-Route::get('/', "HomeController@index");
-=======
 
 Route::get('/', "HomeController@index")->middleware('check');
->>>>>>> 041575103db9a1db5e90245676b484a427011418
 
 Route::get('/login',"HomeController@login");
+
+Route::get('/logout',"HomeController@logout");
 
 Route::post('/login/check',"HomeController@logincheck");
 
