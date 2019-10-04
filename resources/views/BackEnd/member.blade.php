@@ -29,7 +29,7 @@
             </div>
 
             <hr>
-            <div v-for="item in items" v-if="!item.MemberPermission">
+            <div v-for="item,index in items" v-if="!item.MemberPermission">
                 <div class="line3 row">
                     <div class="col text-center">@{{item.MemberName}}</div>
                     <div class="col text-center">@{{item.MemberEmail}}</div>
@@ -64,19 +64,19 @@
                     <div class="modal-body">
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">會員名稱: </label>
-                            <input type="text" class="form-control col-sm-6" >
+                            <input type="text" class="form-control col-sm-6" v-model="MemberName" >
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">電子郵件: </label>
-                            <input type="text" class="form-control col-sm-6" >
+                            <input type="text" class="form-control col-sm-6" v-model="MemberEmail">
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">會員電話: </label>
-                            <input type="text" class="form-control col-sm-6" >
+                            <input type="text" class="form-control col-sm-6" v-model="MemberPhone" >
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">會員密碼: </label>
-                            <input type="text" class="form-control col-sm-6" >
+                            <input type="text" class="form-control col-sm-6" v-model="MemberPassword">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -219,7 +219,7 @@
                             MemberPhone: this.MemberPhone,
                             MemberPassword: this.MemberPassword,
                         }
-
+                        console.log(dataToSever);
                         // 檢查資料 (有空再說)
 
                         ///////////
@@ -227,12 +227,12 @@
                         // 傳送資料
                         axios.post('/api/member', dataToSever)
                         .then(function (response) {
-                            // console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
                             member.init();                //更新目前畫面
                         })
                         
                     }
-                    $("#couponModal").modal("hide");  //隱藏對話盒
+                    $("#memberModal").modal("hide");  //隱藏對話盒
                 }
             }
         });                 //vue-modal tail

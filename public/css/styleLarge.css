@@ -445,3 +445,37 @@
 .creditInputWidth {
     width:100%;
 }
+
+.changeProfileBtn {
+    font-weight: bolder;
+    width: 25%;
+    height: 40px;
+}
+
+.changeProfileBtnDiv{
+    display:none;
+}
+
+.userProfileHidden {
+    display: none;
+    width: 100%;
+}
+
+/* 標註:共用屬性 */
+.form-control:hover {
+    border-color: rgba(82,168,236,0.8);
+    box-shadow: 0 0 10px 1px rgba(82,168,236,0.6) inset, 0 0 10px 1px rgba(82,168,236,0.6);
+}
+
+/* trackingOrder頁面 */
+#trackingOrderBgDiv {
+    height: 675px;
+    background: center/cover no-repeat  url("../img/bg2.jpg") ;
+}
+
+#trackingOrderDiv {
+    border: 1px  rgb(197, 197, 197) solid;
+    background-color: rgba(255, 255, 255, 0.7) ;
+    box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
+}
+

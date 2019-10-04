@@ -130,6 +130,7 @@
                     axios.get('/api/coupon')
                         .then(function (response) {
                             _this.list  = response.data;
+                            console.log(_this.list);
                         })
                         .catch(function (response) {
                             console.log(response);

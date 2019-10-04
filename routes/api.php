@@ -18,44 +18,47 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// coupon
+// 顯示全部
 Route::get('/coupon', 'BackEnd@couponAll');
+// 新增資料
 Route::post('/coupon', 'BackEnd@couponInsert');
+// 修改優惠
+Route::put('/coupon/{id}', 'BackEnd@couponUpdate');
+// 刪除
+Route::delete('/coupon/{id}', "BackEnd@couponDelete");
 
+//order
+Route::get('/order', 'BackEnd@orderAll');
+
+
+
+// member
+// 顯示全部
 Route::get('/member', 'BackEnd@memberAll');
+// 新增資料
+Route::post('/member', 'BackEnd@memberInsert');
 
+// shop
+// 顯示全部
 Route::get('/shop', 'BackEnd@shopAll');
 
-Route::get('/meal/{id}', function($id) {
-    return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
- 
-});
 
-Route::get('/shop/{id}', function($id) {
-    return response()->json(Shop::where('ShopID', $id)->first(), 200);
-     
-});
 
-Route::post('/coupon', 'BackEnd@couponInsert');
 
-Route::put('/coupon/{id}', 'BackEnd@couponUpdate');
 
 // 測試用
 Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);
 });
 
-// Route::post('/test/', function(Request $request) {
-//     $post = new Coupon;
-//     $post->title = $request->input('title', '沒有標題');
-//     $post->body = $request->input('body', '沒有內文。');
-//     $ok = $post->save();
+Route::get('/shop/{id}', function($id) {
+    return response()->json(Shop::where('ShopID', $id)->first(), 200);     
+});
 
-//     return response()->json(['ok' => $ok], 200);
-// });
-
-Route::delete('/coupon/{id}', "BackEnd@couponDelete");
-
-
-
+Route::get('/meal/{id}', function($id) {
+    return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
+ 
+});
 
 ?>

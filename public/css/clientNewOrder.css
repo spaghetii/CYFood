@@ -45,13 +45,11 @@
     margin: auto;
     color:#5b5b5b;
 }
-#takeoutTime{
-    width: 400px;
+.detailsBtn{
     font-size: 28px;
-    margin: 3% auto;
+    margin: 10% auto;
     display: block;
     font-weight: bold;
-    text-align: center;
 }
 @media (min-width: 1300px) and (max-width: 1600px){
     #buttomDiv {

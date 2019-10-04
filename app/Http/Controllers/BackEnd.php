@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Coupon;
+use App\Orders;
 use App\Member;
 use App\Shop;
 
@@ -27,6 +28,10 @@ class BackEnd extends Controller
     
     function couponAll() {
         return response()->json(Coupon::all(), 200);
+    }
+
+    function orderAll() {
+        return response()->json(Orders::all(), 200);
     }
 
     function memberAll() {
@@ -55,6 +60,16 @@ class BackEnd extends Controller
         $coupon->CouponStart = $request->CouponStart;
         $coupon->CouponDeadline = $request->CouponDeadline;
         $ok = $coupon->save();
+        return response()->json(['ok' => $ok], 200);
+    }
+    
+    function memberInsert(Request $request) {
+        $member = new Member;
+        $member->MemberName = $request->MemberName;
+        $member->MemberEmail = $request->MemberEmail;
+        $member->MemberPhone = $request->MemberPhone;
+        $member->MemberPassword = $request->MemberPassword;
+        $ok = $member->save();
         return response()->json(['ok' => $ok], 200);
     }
 

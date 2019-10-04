@@ -36,6 +36,10 @@ class HomeController extends Controller
         return view('home.userProfile');
     }
 
+    function trackingOrder() {
+        return view('home.trackingOrder');
+    }
+
    function newOrder(){
        return view('Client.newOrder');
    }
