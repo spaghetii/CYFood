@@ -14,105 +14,108 @@
 @section('content')
 <div id="restaurant">
     {{-- 餐廳title資訊 --}}
-    <div class="restaurantImgDiv">
+    <div class="restaurantImgDiv" id="topshop" :style="{backgroundImage: 'url('+ shop.ShopImage +')'}">
         <div class="restaurantDetailDiv d-flex align-items-center">
             <div class="restaurantDetail container">
-                <h2>Din Tai Fung鼎泰豐 中佑店</h2>
-                <p class="mt-3 mb-0">$.中式料理</p>
+            <h2>@{{shop.ShopName}}</h2>
+                <p class="mt-3 mb-0">$.@{{shop.ShopType}}</p>
                 <div class="restaurantDetailList row container">
-                    <div class="mt-4 mr-2">10 – 20 分鐘</div>
+                    <div class="mt-4 mr-2">@{{shop.ShipTime-5}} – @{{shop.ShipTime+5}} 分鐘</div>
                     <div class="mt-4 mr-2"><img src="/img/star1.png" class="mr-1">4.8/5</div>
-                    <div class="mt-4 mr-2">60TWD 費用</div>
+                    <div class="mt-4 mr-2">15TWD 費用</div>
                 </div> 
                 <div class="restaurantDetailAddress">
-                    <span>台中市西屯區台灣大道三段251號b2, Taichung.&nbsp;<a href="">詳細資訊</a></span>
+                    <span>@{{shop.ShopAddress}}&nbsp;<a href="">詳細資訊</a></span>
                 </div>
             </div>      
         </div>
     </div>
 
     {{-- 分類排 --}}
-    <div id="categoryBarDiv">
-        <div class="container-fluid" id="categoryBar">
-            <div class="row no-gutters">
-                <nav class="navbar navbar-expand-sm navbar-light bg-white">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav row align-items-center" id="categoryBarList">
-                            <a class="nav-item nav-link":href="'#'+ type" v-for="type in types">@{{type}}</a>
-                            
+    <div id="meallist">
+        <div id="categoryBarDiv">
+            <div class="container-fluid" id="categoryBar">
+                <div class="row no-gutters">
+                    <nav class="navbar navbar-expand-sm navbar-light bg-white">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav row align-items-center" id="categoryBarList">
+                                <a class="nav-item nav-link":href="'#'+ type" v-for="type in types">@{{type}}</a>
+                                
+                            </div>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
 
     {{-- 分類內容 --}}
-    <div class="container-fluid categoryListDiv" id="popularList" v-for="type in types">
-        <div :id="type">
-            <h4>@{{type}}</h4>
+    
+        <div class="container-fluid categoryListDiv" id="popularList" v-for="type in types">
+            <div :id="type">
+                <h4>@{{type}}</h4>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-12 mt-5" v-for="meal,index in list" v-if="meal.MealType === type">
+                    <a  class="categoryItem" v-on:click="selection(index)" >
+                        <div class="media">
+                            <div class="media-body d-flex flex-column">
+                                <div class="col-10">
+                                <h5 class="categoryFoodTitle">@{{meal.MealName}}</h5>
+                                    <h6 class="categoryFoodDesc">@{{meal.MealDesc}}
+                                    </h6>
+                                </div>
+                                <div class="col-2 align-items-end">
+                                    $@{{meal.MealPrice}}
+                                </div>
+                            </div>
+                            <img :src="meal.MealImage" class="categoryItemImg" v-if="meal.MealImage" alt="">
+                        </div>
+                    </a>
+                </div>                       
+            </div>
         </div>
-        <div class="row">
-            <div class="col-sm-4 col-12 mt-5" v-for="meal in list" v-if="meal.MealType === type">
-                <a href="#" class="categoryItem" data-toggle="modal" data-target="#orderModalCenter" >
-                    <div class="media">
-                        <div class="media-body d-flex flex-column">
-                            <div class="col-10">
-                            <h5 class="categoryFoodTitle">@{{meal.MealName}}</h5>
-                                <h6 class="categoryFoodDesc">@{{meal.MealDesc}}
-                                </h6>
-                            </div>
-                            <div class="col-2 align-items-end">
-                                $@{{meal.MealPrice}}
-                            </div>
-                        </div>
-                        <img :src="meal.MealImage" class="categoryItemImg" v-if="meal.MealImage" alt="">
+    </div> <!-- mealList -->
+
+
+
+<!-- OrderModal -->
+<div class="modal fade" id="orderModalCenter" tabindex="-1" role="dialog" aria-labelledby="orderModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" id="orderModalCenterContent">
+        <div class="modal-header" id="orderModalCenterHeader" v-if="meals.MealImage" :style="{backgroundImage: 'url('+ meals.MealImage +')'}">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><img src="/img/close1.png" alt=""></span>
+          </button>
+        </div>
+        <div class="modal-body" id="orderModalCenterBody">
+            <div class="orderModaloodTitle">
+                <h2>@{{meals.MealName}}</h2>
+            </div>
+            <div class="orderModalFoodDesc">
+                @{{meals.MealDesc}}
+            </div>
+        </div>
+        <div class="modal-footer" id="orderModalCenterFooter">
+            <button type="button" class="btn btn-lg" v-on:click="subButton">-</button>
+            <span class="badge badge-white">@{{count}}</span>
+            <button type="button" class="btn btn-lg" v-on:click="plusButton">+</button>
+            <button type="button" class="btn btn-lg btn-block">
+                <div class="" >
+                    新增&nbsp;@{{count}}&nbsp;份餐點至訂單                    
+                    <div class="floatRight">
+                        $@{{totalPrice}}
                     </div>
-                </a>
-            </div>                       
-    </div> <!-- popularList -->
-
-
-
-    <!-- OrderModal -->
-    <div class="modal fade" id="orderModalCenter" tabindex="-1" role="dialog" aria-labelledby="orderModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content" id="orderModalCenterContent">
-            <div class="modal-header" id="orderModalCenterHeader">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true"><img src="img/close1.png" alt=""></span>
-              </button>
-            </div>
-            <div class="modal-body" id="orderModalCenterBody">
-                <div class="orderModaloodTitle">
-                    <h2>6吋火腿酪梨泥堡 6-Inch Ham and Avocado Sub</h2>
                 </div>
-                <div class="orderModalFoodDesc">
-                    內含酪梨及特選火腿。此品項已內含酪梨泥。醬汁最佳風味建議至多兩種為宜。訂單金額超過一千元以上時, 建議善用預約功能。響應環保僅提供紙袋。圖片僅供參考。如您選定的麵包或餅乾已售完, 我們將會您更換其他較接近的口味。
-                </div>
-            </div>
-            <div class="modal-footer" id="orderModalCenterFooter">
-                <button type="button" class="btn btn-lg" v-on:click="subButton">-</button>
-                <span class="badge badge-white">@{{count}}</span>
-                <button type="button" class="btn btn-lg" v-on:click="plusButton">+</button>
-                <button type="button" class="btn btn-lg btn-block">
-                    <div class="" >
-                        新增&nbsp;@{{count}}&nbsp;份餐點至訂單                    
-                        <div class="floatRight">
-                            $@{{totalPrice}}
-                        </div>
-                    </div>
-                </button>
-            </div>
-          </div> <!-- modal-content -->
-        </div> <!-- modal-dialog -->
-    </div> <!-- orderModalCenter -->
-</div>
+            </button>
+        </div>
+      </div> <!-- modal-content -->
+    </div> <!-- modal-dialog -->
+</div> <!-- orderModalCenter -->
 @endsection
 
 @section('script')
@@ -130,32 +133,33 @@
             }
         })
 
-        var orderModalButton = new Vue({
-            el: "#orderModalCenterFooter",
+        var orderModal = new Vue({
+            el: "#orderModalCenter",
             data: {
+                meals:[],
                 count: 1,
-                unitPrice: 128,
-                totalPrice: 128,
+                totalPrice: null,
             },
             methods: {
                 subButton: function () {
                     if (this.count > 1) {
                         this.count--;
-                        this.totalPrice -= this.unitPrice;
+                        this.totalPrice -= this.meals.MealPrice;
                     }
                 },
                 
                 plusButton: function () {
                     this.count++;
-                    this.totalPrice += this.unitPrice;
+                    this.totalPrice += this.meals.MealPrice;
                 }
             }
         })
 
-        var meal = new Vue({
-        el: "#restaurant",
+        var meals = new Vue({
+        el: "#meallist",
         data: {
             list: [],
+            shop: [],
             temp: [],
             types:[]
             
@@ -167,14 +171,50 @@
                 axios.get("/api/meal/{{$id}}")
                     .then(function (response) {
                         _this.list = response.data;
-                        
+                        console.log(_this.list);
+                        //取出餐點種類
                         for(i= 0;i<_this.list.length;i++){
                             _this.temp[i] = _this.list[i].MealType;
                         }
                         _this.types = _this.temp.filter(function(element, index ,arr){
                             return arr.indexOf(element) === index;
                         })
-                        console.log(_this.types);
+                        
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+                
+            },
+            selection: function(e){
+                orderModal.count = 1;
+                orderModal.meals = this.list[e];
+                orderModal.totalPrice = this.list[e].MealPrice;
+                $("#orderModalCenter").modal( { show: true } );
+                console.log(orderModal.meals);
+            }
+        },
+        mounted: function () {
+            this.init();
+        }
+    });
+
+    var topshop = new Vue({
+        el: "#topshop",
+        data: {
+            shop: []
+
+        },
+        methods: {
+            init: function () {
+                let _this = this;
+                
+                    axios.get("/api/shop/{{$id}}")
+                    .then(function (response) {
+                        _this.shop= response.data;
+                        
+                        
+                        console.log(_this.shop);
                     })
                     .catch(function (response) {
                         console.log(response);

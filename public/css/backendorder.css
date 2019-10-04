@@ -117,3 +117,21 @@
     overflow : hidden;
     text-overflow : ellipsis;
 }
+
+.boxBorder{
+    border: 0px;
+}
+.boxBorder:hover{
+    background-color: rgb(205, 217, 255);
+}
+
+#couponModal label{
+    font-size: 20px;
+}
+
+.modal-header{
+    background-color: orange;
+    color: white;
+    text-align: center;
+    font-size: 2em;
+}

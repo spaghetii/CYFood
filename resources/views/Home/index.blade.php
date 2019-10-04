@@ -34,7 +34,7 @@
             <h3>本日推薦</h3>
         </div>
         <div class="row" >
-            <div v-for="item in list" class="col-md-4 col-12 mt-5">
+            <div v-for="item in recommend" class="col-md-4 col-12 mt-5">
                 <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
                 <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
@@ -92,27 +92,41 @@
         })
 
 
-        var shop = new Vue({
-        el: "#todayRecommend",
-        data: {
-            list: []
-        },
-        methods: {
-            init: function () {
-                let _this = this;
-                axios.get('/api/shop')
-                    .then(function (response) {
-                        _this.list = response.data;
-                        
-                    })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
+        var Recommend = new Vue({
+            el: "#todayRecommend",
+            data: {
+                temp: [],
+                recommend:[]
+            },
+            methods: {
+                init: function () {
+                    let _this = this;
+                    axios.get('/api/shop')
+                        .then(function (response) {
+                            _this.temp = response.data;
+                            
+                            //本日推薦(隨機推薦)
+                            for (i = _this.temp.length - 1; i > 0; i--) {
+                                    j = Math.floor(Math.random() * (i + 1));
+                                    temp = _this.temp[i];
+                                    _this.temp[i] = _this.temp[j];
+                                    _this.temp[j] = temp;
+                                }
+                            
+                            //取前3或6筆
+                            _this.recommend = _this.temp.filter(function(item, index, array){
+                                return index < 3;    // 取得陣列中雙數的物件
+                                });
+                            console.log(_this.recommend);
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
+                }
+            },
+            mounted: function () {
+                this.init();
             }
-        },
-        mounted: function () {
-            this.init();
-        }
-    });
+        });
     </script>
 @endsection

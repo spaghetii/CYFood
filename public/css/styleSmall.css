@@ -219,7 +219,6 @@
 .restaurantImgDiv {
     width: 100%;
     height: 380px;
-    background-image: url("../img/restaurant1.jpg");
     background-position: center;
     background-size: cover;
     display: flex;
@@ -312,7 +311,7 @@
 
 /* orderModal */
 #orderModalCenterHeader {
-    background-image: url("../img/food5.jpg");
+
     background-repeat: no-repeat;
     background-position: center;
     background-size:cover;
@@ -428,3 +427,26 @@
     display: none;
 }
 
+/* userProfile頁面 */
+#userProfileBgDiv {
+    height: 670px;
+    background: center/cover no-repeat  url("../img/bg1.jpg") ;
+}
+
+#userProfileOuterDiv {
+    border: 1px  rgb(197, 197, 197) solid;
+    background-color: rgba(255, 255, 255, 0.85) ;
+    box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
+}
+
+#userProfileInnerDiv {
+    padding: 60px 0px;
+}
+
+.creditInputWidth {
+    width:100%;
+}
+
+#blankDiv {
+    display: none;
+}
