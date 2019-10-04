@@ -19,7 +19,7 @@
             <div class="restaurantDetail container">
             <h2>@{{shop.ShopName}}</h2>
                 <p class="mt-3 mb-0">$.@{{shop.ShopType}}</p>
-                <div class="restaurantDetailList row container">
+                <div class="restaurantDetailList d-flex flex-row">
                     <div class="mt-4 mr-2">@{{shop.ShipTime-5}} – @{{shop.ShipTime+5}} 分鐘</div>
                     <div class="mt-4 mr-2"><img src="/img/star1.png" class="mr-1">4.8/5</div>
                     <div class="mt-4 mr-2">15TWD 費用</div>
