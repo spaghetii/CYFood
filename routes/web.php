@@ -23,6 +23,8 @@ Route::get('/userOrderDetail', "HomeController@userOrderDetail");
 
 Route::get('/userProfile', "HomeController@userProfile");
 
+Route::get('/trackingOrder', "HomeController@trackingOrder");
+
 
 Route::get('/newOrder',"HomeController@newOrder");
 Route::get('/processing',"HomeController@processing");
