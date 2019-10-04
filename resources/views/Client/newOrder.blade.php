@@ -3,26 +3,26 @@
 @section('content')
 <!-- buttom -->
 <link rel="stylesheet" href="/css/clientNewOrder.css">
-<div class="row no-gutters" id="buttomDiv">
-    <div class="col-4">
+<div class="row no-gutters" id="buttomDiv" >
+    <div class="col-4" >
         <div id="leftButtom">
             <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in list" v-on:click="orderClick(index)">
-                @{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}
+                @{{item.OrdersNum}}⎯ @{{item.OrdersDetails[index].memberName}}
             </button>
         </div>
     </div>
     <div class="col-8">
         <div id="rightButtom">
-            <div class="jumbotron">
+            <div class="jumbotron"  v-for="item,index in list">
                 <!-- 訂單標題 -->
-                <h1 class="display-4" id="detailsTitle">@{{detailsTitle}}</h1>
+                <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[index].memberName}}</h1>
                 <hr class="my-4">
                 <!-- 訂單內容 -->
                 <h3 id="detailsItem">
-                    <div class="row">
+                    <div class="row" v-for="i in item.OrdersDetails">
                         <div class="col-1 text-center"><span class="badge badge-light">1</span></div>
-                        <div class="col-2 text-left">
-                            <span>@{{detailsCount}}x</span>
+                        <div class="col-2 text-left" >
+                            <span>@{{i.mealQuantity}}x</span>
                         </div>
                         <div class="col-7 text-left">
                             <span>@{{detailsMeal}}</span>
@@ -81,10 +81,9 @@
                 axios.get('/api/order')
                     .then(function (response) {
                         _this.list  = response.data;
-                        _this.list.OrdersDetails = JSON.parse(_this.list[0].OrdersDetails);
-                        console.log(JSON.parse(_this.list[0].OrdersDetails)[0].memberName);
-                        console.log(_this.list);
-                        console.log(typeof _this.list.OrdersDetails);
+                        _this.list.forEach((element,index) => {
+                            _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
+                        });
                         
                     })
                     .catch(function (response) {
