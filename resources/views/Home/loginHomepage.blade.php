@@ -165,6 +165,14 @@
             }
         });
 
+        var nav = new Vue({
+            el:"#navbarItem",
+            data:{
+                navlogin:false,
+                navshow:true
+            }
+        })
+
         var Recommend = new Vue({
             el: "#todayRecommend",
             data: {

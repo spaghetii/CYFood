@@ -15,6 +15,8 @@ Route::get('/', "HomeController@index")->middleware('check');
 
 Route::get('/login',"HomeController@login");
 
+Route::get('/logout',"HomeController@logout");
+
 Route::post('/login/check',"HomeController@logincheck");
 
 Route::post('/login/checkRe',"HomeController@checkRegister");
