@@ -6,8 +6,8 @@
 <div class="row no-gutters" id="buttomDiv">
     <div class="col-4">
         <div id="leftButtom">
-            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in detailsTitle" v-on:click="orderClick(index)">
-                @{{item.ordersNum}}⎯ @{{item.memberName}}
+            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in list" v-on:click="orderClick(index)">
+                @{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}
             </button>
         </div>
     </div>
@@ -62,6 +62,7 @@
     var buttomDiv = new Vue({
         el:"#buttomDiv",
         data:{
+            list:[],
             detailsTitle:[
                 {ordersNum:"CY20191004001",memberName:"Jennifer"},
                 {ordersNum:"CY20191004002",memberName:"Leonard"},
@@ -71,7 +72,25 @@
             detailsPrice:"399",
             totalPrice:"3990"
         },
+        mounted: function () {
+            this.init();
+        },
         methods:{
+            init:function(){
+                let _this = this;
+                axios.get('/api/order')
+                    .then(function (response) {
+                        _this.list  = response.data;
+                        _this.list.OrdersDetails = JSON.parse(_this.list[0].OrdersDetails);
+                        console.log(JSON.parse(_this.list[0].OrdersDetails)[0].memberName);
+                        console.log(_this.list);
+                        console.log(typeof _this.list.OrdersDetails);
+                        
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                });
+            },
             orderClick:function(index){
                 $(".jumbotron").css("display","block");
             }
