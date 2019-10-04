@@ -13,22 +13,22 @@
     </div>
     <div class="col-8">
         <div id="rightButtom">
-            <div class="jumbotron">
+            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex">
                 <!-- 訂單標題 -->
-                <h1 class="display-4" id="detailsTitle">@{{detailsTitle}}</h1>
+                <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}</h1>
                 <hr class="my-4">
                 <!-- 訂單內容 -->
                 <h3 id="detailsItem">
-                    <div class="row">
-                        <div class="col-1 text-center"><span class="badge badge-light">1</span></div>
+                    <div class="row" v-for="i,index in item.OrdersDetails">
+                    <div class="col-1 text-center"><span class="badge badge-light">@{{index+1}}</span></div>
                         <div class="col-2 text-left">
-                            <span>@{{detailsCount}}x</span>
+                            <span>@{{i.mealQuantity}}x</span>
                         </div>
                         <div class="col-7 text-left">
-                            <span>@{{detailsMeal}}</span>
+                            <span>@{{i.mealName}}</span>
                         </div>
                         <div class="col-2 text-right">
-                            <span>$@{{detailsPrice}}</span>
+                            <span>$@{{i.mealUnitPrice}}</span>
                         </div>
                     </div>
                 </h3>
@@ -36,17 +36,18 @@
                 <h3>
                     <div class="row" id="detailsTotal">
                         <div class="col-9 text-right">Total</div>
-                        <div class="col-3 text-right">$@{{totalPrice}}</div>
+                        <div class="col-3 text-right">$@{{total[index]}}</div>
+                       
                     </div>
                 </h3>
                 <hr class="my-4">
                 <div class="row" id="detailsButton">
                     <div class="col-3"></div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn">✘拒絕訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="rejectClick(index)">✘拒絕訂單</button>
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn">✔接受訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="acceptClick(index)">✔接受訂單</button>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -58,19 +59,13 @@
 
 @section('script')
 <script>
-
+   
     var buttomDiv = new Vue({
         el:"#buttomDiv",
         data:{
             list:[],
-            detailsTitle:[
-                {ordersNum:"CY20191004001",memberName:"Jennifer"},
-                {ordersNum:"CY20191004002",memberName:"Leonard"},
-            ],
-            detailsCount:"10",
-            detailsMeal:"CY超值豪華A9和牛套餐",
-            detailsPrice:"399",
-            totalPrice:"3990"
+            total:[],
+            currentIndex:[]
         },
         mounted: function () {
             this.init();
@@ -81,18 +76,31 @@
                 axios.get('/api/order')
                     .then(function (response) {
                         _this.list  = response.data;
-                        _this.list.OrdersDetails = JSON.parse(_this.list[0].OrdersDetails);
-                        console.log(JSON.parse(_this.list[0].OrdersDetails)[0].memberName);
-                        console.log(_this.list);
-                        console.log(typeof _this.list.OrdersDetails);
-                        
+                        _this.list.forEach((element,index) => {
+                            _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
+                            _this.total[index] = 0;
+                            _this.list[index].OrdersDetails.forEach(ele => {
+                                _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
+                            });
+                        });
+                        // console.log(_this.list);
                     })
                     .catch(function (response) {
                         console.log(response);
                 });
             },
             orderClick:function(index){
-                $(".jumbotron").css("display","block");
+                this.currentIndex = index;
+                $(".jumbotron").css("display","block"); 
+            },
+            acceptClick:function(index){
+                // axios.delete('/api/order')
+                //     .then(function (response) {
+                        
+                //     })
+                //     .catch(function (response) {
+                //         console.log(response);
+                // });
             }
         }
     })
