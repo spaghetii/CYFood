@@ -36,6 +36,10 @@ class HomeController extends Controller
         return view('home.userProfile');
     }
 
+    function trackingOrder() {
+        return view('home.trackingOrder');
+    }
+
    function newOrder(){
        return view('Client.newOrder');
    }
@@ -51,11 +55,11 @@ class HomeController extends Controller
    
 
     function rLogin(){
-        return view("restaurant.login");
+        return view("shop.login");
     }
 
     public function rRegister(){
-        return view("restaurant.register");
+        return view("shop.register");
     }
 
     function sayHello(Request $request) {
@@ -71,8 +75,9 @@ class HomeController extends Controller
     function logincheck(Request $request){
         $member = DB::table("members")->where("MemberEmail",$request->loginEmail)->first();
         if($member){
-            Session::put('userName', $member->MemberName);
+            
             if(Hash::check($request->loginPassword, $member->MemberPassword)){
+                Session::put('userName', $member->MemberName);
                 return response()->json(['ok' => true], 200);
             }else{
                 return response()->json(['ok' => false], 200);
@@ -83,7 +88,6 @@ class HomeController extends Controller
     }
 
     function reset(Request $request){
-        
         $member = DB::table("members")->where("MemberEmail",$request->email)->first();
         if($member){
             $memberName =$member->MemberName;
@@ -91,10 +95,14 @@ class HomeController extends Controller
             $memberEmail =$member->MemberEmail;
             $encryptID = Crypt::encrypt($memberID);
             
-            $to = ['email'=>$memberEmail];
+            $me = Member::find($memberID);
             
-
+            $me->token = $encryptID;
+            $me->save();
+            
+            $to = ['email'=>$memberEmail];
             $data = ['name' => $memberName , 'token' => $encryptID ];
+
             // Mail::send('email.welcome', $data, function($message) use($memberEmail) {
             // $message->to($memberEmail)->subject('CYFood 會員密碼重置');
             // });
@@ -103,11 +111,17 @@ class HomeController extends Controller
         }else{
             echo "請輸入正確的電子信箱";
         }
-
     }
 
     function resetForm($token){
-        return view("home.resetform",compact('token'));
+        $decryptID = Crypt::decrypt($token);
+        $member = Member::find($decryptID);
+
+        if($token == $member->token){
+            return view("home.resetform");
+        }else{
+            echo "此連結已過期";
+        }
     }
 
     function resetPassword(Request $request){
@@ -116,7 +130,29 @@ class HomeController extends Controller
         $password = $request->newPassword;
         $hashed = Hash::make($password);
         $member->MemberPassword = $hashed;
+        $member->token = "";
         if($member->save()){
+            return response()->json(['ok' => true], 200);
+        }
+        
+    }
+
+    public function checkRegister(Request $request)
+    {
+        $register = DB::table("members")->where("MemberEmail",$request->registerEmail)->first();
+        //
+        if($register){
+            return response()->json(['ok' => false], 200);
+        }
+        else{
+            $me =new Member();
+            $me->MemberName = $request->registerName;
+            $me->MemberEmail = $request->registerEmail;
+            $me->MemberPhone = $request->registerPhone;
+            $password = $request->registerPassword;
+            $hashed = Hash::make($password);
+            $me->MemberPassword = $hashed;
+            $me->save();
             return response()->json(['ok' => true], 200);
         }
         

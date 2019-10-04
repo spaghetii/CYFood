@@ -129,7 +129,7 @@
                                 @{{item.ShopName}}
                             </div>
                             <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.$.@{{item.ShopType}}</small></div>
+                                <div class="mr-1 popularRestaurantContentItem"><small>$.@{{item.ShopType}}</small></div>
                                 <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
                                 <div class="mr-1 popularRestaurantContentItem"><small>15TWD 費用</small></div>
                             </div>

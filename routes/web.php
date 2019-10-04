@@ -10,8 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+<<<<<<< HEAD
+//===========客戶端====================
 Route::get('/', "HomeController@index");
+=======
+
+Route::get('/', "HomeController@index")->middleware('check');
+>>>>>>> 041575103db9a1db5e90245676b484a427011418
+
+Route::get('/login',"HomeController@login");
+
+Route::post('/login/check',"HomeController@logincheck");
+
+Route::post('/login/checkRe',"HomeController@checkRegister");
 
 Route::get('/loginHomepage', "HomeController@loginHomepage")->middleware('check');
 
@@ -23,22 +34,26 @@ Route::get('/userOrderDetail', "HomeController@userOrderDetail");
 
 Route::get('/userProfile', "HomeController@userProfile");
 
+Route::get('/trackingOrder', "HomeController@trackingOrder");
 
+
+
+
+//===============店家端======================
+Route::get('/shop/login',"HomeController@rLogin");
+Route::get('/shop/register',"HomeController@rRegister");
 Route::get('/newOrder',"HomeController@newOrder");
 Route::get('/processing',"HomeController@processing");
 Route::get('/takeout',"HomeController@takeout");
 Route::get('/user',"HomeController@user");
 
 
-Route::get('/login',"HomeController@login");
-
-Route::post('/login/check',"HomeController@logincheck");
 
 
 
-Route::get('/restaurant/login',"HomeController@rLogin");
-Route::get('/restaurant/register',"HomeController@rRegister");
 
+
+//===============後端=================
 Route::get('/BackEnd/coupon','BackEnd@couponIndex');
 Route::get('/BackEnd/member','BackEnd@memberIndex');
 Route::get('/BackEnd/order','BackEnd@orderIndex');

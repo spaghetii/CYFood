@@ -93,17 +93,18 @@
     </div>
 
 <script>
-
+// alert('location.pathname: '+location.pathname);
 var resetform = new Vue({
     el:"#reset-form",
     data:{
         newPassword:'',
         repeatPassword:'',
-        token:"{{$token}}",
+        token:"",
         wrongcheck:false
     },
     methods:{
         checkpassword:function(){
+            console.log(this.token);
             let self = this;
             if(this.newPassword !== this.repeatPassword){
                 this.wrongcheck = true;
@@ -113,34 +114,23 @@ var resetform = new Vue({
                         .then(function (response) {
                             console.log(response);
                             if (response.data['ok']) {
-                                // Swal.fire({
-                                //     type: 'success',
-                                //     title: '密碼修改成功',
-                                //     html:
-                                //         '本畫面於6秒後回到登入頁',
-                                //     showConfirmButton: false,
-                                //     timer: 6000
-                                //     })
-                                //     setTimeout(function () {
-                                //         window.location.href = "/login"; 
-                                //         }, 6000);
-                                        Swal.fire({
-                                            type: 'success',
-                                            title: '密碼修改成功',
-                                            html: '本畫面於<strong></strong>秒後回到登入頁',
-                                            timer: 6000,
-                                            onBeforeOpen: () => {
-                                                Swal.showLoading()
-                                                timerInterval = setInterval(() => {
-                                                Swal.getContent().querySelector('strong')
-                                                    .textContent = parseInt(Math.ceil(Swal.getTimerLeft()/1000))
-                                                }, 100)
-                                            },
-                                            onClose: () => {
-                                                clearInterval(timerInterval)
-                                                window.location.href = "/login"; 
-                                            }     
-                                            })       
+                                Swal.fire({
+                                    type: 'success',
+                                    title: '密碼修改成功',
+                                    html: '本畫面於<strong></strong>秒後回到登入頁',
+                                    timer: 3000,
+                                    onBeforeOpen: () => {
+                                        Swal.showLoading()
+                                        timerInterval = setInterval(() => {
+                                        Swal.getContent().querySelector('strong')
+                                            .textContent = parseInt(Math.ceil(Swal.getTimerLeft()/1000))
+                                        }, 100)
+                                    },
+                                    onClose: () => {
+                                        clearInterval(timerInterval)
+                                        window.location.href = "/login"; 
+                                    }     
+                                    })       
                             }
                             
                         })
@@ -149,7 +139,13 @@ var resetform = new Vue({
                         });
             }
         }
+    },
+    mounted:function(){
+        let newtoken = location.pathname.substr(17);
+        this.token = newtoken;
+        
     }
+    
 
 })
 

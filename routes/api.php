@@ -36,18 +36,14 @@ Route::get('/order', 'BackEnd@orderAll');
 // member
 // 顯示全部
 Route::get('/member', 'BackEnd@memberAll');
+// 新增資料
+Route::post('/member', 'BackEnd@memberInsert');
 
+// shop
+// 顯示全部
 Route::get('/shop', 'BackEnd@shopAll');
 
-Route::get('/meal/{id}', function($id) {
-    return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
- 
-});
 
-Route::get('/shop/{id}', function($id) {
-    return response()->json(Shop::where('ShopID', $id)->first(), 200);
-     
-});
 
 
 
@@ -56,7 +52,13 @@ Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);
 });
 
+Route::get('/shop/{id}', function($id) {
+    return response()->json(Shop::where('ShopID', $id)->first(), 200);     
+});
 
-
+Route::get('/meal/{id}', function($id) {
+    return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
+ 
+});
 
 ?>
