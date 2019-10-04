@@ -90,7 +90,7 @@
                                     name="registerPassword">
                             </div>
                             <span v-if="checkRegister" class="resetalert">@{{errorMsg}}</span>
-                            <button type="button" v-on:click="register" class="btn btn-primary btn-block btn-lg">註冊</button>
+                            <button type="submit" v-on:click="register" class="btn btn-primary btn-block btn-lg">註冊</button>
                         </form>
                     </div>
                 </div>
@@ -215,7 +215,7 @@
                     this.errorEmail = "請輸入正確的格式";
                 }
                 if (this.registerName == "" || this.registerEmail == "" ||
-                    this.registerPhone == "" ||  this.registerPassword)
+                    this.registerPhone == "" ||  this.registerPassword == "")
                 {
                     this.checkRegister = true;
                     this.errorMsg = "欄位不能為空"
