@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Coupon;
+use App\Orders;
 use App\Member;
 use App\Shop;
 
@@ -27,6 +28,10 @@ class BackEnd extends Controller
     
     function couponAll() {
         return response()->json(Coupon::all(), 200);
+    }
+
+    function orderAll() {
+        return response()->json(Orders::all(), 200);
     }
 
     function memberAll() {
