@@ -369,6 +369,10 @@
     margin: 0px;
 }
 
+.fontBold {
+    font-weight: bolder;
+}
+
 /* orderDetail頁面 */
 #orderDetailDiv {
     padding: 40px 0px 80px;
@@ -473,9 +477,15 @@
     background: center/cover no-repeat  url("../img/bg2.jpg") ;
 }
 
-#trackingOrderDiv {
+.trackingOrderDivStyle {
+    padding: 10px;
     border: 1px  rgb(197, 197, 197) solid;
-    background-color: rgba(255, 255, 255, 0.7) ;
+    background-color: rgba(255, 255, 255, 0.9) ;
     box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
 }
 
+#trackingOrderSummary {
+    height:240px;
+    overflow:scroll;
+    overflow-X:hidden;
+}
