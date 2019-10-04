@@ -62,6 +62,16 @@ class BackEnd extends Controller
         $ok = $coupon->save();
         return response()->json(['ok' => $ok], 200);
     }
+    
+    function memberInsert(Request $request) {
+        $member = new Member;
+        $member->MemberName = $request->MemberName;
+        $member->MemberEmail = $request->MemberEmail;
+        $member->MemberPhone = $request->MemberPhone;
+        $member->MemberPassword = $request->MemberPassword;
+        $ok = $member->save();
+        return response()->json(['ok' => $ok], 200);
+    }
 
     function couponUpdate(Request $request, $id) {
         $ok='';

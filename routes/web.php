@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', "HomeController@index");
+Route::get('/', "HomeController@index")->middleware('check');
 
 Route::get('/loginHomepage', "HomeController@loginHomepage")->middleware('check');
 

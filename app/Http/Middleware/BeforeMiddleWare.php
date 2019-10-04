@@ -16,8 +16,14 @@ class BeforeMiddleWare
      */
     public function handle($request, Closure $next)
     {
-        if (Session::get('userName','Guest') == 'Guest'){
-            return redirect("/login");
+        if ($_SERVER ["REQUEST_URI"]=='/loginHomepage') {
+            if (Session::get('userName','Guest') == 'Guest'){
+                return redirect("/login");
+            }
+        }else if($_SERVER['REQUEST_URI'] == '/'){
+            if (Session::get('userName','Guest') != 'Guest'){
+                return redirect("/loginHomepage");
+            }
         }
         return $next($request);
     }
