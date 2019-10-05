@@ -49,6 +49,8 @@ Route::post('/member', 'BackEnd@memberInsert');
 // 顯示全部
 Route::get('/shop', 'BackEnd@shopAll');
 
+
+
 // 測試用
 Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);

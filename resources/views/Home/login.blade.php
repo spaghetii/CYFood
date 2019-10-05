@@ -172,7 +172,8 @@
                                         },
                                         onClose: () => {
                                             clearInterval(timerInterval)
-                                            window.location.href = "/loginHomepage";
+                                            console.log(response.data['lastPage']);
+                                            window.location.href = response.data['lastPage'];
                                         }
                                     })
                                 } else {
