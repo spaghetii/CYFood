@@ -33,6 +33,7 @@ Route::get('/userProfile', "HomeController@userProfile");
 
 Route::get('/trackingOrder', "HomeController@trackingOrder");
 
+Route::get('/session',"HomeController@checkMemberSession" );
 
 
 

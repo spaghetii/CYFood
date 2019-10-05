@@ -41,7 +41,8 @@ class HomeController extends Controller
 
     function userProfile() {
         $userName = Session::get("userName" , "Guest");
-        dd($userName);
+        Session::put("lastPage","/userProfile");
+        // dd($userName);
         if($userName == "Guest"){
             return redirect("/login");
         }else{
@@ -50,38 +51,27 @@ class HomeController extends Controller
         
     }
 
-    
-
     function trackingOrder() {
         return view('home.trackingOrder');
     }
 
-   function newOrder(){
-       return view('Client.newOrder');
-   }
-   function processing(){
-       return view('Client.processing');
-   }
-   function takeout(){
-       return view('Client.takeout');
-   }
-   function user(){
-       return view('Client.user');
-   }
-   
-
+    function newOrder(){
+        return view('Client.newOrder');
+    }
+    function processing(){
+        return view('Client.processing');
+    }
+    function takeout(){
+        return view('Client.takeout');
+    }
+    function user(){
+        return view('Client.user');
+    }
     function rLogin(){
         return view("shop.login");
     }
-
     public function rRegister(){
         return view("shop.register");
-    }
-
-    function sayHello(Request $request) {
-        // return view("home.hello", 
-        //     [ "who" => $request->userName ]);    //較常用
-        return view("home.hello")->withwho($request->userName); //不建議用
     }
 
     function login(){
@@ -91,11 +81,11 @@ class HomeController extends Controller
     function logincheck(Request $request){
         $member = DB::table("members")->where("MemberEmail",$request->loginEmail)->first();
         if($member){
-            
             if(Hash::check($request->loginPassword, $member->MemberPassword)){
                 Session::put('userName', $member->MemberName);
-                
-                return response()->json(['ok' => true , 'id' => $member->MemberID , 'name' => $member->MemberName], 200);
+                $lastpage = Session::get('lastPage',"/loginHomepage");
+                return response()->json(['ok' => true , 'id' => $member->MemberID 
+                ,'lastPage' => $lastpage, 'name' => $member->MemberName], 200);
             }else{
                 return response()->json(['ok' => false], 200);
             }
@@ -159,8 +149,7 @@ class HomeController extends Controller
         
     }
 
-    public function checkRegister(Request $request)
-    {
+    public function checkRegister(Request $request) {
         $register = DB::table("members")->where("MemberEmail",$request->registerEmail)->first();
         //
         if($register){
@@ -179,4 +168,10 @@ class HomeController extends Controller
         }
         
     }
+
+    public function checkMemberSession(){
+        $userName = Session::get("userName" , "Guest");
+        return response()->json(['name' => $userName], 200);        
+    }
+
 }
