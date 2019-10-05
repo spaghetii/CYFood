@@ -6,14 +6,14 @@
 <div class="row no-gutters" id="buttomDiv">
     <div class="col-4">
         <div id="leftButtom">
-            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in list" v-on:click="orderClick(index)">
+            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in list" v-on:click="orderClick(index)" v-if="item.OrdersFinish == 0">
                 @{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}
             </button>
         </div>
     </div>
     <div class="col-8">
         <div id="rightButtom">
-            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex && item.OrdersFinish == 0">
+            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex">
                 <!-- 訂單標題 -->
                 <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}</h1>
                 <hr class="my-4">
@@ -84,7 +84,7 @@
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             });
                         });
-                        console.log(_this.list);
+                        // console.log(_this.list);
                     })
                     .catch(function (response) {
                         console.log(response);
@@ -98,6 +98,7 @@
                 // console.log(this.list[index].OrdersID);
                 // console.log(index);
                 this.list[index].OrdersFinish = 1;
+                $(".jumbotron").css("display","none"); 
                 let _this = this;
                 axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
                     .then(function(response){
