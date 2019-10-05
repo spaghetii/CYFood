@@ -29,11 +29,25 @@ class HomeController extends Controller
     }
 
     function userOrderDetail() {
-        return view('home.userOrderDetail');
+        $userName = Session::get("userName" , "Guest");
+        
+        if($userName == "Guest"){
+            return redirect("/login");
+        }else{
+            return view('home.userOrderDetail');
+        }
+        
     }
 
     function userProfile() {
-        return view('home.userProfile');
+        $userName = Session::get("userName" , "Guest");
+        
+        if($userName == "Guest"){
+            return redirect("/login");
+        }else{
+            return view('home.userProfile');
+        }
+        
     }
 
     function trackingOrder() {

@@ -52,6 +52,12 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok], 200);
     }
 
+    function orderDelete($id) {
+        $rows = Orders::destroy($id);
+        $ok = ($rows > 0);
+        return response()->json(['ok' => $ok], 200);
+    }
+
     function couponInsert(Request $request) {
         $coupon = new Coupon;
         $coupon->CouponCode = $request->CouponCode;
@@ -84,6 +90,21 @@ class BackEnd extends Controller
             $coupon->CouponStart = $request->CouponStart;
             $coupon->CouponDeadline = $request->CouponDeadline;
             $ok = $coupon->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
+
+    function orderUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $order = Orders::find($id);
+        if ($order) {
+            $order->OrdersFinish = $request->OrdersFinish;
+            $ok = $order->save();
             if (!$ok) $msg = 'Error';
             else $msg = "suessfull";
         } else {

@@ -31,6 +31,9 @@ Route::delete('/coupon/{id}', "BackEnd@couponDelete");
 //order
 Route::get('/order', 'BackEnd@orderAll');
 
+Route::put('/order/{id}', 'BackEnd@orderUpdate');
+
+Route::delete('/order/{id}', "BackEnd@orderDelete");
 
 
 // member

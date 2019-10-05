@@ -37,6 +37,7 @@
                     <div class="row" id="detailsTotal">
                         <div class="col-9 text-right">Total</div>
                         <div class="col-3 text-right">$@{{total[index]}}</div>
+                    
                        
                     </div>
                 </h3>

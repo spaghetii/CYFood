@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <title>CYFood-BackEnd</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -49,15 +49,14 @@
         </div>
         <hr>
         {{-- 左側 --}}
-        <div id="divleft" class="col-2 text-center" >
-            <br>
-            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='order'" target="_blank" rel="nofollow"><span>訂&emsp;&emsp;單</a></div>
+        <div id="divleft" class="col-2 text-center h-100" >
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='order'" target="_blank" rel="nofollow"><span>訂&emsp;單</a></div>
             <hr>
-            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='restaurant'" target="_blank" rel="nofollow"><span>餐&emsp;&emsp;廳</a></div>
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='restaurant'" target="_blank" rel="nofollow"><span>餐&emsp;廳</a></div>
             <hr>
-            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='member'" target="_blank" rel="nofollow"><span>會&emsp;&emsp;員</a></div>
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='member'" target="_blank" rel="nofollow"><span>會&emsp;員</a></div>
             <hr>
-            <div class="button_cont col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='coupon'" target="_blank" rel="nofollow"><span>優&emsp;&emsp;惠</a></div>                    
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='coupon'" target="_blank" rel="nofollow"><span>優&emsp;惠</a></div>                    
             <br>
         </div>
         
