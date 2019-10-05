@@ -101,7 +101,7 @@
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             });
                         });
-                        console.log(_this.list);
+                        // console.log(_this.list);
                     })
                     .catch(function (response) {
                         console.log(response);

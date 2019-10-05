@@ -91,13 +91,7 @@
                 }
         })
 
-        var nav = new Vue({
-            el:"#navbarItem",
-            data:{
-                navlogin:true,
-                navshow:false
-            }
-        })
+
 
 
         var Recommend = new Vue({
