@@ -13,7 +13,7 @@
     </div>
     <div class="col-8">
         <div id="rightButtom">
-            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex">
+            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex && item.OrdersFinish == 0">
                 <!-- 訂單標題 -->
                 <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}</h1>
                 <hr class="my-4">
@@ -45,10 +45,10 @@
                 <div class="row" id="detailsButton">
                     <div class="col-3"></div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn">✘拒絕訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="rejectClick(index)">✘拒絕訂單</button>
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn">✔接受訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="acceptClick(index)">✔接受訂單</button>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -61,12 +61,12 @@
 @section('script')
 <script>
    
-    var buttomDiv = new Vue({
+    var appB = new Vue({
         el:"#buttomDiv",
         data:{
             list:[],
             total:[],
-            currentIndex:[]
+            currentIndex:0
         },
         mounted: function () {
             this.init();
@@ -93,6 +93,17 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block"); 
+            },
+            acceptClick:function(index){
+                // console.log(this.list[index].OrdersID);
+                // console.log(index);
+                this.list[index].OrdersFinish = 1;
+                let _this = this;
+                axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
+                    .then(function(response){
+                        console.log(response.data['ok']);
+                        _this.init();
+                    })
             }
         }
     })
