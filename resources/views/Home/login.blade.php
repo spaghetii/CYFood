@@ -151,6 +151,10 @@
                             .then(function (response) {
                                 console.log(response.data['ok']);
                                 if (response.data['ok']) {
+                                    sessionStorage.setItem("status","1");
+                                    sessionStorage.setItem("memberID",response.data['id']);
+                                    sessionStorage.setItem("memberName",response.data['name']);
+                                    console.log(response.data['id']);
                                     Swal.fire({
                                         type: 'success',
                                         title: '登入成功',
