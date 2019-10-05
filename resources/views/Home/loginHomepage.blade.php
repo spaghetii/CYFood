@@ -220,7 +220,7 @@
                             //篩選出跟本日推薦不重複的餐廳
                             recommendApp.recommend.forEach((r_ele,r_index) => {
                                 _this.list = _this.list.filter(function(element, index, arr){
-                                    console.log(!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
+                                    // console.log(!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
                                     // console.log(arr.indexOf(element) === index);
                                     return (!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
                                 });

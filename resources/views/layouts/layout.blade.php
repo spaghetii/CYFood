@@ -46,18 +46,19 @@
 
                 <div class="collapse navbar-collapse">
                     <div class="navbar-nav collapse navbar-collapse justify-content-end" id="navbarItem">
-                        {{-- 登入 --}}
-                        <a class="nav-item nav-link ml-4" v-if="navlogin" href="/login"><img src="/img/user.png" alt="">&ensp;登入</a>
                         {{-- 登入後資訊欄 --}}
-                        <div class="dropdown show" v-if="navshow">
-                            <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="">&ensp;User</a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
-                                    <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
-                                    <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
-                                    <a class="dropdown-item" href="/logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
-                                  </div>
-                        </div>
+                        <div class="dropdown show" v-if="navlogin === true">
+                                <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="">&ensp;@{{userName}}</a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
+                                        <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
+                                        <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
+                                        <a class="dropdown-item" href="/logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
+                                      </div>
+                            </div>
+                        {{-- 登入 --}}
+                        <div v-if="navlogin === false"><a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;登入</a></div>
+                        
                         {{-- 購物袋 --}}
                         <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal">
                             <img src="/img/shopping-bag.png" alt="">
@@ -158,7 +159,37 @@
         </div> {{-- modal-dialog --}}
     </div> {{-- shoppingBagModal --}}
     
-   
+   <script>
+        var navBar = new Vue({
+            el:"#navbarItem",
+            data:{
+                navlogin:false,
+                userName:''
+            },
+            methods:{
+                init: function () {
+                    let _this = this;
+                    axios.get('/session')
+                        .then(function (response) {
+                            console.log(response.data['name']);
+                            if ( response.data['name'] != 'Guest' ){
+                                _this.userName = response.data['name'];
+                                _this.navlogin = true;
+                            }else{
+                                _this.navlogin = false;
+                            }
+                            console.log(_this.navBar);
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                    });
+                },
+            },
+            mounted: function () {
+                this.init();            //initial
+            },
+        });  
+   </script>
     @yield('script')
     
 </body>
