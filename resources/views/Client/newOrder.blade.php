@@ -95,9 +95,11 @@
                     .then(function (response) {
                         _this.list  = response.data;
                         _this.list.forEach((element,index) => {
+                            // console.log(element);
                             _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                             _this.total[index] = 0;
                             _this.list[index].OrdersDetails.forEach(ele => {
+                                // console.log(ele);
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             });
                         });
@@ -108,7 +110,7 @@
                 });
             },
             orderClick:function(index){
-                console.log(index);
+                // console.log(index);
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block");
             },
