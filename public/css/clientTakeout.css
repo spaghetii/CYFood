@@ -8,11 +8,12 @@
 }
 #orderBtn {
     height: 80px;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     margin: 10px auto;
     color:#3c3c3c;
-    text-align: left;
+    text-align: center;
+    padding: 0px;
 }
 #rightButtom {
     width: 840px;
