@@ -44,10 +44,10 @@
                 <div class="row" id="detailsButton">
                     <div class="col-3"></div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn">✘拒絕訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="rejectClick(index)">✘拒絕訂單</button>
                     </div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn">✔接受訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="acceptClick(index)">✔接受訂單</button>
                     </div>
                     <div class="col-3"></div>
                 </div>
@@ -60,12 +60,12 @@
 @section('script')
 <script>
    
-    var buttomDiv = new Vue({
+    var appB = new Vue({
         el:"#buttomDiv",
         data:{
             list:[],
             total:[],
-            currentIndex:[]
+            currentIndex:0
         },
         mounted: function () {
             this.init();
@@ -92,6 +92,17 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block"); 
+            },
+            acceptClick:function(index){
+                console.log(this.list[index].OrdersID);
+                console.log(index);
+                let _this = this;
+                _this.list[index].OrdersFinish = 2;
+                axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
+                    .then(function(response){
+                        console.log(response.data['ok']);
+                        _this.init();
+                    })
             }
         }
     })
