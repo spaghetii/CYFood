@@ -47,8 +47,8 @@
                 <div class="collapse navbar-collapse">
                     <div class="navbar-nav collapse navbar-collapse justify-content-end" id="navbarItem">
                         {{-- 登入後資訊欄 --}}
-                        <div class="dropdown show" v-if="navlogin === true">
-                                <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="">&ensp;@{{userName}}</a>
+                        <div class="dropdown show" v-if="navshow" v-once>
+                                <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="" >&ensp;@{{userName}}</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
                                         <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
@@ -57,7 +57,7 @@
                                       </div>
                             </div>
                         {{-- 登入 --}}
-                        <div v-if="navlogin === false"><a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;登入</a></div>
+                        <div v-if="navlogin"><a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;@{{userName}}</a></div>
                         
                         {{-- 購物袋 --}}
                         <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal">
@@ -160,10 +160,12 @@
     </div> {{-- shoppingBagModal --}}
     
    <script>
+       
         var navBar = new Vue({
             el:"#navbarItem",
             data:{
-                navlogin:false,
+                navlogin:true,
+                navshow:false,
                 userName:''
             },
             methods:{
@@ -174,9 +176,13 @@
                             console.log(response.data['name']);
                             if ( response.data['name'] != 'Guest' ){
                                 _this.userName = response.data['name'];
-                                _this.navlogin = true;
-                            }else{
                                 _this.navlogin = false;
+                                _this.navshow = true;
+                                sessionStorage.setItem("name",_this.userName);
+                            }else{
+                                _this.userName = "登入";
+                                _this.navlogin = true;
+                                _this.navshow = false;
                             }
                             console.log(_this.navBar);
                         })
@@ -186,9 +192,11 @@
                 },
             },
             mounted: function () {
+                
                 this.init();            //initial
-            },
+            }
         });  
+    
    </script>
     @yield('script')
     
