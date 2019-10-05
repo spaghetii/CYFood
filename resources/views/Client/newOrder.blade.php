@@ -14,7 +14,6 @@
     <div class="col-8">
         <div id="rightButtom">
             <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex">
-                
                 <!-- 訂單標題 -->
                 <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}</h1>
                 <hr class="my-4">
@@ -39,6 +38,7 @@
                         <div class="col-9 text-right">Total</div>
                         <div class="col-3 text-right">$@{{total[index]}}</div>
                     
+                       
                     </div>
                 </h3>
                 <hr class="my-4">
@@ -66,7 +66,7 @@
         data:{
             list:[],
             total:[],
-            currentIndex:0
+            currentIndex:[]
         },
         mounted: function () {
             this.init();
@@ -90,7 +90,7 @@
                         console.log(response);
                 });
             },
-            orderClick:function(index){ 
+            orderClick:function(index){
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block"); 
             }

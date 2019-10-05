@@ -15,6 +15,8 @@ Route::get('/', "HomeController@index")->middleware('check');
 
 Route::get('/login',"HomeController@login");
 
+Route::get('/logout',"HomeController@logout");
+
 Route::post('/login/check',"HomeController@logincheck");
 
 Route::post('/login/checkRe',"HomeController@checkRegister");
@@ -32,8 +34,6 @@ Route::get('/userProfile', "HomeController@userProfile");
 Route::get('/trackingOrder', "HomeController@trackingOrder");
 
 
-
-
 //===============店家端======================
 Route::get('/shop/login',"HomeController@rLogin");
 Route::get('/shop/register',"HomeController@rRegister");
@@ -43,18 +43,11 @@ Route::get('/takeout',"HomeController@takeout");
 Route::get('/user',"HomeController@user");
 
 
-
-
-
-
-
 //===============後端=================
 Route::get('/BackEnd/coupon','BackEnd@couponIndex');
 Route::get('/BackEnd/member','BackEnd@memberIndex');
 Route::get('/BackEnd/order','BackEnd@orderIndex');
 Route::get('/BackEnd/restaurant','BackEnd@restaurantIndex');
-
-
 
 
 Route::resource('coupon','CouponController');
