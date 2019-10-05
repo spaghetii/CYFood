@@ -13,7 +13,7 @@
     </div>
     <div class="col-8">
         <div id="rightButtom">
-            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex">
+            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex && item.OrdersFinish == 0">
                 <!-- 訂單標題 -->
                 <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}</h1>
                 <hr class="my-4">
@@ -95,10 +95,10 @@
                 $(".jumbotron").css("display","block"); 
             },
             acceptClick:function(index){
-                console.log(this.list[index].OrdersID);
-                console.log(index);
+                // console.log(this.list[index].OrdersID);
+                // console.log(index);
+                this.list[index].OrdersFinish = 1;
                 let _this = this;
-                _this.list[index].OrdersFinish = 2;
                 axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
                     .then(function(response){
                         console.log(response.data['ok']);
