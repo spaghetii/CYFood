@@ -166,13 +166,6 @@
             }
         });
 
-        var nav = new Vue({
-            el:"#navbarItem",
-            data:{
-                navlogin:false,
-                navshow:true
-            }
-        })
 
         var recommendApp = new Vue({
             el: "#todayRecommend",

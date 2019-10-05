@@ -34,6 +34,8 @@ Route::get('/userProfile', "HomeController@userProfile");
 Route::get('/trackingOrder', "HomeController@trackingOrder");
 
 
+
+
 //===============店家端======================
 Route::get('/shop/login',"HomeController@rLogin");
 Route::get('/shop/register',"HomeController@rRegister");

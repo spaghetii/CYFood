@@ -41,7 +41,7 @@ class HomeController extends Controller
 
     function userProfile() {
         $userName = Session::get("userName" , "Guest");
-        
+        dd($userName);
         if($userName == "Guest"){
             return redirect("/login");
         }else{
@@ -49,6 +49,8 @@ class HomeController extends Controller
         }
         
     }
+
+    
 
     function trackingOrder() {
         return view('home.trackingOrder');
@@ -92,7 +94,8 @@ class HomeController extends Controller
             
             if(Hash::check($request->loginPassword, $member->MemberPassword)){
                 Session::put('userName', $member->MemberName);
-                return response()->json(['ok' => true], 200);
+                
+                return response()->json(['ok' => true , 'id' => $member->MemberID , 'name' => $member->MemberName], 200);
             }else{
                 return response()->json(['ok' => false], 200);
             }
