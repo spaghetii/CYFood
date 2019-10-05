@@ -8,11 +8,12 @@
 }
 #orderBtn {
     height: 80px;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     margin: 10px auto;
     color:#3c3c3c;
-    text-align: left;
+    text-align: center;
+    padding: 0px;
 }
 #rightButtom {
     width: 840px;
@@ -64,4 +65,15 @@
         width: 926px;
         min-height: 544px;
     }
+}
+.modal{
+    font-family: Microsoft JhengHei;
+}
+#modalHeader{
+    margin: 5% auto 1% auto;
+    font-weight: bold;
+    font-size: 26px;
+}
+#modalFooter{
+    margin: 1% auto 5% auto;
 }

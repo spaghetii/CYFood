@@ -6,8 +6,8 @@
 <div class="row no-gutters" id="buttomDiv">
     <div class="col-4">
         <div id="leftButtom">
-            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in list" v-on:click="orderClick(index)" v-if="item.OrdersFinish == 0">
-                @{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}
+            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-for="item,index in list" v-on:click="orderClick(index)" v-if="item.OrdersFinish == 1">
+                @{{item.OrdersNum}}<br>@{{item.OrdersDetails[0].memberName}}
             </button>
         </div>
     </div>
@@ -45,7 +45,7 @@
                 <div class="row" id="detailsButton">
                     <div class="col-3"></div>
                     <div class="col-3">
-                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="rejectClick(index)">✘拒絕訂單</button>
+                        <button type="button" class="btn btn-dark detailsBtn" data-toggle="modal" data-target="#rejectModal">✘拒絕訂單</button>
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-dark detailsBtn" v-on:click="acceptClick(index)">✔接受訂單</button>
@@ -55,7 +55,24 @@
             </div>
         </div>
     </div>
+    {{-- 是否拒絕訂單MODAL --}}
+    <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div id="modalHeader">
+                    <span>您確定要拒絕此筆訂單?</span>
+                </div>
+                <div id="modalFooter">
+                    <button type="button" class="btn btn-danger" v-on:click="yesReject()">確定拒絕</button>
+                    <button type="button" class="btn btn-outline-dark" v-on:click="notReject()">取消拒絕</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 @endsection
 
 @section('script')
@@ -91,20 +108,37 @@
                 });
             },
             orderClick:function(index){
+                console.log(index);
                 this.currentIndex = index;
-                $(".jumbotron").css("display","block"); 
+                $(".jumbotron").css("display","block");
             },
             acceptClick:function(index){
                 // console.log(this.list[index].OrdersID);
                 // console.log(index);
-                this.list[index].OrdersFinish = 1;
-                $(".jumbotron").css("display","none"); 
+                this.list[index].OrdersFinish = 2;
+                $(".jumbotron").css("display","none");
                 let _this = this;
                 axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
                     .then(function(response){
                         console.log(response.data['ok']);
                         _this.init();
                     })
+            },
+            notReject:function(){
+                $("#rejectModal").modal('hide');
+            },
+            yesReject:function(){
+                // console.log(this.currentIndex);
+                // console.log(this.list[this.currentIndex].OrdersID);
+                this.list[this.currentIndex].OrdersFinish = 0;
+                let _this = this;
+                axios.put('/api/order/'+_this.list[_this.currentIndex].OrdersID,_this.list[_this.currentIndex])
+                    .then(function(response){
+                        console.log(response.data['ok']);
+                        _this.init();
+                    })
+                $(".jumbotron").css("display","none");
+                $("#rejectModal").modal('hide');
             }
         }
     })
