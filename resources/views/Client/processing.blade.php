@@ -35,7 +35,7 @@
                 <!-- 訂單內容 -->
                 <h3  id="detailsItem">
                     <div class="row" v-for="i,index in item.OrdersDetails">
-                    <div class="col-1 text-center"><span class="badge badge-light">@{{index+1}}</span></div>
+                        <div class="col-1 text-center"><span class="badge badge-light">@{{index+1}}</span></div>
                         <div class="col-2 text-left">
                             <span>@{{i.mealQuantity}}x</span>
                         </div>
@@ -57,7 +57,7 @@
                 <hr class="my-4">
                 <div class="row">
                     <div class="col-12">
-                        <button type="button" class="btn btn-dark detailsBtn">☎ 呼叫外送員</button>
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="callOut(index)">☎ 呼叫外送員</button>
                     </div>
                 </div>
             </div>
@@ -198,6 +198,16 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block");
+            },
+            callOut:function(index){
+                $(".jumbotron").css("display","none");
+                this.list[index].OrdersFinish = 3;
+                let _this = this;
+                axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
+                    .then(function(response){
+                        console.log(response.data['ok']);
+                        _this.init();
+                    })
             }
         }
     })
