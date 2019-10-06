@@ -70,3 +70,14 @@ Route::post('/reset',"HomeController@reset");
 Route::get('/reset/resetform/{token}',"HomeController@resetForm");
 
 Route::post('/reset/resetpassword',"HomeController@resetPassword");
+
+//======boardcast test=======
+Route::get('/test',function(){
+    event (new \App\Events\SayHelloEvent("aaa"));
+    return view('welcome');
+});
+
+Route::get('/aaa',function(){
+    event (new \App\Events\SayHelloEvent("mumimumimumi"));
+    return view('welcome');
+});

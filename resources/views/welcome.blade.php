@@ -78,7 +78,7 @@
                     @endauth
                 </div>
             @endif
-            <p>Hi {{ $name }}!</p>
+            
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
@@ -100,5 +100,6 @@
                 </div>
             </div>
         </div>
+        <script src="../js/app.js" type="text/javascript"></script>
     </body>
 </html>
