@@ -60,7 +60,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="/reset">
                     <div class="modal-body">
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">會員名稱: </label>
@@ -83,159 +82,158 @@
                         <button type="button" class="btn btn-primary form-control" v-on:click="modalOK">確定</button>
                         <button type="button" class="btn btn-secondary form-control" data-dismiss="modal">取消</button>
                     </div>
-                </form>
             </div>
         </div>
     </div>
 @endsection
 
 @section('script')
-<script>
-    var member = new Vue({
-        el: "#App",
-        data: {
-            selected: "MemberPhone",
-            search: "",
-            list: []
-        },
-        methods: {
-            init: function () {
-                let _this = this;
-                axios.get('/api/member')
-                    .then(function (response) {
-                        _this.list = response.data;
-                    })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
+    <script>
+        var member = new Vue({
+            el: "#App",
+            data: {
+                selected: "MemberPhone",
+                search: "",
+                list: []
             },
-            remove: function (id) {
-                let _this = this;
-                Swal.fire({
-                    title: '確定要將該會員停權?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: '確定',
-                    cancelButtonText: '取消'
-                }).then((result) => {
-                    if (result.value){
-                        member.list.forEach((element,index) => {
-                            if(element.CouponID == id)currentIndex = index;
-                        });
-                        member.list[currentIndex].MemberPermission = true;
-                        axios.put('/api/coupon/'+id, member.list[currentIndex])
+            methods: {
+                init: function () {
+                    let _this = this;
+                    axios.get('/api/member')
                         .then(function (response) {
-                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            coupon.init();                //更新目前畫面
+                            _this.list = response.data;
                         })
                         .catch(function (response) {
                             console.log(response);
                         });
-                    }
-                        
-                });
-            },
-            insertData:function(){
-                Modal.title = "新增會員";
-                Modal.MemberName = "";
-                Modal.MemberEmail = "";
-                Modal.MemberPhone = "";
-                Modal.MemberPassword = "";
-                $("#memberModal").modal();
-                currentIndex = -1;
-            },
-            edit: function(select){
-                Modal.title = "修改資料";
-                member.list.forEach((element,index) => {
-                    if(element.CouponID == select)currentIndex = index;
-                });
-                Modal.MemberName = member.list[currentIndex].MemberName;
-                Modal.MemberEmail = member.list[currentIndex].MemberEmail;
-                Modal.MemberPhone = member.list[currentIndex].MemberPhone;
-                Modal.MemberPassword = member.list[currentIndex].MemberPassword;
-                $("#memberModal").modal();
-            }
-        },
-        mounted: function () {
-            this.init();
-        },
-        computed: {
-            items: function () {
-                var _search = this.search;
-                var _selected = this.selected;
-                if (_search) {
-                    return this.list.filter(function (item) {
-                        console.log(item);
-                        console.log(Object.keys(item));
-                        return Object.keys(item).some(function (key) {
-                            // console.log(key);
-                            if (_selected == key) { // 下拉式的分類
-                                // console.log("select "+_selected);
-                                // console.log(key);
-                                return String(item[key]).toLowerCase().indexOf(_search) > -1
-                            }
-
-                            // console.log(String(item[key]).toLowerCase().indexOf(_search) > -1);
-
-                        })
-                    })
-                }
-                return this.list;
-            }
-        }
-    });
-
-    var Modal = new Vue({
-            el:"#memberModal",
-            data:{
-                title:"",
-                MemberName: "",
-                MemberEmail: "",
-                MemberPhone: "",
-                MemberPassword: "",
-            },
-            methods:{
-                modalOK: function(){
-                    // showToast("Select item",currentIndex);
-                    if (currentIndex >= 0){
-                        member.list[currentIndex].MemberName     = Modal.MemberName;
-                        member.list[currentIndex].MemberEmail    = Modal.MemberEmail;
-                        member.list[currentIndex].MemberPhone    = Modal.MemberPhone;
-                        member.list[currentIndex].MemberPassword = Modal.MemberPassword;
-                        // 未修改完畢
-                        axios.put('/api/coupon/'+member.list[currentIndex].MemberID, member.list[currentIndex])
-                        .then(function (response) {
-                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            coupon.init();                //更新目前畫面
-                        })
-                    }else{
-                        // 新增資料
-
-                        var dataToSever = {
-                            MemberName: this.MemberName,
-                            MemberEmail: this.MemberEmail,
-                            MemberPhone: this.MemberPhone,
-                            MemberPassword: this.MemberPassword,
+                },
+                remove: function (id) {
+                    let _this = this;
+                    Swal.fire({
+                        title: '確定要將該會員停權?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '確定',
+                        cancelButtonText: '取消'
+                    }).then((result) => {
+                        if (result.value){
+                            member.list.forEach((element,index) => {
+                                if(element.CouponID == id)currentIndex = index;
+                            });
+                            member.list[currentIndex].MemberPermission = true;
+                            axios.put('/api/coupon/'+id, member.list[currentIndex])
+                            .then(function (response) {
+                                console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                                coupon.init();                //更新目前畫面
+                            })
+                            .catch(function (response) {
+                                console.log(response);
+                            });
                         }
-                        console.log(dataToSever);
-                        // 檢查資料 (有空再說)
+                            
+                    });
+                },
+                insertData:function(){
+                    Modal.title = "新增會員";
+                    Modal.MemberName = "";
+                    Modal.MemberEmail = "";
+                    Modal.MemberPhone = "";
+                    Modal.MemberPassword = "";
+                    $("#memberModal").modal();
+                    currentIndex = -1;
+                },
+                edit: function(select){
+                    Modal.title = "修改資料";
+                    member.list.forEach((element,index) => {
+                        if(element.CouponID == select)currentIndex = index;
+                    });
+                    Modal.MemberName = member.list[currentIndex].MemberName;
+                    Modal.MemberEmail = member.list[currentIndex].MemberEmail;
+                    Modal.MemberPhone = member.list[currentIndex].MemberPhone;
+                    Modal.MemberPassword = member.list[currentIndex].MemberPassword;
+                    $("#memberModal").modal();
+                }
+            },
+            mounted: function () {
+                this.init();
+            },
+            computed: {
+                items: function () {
+                    var _search = this.search;
+                    var _selected = this.selected;
+                    if (_search) {
+                        return this.list.filter(function (item) {
+                            console.log(item);
+                            console.log(Object.keys(item));
+                            return Object.keys(item).some(function (key) {
+                                // console.log(key);
+                                if (_selected == key) { // 下拉式的分類
+                                    // console.log("select "+_selected);
+                                    // console.log(key);
+                                    return String(item[key]).toLowerCase().indexOf(_search) > -1
+                                }
 
-                        ///////////
+                                // console.log(String(item[key]).toLowerCase().indexOf(_search) > -1);
 
-                        // 傳送資料
-                        axios.post('/api/member', dataToSever)
-                        .then(function (response) {
-                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            member.init();                //更新目前畫面
+                            })
                         })
-                        
                     }
-                    $("#memberModal").modal("hide");  //隱藏對話盒
+                    return this.list;
                 }
             }
-        });                 //vue-modal tail
+        });
 
-</script>
+        var Modal = new Vue({
+                el:"#memberModal",
+                data:{
+                    title:"",
+                    MemberName: "",
+                    MemberEmail: "",
+                    MemberPhone: "",
+                    MemberPassword: "",
+                },
+                methods:{
+                    modalOK: function(){
+                        // showToast("Select item",currentIndex);
+                        if (currentIndex >= 0){
+                            member.list[currentIndex].MemberName     = Modal.MemberName;
+                            member.list[currentIndex].MemberEmail    = Modal.MemberEmail;
+                            member.list[currentIndex].MemberPhone    = Modal.MemberPhone;
+                            member.list[currentIndex].MemberPassword = Modal.MemberPassword;
+                            // 未修改完畢
+                            axios.put('/api/coupon/'+member.list[currentIndex].MemberID, member.list[currentIndex])
+                            .then(function (response) {
+                                console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                                coupon.init();                //更新目前畫面
+                            })
+                        }else{
+                            // 新增資料
+
+                            var dataToSever = {
+                                MemberName: this.MemberName,
+                                MemberEmail: this.MemberEmail,
+                                MemberPhone: this.MemberPhone,
+                                MemberPassword: this.MemberPassword,
+                            }
+                            console.log(dataToSever);
+                            // 檢查資料 (有空再說)
+
+                            ///////////
+
+                            // 傳送資料
+                            axios.post('/api/member', dataToSever)
+                            .then(function (response) {
+                                console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                                member.init();                //更新目前畫面
+                            })
+                            
+                        }
+                        $("#memberModal").modal("hide");  //隱藏對話盒
+                    }
+                }
+            });                 //vue-modal tail
+
+    </script>
 @endsection
