@@ -10,6 +10,9 @@ use App\Shop;
 
 class BackEnd extends Controller
 {
+    function loginIndex(){
+        return view("BackEnd.login");
+    }
     function couponIndex(){
         return view("BackEnd.coupon");
     }
