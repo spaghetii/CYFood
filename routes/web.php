@@ -47,6 +47,7 @@ Route::get('/user',"HomeController@user");
 
 
 //===============後端=================
+Route::get('/BackEnd/login','BackEnd@loginIndex');
 Route::get('/BackEnd/coupon','BackEnd@couponIndex');
 Route::get('/BackEnd/member','BackEnd@memberIndex');
 Route::get('/BackEnd/order','BackEnd@orderIndex');
