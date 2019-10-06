@@ -74,6 +74,10 @@
     height: 240px;
 }
 
+#loadingSpinners {
+    display: none;
+}
+
 /* 分隔線 */
 .separationline {
     width: 88%;
@@ -145,7 +149,7 @@
     overflow-y: auto;
 }
 
-.modal.right .modal-title{
+.modal.right .modal-title {
     color: orange;
 }
 
@@ -154,9 +158,9 @@
 }
 
 #shoppingBagModalBody ul,
-#shoppingBagModalBody li{
-    padding:0; 
-    margin:0;
+#shoppingBagModalBody li {
+    padding: 0;
+    margin: 0;
 }
 
 .shoppingBagModalItemQuantity {
@@ -181,9 +185,9 @@
 }
 
 .modal.right #shoppingBagModalCheckOutItem {
-    border-color:white;
-    border-style:solid;
-    border-width:1px;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
     padding: 0px 4px;
 }
 
@@ -205,17 +209,29 @@
     display: flex;
 }
 
-.restaurantDetailDiv{
+.restaurantDetailDiv {
     width: fit-content;
     background: transparent;
 }
 
 .restaurantDetail {
-    background-color:white;
+    background-color: white;
     padding: 24px 40px 24px 80px;
 }
 
-.restaurantDetailList div{
+/* googleAPI */
+#RestaurantAddressModalContent {
+    width: 670px;
+    left: -85px;
+}
+
+#map {
+    height: 100%;
+    width: 670px;
+    height: 337px;
+}
+
+.restaurantDetailList div {
     background-color: #FFF8DC;
     padding: 0px 10px;
     text-align: center;
@@ -226,8 +242,9 @@
     font-size: 0.9rem;
 }
 
-.restaurantDetailAddress a {
+#restaurantAddressDesc {
     color: #ffa500;
+    cursor: pointer;
 }
 
 /* 分類排 */
@@ -235,12 +252,12 @@
     background-color: white;
 }
 
-#categoryBar{
+#categoryBar {
     width: 90%;
     height: 60px;
 }
 
-#categoryBarList a{
+#categoryBarList a {
     font-size: 1.1rem;
 }
 
@@ -266,20 +283,20 @@
     height: 158px;
 }
 
-.categoryFoodTitle{
-    overflow: hidden; 
+.categoryFoodTitle {
+    overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box; 
+    display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; 
+    -webkit-line-clamp: 3;
 }
 
-.categoryFoodDesc{
-    overflow: hidden; 
+.categoryFoodDesc {
+    overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box; 
+    display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;  
+    -webkit-line-clamp: 2;
 }
 
 .categoryItem {
@@ -300,17 +317,17 @@
 #orderModalCenterHeader {
     background-repeat: no-repeat;
     background-position: center;
-    background-size:cover;
+    background-size: cover;
     width: 676px;
     height: 400px;
 }
 
-#orderModalCenterBody{
+#orderModalCenterBody {
     padding: 24px 24px 32px;
     width: 676px;
 }
 
-.orderModaloodTitle{
+.orderModaloodTitle {
     align-items: center;
 }
 
@@ -319,21 +336,21 @@
     font-size: 0.9rem;
 }
 
-#orderModalCenterFooter .badge{
+#orderModalCenterFooter .badge {
     font-size: 1.1rem;
 }
 
-#orderModalCenterFooter .btn{
+#orderModalCenterFooter .btn {
     color: white;
     background-color: orange;
 }
 
 .floatRight {
-    float:right;
+    float: right;
 }
 
 .floatLeft {
-    float:left;
+    float: left;
 }
 
 .textWhite {
@@ -379,21 +396,21 @@
     width: 92%;
 }
 
-.orderDetailItemDiv{
+.orderDetailItemDiv {
     padding-top: 20px;
 }
 
 .orderSummaryDiv {
     width: 472px;
     top: 150px;
-    position: sticky;    
+    position: sticky;
     padding: 24px;
     box-shadow: rgba(255, 165, 0, 0.15) 0px 2px 50px;
     float: right;
 }
 
 .divCenter {
-    margin:0px auto;
+    margin: 0px auto;
 }
 
 .orderConfirmDiv {
@@ -415,13 +432,13 @@
 }
 
 #reorderBtn {
-    width:100%;
+    width: 100%;
     height: 48px;
     font-size: 1.1rem;
 }
 
-#foodItemQuantity{
-    border: 1px  rgb(197, 197, 197) solid;
+#foodItemQuantity {
+    border: 1px rgb(197, 197, 197) solid;
     padding: 0px 8px;
     height: 26px;
 }
@@ -433,12 +450,12 @@
 /* userProfile頁面 */
 #userProfileBgDiv {
     height: 670px;
-    background: center/cover no-repeat  url("../img/bg1.jpg") ;
+    background: center/cover no-repeat url("../img/bg1.jpg");
 }
 
 #userProfileOuterDiv {
-    border: 1px  rgb(197, 197, 197) solid;
-    background-color: rgba(255, 255, 255, 0.5) ;
+    border: 1px rgb(197, 197, 197) solid;
+    background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
 }
 
@@ -447,7 +464,7 @@
 }
 
 .creditInputWidth {
-    width:100%;
+    width: 100%;
 }
 
 .changeProfileBtn {
@@ -456,8 +473,8 @@
     height: 40px;
 }
 
-.changeProfileBtnDiv{
-    display:none;
+.changeProfileBtnDiv {
+    display: none;
 }
 
 .userProfileHidden {
@@ -467,25 +484,27 @@
 
 /* 標註:共用屬性 */
 .form-control:hover {
-    border-color: rgba(82,168,236,0.8);
-    box-shadow: 0 0 10px 1px rgba(82,168,236,0.6) inset, 0 0 10px 1px rgba(82,168,236,0.6);
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 0 10px 1px rgba(82, 168, 236, 0.6) inset, 0 0 10px 1px rgba(82, 168, 236, 0.6);
 }
 
 /* trackingOrder頁面 */
 #trackingOrderBgDiv {
     height: 675px;
-    background: center/cover no-repeat  url("../img/bg2.jpg") ;
+    background: center/cover no-repeat url("../img/bg2.jpg");
 }
 
 .trackingOrderDivStyle {
     padding: 10px;
-    border: 1px  rgb(197, 197, 197) solid;
-    background-color: rgba(255, 255, 255, 0.9) ;
+    border: 1px rgb(197, 197, 197) solid;
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
 }
 
 #trackingOrderSummary {
-    height:240px;
-    overflow:scroll;
-    overflow-X:hidden;
+    height: 240px;
+    overflow: scroll;
+    overflow-X: hidden;
 }
+
+

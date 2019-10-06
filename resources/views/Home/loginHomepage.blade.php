@@ -121,7 +121,7 @@
                 <h3>熱門餐廳</h3>
             </div>
             <div class="row">
-                <div v-for="item in list" class="col-sm-4 col-12 mt-5">
+                <div v-for="(item,index) in list" class="col-sm-4 col-12 mt-5">
                     <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
                         <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
@@ -135,17 +135,20 @@
                             </div>
                         </div>
                     </a>
-                </div>                 
-                                 
+                </div>        
             </div> <!-- row -->
-        </div> <!-- popularRestaurant --> 
-
-        {{-- 顯示更多 btn --}}
-        <div class="displayMore container-fluid">
-            <div class="row justify-content-center align-items-center mt-5 mb-5">
-                <button type="button" class="btn btn-lg btn-dark ">顯示更多餐廳</button>
+             {{-- 顯示更多 btn --}}
+            <div class="displayMore container-fluid">
+                <div class="row justify-content-center align-items-center mt-5 mb-5">
+                    <button type="button" class="btn btn-lg btn-dark" v-on:click="displayBtn" v-if="btnShow">顯示更多餐廳</button>
+                </div>
             </div>
-        </div>
+            {{-- loading spinners --}}
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" v-if="spinnerShow" role="status">
+                </div>
+            </div>
+        </div> <!-- popularRestaurant --> 
 
 @endsection
 
@@ -165,7 +168,6 @@
                 $("#headerSearchLarge,#headerAreaLarge,#headerCategoryLarge").css("visibility","hidden");
             }
         });
-
         var recommendApp = new Vue({
             el: "#todayRecommend",
             data: {
@@ -202,12 +204,14 @@
                 this.init();
             }
         });
-
         var loginshop = new Vue({
             el: "#popularRestaurant",
             data: {
                 list: [],
-                listtemp:[]
+                listtemp:[],
+                listTotal: [],
+                btnShow: true,
+                spinnerShow: false,
             },
             methods: {
                 init: function () {
@@ -215,21 +219,36 @@
                     axios.get('/api/shop')
                         .then(function (response) {
                             _this.listtemp = response.data;
-                            _this.list = _this.listtemp;
+                            _this.listTotal = _this.listtemp;
                             //篩選出跟本日推薦不重複的餐廳
                             recommendApp.recommend.forEach((r_ele,r_index) => {
-                                _this.list = _this.list.filter(function(element, index, arr){
-                                    console.log(!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
+                                _this.listTotal = _this.listTotal.filter(function(element, index, arr){
+                                    // console.log(!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
                                     // console.log(arr.indexOf(element) === index);
                                     return (!(arr[index].ShopID==recommendApp.recommend[r_index].ShopID));
                                 });
+                                _this.list = _this.listTotal.slice(0,6);
                             });
-                            // console.log(_this.list);
                         })
                         .catch(function (response) {
-                            console.log(response);
+                            // console.log(response);
                         });
-                }
+                },
+                displayBtn: function(){
+                    let _this = this;
+                    this.btnShow = false;
+                    this.spinnerShow = true;
+                    setTimeout( function(){  
+                        _this.list = _this.listTotal.slice(0,_this.list.length+6);
+                        _this.spinnerShow = false;
+                        _this.btnShow = true;
+                        if (_this.list.length == _this.listTotal.length){
+                            _this.btnShow = false;
+                            }}
+                    ,2000)
+                    // console.log(this.list.length);
+                    // console.log(this.listTotal.length);
+                },
             },
             mounted: function () {
                 this.init();

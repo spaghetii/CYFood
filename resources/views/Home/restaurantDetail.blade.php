@@ -25,7 +25,8 @@
                     <div class="mt-4 mr-2">15TWD 費用</div>
                 </div> 
                 <div class="restaurantDetailAddress">
-                    <span>@{{shop.ShopAddress}}&nbsp;<a href="">詳細資訊</a></span>
+                    <span>@{{shop.ShopAddress}}&nbsp;
+                    <a v-on:click="restaurantAddressBtn" id="restaurantAddressDesc">詳細資訊</a></span>
                 </div>
             </div>      
         </div>
@@ -45,7 +46,6 @@
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav row align-items-center" id="categoryBarList">
                                 <a class="nav-item nav-link":href="'#'+ type" v-for="type in types">@{{type}}</a>
-                                
                             </div>
                         </div>
                     </nav>
@@ -116,6 +116,36 @@
       </div> <!-- modal-content -->
     </div> <!-- modal-dialog -->
 </div> <!-- orderModalCenter -->
+
+<!-- RestaurantAddressModal -->
+<div class="modal fade" id="RestaurantAddressModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" id="RestaurantAddressModalContent" style="width: 674px;">
+                <div id="map">
+                    {{-- 嵌入式 google api --}}
+                    {{-- <iframe width="674" height="337" frameborder="0" style="border:0" 
+                        v-bind:src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyAvNZ5xYMFKm3OAfZNqzAxCzgbPYuZf4D4&q='  + restaurantAddr " 
+                        allowfullscreen>
+                    </iframe> --}}
+                </div>
+                <div style="margin: 24px 24px 8px;">
+                    <div class="container-fluid d-flex flex-row">
+                         <h5 class="mb-4">地點和營業時間</h5>
+                    </div>
+                    <div class="container-fluid d-flex flex-row">
+                        <div><img class="mr-3" src="/img/address.png" alt=""></div>
+                        <div>@{{restaurantAddr}}</div>
+                    </div>
+                    <hr>
+                    <div class="container-fluid d-flex flex-rowr">
+                        <div><img class="mr-3" src="/img/clock.png" alt=""></div>
+                        <div><h6 class="mt-1">24hr</h6></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -198,32 +228,77 @@
             this.init();
         }
     });
-
+    
     var topshop = new Vue({
         el: "#topshop",
         data: {
-            shop: []
-
+            shop: [],
         },
         methods: {
             init: function () {
                 let _this = this;
-                
-                    axios.get("/api/shop/{{$id}}")
-                    .then(function (response) {
-                        _this.shop= response.data;
-                        
-                        
-                        console.log(_this.shop);
-                    })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
-            }
+
+                axios.get("/api/shop/{{$id}}")
+                .then(function (response) {
+                    _this.shop= response.data;
+                    // 店家地址傳給地址modal的vue
+                    RestaurantAddressModal.restaurantAddr = _this.shop.ShopAddress;  
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
+            },
+            restaurantAddressBtn: function() {
+                // 將地址給localStorge
+                localStorage.setItem('restaurantAddress', this.shop.ShopAddress);
+                // 呼叫 maps js api
+                initMap();
+                $("#RestaurantAddressModal").modal( { show: true } );
+                // 清除localStorge
+                localStorage.clear();
+            },
         },
         mounted: function () {
             this.init();
         }
     });
+    
+    // 地址model vue
+    var RestaurantAddressModal = new Vue ({
+        el: "#RestaurantAddressModal",
+        data: {
+            restaurantAddr : '',
+        },
+    });
+
+    // google maps js api
+    var map, geocoder, address;
+    function initMap() {
+        // google 經緯度轉換
+        geocoder = new google.maps.Geocoder();
+        map = new google.maps.Map(document.getElementById('map'), {
+            // 地圖遠近
+            zoom: 17
+        });
+        // localStorage 地址傳入給 Geocoder
+        let restaurantAddress = localStorage.getItem('restaurantAddress');
+        address = restaurantAddress;
+        // 地址經緯度轉換給maker
+        geocoder.geocode({
+            'address': address
+        }, function (results, status) {
+            if (status == 'OK') {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location    
+                });
+            } else {
+                console.log(status);
+            }
+        });
+    }  
     </script>
+    {{-- google map api key --}}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvNZ5xYMFKm3OAfZNqzAxCzgbPYuZf4D4&callback=initMap" async defer></script>
 @endsection
