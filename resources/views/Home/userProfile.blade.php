@@ -15,9 +15,9 @@
                     </div>
                     <div class="col-sm-8 col-8">
                         <div class="mt-4 mb-3">
-                            <h6 class="userProfileDisplay">Leonardo DiCaprio</h6>
+                        <h6 class="userProfileDisplay">@{{profile.MemberName}}</h6>
                             <div class="input-group-sm userProfileHidden">
-                                <input type="text" class="form-control" id="userProfileName" placeholder="Leonardo DiCaprio">
+                                <input type="text" class="form-control" id="userProfileName" :placeholder="profile.MemberName">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -33,10 +33,10 @@
                         <h6 class="floatRight">Tel</h6>
                     </div>
                     <div class="col-sm-8 col-8 userProfileDisplay">
-                        <h6>0987654321</h6>           
+                        <h6>@{{profile.MemberPhone}}</h6>           
                     </div>
                     <div class="input-group-sm col-sm-8 col-8 userProfileHidden">
-                        <input type="text" class="form-control" id="userProfilePhone" placeholder="0987654321">
+                        <input type="text" class="form-control" id="userProfilePhone" :placeholder="profile.MemberPhone">
                     </div>
                 </div>
                 <div class="container-fluid alignCenter mb-3">
@@ -44,11 +44,11 @@
                         <h6 class="floatRight">E-mail</h6>
                     </div>
                     <div class="col-sm-8 col-8 userProfileDisplay">
-                        <h6>a123456789@gmail.com</h6>
+                        <h6>@{{profile.MemberEmail}}</h6>
                     </div>
                     <div class="col-sm-8 col-8">
                         <div class="input-group-sm userProfileHidden">
-                            <input type="email" class="form-control" id="userProfileEmail" placeholder="a123456789@gmail.com">
+                            <input type="email" class="form-control" id="userProfileEmail" :placeholder="profile.MemberEmail">
                         </div>
                         <div class="form-check alignCenter userProfileHidden">
                             <small>
@@ -100,10 +100,27 @@
             });
         });
 
+
         // 顯示Profile Div btn
         var displayApp = new Vue ({
-                el: '.displayProfileDivApp',
+                el: '#userProfileInnerDiv',
+                data:{
+                    profile:[],
+                    username:''
+                },
                 methods:{
+                    init: function(){
+                        var _this = this;
+                        this.username = sessionStorage.getItem('name');
+                        axios.get('/api/member/'+this.username)
+                        .then(function (response) {
+                            _this.profile = response.data;
+                            console.log(_this.profile);
+                        })
+                        .catch(function (response) {
+                            console.log(response);
+                        });
+                    },
                     // 顯示Profile Div btn
                     clickDispayProfileBtn: function(){
                         $(".userProfileHidden").css("display", 'inline-flex');
@@ -116,7 +133,15 @@
                         $(".changeProfileBtnDiv").css("display", 'none');
                         $(".userProfileDisplay,#changeProfileBtn").css("display", "block");
                     }
+                },
+                mounted: function (){
+                    this.init();
+                    
+                    
                 }
-            })
+            });
+        
+        
+        
             </script>
 @endsection

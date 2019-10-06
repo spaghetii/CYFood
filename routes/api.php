@@ -60,6 +60,10 @@ Route::get('/shop/{id}', function($id) {
     return response()->json(Shop::where('ShopID', $id)->first(), 200);     
 });
 
+Route::get('/member/{name}', function($name) {
+    return response()->json(App\Member::where('MemberName', $name)->first(), 200);     
+});
+
 Route::get('/meal/{id}', function($id) {
     return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
 });
