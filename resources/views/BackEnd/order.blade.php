@@ -24,7 +24,7 @@
                 <div class="col text-center">會員名稱</div>
                 <div class="col text-center">下單日期</div>
                 <div class="col"></div>
-                <div id="neworder" class="col text-right">
+                <div id="neworder" class="col text-center">
                     <button id="singlebutton" name="singlebutton" class="btn btn-primary">新增訂單</button>
                 </div>
             </div>

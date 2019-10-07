@@ -24,7 +24,7 @@
                 <div class="col text-center">餐廳電話</div>
                 <div class="col text-center">餐廳地址</div>
                 <div class="col"></div>
-                <div id="neworder" class="col text-right">
+                <div id="neworder" class="col text-center">
                     <button id="singlebutton" name="singlebutton" class="btn btn-primary">新增餐廳</button>
                 </div>
             </div>

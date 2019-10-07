@@ -1,4 +1,5 @@
 /* 整個畫面 */
+body {font-family:"Microsoft JhengHei";}
 .wrapper {
     height: 100vh;
     display: flex;
