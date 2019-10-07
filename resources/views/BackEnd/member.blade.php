@@ -29,7 +29,7 @@
             </div>
 
             <hr>
-            <div v-for="item,index in items" v-if="!item.MemberPermission">
+            <div v-for="item,index in items.slice(start,numForPage+start)" v-if="!item.MemberPermission">
                 <div class="line3 row">
                     <div class="col text-center ">@{{item.MemberName}}</div>
                     <div class="col text-center">@{{item.MemberEmail}}</div>
@@ -46,6 +46,14 @@
 
                 <hr>
             </div>
+        </div>
+        <div class="page" style="background-color:transparent;margin-top: -10px;">
+            <ul class="pagination">
+                <li class="page-item" v-on:click="changePage(currentPage-1)" :class="{'disabled':(currentPage === 1)}" ><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item" v-for="page in totalPage" v-on:click="currentPage = page" :class="{'active': (currentPage === page)}">
+                <a class="page-link" href="#">@{{page}}</a></li>
+                <li class="page-item" v-on:click="changePage(currentPage+1)" :class="{'disabled':(currentPage === totalPage)}"><a class="page-link" href="#">Next</a></li>
+            </ul>
         </div>
     </div>
 @endsection
@@ -94,7 +102,9 @@
             data: {
                 selected: "MemberPhone",
                 search: "",
-                list: []
+                list: [],
+                numForPage:5,
+                currentPage:1
             },
             methods: {
                 init: function () {
@@ -154,6 +164,13 @@
                     Modal.MemberPhone = member.list[currentIndex].MemberPhone;
                     Modal.MemberPassword = member.list[currentIndex].MemberPassword;
                     $("#memberModal").modal();
+                },
+                changePage:function(page){
+                    if(page === 0 || page > this.totalPage){
+                        return;
+                    }
+                    this.currentPage = page;
+
                 }
             },
             mounted: function () {
@@ -181,6 +198,12 @@
                         })
                     }
                     return this.list;
+                },
+                totalPage: function(){
+                    return Math.ceil(this.items.length/this.numForPage);
+                },
+                start: function(){
+                    return (this.currentPage-1)*this.numForPage;
                 }
             }
         });

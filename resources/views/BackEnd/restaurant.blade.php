@@ -30,7 +30,7 @@
             </div>
 
             <hr>
-            <div v-for="item in items">
+            <div v-for="item in items.slice(start,numForPage+start)">
                 <div class="line3 row">
                     <div class="col text-center">@{{item.ShopName}}</div>
                     <div class="col text-center">@{{item.ShopEmail}}</div>
@@ -47,9 +47,18 @@
 
                 <hr>
             </div>
-
+            
+        </div>
+        <div class="page" style="background-color:transparent;margin-top: -10px;">
+            <ul class="pagination">
+                <li class="page-item" v-on:click.prevent="changePage(currentPage-1)" :class="{'disabled':(currentPage === 1)}" ><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item" v-for="page in totalPage" v-on:click="currentPage = page" :class="{'active': (currentPage === page)}">
+                <a class="page-link" href="#">@{{page}}</a></li>
+                <li class="page-item" v-on:click.prevent="changePage(currentPage+1)" :class="{'disabled':(currentPage === totalPage)}"><a class="page-link" href="#">Next</a></li>
+            </ul>
         </div>
     </div>
+    
 @endsection
 
 @section('script')
@@ -59,7 +68,9 @@
             data: {
                 selected: "ShopName",
                 search: "",
-                list: []
+                list: [],
+                numForPage:5,
+                currentPage:1
             },
             methods: {
                 init: function () {
@@ -75,8 +86,8 @@
                 remove: function (id) {
                     let _this = this;
                     Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
+                        title: '確定要刪除這家餐廳?',
+                        text: "刪除之後就無法復原!!!",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -94,6 +105,13 @@
                                 console.log(response);
                             });
                     });
+                },
+                changePage:function(page){
+                    if(page === 0 || page > this.totalPage){
+                        return;
+                    }
+                    this.currentPage = page;
+
                 }
             },
             mounted: function () {
@@ -121,6 +139,12 @@
                         })
                     }
                     return this.list;
+                },
+                totalPage: function(){
+                    return Math.ceil(this.items.length/this.numForPage);
+                },
+                start: function(){
+                    return (this.currentPage-1)*this.numForPage;
                 }
             }
         });
