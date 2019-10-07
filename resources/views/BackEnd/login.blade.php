@@ -24,9 +24,9 @@
     <style> 
         body{
             height: 100%;
-            background:  no-repeat  url("/img/beverage-blue-sky-blur-1804035.jpg");
+            background:  no-repeat  url("/img/BE-5.jpg");
             background-size:cover;
-            background-position-y: 20%;
+            
         }
         .login {
             background:rgba(255, 255, 255, 0.5);
@@ -35,8 +35,8 @@
             border-width: thick;
             width: 650px;
             height: 270px;
-            margin: 80px 10px 0px 50%;
-            padding: 20px;
+            margin: 80px 10px 0px 40%;
+            padding: 10px 20px 20px 20px;
         }
 
         .loginform{
@@ -44,23 +44,14 @@
             margin-left: 50px
         }
 
-        header{
-            font-size: 1.5em;
-            color: white;
-            width: 100%;
-            height: 70px;
-            background-color: orange;
-            padding-left: 20px;
+        .title{
+            margin-bottom: 20px;
+            /* color: orange; */
             text-shadow: 2px 3px 3px rgba(0,0,0,0.3);
         }
 
-        footer{
-
-            width: 100%;
-            height: 70px;
-            background-color: darkcyan;
-            position: absolute;
-            bottom: 0;
+        .row{
+            margin-bottom: 10px;
         }
 
         #inputArea {
@@ -83,27 +74,28 @@
 </head>
 
 <body>
-    <header class="header bg-info align-middle">CYFood 後臺管理</header>
     <div class="login">
         <div class="loginform">
-            <div class="row">
-                <span class="icon"><i class="far fa-user"></i></span>      
-                <input type="text" name="userName" placeholder="請輸入帳號" id="inputArea"><br><br>
+            <div class="title">
+                <h1>CYFood 管理端</h1>
             </div>
-            <div class="row">
-                <span class="icon"><i class="fas fa-lock"></i></span>
-                <input type="password" name="pwd" placeholder="請輸入密碼" id="inputArea"><br><br>
+            <form>
+                <div class="row">
+                    <span class="icon d-flex  align-items-center justify-content-center"><i class="far fa-user"></i></span>      
+                    <input type="text" name="userName" placeholder="請輸入帳號" id="inputArea"><br><br>
                 </div>
-            <div class="row">
-                <input type="button" name="login" value="登入" class="btn btn-success" onclick="validate();">
-                <input type="button" name="cancel" value="取消" class="btn btn-secondary">
-            </div>
+                <div class="row">
+                    <span class="icon d-flex  align-items-center justify-content-center"><i class="fas fa-lock"></i></span>
+                    <input type="password" name="pwd" placeholder="請輸入密碼" id="inputArea"><br><br>
+                    </div>
+                <div class="row ">
+                    <input type="button" name="login" value="登入" class="btn btn-success" onclick="validate();">
+                    <input type="reset" name="cancel" value="重置" class="btn btn-secondary">
+                </div>
+            </form>
         </div>
     </div>
-    <footer class="footer bg-info">Copyright © 2019 CY food</footer>
-    <script language="javascript" type="text/javascript">
-      
-    </script>
+
 <body>
     
 </body>

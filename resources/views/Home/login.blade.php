@@ -32,10 +32,10 @@
 
 <body>
     {{-- 登入註冊 --}}
-    <div class="container">
+    <div class="container ">
         <div class=" back">
             <!-- Columns are always 50% wide, on mobile and desktop -->
-            <div class="login-register">
+            <div class="login-register d-flex justify-content-center flex-wrap">
                 <h2 class="title">登入或註冊帳戶前往選購餐點</h2>
                 <div class=" col-md-5 col-12 w-100  login">
                     <h3 class="logintitle">登入</h3>
@@ -155,10 +155,11 @@
                                     sessionStorage.setItem("memberID",response.data['id']);
                                     sessionStorage.setItem("memberName",response.data['name']);
                                     console.log(response.data['id']);
+                                    console.log(response.data['lastPage']);
                                     Swal.fire({
                                         type: 'success',
                                         title: '登入成功',
-                                        html: '本畫面於<strong></strong>秒後回到首頁',
+                                        html: '本畫面於<strong></strong>秒後跳轉頁面',
                                         timer: 3000,
                                         onBeforeOpen: () => {
                                             Swal.showLoading()
@@ -172,8 +173,8 @@
                                         },
                                         onClose: () => {
                                             clearInterval(timerInterval)
-                                            console.log(response.data['lastPage']);
-                                            window.location.href = response.data['lastPage'];
+                                            window.self.location=window.document.referrer;  
+
                                         }
                                     })
                                 } else {

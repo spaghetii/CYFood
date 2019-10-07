@@ -25,7 +25,7 @@
                 <div class="col text-center">生效日期</div>
                 <div class="col text-center">結束日期</div>
                 <div class="col"></div>
-                <div id="neworder" class="col text-right">
+                <div id="neworder" class="col text-center">
                     <button id="singlebutton" name="singlebutton" class="btn btn-primary" 
                     v-on:click="insertData">新增優惠</button>
                 </div>

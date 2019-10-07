@@ -3,12 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\Shop;
 use Storage;
+use Session;
 use Illuminate\Support\Facades\Hash;
 
 class ShopController extends Controller
 {
+    function newOrder(){
+        return view('Client.newOrder');
+    }
+    function processing(){
+        return view('Client.processing');
+    }
+    function takeout(){
+        return view('Client.takeout');
+    }
+    function user(){
+        return view('Client.user');
+    }
+    function rLogin(){
+        return view("shop.login");
+    }
+    function rRegister(){
+        return view("shop.register");
+    }
+
+    function rLogincheck(Request $request){
+        $shop = DB::table("shops")->where("ShopEmail",$request->loginEmail)->first();
+        if($shop){
+            if(Hash::check($request->loginPassword, $shop->ShopPassword)){
+                Session::put('shopName', $shop->ShopName);
+                
+                return response()->json(['ok' => true , 'id' => $shop->ShopID], 200);
+            }else{
+                return response()->json(['ok' => false], 200);
+            }
+        }else{
+            return response()->json(['ok' => false], 200);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
