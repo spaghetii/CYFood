@@ -107,7 +107,7 @@
                     })
                     .catch(function (response) {
                         console.log(response);
-                });
+                    });
             },
             orderClick:function(index){
                 // console.log(index);

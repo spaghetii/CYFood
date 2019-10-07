@@ -55,6 +55,11 @@
     font-weight: bold;
     text-align: center;
 }
+#timeInterval{
+    color: black;
+    font-size: 36px;
+}
+
 @media (min-width: 1300px) and (max-width: 1600px){
     #buttomDiv {
         height: 614px;
