@@ -18,10 +18,17 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    {{-- Vue --}}
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    {{-- axios --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <title>CYFood</title>
     <style>
         body{
             background: center/cover no-repeat  url("../img/chairs-dining-room-dinner-460537.jpg") ;
+            font-family:"Microsoft JhengHei";
         }
 
         .login {
@@ -54,6 +61,12 @@
             border-color: rgba(255, 166, 0, 0.856);
         }
 
+        .resetalert{
+            color:red;
+            font-size: 20px;
+        }
+
+
     </style>
 </head>
 
@@ -61,26 +74,87 @@
     <div class="container col-md-6">
         <div class="login">
             <h3 class=" logintitle">餐廳登入</h3>
-            <div class="login-form  w-100  " id="#login-form">
+            <div class="login-form  w-100" id="login-form">
                 <form>
                     @csrf
                     <div class="form-group">
                         <label for="loginEmail">電子郵件</label>
-                        <input type="email" class="form-control" id="loginEmail" name="loginEmail">
+                        <input v-model="loginEmail" type="email" class="form-control" id="loginEmail" name="loginEmail">
                     </div>
                     <div class="form-group">
                         <label for="loginEmail">密碼</label>
-                        <input type="password" class="form-control" id="loginEmail" name="loginPassword">
+                        <input v-model="loginPassword" type="password" class="form-control" id="loginEmail" name="loginPassword">
+                        <span v-if="space" class="resetalert">電子郵件或密碼不能為空</span>
+                        <span v-if="checklogin" class="resetalert">電子郵件或密碼錯誤</span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block btn-lg">登入</button>
+                    <button type="button" v-on:click="rlogin" class="btn btn-primary btn-block btn-lg">登入</button>
                     
                 </form>
             </div>
 
         </div>
     </div>
+    <script>
+        //登入驗證
+        var rloginform = new Vue({
+            el: "#login-form",
+            data: {
+                loginEmail: '',
+                loginPassword: '',
+                space: false,
+                checklogin: false
+            },
+            methods: {
+                rlogin: function () {
+                    let self = this;
+                    if (this.loginEmail == '' || this.loginPassword == '') {
+                        this.space = true;
+                    } else {
+                        this.space = false;
+                        this.checklogin = false;
+                        axios.post('/shop/login/check', {
+                                loginEmail: this.loginEmail,
+                                loginPassword: this.loginPassword
+                            })
+                            .then(function (response) {
+                                console.log(response.data['ok']);
+                                if (response.data['ok']) {
+                                    console.log(response.data['id']);
 
+                                    Swal.fire({
+                                        type: 'success',
+                                        title: '登入成功',
+                                        html: '本畫面於<strong></strong>秒後跳轉頁面',
+                                        timer: 3000,
+                                        onBeforeOpen: () => {
+                                            Swal.showLoading()
+                                            timerInterval = setInterval(() => {
+                                                Swal.getContent().querySelector(
+                                                        'strong')
+                                                    .textContent = parseInt(Math
+                                                        .ceil(Swal.getTimerLeft() /
+                                                            1000))
+                                            }, 100)
+                                        },
+                                        onClose: () => {
+                                            window.location = "/newOrder";
+                                        }
+                                    })
+                                } else {
+                                    self.checklogin = true;
+                                }
+
+                            })
+                            .catch(function (response) {
+                                console.log(response)
+                            });
+
+                    }
+                }
+            }
+        })
+    </script>
 </body>
 
 </html>

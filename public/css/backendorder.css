@@ -146,3 +146,7 @@ body {font-family:"Microsoft JhengHei";}
     text-align: center;
     font-size: 2em;
 }
+
+.col{
+    padding-right: 0 ;
+}

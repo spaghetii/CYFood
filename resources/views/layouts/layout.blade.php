@@ -53,7 +53,7 @@
                                         <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
                                         <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
                                         <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
-                                        <a class="dropdown-item" href="/logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
+                                        <a class="dropdown-item" v-on:click="logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
                                       </div>
                             </div>
                         {{-- 登入 --}}
@@ -190,6 +190,18 @@
                             console.log(response);
                     });
                 },
+                logout: function(){
+                    axios.get('/logout')
+                        .then(function (response) {
+                            if (response.data['ok']) {
+                                sessionStorage.clear();
+                                location.reload();
+                            }
+                        })
+                        .catch(function (response) {
+                            
+                    });
+                }
             },
             mounted: function () {
                 

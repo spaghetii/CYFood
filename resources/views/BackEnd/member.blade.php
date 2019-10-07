@@ -22,7 +22,7 @@
                 <div class="col text-center">電子郵件</div>
                 <div class="col text-center">連絡電話</div>
                 <div class="col"></div>
-                <div id="neworder" class="col text-right">
+                <div id="neworder" class="col text-center">
                     <button id="singlebutton" name="singlebutton" class="btn btn-primary"
                     v-on:click="insertData">新增會員</button>
                 </div>
@@ -31,14 +31,14 @@
             <hr>
             <div v-for="item,index in items" v-if="!item.MemberPermission">
                 <div class="line3 row">
-                    <div class="col text-center">@{{item.MemberName}}</div>
+                    <div class="col text-center ">@{{item.MemberName}}</div>
                     <div class="col text-center">@{{item.MemberEmail}}</div>
                     <div class="col text-center">@{{item.MemberPhone}}</div>
-                    <div class="col text-right">
+                    <div class="col change text-right">
                         <button id="singlebutton" name="singlebutton" class="btn btn-primary"
-                        v-on:click="edit(item.CouponID)">修改資訊</button>
+                        v-on:click="edit(item.MemberID)">修改資訊</button>
                     </div>
-                    <div class="col text-center">
+                    <div class="col change text-center">
                         <button id="singlebutton" name="singlebutton" 
                         v-on:click="remove(item.MemberID)" class="btn btn-danger">刪除會員</button>
                     </div>
@@ -65,8 +65,8 @@
                             <label class="col-form-label col-sm-4 text-center">會員名稱: </label>
                             <input type="text" class="form-control col-sm-6" v-model="MemberName" >
                         </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-sm-4 text-center">電子郵件: </label>
+                        <div class="form-group row ">
+                            <label class="col-form-label col-sm-4 text-center ">電子郵件: </label>
                             <input type="text" class="form-control col-sm-6" v-model="MemberEmail">
                         </div>
                         <div class="form-group row">
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">會員密碼: </label>
-                            <input type="text" class="form-control col-sm-6" v-model="MemberPassword">
+                            <input type="password" disabled title="管理員無權更改會員密碼" class="form-control col-sm-6" v-model="MemberPassword">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -147,7 +147,7 @@
                 edit: function(select){
                     Modal.title = "修改資料";
                     member.list.forEach((element,index) => {
-                        if(element.CouponID == select)currentIndex = index;
+                        if(element.MemberID == select)currentIndex = index;
                     });
                     Modal.MemberName = member.list[currentIndex].MemberName;
                     Modal.MemberEmail = member.list[currentIndex].MemberEmail;

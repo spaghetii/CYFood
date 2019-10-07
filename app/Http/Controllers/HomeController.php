@@ -13,6 +13,8 @@ use App\Member;
 class HomeController extends Controller
 {
     function index() {
+        // $lastpage = Session::get('lastPage',"/loginHomepage");
+        // dd($lastpage);
         return view('home.index');
     }
 
@@ -20,8 +22,14 @@ class HomeController extends Controller
         return view('home.loginHomepage');
     }
 
-    function restaurantDetail($id) {
-        return view('home.restaurantDetail',compact("id"));
+    function restaurantDetail($id,Request $request) {
+        // $url = "/restaurant"."/".$request->route('id');
+        // dd($id);
+        $test = $id;
+        
+        // dd($url);
+        
+        return view('home.restaurantDetail',compact("id"));      
     }
 
     function orderDetail() {
@@ -41,7 +49,7 @@ class HomeController extends Controller
 
     function userProfile() {
         $userName = Session::get("userName" , "Guest");
-        Session::put("lastPage","/userProfile");
+        
         // dd($userName);
         if($userName == "Guest"){
             return redirect("/login");
@@ -55,24 +63,6 @@ class HomeController extends Controller
         return view('home.trackingOrder');
     }
 
-    function newOrder(){
-        return view('Client.newOrder');
-    }
-    function processing(){
-        return view('Client.processing');
-    }
-    function takeout(){
-        return view('Client.takeout');
-    }
-    function user(){
-        return view('Client.user');
-    }
-    function rLogin(){
-        return view("shop.login");
-    }
-    public function rRegister(){
-        return view("shop.register");
-    }
 
     function login(){
         return view("home.login");
@@ -83,9 +73,9 @@ class HomeController extends Controller
         if($member){
             if(Hash::check($request->loginPassword, $member->MemberPassword)){
                 Session::put('userName', $member->MemberName);
-                $lastpage = Session::get('lastPage',"/loginHomepage");
+                
                 return response()->json(['ok' => true , 'id' => $member->MemberID 
-                ,'lastPage' => $lastpage, 'name' => $member->MemberName], 200);
+                , 'name' => $member->MemberName], 200);
             }else{
                 return response()->json(['ok' => false], 200);
             }
@@ -96,7 +86,7 @@ class HomeController extends Controller
 
     function logout(){
         Session::forget('userName');
-        return redirect("/");
+        return response()->json(['ok' => true], 200);
     }
 
     function reset(Request $request){
@@ -115,9 +105,9 @@ class HomeController extends Controller
             $to = ['email'=>$memberEmail];
             $data = ['name' => $memberName , 'token' => $encryptID ];
 
-            // Mail::send('email.welcome', $data, function($message) use($memberEmail) {
-            // $message->to($memberEmail)->subject('CYFood 會員密碼重置');
-            // });
+            Mail::send('email.welcome', $data, function($message) use($memberEmail) {
+            $message->to($memberEmail)->subject('CYFood 會員密碼重置');
+            });
             return response()->json(['ok' => true], 200);
             
         }else{
