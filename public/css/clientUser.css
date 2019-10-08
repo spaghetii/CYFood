@@ -89,3 +89,14 @@ input:focus {
     border-color: #5b5b5b;
     box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }
+/* 銷售統計 */
+#chartSearchDiv{
+    width: 80%;
+    margin: 60% auto;
+}
+.chartSearch{
+    margin: 10% auto;
+}
+#chartDiv{
+    margin:1% auto;
+}
