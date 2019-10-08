@@ -60,9 +60,9 @@
                                 class="btn btn-primary btn-block btn-lg btn-login">登入</button>
                         </form>
                     </div>
-
                 </div>
 
+                {{-- 註冊form --}}
                 <div class="col-md-5 col-12 w-100 register">
                     <h3 class="registertitle">註冊</h3>
                     <div class="register-form" id="register-form">
@@ -76,7 +76,7 @@
                             <div class="form-group ">
                                 <label for="registerEmail">電子郵件</label>
                                 <span v-if="checkEmail" class="resetalert">@{{errorEmail}}</span>
-                                <input type="email" class="form-control" v-model="registerEmail" id="registerEmail"
+                                <input type="email" class="form-control" v-model.lazy="registerEmail" id="registerEmail"
                                     name="registerEmail">
                             </div>
                             <div class="form-group ">
@@ -204,17 +204,41 @@
                 checkRegister: false,
                 errorMsg: ''
             },
+            watch:{
+                registerEmail:function(){
+                    let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)+$/;
+                    if (!reg.test(this.registerEmail)) {
+                        this.checkEmail = true;
+                        this.errorEmail = "請輸入正確的格式";
+                    }else{
+                        this.checkEmail = false;
+                        let self = this;
+                        axios.post('/login/checkReID', {
+                                registerEmail: this.registerEmail,
+                            })
+                            .then(function (response) {
+                                console.log(response.data['ok']);
+                                if (response.data['ok']) {
+                                    self.checkEmail = true;
+                                    self.errorEmail = "電子郵件無重複";
+                                } else {
+                                    self.checkEmail = true;
+                                    self.errorEmail = "電子郵件重複，請更換別的電子郵件";
+                                }
+
+                            })
+                            .catch(function (response) {
+                                console.log(response)
+                            });
+                    }
+                }
+            },
             methods: {
                 register: function () {
                     this.checkEmail = false;
                     this.checkRegister = false;
                     this.errorEmail = "";
                     this.errorMsg = "";
-                    let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)+$/;
-                    if (!reg.test(this.registerEmail)) {
-                        this.checkEmail = true;
-                        this.errorEmail = "請輸入正確的格式";
-                    }
                     if (this.registerName == "" || this.registerEmail == "" ||
                         this.registerPhone == "" || this.registerPassword == "") {
                         this.checkRegister = true;
@@ -239,11 +263,8 @@
                                         confirmButtonAriaLabel: 'Thumbs up, great!',
                                     })
                                 } else {
-                                    Swal.fire({
-                                        type: 'error',
-                                        title: '<strong>電子郵件重複</strong>',
-                                        text: '請更換別的電子郵件',
-                                        })
+                                    self.checkEmail = true;
+                                    self.errorEmail = "電子郵件重複，請更換別的電子郵件";
                                 }
 
                             })

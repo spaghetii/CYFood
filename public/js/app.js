@@ -29107,9 +29107,6 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: 'ap3',
   encrypted: true
 });
-window.Echo.channel('say-hello').listen('SayHelloEvent', function (e) {
-  console.log(e);
-});
 
 /***/ }),
 

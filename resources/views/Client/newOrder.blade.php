@@ -76,6 +76,8 @@
 @endsection
 
 @section('script')
+    {{-- websocket --}}
+    <script src="/js/app.js" type="text/javascript"></script>
 <script>
    
     var appB = new Vue({
@@ -144,5 +146,15 @@
             }
         }
     })
+    
+        //websocket
+        window.Echo.channel('orders')
+            .listen('OrdersEvent', (e) => {
+                
+                if(e.header == "shopID" && e.id == 1){
+                    console.log(e);
+                }
+            });
+
 </script>
 @endsection

@@ -7,12 +7,30 @@ use App\Coupon;
 use App\Orders;
 use App\Member;
 use App\Shop;
+use Session;
 
 class BackEnd extends Controller
 {
     function loginIndex(){
         return view("BackEnd.login");
     }
+
+    function bLogincheck(Request $request){
+        $adminName = $request->adminName;
+        $adminPassword = $request->adminPassword;
+
+        if($adminName == "AI0101cyfood"){
+            if($adminPassword == "admincyfood0101"){
+                Session::put('adminname', $adminName);
+                return redirect("/BackEnd/order");
+            }else{
+                return redirect("/BackEnd/login");
+            }
+        }else{
+                return redirect("/BackEnd/login");
+        }
+    }
+
     function couponIndex(){
         return view("BackEnd.coupon");
     }

@@ -121,7 +121,7 @@
                                 console.log(response.data['ok']);
                                 if (response.data['ok']) {
                                     console.log(response.data['id']);
-
+                                    let id = response.data['id'];
                                     Swal.fire({
                                         type: 'success',
                                         title: '登入成功',
@@ -138,7 +138,7 @@
                                             }, 100)
                                         },
                                         onClose: () => {
-                                            window.location = "/newOrder";
+                                            window.location = "/shop/newOrder/"+id;
                                         }
                                     })
                                 } else {

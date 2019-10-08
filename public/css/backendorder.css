@@ -123,12 +123,6 @@ body {font-family:"Microsoft JhengHei";}
     right: 0;
 }
 
-.dot {
-    white-space : nowrap; 
-    overflow : hidden;
-    text-overflow : ellipsis;
-}
-
 .boxBorder{
     border: 0px;
 }
