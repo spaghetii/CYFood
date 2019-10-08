@@ -12,6 +12,9 @@
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#restOrder" role="tab" aria-controls="restOrder" aria-selected="false">歷史訂單</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#restSales" role="tab" aria-controls="restSales" aria-selected="false">銷售統計</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#restInfo" role="tab" aria-controls="restInfo" aria-selected="false">餐廳資訊</a>
         </li>
     </ul>
@@ -63,14 +66,14 @@
         <div class="tab-pane fade" id="restOrder" role="tabpanel" aria-labelledby="profile-tab">
             {{-- 搜尋 --}}
             <div class="input-group">
-                <select class="col-sm-4 form-control" id="orderSelect" name="orderSelect">
-                    <option value="orderNum">訂單編號</option>
-                    <option value="orderDate">訂單日期</option>
-                    <option value="orderName">客戶名稱</option>
-                    <option value="orderTotal">訂單金額</option>
-                    <option value="orderStatus">訂單狀況</option>
+                <select class="col-sm-4 form-control" id="orderSelect" name="orderSelect" v-model="orderSelect">
+                    <option value="OrdersNum">訂單編號</option>
+                    <option value="OrdersCreate">訂單日期</option>
+                    <option value="">客戶名稱</option>
+                    <option value="">訂單金額</option>
+                    <option value="OrdersFinish">訂單狀況</option>
                 </select>
-                <input type="text" class="form-control" placeholder="Please Enter Keyword" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" class="form-control" placeholder="Please Enter Keyword" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="search">
             </div>
             {{-- 表格 --}}
             <table>
@@ -81,7 +84,7 @@
                     <th>訂單金額</th>
                     <th>訂單狀況</th>
                 </tr>
-                <tr v-for="item,index in list" v-if="item.OrdersFinish==4">
+                <tr v-for="item,index in searchData">
                     <td>@{{item.OrdersNum}}</td>
                     <td>@{{item.OrdersCreate}}</td>
                     <td>@{{item.OrdersDetails[0].memberName}}</td>
@@ -90,6 +93,33 @@
                 </tr>
                 
             </table>
+        </div>
+        {{-- 銷售統計 --}}
+        <div class="tab-pane fade" id="restSales" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row no-gutters">
+                <div class="col-lg-2">
+                    <div id="chartSearchDiv">
+                        <select class="form-control form-control-lg chartSearch" name="chartName" v-model="chartName">
+                            <option value="chartNameOrders">訂單數</option>
+                            <option value="chartNameSales">銷售額</option>
+                            <option value="chartNameProducts">商品</option>
+                        </select>
+                        <select class="form-control form-control-lg chartSearch" name="chartYear" v-model="chartYear">
+                            <option value="chartYear2019">2019</option>
+                        </select>
+                        <select class="form-control form-control-lg chartSearch" name="chartMonth" v-model="chartMonth">
+                            <option value="chartMonth9">Semptember</option>
+                            <option value="chartMonth10">October</option>
+                            <option value="chartMonth11">November</option>
+                        </select>
+                        @{{chartId}}
+                    </div>
+                </div>
+                <div class="col-lg-8" id="chartDiv">
+                    <canvas :id="chartId"></canvas>
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
         </div>
         {{-- 餐廳資訊 --}}
         <div class="tab-pane fade" id="restInfo" role="tabpanel" aria-labelledby="contact-tab">
@@ -174,6 +204,7 @@
 @endsection
 
 @section('script')
+<script type="text/javascript" src="/js/charts.js" charset="UTF-8"></script>
 <script>
     var delay = new Vue({
         el:"#delay",
@@ -212,7 +243,9 @@
         el:"#restOrder",
         data:{
             list:[],
-            total:[]
+            total:[],
+            orderSelect:"OrdersNum",
+            search:""
         },
         mounted:function(){
             this.init();
@@ -230,11 +263,29 @@
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             })
                         })
-                        console.log(_this.list);
+                        // console.log(_this.list);
                     })
                     .catch(function(response){
                         console.log(response);
                     })
+            }
+        },
+        computed:{
+            searchData:function(){
+                var _search = this.search;
+                var _orderSelect = this.orderSelect;
+                if(_search){
+                    return this.list.filter(function(data){
+                        // console.log(data); 
+                        return Object.keys(data).some(function(key){
+                            // console.log(key);
+                            if(_orderSelect==key){
+                                return String(data[key]).toLowerCase().indexOf(_search)>-1;
+                            }
+                        })
+                    })
+                }
+                return this.list;
             }
         }
     })
@@ -248,6 +299,19 @@
         }
     })
 
-    
+    var restSales = new Vue({
+        el:"#restSales",
+        data:{
+            chartName:"",
+            chartYear:"",
+            chartMonth:""
+        },
+        computed:{
+            chartId:function(){
+                return this.chartName+this.chartYear+this.chartMonth;
+            }
+        }
+    })
+  
 </script>
 @endsection
