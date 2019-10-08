@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Shop;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +56,7 @@ Route::get('/coupon/{id}', function($id) {
 });
 
 Route::get('/shop/{id}', function($id) {
-    return response()->json(Shop::where('ShopID', $id)->first(), 200);     
+    return response()->json(App\Shop::where('ShopID', $id)->first(), 200);     
 });
 
 Route::get('/member/{name}', function($name) {
