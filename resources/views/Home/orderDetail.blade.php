@@ -320,7 +320,7 @@
                             <div><h4>NT$290</h4></div>
                         </li>
                     </ul>
-                    <a href="" style="text-decoration: none;">
+                    <a v-on:click="sendOrders" style="text-decoration: none;">
                         <div class="orderConfirmDiv alignCenter bgOrange">
                             安排訂單
                         </div>
@@ -332,4 +332,41 @@
 @endsection
 
 @section('script')
+    <script>
+    
+        var sendOrders = new Vue({
+            el:".orderDetailRightDiv",
+            data:{
+                header:"shopID",
+                id:1
+            },
+            methods:{
+                sendOrders: function(){
+                    let _this = this;
+                    Swal.fire({                 // delete form
+                        title: '確定要安排訂單嗎?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '送出訂單',
+                        cancelButtonText: '再考慮一下'
+                        }).then((result) => {
+                            if (result.value)
+                            axios.post('/socket/clientsend', {
+                                header: this.header,
+                                id:this.id
+                            })
+                            .then(function (response) {
+                                console.log(response.data);
+                            })
+                            .catch(function (response) {
+                                console.log(response)
+                            });
+                    });
+                }
+            }
+        })
+    
+    </script>
 @endsection

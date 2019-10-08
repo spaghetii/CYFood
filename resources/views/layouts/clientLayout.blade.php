@@ -32,28 +32,28 @@
         <!-- top -->
         <div class="row no-gutters sticky-top" id="fixedDiv">
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <a href="/newOrder">
+                <a href="/shop/newOrder/{{$id}}">
                     <div class="fixedItem rounded">
                         <img src="/img/client/neworder.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <a href="/processing">
+                <a href="/shop/processing/{{$id}}">
                     <div class="fixedItem rounded">
                         <img src="/img/client/processing.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <a href="/takeout">
+                <a href="/shop/takeout/{{$id}}">
                     <div class="fixedItem rounded">
                         <img src="/img/client/takeout.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <a href="/user">
+                <a href="/shop/user/{{$id}}">
                     <div class="fixedItem rounded">
                         <img src="/img/client/user.png" alt="">
                     </div>

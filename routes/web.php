@@ -21,6 +21,8 @@ Route::post('/login/check',"HomeController@logincheck");
 
 Route::post('/login/checkRe',"HomeController@checkRegister");
 
+Route::post('/login/checkReID',"HomeController@checkRegisterID");
+
 Route::get('/loginHomepage', "HomeController@loginHomepage")->middleware('check');
 
 Route::get('/restaurant/{id}', "HomeController@restaurantDetail");
@@ -41,14 +43,15 @@ Route::get('/session',"HomeController@checkMemberSession" );
 Route::get('/shop/login',"ShopController@rLogin");
 Route::post('/shop/login/check',"ShopController@rLogincheck");
 Route::get('/shop/register',"ShopController@rRegister");
-Route::get('/newOrder',"ShopController@newOrder");
-Route::get('/processing',"ShopController@processing");
-Route::get('/takeout',"ShopController@takeout");
-Route::get('/user',"ShopController@user");
+Route::get('/shop/newOrder/{id}',"ShopController@newOrder");
+Route::get('/shop/processing/{id}',"ShopController@processing");
+Route::get('/shop/takeout/{id}',"ShopController@takeout");
+Route::get('/shop/user/{id}',"ShopController@user");
 
 
 //===============後端=================
 Route::get('/BackEnd/login','BackEnd@loginIndex');
+Route::post('/BackEnd/login/check','BackEnd@bLogincheck');
 Route::get('/BackEnd/coupon','BackEnd@couponIndex');
 Route::get('/BackEnd/member','BackEnd@memberIndex');
 Route::get('/BackEnd/order','BackEnd@orderIndex');
@@ -74,12 +77,6 @@ Route::get('/reset/resetform/{token}',"HomeController@resetForm");
 Route::post('/reset/resetpassword',"HomeController@resetPassword");
 
 //======boardcast test=======
-Route::get('/test',function(){
-    event (new \App\Events\SayHelloEvent("aaa"));
-    return view('welcome');
-});
+Route::post('/socket/clientsend',"HomeController@clientSend");
 
-Route::get('/aaa',function(){
-    event (new \App\Events\SayHelloEvent("mumimumimumi"));
-    return view('welcome');
-});
+Route::post('/socket/shopsend',"HomeController@shopSend");

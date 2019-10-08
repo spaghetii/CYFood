@@ -11,17 +11,17 @@ use Illuminate\Support\Facades\Hash;
 
 class ShopController extends Controller
 {
-    function newOrder(){
-        return view('Client.newOrder');
+    function newOrder($id){
+        return view('Client.newOrder',compact("id"));
     }
-    function processing(){
-        return view('Client.processing');
+    function processing($id){
+        return view('Client.processing',compact("id"));
     }
-    function takeout(){
-        return view('Client.takeout');
+    function takeout($id){
+        return view('Client.takeout',compact("id"));
     }
-    function user(){
-        return view('Client.user');
+    function user($id){
+        return view('Client.user',compact("id"));
     }
     function rLogin(){
         return view("shop.login");

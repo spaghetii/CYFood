@@ -123,12 +123,6 @@ body {font-family:"Microsoft JhengHei";}
     right: 0;
 }
 
-.dot {
-    white-space : nowrap; 
-    overflow : hidden;
-    text-overflow : ellipsis;
-}
-
 .boxBorder{
     border: 0px;
 }
@@ -146,7 +140,20 @@ body {font-family:"Microsoft JhengHei";}
     text-align: center;
     font-size: 2em;
 }
-
+.ellipsis {
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.disable {
+	pointer-events: none;
+}
+.table tbody tr td{
+    vertical-align: middle;
+}
+.disableSelect {
+    -webkit-user-select: none;   /* for Chrome */
+}
 .col{
     padding-right: 0 ;
 }

@@ -32,10 +32,10 @@
             <hr>
             <div v-for="item in items.slice(start,numForPage+start)">
                 <div class="line3 row">
-                    <div class="col text-center">@{{item.ShopName}}</div>
+                    <div class="col text-center ellipsis">@{{item.ShopName}}</div>
                     <div class="col text-center">@{{item.ShopEmail}}</div>
                     <div class="col text-center">@{{item.ShopPhone}}</div>
-                    <div class="col text-center dot" >@{{item.ShopAddress}}</div>
+                    <div class="col text-center ellipsis" >@{{item.ShopAddress}}</div>
                     <div class="col text-right">
                         <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
                     </div>

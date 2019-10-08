@@ -9,6 +9,7 @@ use Crypt;
 use Mail;
 use Session;
 use App\Member;
+use App\Events\OrdersEvent;
 
 class HomeController extends Controller
 {
@@ -139,7 +140,7 @@ class HomeController extends Controller
         
     }
 
-    public function checkRegister(Request $request) {
+    function checkRegister(Request $request) {
         $register = DB::table("members")->where("MemberEmail",$request->registerEmail)->first();
         //
         if($register){
@@ -156,12 +157,38 @@ class HomeController extends Controller
             $me->save();
             return response()->json(['ok' => true], 200);
         }
-        
+    }
+
+    function checkRegisterID(Request $request){
+        $checkID = DB::table("members")->where("MemberEmail",$request->registerEmail)->first();
+
+        if($checkID){
+            return response()->json(['ok' => false], 200);
+        }else{
+            return response()->json(['ok' => true], 200);
+        }
     }
 
     public function checkMemberSession(){
         $userName = Session::get("userName" , "Guest");
         return response()->json(['name' => $userName], 200);        
+    }
+
+    //=================websocket↓======================
+
+    function clientSend(Request $request){
+        $header = $request->header;
+        $id = $request->id;
+        broadcast (new OrdersEvent($header,$id))->toOthers();
+        
+    }
+
+    function shopSend(Request $request){
+        $header = $request->header;
+        $id = $request->id;
+        $message = $request->message;
+        broadcast (new OrdersEvent($header,$id,$message))->toOthers();
+        
     }
 
 }
