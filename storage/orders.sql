@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 --
 -- 建立時間： 
 --
-
+use cyfood;
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `OrdersID` bigint(20) UNSIGNED NOT NULL,
