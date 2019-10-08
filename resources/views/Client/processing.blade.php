@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
 </div>
 
 {{-- 聯絡顧客MODAL --}}
@@ -70,7 +70,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Jennifer</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Send messages to: @{{messageName}}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -171,7 +171,7 @@
         data:{
             list:[],
             total:[],
-            currentIndex:0
+            currentIndex:0,
         },
         mounted: function () {
             this.init();
@@ -198,6 +198,8 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block");
+                //聯絡顧客 名稱
+                contactModal.messageName = this.list[this.currentIndex].OrdersDetails[0].memberName;
             },
             callOut:function(index){
                 $(".jumbotron").css("display","none");
@@ -209,6 +211,13 @@
                         _this.init();
                     })
             }
+        }
+    })
+
+    var contactModal = new Vue({
+        el:"#contactModal",
+        data:{
+            messageName:""
         }
     })
 </script>

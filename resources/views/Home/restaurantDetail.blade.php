@@ -84,7 +84,7 @@
 
 
 <!-- OrderModal -->
-<div class="modal fade" id="orderModalCenter" tabindex="-1" role="dialog" aria-labelledby="orderModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="orderModalCenter" abindex="-1" role="dialog" aria-labelledby="orderModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content" id="orderModalCenterContent">
         <div class="modal-header" id="orderModalCenterHeader" v-if="meals.MealImage" :style="{backgroundImage: 'url('+ meals.MealImage +')'}">
@@ -104,7 +104,7 @@
             <button type="button" class="btn btn-lg" v-on:click="subButton">-</button>
             <span class="badge badge-white">@{{count}}</span>
             <button type="button" class="btn btn-lg" v-on:click="plusButton">+</button>
-            <button type="button" class="btn btn-lg btn-block">
+            <button type="button" class="btn btn-lg btn-block" v-on:click="orderBtn">
                 <div class="" >
                     新增&nbsp;@{{count}}&nbsp;份餐點至訂單                    
                     <div class="floatRight">
@@ -176,11 +176,32 @@
                         this.count--;
                         this.totalPrice -= parseInt(this.meals.MealPrice);
                     }
-                },
-                
+                },  
                 plusButton: function () {
                     this.count++;
                     this.totalPrice += parseInt(this.meals.MealPrice);
+                },
+                orderBtn: function () {
+                    // console.log(this.meals);
+                    // 跳出 model
+                    $('#orderModalCenter').modal('toggle');
+
+                    // 餐點object 和 餐點數量 存入 localStorage 
+                    localStorage.setItem('orderMeal', JSON.stringify(this.meals));
+                    localStorage.setItem('orderMealQuantity', this.count);
+
+                    // 取出 localStorage
+                    let orderMeal = localStorage.getItem('orderMeal');
+                    orderMeal = JSON.parse(orderMeal);
+                    let orderMealQuantity = localStorage.getItem('orderMealQuantity');
+                    // console.log(orderMeal);
+                    
+                    // 資料傳入到 shoppingBagModalApp-Vue
+                    shoppingBagModalApp.shoppingBagMealName.push(orderMeal.MealName);
+                    shoppingBagModalApp.shoppingBagMealPrice.push(orderMeal.MealPrice);
+                    shoppingBagModalApp.shoppingBagMealQuantity.push(orderMealQuantity);  
+                    shoppingBagModalApp.shoppingBagMealTotalPrice.push(orderMeal.MealPrice * orderMealQuantity);  
+                    // console.log(shoppingBagModalApp.shoppingBagMealName);
                 }
             }
         })
@@ -201,7 +222,7 @@
                 axios.get("/api/meal/{{$id}}")
                     .then(function (response) {
                         _this.list = response.data;
-                        console.log(response.data);
+                        // console.log(_this.list);
                         //取出餐點種類
                         for(i= 0;i<_this.list.length;i++){
                             _this.temp[i] = _this.list[i].MealType;
@@ -221,7 +242,7 @@
                 orderModal.meals = this.list[e];
                 orderModal.totalPrice = this.list[e].MealPrice;
                 $("#orderModalCenter").modal( { show: true } );
-                console.log(orderModal.meals);
+                // console.log(orderModal.meals);
             }
         },
         mounted: function () {
@@ -294,7 +315,7 @@
                     position: results[0].geometry.location    
                 });
             } else {
-                console.log(status);
+                // console.log(status);
             }
         });
     }  
