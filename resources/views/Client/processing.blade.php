@@ -193,7 +193,7 @@
                     })
                     .catch(function (response) {
                         console.log(response);
-                });
+                    });
             },
             orderClick:function(index){
                 this.currentIndex = index;

@@ -38,15 +38,17 @@ Route::get('/session',"HomeController@checkMemberSession" );
 
 
 //===============店家端======================
-Route::get('/shop/login',"HomeController@rLogin");
-Route::get('/shop/register',"HomeController@rRegister");
-Route::get('/newOrder',"HomeController@newOrder");
-Route::get('/processing',"HomeController@processing");
-Route::get('/takeout',"HomeController@takeout");
-Route::get('/user',"HomeController@user");
+Route::get('/shop/login',"ShopController@rLogin");
+Route::post('/shop/login/check',"ShopController@rLogincheck");
+Route::get('/shop/register',"ShopController@rRegister");
+Route::get('/newOrder',"ShopController@newOrder");
+Route::get('/processing',"ShopController@processing");
+Route::get('/takeout',"ShopController@takeout");
+Route::get('/user',"ShopController@user");
 
 
 //===============後端=================
+Route::get('/BackEnd/login','BackEnd@loginIndex');
 Route::get('/BackEnd/coupon','BackEnd@couponIndex');
 Route::get('/BackEnd/member','BackEnd@memberIndex');
 Route::get('/BackEnd/order','BackEnd@orderIndex');
@@ -70,3 +72,14 @@ Route::post('/reset',"HomeController@reset");
 Route::get('/reset/resetform/{token}',"HomeController@resetForm");
 
 Route::post('/reset/resetpassword',"HomeController@resetPassword");
+
+//======boardcast test=======
+Route::get('/test',function(){
+    event (new \App\Events\SayHelloEvent("aaa"));
+    return view('welcome');
+});
+
+Route::get('/aaa',function(){
+    event (new \App\Events\SayHelloEvent("mumimumimumi"));
+    return view('welcome');
+});

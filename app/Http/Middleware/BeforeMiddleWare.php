@@ -18,7 +18,7 @@ class BeforeMiddleWare
     {
         if ($_SERVER ["REQUEST_URI"]=='/loginHomepage') {
             if (Session::get('userName','Guest') == 'Guest'){
-                return redirect("/login");
+                return redirect("/");
             }
         }else if($_SERVER['REQUEST_URI'] == '/'){
             if (Session::get('userName','Guest') != 'Guest'){

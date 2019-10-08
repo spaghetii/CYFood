@@ -22,6 +22,7 @@
     <style>
         body {
             background: center/cover no-repeat url("../img/buffet-counter-cozy-776538.jpg");
+            font-family:"Microsoft JhengHei";
         }
 
         .register {

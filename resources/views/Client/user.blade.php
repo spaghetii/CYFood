@@ -81,27 +81,14 @@
                     <th>訂單金額</th>
                     <th>訂單狀況</th>
                 </tr>
-                <tr>
-                    <td>CY20190930001</td>
-                    <td>2019/09/30</td>
-                    <td>Jennifer</td>
-                    <td>$9900</td>
-                    <td>已送達</td>
+                <tr v-for="item,index in list" v-if="item.OrdersFinish==4">
+                    <td>@{{item.OrdersNum}}</td>
+                    <td>@{{item.OrdersCreate}}</td>
+                    <td>@{{item.OrdersDetails[0].memberName}}</td>
+                    <td>@{{total[index]}}</td>
+                    <td>@{{item.OrdersFinish}}</td>
                 </tr>
-                <tr>
-                    <td>CY20190930002</td>
-                    <td>2019/09/30</td>
-                    <td>CYcompany</td>
-                    <td>$66</td>
-                    <td>已送達</td>
-                </tr>
-                <tr>
-                    <td>CY20190930002</td>
-                    <td>2019/09/30</td>
-                    <td>Panda</td>
-                    <td>$999</td>
-                    <td>已送達</td>
-                </tr>
+                
             </table>
         </div>
         {{-- 餐廳資訊 --}}
@@ -221,6 +208,37 @@
         }
     })
 
+    var restOrder = new Vue({
+        el:"#restOrder",
+        data:{
+            list:[],
+            total:[]
+        },
+        mounted:function(){
+            this.init();
+        },
+        methods:{
+            init:function(){
+                let _this = this;
+                axios.get('/api/order')
+                    .then(function(response){
+                        _this.list = response.data;
+                        _this.list.forEach((element,index)=>{
+                            _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
+                            _this.total[index] = 0;
+                            _this.list[index].OrdersDetails.forEach(ele=>{
+                                _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
+                            })
+                        })
+                        console.log(_this.list);
+                    })
+                    .catch(function(response){
+                        console.log(response);
+                    })
+            }
+        }
+    })
+
     var restInfo = new Vue({
         el:"#restInfo",
         methods:{
@@ -229,5 +247,7 @@
             }
         }
     })
+
+    
 </script>
 @endsection

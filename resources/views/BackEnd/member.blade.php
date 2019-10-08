@@ -22,23 +22,23 @@
                 <div class="col text-center">電子郵件</div>
                 <div class="col text-center">連絡電話</div>
                 <div class="col"></div>
-                <div id="neworder" class="col text-right">
+                <div id="neworder" class="col text-center">
                     <button id="singlebutton" name="singlebutton" class="btn btn-primary"
                     v-on:click="insertData">新增會員</button>
                 </div>
             </div>
 
             <hr>
-            <div v-for="item,index in items" v-if="!item.MemberPermission">
+            <div v-for="item,index in items.slice(start,numForPage+start)" v-if="!item.MemberPermission">
                 <div class="line3 row">
-                    <div class="col text-center">@{{item.MemberName}}</div>
+                    <div class="col text-center ">@{{item.MemberName}}</div>
                     <div class="col text-center">@{{item.MemberEmail}}</div>
                     <div class="col text-center">@{{item.MemberPhone}}</div>
-                    <div class="col text-right">
+                    <div class="col change text-right">
                         <button id="singlebutton" name="singlebutton" class="btn btn-primary"
-                        v-on:click="edit(item.CouponID)">修改資訊</button>
+                        v-on:click="edit(item.MemberID)">修改資訊</button>
                     </div>
-                    <div class="col text-center">
+                    <div class="col change text-center">
                         <button id="singlebutton" name="singlebutton" 
                         v-on:click="remove(item.MemberID)" class="btn btn-danger">刪除會員</button>
                     </div>
@@ -46,6 +46,14 @@
 
                 <hr>
             </div>
+        </div>
+        <div class="page" style="background-color:transparent;margin-top: -10px;">
+            <ul class="pagination">
+                <li class="page-item" v-on:click="changePage(currentPage-1)" :class="{'disabled':(currentPage === 1)}" ><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item" v-for="page in totalPage" v-on:click="currentPage = page" :class="{'active': (currentPage === page)}">
+                <a class="page-link" href="#">@{{page}}</a></li>
+                <li class="page-item" v-on:click="changePage(currentPage+1)" :class="{'disabled':(currentPage === totalPage)}"><a class="page-link" href="#">Next</a></li>
+            </ul>
         </div>
     </div>
 @endsection
@@ -65,8 +73,8 @@
                             <label class="col-form-label col-sm-4 text-center">會員名稱: </label>
                             <input type="text" class="form-control col-sm-6" v-model="MemberName" >
                         </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-sm-4 text-center">電子郵件: </label>
+                        <div class="form-group row ">
+                            <label class="col-form-label col-sm-4 text-center ">電子郵件: </label>
                             <input type="text" class="form-control col-sm-6" v-model="MemberEmail">
                         </div>
                         <div class="form-group row">
@@ -75,7 +83,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">會員密碼: </label>
-                            <input type="text" class="form-control col-sm-6" v-model="MemberPassword">
+                            <input type="password" disabled title="管理員無權更改會員密碼" class="form-control col-sm-6" v-model="MemberPassword">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -94,7 +102,9 @@
             data: {
                 selected: "MemberPhone",
                 search: "",
-                list: []
+                list: [],
+                numForPage:5,
+                currentPage:1
             },
             methods: {
                 init: function () {
@@ -147,13 +157,20 @@
                 edit: function(select){
                     Modal.title = "修改資料";
                     member.list.forEach((element,index) => {
-                        if(element.CouponID == select)currentIndex = index;
+                        if(element.MemberID == select)currentIndex = index;
                     });
                     Modal.MemberName = member.list[currentIndex].MemberName;
                     Modal.MemberEmail = member.list[currentIndex].MemberEmail;
                     Modal.MemberPhone = member.list[currentIndex].MemberPhone;
                     Modal.MemberPassword = member.list[currentIndex].MemberPassword;
                     $("#memberModal").modal();
+                },
+                changePage:function(page){
+                    if(page === 0 || page > this.totalPage){
+                        return;
+                    }
+                    this.currentPage = page;
+
                 }
             },
             mounted: function () {
@@ -181,6 +198,12 @@
                         })
                     }
                     return this.list;
+                },
+                totalPage: function(){
+                    return Math.ceil(this.items.length/this.numForPage);
+                },
+                start: function(){
+                    return (this.currentPage-1)*this.numForPage;
                 }
             }
         });

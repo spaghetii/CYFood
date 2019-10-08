@@ -6,29 +6,29 @@
 <div class="row no-gutters" id="buttomDiv">
     <div class="col-4">
         <div id="leftButtom">
-            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick">
-                @{{detailsTitle}}
+            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick(index)" v-for="item,index in list" v-if="item.OrdersFinish==3">
+                @{{item.OrdersNum}}<br>@{{item.OrdersDetails[0].memberName}}
             </button>
         </div>
     </div>
     <div class="col-8">
         <div id="rightButtom">
-            <div class="jumbotron">
+            <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex">
                 <!-- 訂單標題 -->
-                <h1 class="display-4" id="detailsTitle">@{{detailsTitle}}</h1>
+                <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}</h1>
                 <hr class="my-4">
                 <!-- 訂單內容 -->
                 <h3 id="detailsItem">
-                    <div class="row">
+                    <div class="row" v-for="i,index in item.OrdersDetails">
                         <div class="col-1 text-center"><span class="badge badge-light">1</span></div>
                         <div class="col-2 text-left">
-                            <span>@{{detailsCount}}x</span>
+                            <span>@{{i.mealQuantity}}x</span>
                         </div>
                         <div class="col-7 text-left">
-                            <span>@{{detailsMeal}}</span>
+                            <span>@{{i.mealName}}</span>
                         </div>
                         <div class="col-2 text-right">
-                            <span>$@{{detailsPrice}}</span>
+                            <span>$@{{i.mealUnitPrice}}</span>
                         </div>
                     </div>
                 </h3>
@@ -36,13 +36,15 @@
                 <h3>
                     <div class="row" id="detailsTotal">
                         <div class="col-9 text-right">Total</div>
-                        <div class="col-3 text-right">$@{{totalPrice}}</div>
+                        <div class="col-3 text-right">$@{{total[index]}}</div>
                     </div>
                 </h3>
                 <hr class="my-4">
                 <div class="row" id="detailsButton">
                     <div class="col-12">
-                        <div class="alert alert-dark" role="alert" id="takeoutTime">外送員將於 5:00 後抵達</div>
+                        <div class="alert alert-dark" role="alert" id="takeoutTime">
+                            外送員將於<span id="timeInterval"> 5:00 </span>後抵達
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,20 +55,40 @@
 
 @section('script')
 <script>
-            var buttomDiv = new Vue({
-                el:"#buttomDiv",
-                data:{
-                    detailsTitle:"CY201909240001—Jennifer",
-                    detailsCount:"10",
-                    detailsMeal:"CY超值豪華A9和牛套餐",
-                    detailsPrice:"399",
-                    totalPrice:"3990"
-                },
-                methods:{
-                    orderClick:function(){
-                        $(".jumbotron").css("display","block");
-                    }
-                }
-            })
-        </script>
+    var buttomDiv = new Vue({
+        el:"#buttomDiv",
+        data:{
+            list:[],
+            total:[],
+            currentIndex:0
+        },
+        mounted:function(){
+            this.init();
+        },
+        methods:{
+            init:function(){
+                let _this = this;
+                axios.get('/api/order')
+                    .then(function(response){
+                        _this.list = response.data;
+                        _this.list.forEach((element,index)=>{
+                            _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
+                            _this.total[index] = 0;
+                            _this.list[index].OrdersDetails.forEach(ele => {
+                                _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
+                            })
+                        })
+                        // console.log(_this.list);
+                    })
+                    .catch(function(response){
+                        console.log(response);
+                    })
+            },
+            orderClick:function(index){
+                this.currentIndex = index;
+                $(".jumbotron").css("display","block");
+            }
+        }
+    })
+</script>
 @endsection
