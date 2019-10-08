@@ -79,17 +79,18 @@
             <div class="title">
                 <h1>CYFood 管理端</h1>
             </div>
-            <form>
+            <form method="post" action="/BackEnd/login/check">
+                @csrf
                 <div class="row">
                     <span class="icon d-flex  align-items-center justify-content-center"><i class="far fa-user"></i></span>      
-                    <input type="text" name="userName" placeholder="請輸入帳號" id="inputArea"><br><br>
+                    <input type="text" name="adminName" placeholder="請輸入帳號" id="inputArea"><br><br>
                 </div>
                 <div class="row">
                     <span class="icon d-flex  align-items-center justify-content-center"><i class="fas fa-lock"></i></span>
-                    <input type="password" name="pwd" placeholder="請輸入密碼" id="inputArea"><br><br>
+                    <input type="password" name="adminPassword" placeholder="請輸入密碼" id="inputArea"><br><br>
                     </div>
                 <div class="row ">
-                    <input type="button" name="login" value="登入" class="btn btn-success" onclick="validate();">
+                    <input type="submit" name="login"  value="登入" class="btn btn-success" onclick="validate();">
                     <input type="reset" name="cancel" value="重置" class="btn btn-secondary">
                 </div>
             </form>

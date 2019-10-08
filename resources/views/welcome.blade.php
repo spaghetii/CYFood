@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
+        <script src="../js/app.js" type="text/javascript"></script>
         <!-- Styles -->
         <style>
             html, body {
@@ -100,6 +100,13 @@
                 </div>
             </div>
         </div>
-        <script src="../js/app.js" type="text/javascript"></script>
+        <script>
+            window.Echo.channel('orders')
+            .listen('OrdersEvent', (e) => {
+                console.log(e.header);
+            });
+
+        </script>
+        
     </body>
 </html>

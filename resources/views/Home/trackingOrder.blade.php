@@ -136,18 +136,28 @@
                 barValue: '0%',
                 orderStatus: '餐廳正在確定訂單 ...'
             },
-            mounted:function(){
-                var flag = setInterval(() => {
-                    temp += 20;
-                    this.barValue = temp + "%";
-                    console.log(this.barValue);
-                    if  (temp == 20 )   { this.orderStatus = '餐點正在準備中 ...' } else if
-                        (temp == 40 )   { this.orderStatus = '外送員正在領取您的餐點' } else if
-                        (temp == 60 )   { this.orderStatus = '外送員正在前往您所在位置' } else if
-                        (temp == 80 )   { this.orderStatus = '請前往門口與外送員碰面' } else if
-                        (temp == 100)   { this.orderStatus = '已完成訂單'; clearInterval(flag);};      
-                }, 2000);
-            },
+            methods:{
+            progressbar : function(){
+                    var flag = setInterval(() => {
+                        temp += 20;
+                        this.barValue = temp + "%";
+                        console.log(this.barValue);
+                        if  (temp == 20 )   { this.orderStatus = '餐點正在準備中 ...' } else if
+                            (temp == 40 )   { this.orderStatus = '外送員正在領取您的餐點' } else if
+                            (temp == 60 )   { this.orderStatus = '外送員正在前往您所在位置' } else if
+                            (temp == 80 )   { this.orderStatus = '請前往門口與外送員碰面' } else if
+                            (temp == 100)   { this.orderStatus = '已完成訂單'; clearInterval(flag);};      
+                    }, 2000);
+                },
+            }
         })
+
+    // websocket
+        window.Echo.channel('orders')
+            .listen('OrdersEvent', (e) => {
+                if(e.header == "memberID" && e.id == 1){
+                    console.log(e);
+                }
+            });    
     </script>
 @endsection

@@ -201,7 +201,7 @@
                 axios.get("/api/meal/{{$id}}")
                     .then(function (response) {
                         _this.list = response.data;
-                        console.log(_this.list);
+                        console.log(response.data);
                         //取出餐點種類
                         for(i= 0;i<_this.list.length;i++){
                             _this.temp[i] = _this.list[i].MealType;

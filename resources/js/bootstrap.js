@@ -28,7 +28,3 @@ window.Echo = new Echo({
     encrypted: true
 });
 
-window.Echo.channel('say-hello')
-    .listen('SayHelloEvent', (e) => {
-        console.log(e);
-    });

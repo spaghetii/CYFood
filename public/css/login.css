@@ -86,12 +86,13 @@ form {
 }
 
 .form-group a{
-    margin-left: 75%;
+    margin-left: 79%;
+    font-size: 20px;
 }
 
 
 .modal-header, h4, .close {
-    background-color: #5cb85c;
+    background-color: orange;
     color: white;
     text-align: center;
     font-size: 1em;
