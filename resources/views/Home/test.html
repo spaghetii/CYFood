@@ -30,6 +30,42 @@
                 barValue: '10%'
             }
         })
+
+        var text = 
+        {"restaurant":"CY",
+        "memberName":"Jennifer",
+        "meal":
+            [   {"mealQuantity":"1",
+                "mealName":"冰淇淋紅茶",
+                "mealUnitPrice":"70",
+                "mealDetail":
+                    [   {"type":0,
+                        "mealNum":"meal0",
+                        "detail": "",
+                        "price":"",
+                        "check":false
+                        }
+                    ] 
+                },
+                {"mealQuantity":"2",
+                "mealName":"珍珠奶茶",
+                "mealUnitPrice":"70",
+                "mealDetail":
+                    [   {"type":0,
+                        "mealNum":"meal0",
+                        "detail": "",
+                        "price":"",
+                        "check":false
+                        }
+                    ] 
+                } 
+            ]
+        };
+        console.log(text);
+        console.log(typeof text);
+        console.log(JSON.stringify(text));
+        console.log(JSON.parse(JSON.stringify(text)));
+
     </script>
 </body>
 </html>

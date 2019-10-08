@@ -6,8 +6,8 @@
 <div class="row no-gutters" id="buttomDiv">
     <div class="col-4">
         <div id="leftButtom">
-            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick(index)" v-for="item,index in list" v-if="item.OrdersFinish==3">
-                @{{item.OrdersNum}}<br>@{{item.OrdersDetails[0].memberName}}
+            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick(index)" v-for="item,index in list" v-if="item.OrdersStatus==3">
+                @{{item.OrdersNum}}<br>@{{item.OrdersDetails.memberName}}
             </button>
         </div>
     </div>
@@ -15,11 +15,11 @@
         <div id="rightButtom">
             <div class="jumbotron" v-for="item,index in list" v-if="index == currentIndex">
                 <!-- 訂單標題 -->
-                <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails[0].memberName}}</h1>
+                <h1 class="display-4" id="detailsTitle">@{{item.OrdersNum}}⎯ @{{item.OrdersDetails.memberName}}</h1>
                 <hr class="my-4">
                 <!-- 訂單內容 -->
                 <h3 id="detailsItem">
-                    <div class="row" v-for="i,index in item.OrdersDetails">
+                    <div class="row" v-for="i,index in item.OrdersDetails.meal">
                         <div class="col-1 text-center"><span class="badge badge-light">1</span></div>
                         <div class="col-2 text-left">
                             <span>@{{i.mealQuantity}}x</span>
@@ -74,7 +74,7 @@
                         _this.list.forEach((element,index)=>{
                             _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                             _this.total[index] = 0;
-                            _this.list[index].OrdersDetails.forEach(ele => {
+                            _this.list[index].OrdersDetails.meal.forEach(ele => {
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             })
                         })
