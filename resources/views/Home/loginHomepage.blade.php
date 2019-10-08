@@ -5,7 +5,7 @@
 <!-- 區域選擇 -->
     <div class="form-group navbar-nav col-sm-1" id="headerAreaLarge">
         <select class="form-control">
-            <option>區域</option>
+            <option selected disabled hidden>區域</option>
             <option>西區</option>
             <option>北區</option>
             <option>東區</option>
@@ -19,7 +19,7 @@
     <!-- 類別篩選 -->
     <div class="form-group navbar-nav col-sm-1" id="headerCategoryLarge">
         <select class="form-control">
-            <option>類別</option>
+            <option selected disabled hidden>類別</option>
             <option>中式美食</option>
             <option>日式美食</option>
             <option>美式美食</option>
@@ -50,7 +50,7 @@
                 <!-- 區域選擇 -->
                 <div class="form-group col-sm-2 col-12" id="selectArea">
                     <select class="form-control">
-                        <option>選擇區域</option>
+                        <option selected disabled hidden>選擇區域</option>
                         <option>西區</option>
                         <option>北區</option>
                         <option>東區</option>
@@ -64,7 +64,7 @@
                 <!-- 類別篩選 -->
                 <div class="form-group col-sm-2 col-12" id="selectCategory">
                     <select class="form-control">
-                        <option>選擇類別</option>
+                        <option selected disabled hidden>選擇類別</option>
                         <option>中式美食</option>
                         <option>日式美食</option>
                         <option>美式美食</option>
