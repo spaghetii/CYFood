@@ -196,7 +196,7 @@
                         .then(function (response) {
                             _this.list  = response.data;
                             _this.list.forEach((element,index) => {
-                                //  console.log(element);
+                                 console.log(element.OrdersDetails);
                                 _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                             });
                             // console.log(_this.list);
