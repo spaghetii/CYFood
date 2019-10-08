@@ -70,7 +70,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Send messages to: @{{messageName}}</h4>
+                <h4 class="modal-title"  id="exampleModalLabel">Send messages to: @{{messageName}}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -79,12 +79,12 @@
                 <form>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">輸入訊息:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textarea class="form-control" v-model="messageText" id="message-text"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark">送出</button>
+                <button type="button" v-on:click="sendMessage" class="btn btn-outline-dark">送出</button>
             </div>
         </div>
     </div>
@@ -105,25 +105,25 @@
             <div class="modal-body">
                 <form>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="delayTime" id="inlineRadio1" value="5">
                         <label class="form-check-label" for="inlineRadio1">5分鐘</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="delayTime" id="inlineRadio2" value="10">
                         <label class="form-check-label" for="inlineRadio2">10分鐘</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option2">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="delayTime" id="inlineRadio3" value="15">
                         <label class="form-check-label" for="inlineRadio3">15分鐘</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="delayTime" id="inlineRadio4" value="20">
                         <label class="form-check-label" for="inlineRadio4">20分鐘</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark">送出</button>
+                <button type="button" v-on:click="sendDTime" class="btn btn-outline-dark">送出</button>
             </div>
         </div>
     </div>
@@ -143,21 +143,21 @@
             <div class="modal-body">
                 <form>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option1">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="cancelMsg" id="inlineRadio5" value="提早打烊">
                         <label class="form-check-label" for="inlineRadio5">提早打烊</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option2">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="cancelMsg" id="inlineRadio6" value="存貨不足">
                         <label class="form-check-label" for="inlineRadio6">存貨不足</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="option2">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" v-model="cancelMsg" id="inlineRadio7" value="餐廳問題">
                         <label class="form-check-label" for="inlineRadio7">餐廳問題</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark">送出</button>
+                <button type="button" v-on:click="sendCancel" class="btn btn-outline-dark">送出</button>
             </div>
         </div>
     </div>
@@ -199,9 +199,21 @@
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block");
                 //聯絡顧客 名稱
-                contactModal.messageName = this.list[this.currentIndex].OrdersDetails[0].memberName;
+                // contactModal.messageName = this.list[this.currentIndex].OrdersDetails[0].memberName;
             },
             callOut:function(index){
+                    axios.post('/socket/shopsend', {
+                            header: "memberID",
+                            id:1,
+                            type:"ok",      
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                    });
+
                 $(".jumbotron").css("display","none");
                 this.list[index].OrdersStatus = 3;
                 let _this = this;
@@ -217,7 +229,74 @@
     var contactModal = new Vue({
         el:"#contactModal",
         data:{
-            messageName:""
+            messageName:"",
+            messageText:""
+        },
+        methods:{
+            sendMessage:function(){
+                axios.post('/socket/shopsend', {
+                            header: "memberID",
+                            id:1,
+                            type:"message",
+                            message:this.messageText
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
+                $("#contactModal").modal('hide');
+                this.messageText="";
+            }
+        }
+    })
+
+    var delayModal = new Vue({
+        el:"#delayModal",
+        data:{
+            delayTime:""
+        },
+        methods:{
+            sendDTime:function(){
+                axios.post('/socket/shopsend', {
+                            header: "memberID",
+                            id:1,
+                            type:"delay",
+                            message:this.delayTime
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
+                $("#delayModal").modal('hide');
+            }
+        }
+    })
+
+    var cancelModal = new Vue({
+        el:"#cancelModal",
+        data:{
+            cancelMsg:""
+        },
+        methods:{
+            sendCancel:function(){
+                axios.post('/socket/shopsend', {
+                            header: "memberID",
+                            id:1,
+                            type:"cancel",
+                            message:this.cancelMsg
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
+                $("#cancelModal").modal('hide');
+            }
         }
     })
 </script>

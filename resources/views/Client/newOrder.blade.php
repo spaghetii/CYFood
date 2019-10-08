@@ -139,14 +139,25 @@
             yesReject:function(){
                 // console.log(this.currentIndex);
                 // console.log(this.list[this.currentIndex].OrdersID);
-                this.list[this.currentIndex].OrdersStatus = 0;
-                let _this = this;
-                axios.put('/api/order/'+_this.list[_this.currentIndex].OrdersID,_this.list[_this.currentIndex])
-                    .then(function(response){
-                        console.log(response.data['ok']);
-                        _this.init();
-                    })
-                $(".jumbotron").css("display","none");
+                axios.post('/socket/shopsend', {
+                            header: "memberID",
+                            id:1,
+                            type:"reject"
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
+                // this.list[this.currentIndex].OrdersStatus = 0;
+                // let _this = this;
+                // axios.put('/api/order/'+_this.list[_this.currentIndex].OrdersID,_this.list[_this.currentIndex])
+                //     .then(function(response){
+                //         console.log(response.data['ok']);
+                //         _this.init();
+                //     })
+                // $(".jumbotron").css("display","none");
                 $("#rejectModal").modal('hide');
             }
         }
@@ -155,9 +166,10 @@
         //websocket
         window.Echo.channel('orders')
             .listen('OrdersEvent', (e) => {
-                
                 if(e.header == "shopID" && e.id == 1){
-                    console.log(e);
+                    Swal.fire({
+                        title: '您有新訂單'
+                        })
                 }
             });
 
