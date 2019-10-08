@@ -23,6 +23,8 @@
     </script>
     {{-- charts.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     {{-- Topcss --}}
     <link rel="stylesheet" href="/css/clientTop.css">
     

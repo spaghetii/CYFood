@@ -186,8 +186,9 @@ class HomeController extends Controller
     function shopSend(Request $request){
         $header = $request->header;
         $id = $request->id;
+        $type =$request->type;
         $message = $request->message;
-        broadcast (new OrdersEvent($header,$id,$message))->toOthers();
+        broadcast (new OrdersEvent($header,$id,$type,$message))->toOthers();
         
     }
 

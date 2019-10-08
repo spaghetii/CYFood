@@ -16,17 +16,19 @@ class OrdersEvent implements ShouldBroadcast
 
     public $header;
     public $id;
+    public $type;
     public $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($header,$id=0,$message="aaa")
+    public function __construct($header,$id=0,$type="a",$message="b")
     {
         //
         $this->header = $header;
         $this->id = $id;
+        $this->type = $type;
         $this->message = $message;
     }
 
