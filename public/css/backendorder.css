@@ -146,3 +146,17 @@ body {font-family:"Microsoft JhengHei";}
     text-align: center;
     font-size: 2em;
 }
+.ellipsis {
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.disable {
+	pointer-events: none;
+}
+.table tbody tr td{
+    vertical-align: middle;
+}
+.disableSelect {
+    -webkit-user-select: none;   /* for Chrome */
+}
