@@ -64,9 +64,9 @@
                         <div v-if="navlogin"><a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;@{{userName}}</a></div>
                         
                         {{-- 購物袋 --}}
-                        <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal">
-                            <img src="/img/shopping-bag.png" alt="">
-                            <span style="font-size:1.2rem;">1</span>
+                        <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal" v-if="shoppingBagTotalQuantity!=0">
+                            <img src="/img/shopping-bag2.png" alt="">
+                            <span style="font-size:1.2rem;">@{{shoppingBagTotalQuantity}}</span>
                         </a>
                     </div>
                 </div>
@@ -114,22 +114,20 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="shoppingBagModalLabel"><img src="/img/shopping-bag.png" alt="">&emsp;您的訂單&nbsp;(1)</h5>
+                    <h5 class="modal-title" id="shoppingBagModalLabel"><img src="/img/shopping-bag.png" alt="">&emsp;您的訂單&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="/img/close.png" alt=""></span>
                     </button>
                 </div>
                 <div class="modal-body" id="shoppingBagModalBody">
                     <ul>
-                        <li style="list-style-type:none">
+                        <li style="list-style-type:none" v-for="MealItem,index in shoppingBagMealName">
                             <div class="d-flex justify-content-between">
                                 <div class="shoppingBagModalItemQuantity">
                                     <div class="form-group">
-                                        <select class="form-control">
-                                            <option>移除</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>    
+                                        <select class="form-control" v-model="shoppingBagMealQuantity[index]">
+                                            <option value="0">移除</option>
+                                            <option v-for="item in quantitySelectLists">@{{item}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -137,10 +135,10 @@
                                     <div class="d-flex flex-column">
                                         <div>
                                             <div class="float-left">
-                                                小籠包 Pork Xiaolongbao
+                                                @{{shoppingBagMealName[index]}}
                                             </div>
-                                            <div class="float-right">
-                                                $9,999
+                                            <div class="float-right" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex">
+                                                $@{{item}}
                                             </div>
                                         </div>
                                         <div>
@@ -149,14 +147,15 @@
                                     </div>
                                 </a>
                             </div>
+                            <hr>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="d-flex justify-content-between" id="shoppingBagModalCheckOutDiv">
-                        <div id="shoppingBagModalCheckOutItem">99</div>
+                        <div id="shoppingBagModalCheckOutItem">@{{shoppingBagTotalQuantity}}</div>
                         <div>下一步：結帳</div>
-                        <div>$9,999</div>
+                        <div>$@{{shoppingBagTotalPrice}}</div>
                     </a>
                 </div>
             </div> {{-- modal-content --}}
@@ -164,20 +163,20 @@
     </div> {{-- shoppingBagModal --}}
     
    <script>
-       
         var navBar = new Vue({
             el:"#navbarItem",
             data:{
                 navlogin:true,
                 navshow:false,
-                userName:''
+                userName:'',
+                shoppingBagTotalQuantity:'',
             },
             methods:{
                 init: function () {
                     let _this = this;
                     axios.get('/session')
                         .then(function (response) {
-                            console.log(response.data['name']);
+                            // console.log(response.data['name']);
                             if ( response.data['name'] != 'Guest' ){
                                 _this.userName = response.data['name'];
                                 _this.navlogin = false;
@@ -188,7 +187,7 @@
                                 _this.navlogin = true;
                                 _this.navshow = false;
                             }
-                            console.log(_this.navBar);
+                            // console.log(_this.navBar);
                         })
                         .catch(function (response) {
                             console.log(response);
@@ -207,11 +206,58 @@
                     });
                 }
             },
-            mounted: function () {
-                
+            mounted: function () {      
                 this.init();            //initial
             }
         });  
+
+        var shoppingBagModalApp = new Vue ({
+            el:"#shoppingBagModal",
+            data:{
+                // 數量選擇框
+                quantitySelectLists: [],
+
+                // 購物袋 總數 總價
+                shoppingBagTotalQuantity: 0,
+                shoppingBagTotalPrice: 0,
+
+                // 購物袋 各個資料
+                shoppingBagMealQuantity: [],
+                shoppingBagMealTotalPrice: [],
+                shoppingBagMealName: [],
+                shoppingBagMealPrice: [],
+            },
+            watch: {
+                // watch 餐點數量變化
+                shoppingBagMealQuantity: function (value) {
+                    console.log(value);
+                    _this = this;
+                    this.shoppingBagTotalQuantity = 0;
+                    // 每筆 數量 和 順序
+                    value.forEach((element,index) => {
+                        console.log(element);
+                        // 根據數量變化 改變每筆的總價
+                        _this.shoppingBagMealTotalPrice[index] = _this.shoppingBagMealPrice[index] * element;
+                        console.log(_this.shoppingBagMealTotalPrice);
+                        // 餐點總數 更新
+                        _this.shoppingBagTotalQuantity += parseInt(element);
+                        // navbar 餐點總數 更新
+                        navBar.shoppingBagTotalQuantity = _this.shoppingBagTotalQuantity;
+                    });
+                    // 總價 更新
+                    this.shoppingBagTotalPrice = 0;
+                    this.shoppingBagMealTotalPrice.forEach(element => {
+                        _this.shoppingBagTotalPrice += element;
+                    });
+                }
+            },
+            mounted: function () {
+                // 數量選擇框
+                for(var i=1; i<=99; i++){
+                    this.quantitySelectLists.push(i);
+                }
+            },
+        })
     
    </script>
     @yield('script')
