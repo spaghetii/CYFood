@@ -369,17 +369,16 @@
                 },
                 modalOK: function(){
                     if (currentIndex >= 0){
-                        order.list[currentIndex].OrdersNum = Modal.CouponCode;
-                        order.list[currentIndex].OrdersDetails   = Modal.CouponType;
-                        order.list[currentIndex].OrdersCreate   = Modal.CouponDiscount;
-                        order.list[currentIndex].CouponStart   = Modal.CouponStart;
-                        order.list[currentIndex].OrdersFinish   = Modal.CouponDeadline;
+                        // order.list[currentIndex].OrdersNum      = Modal.OrdersNum;
+                        // order.list[currentIndex].OrdersDetails   = Modal.OrdersDetails;
+                        // order.list[currentIndex].OrdersUpdate   = Modal.OrdersUpdate;
+                        console.log(this.list);
                         // 未修改完畢
-                        axios.put('/api/order/'+order.list[currentIndex].OrdersID, order.list[currentIndex])
-                        .then(function (response) {
-                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            order.init();                //更新目前畫面
-                        })
+                        // axios.put('/api/order/'+order.list[currentIndex].OrdersID, order.list[currentIndex])
+                        // .then(function (response) {
+                        //     console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                        //     order.init();                //更新目前畫面
+                        // })
                     }else{
                         // 新增資料
                         this.memberList.forEach(element => {
@@ -424,6 +423,7 @@
                     let _this = this;
                     axios.get('/api/meal/'+value)
                         .then(function (response) {
+                            console.log(_this.mealList)
                             if(Object.keys(response.data).length != 0){
                                 _this.list.OrdersDetails.meal[lastNum].mealName = response.data[0].MealName;
                                 _this.mealList  = response.data;
@@ -431,7 +431,7 @@
                                 _this.list.OrdersDetails.meal[lastNum].mealName = "";
                                 _this.mealList  = [];
                             }
-                            
+                            console.log(_this.mealList)
                     })
                 }
             },
