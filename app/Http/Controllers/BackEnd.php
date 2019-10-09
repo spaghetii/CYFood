@@ -120,11 +120,30 @@ class BackEnd extends Controller
     }
 
     function orderInsert(Request $request) {
+        //產生流水號
+        $order = Orders::max('OrdersNum');
+        $date = date('Ymd');
+        $subdate = substr($order, -11, -3);
+        $suborder = substr($order, 2);
+        // echo $order."<br>";
+        // echo substr($order, -11, -3)."<br>"; 
+        
+        //判定日期
+        if($date !== $subdate){
+            $OrdersNum = "CY".$date."001";
+            // echo $OrdersNum;
+        }else{
+            $suborder += 1;
+            $OrdersNum ="CY".$suborder;
+            // echo $OrdersNum;
+        }
+
         $order = new Orders;
-        $order->OrdersNum = $request->OrdersNum;
+        $order->OrdersNum = $OrdersNum;
         $order->OrdersDetails = $request->OrdersDetails;
         $order->OrdersStatus = $request->OrdersStatus;
-        $order->OrdersCreate = $request->OrdersCreate;
+        // $order->OrdersCreate = $request->OrdersCreate;
+        // $order->OrdersUpdate = $request->OrdersUpdate;
         $order->MemberID = $request->MemberID;
         $order->ShopID = $request->ShopID;
         $ok = $order->save();
@@ -148,9 +167,25 @@ class BackEnd extends Controller
 
 
     function ordertest(){
+        //產生流水號
         $order = Orders::max('OrdersNum');
+        $date = date('Ymd');
+        $subdate = substr($order, -11, -3);
+        $suborder = substr($order, 2);
+        echo $order."<br>";
+        echo substr($order, -11, -3)."<br>"; 
+        
+        //判定日期
+        if($date !== $subdate){
+            $OrdersNum = "CY".$date."001";
+            // echo $OrdersNum;
+        }else{
+            $suborder += 1;
+            $OrdersNum ="CY".$suborder;
+            echo $OrdersNum;
+        }
 
-        echo date('U');
+
     }
     
 }
