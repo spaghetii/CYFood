@@ -69,9 +69,9 @@
                 <select class="col-sm-4 form-control" id="orderSelect" name="orderSelect" v-model="orderSelect">
                     <option value="OrdersNum">訂單編號</option>
                     <option value="OrdersCreate">訂單日期</option>
-                    <option value="">客戶名稱</option>
-                    <option value="">訂單金額</option>
-                    <option value="OrdersFinish">訂單狀況</option>
+                    <option value="memberName">客戶名稱</option>
+                    <option value="total">訂單金額</option>
+                    <option value="OrdersStatus">訂單狀況</option>
                 </select>
                 <input type="text" class="form-control" placeholder="Please Enter Keyword" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="search">
             </div>
@@ -87,9 +87,9 @@
                 <tr v-for="item,index in searchData">
                     <td>@{{item.OrdersNum}}</td>
                     <td>@{{item.OrdersCreate}}</td>
-                    <td>@{{item.OrdersDetails[0].memberName}}</td>
+                    <td>@{{item.OrdersDetails.memberName}}</td>
                     <td>@{{total[index]}}</td>
-                    <td>@{{item.OrdersFinish}}</td>
+                    <td>@{{item.OrdersStatus}}</td>
                 </tr>
                 
             </table>
@@ -259,7 +259,7 @@
                         _this.list.forEach((element,index)=>{
                             _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                             _this.total[index] = 0;
-                            _this.list[index].OrdersDetails.forEach(ele=>{
+                            _this.list[index].OrdersDetails.meal.forEach(ele=>{
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             })
                         })
@@ -272,17 +272,23 @@
         },
         computed:{
             searchData:function(){
+                let _this = this;
                 var _search = this.search;
                 var _orderSelect = this.orderSelect;
                 if(_search){
-                    return this.list.filter(function(data){
-                        // console.log(data); 
+                    return this.list.filter(function(data,index){
+                        
                         return Object.keys(data).some(function(key){
                             // console.log(key);
                             if(_orderSelect==key){
                                 return String(data[key]).toLowerCase().indexOf(_search)>-1;
                             }
-                        })
+                        }) || Object.keys(data.OrdersDetails).some(function(key){
+                            // console.log(key);
+                            if(_orderSelect==key){
+                                return String(data.OrdersDetails[key]).toLowerCase().indexOf(_search)>-1;
+                            }
+                        }) 
                     })
                 }
                 return this.list;
