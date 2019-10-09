@@ -133,5 +133,12 @@ class BackEnd extends Controller
         }
         return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
+
+
+    function ordertest(){
+        $order = Orders::max('OrdersNum');
+
+        echo date('U');
+    }
     
 }
