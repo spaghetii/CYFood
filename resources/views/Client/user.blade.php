@@ -93,6 +93,7 @@
                 </tr>
                 
             </table>
+            <a href="#"><div id="upDiv"></div></a>
         </div>
         {{-- 銷售統計 --}}
         <div class="tab-pane fade" id="restSales" role="tabpanel" aria-labelledby="profile-tab">
