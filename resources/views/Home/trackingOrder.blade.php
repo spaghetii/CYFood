@@ -128,6 +128,8 @@
 @endsection
 
 @section('script')
+    {{-- websocket --}}
+    <script src="../js/app.js" type="text/javascript"></script>
     <script>
         var temp = 0;
         var timerApp =  new Vue({

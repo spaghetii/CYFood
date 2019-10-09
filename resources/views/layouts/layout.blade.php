@@ -24,8 +24,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     {{-- axios --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
-    {{-- websocket --}}
-    <script src="../js/app.js" type="text/javascript"></script>
     {{-- sweetalert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <!-- 網頁 css -->
@@ -114,7 +112,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="shoppingBagModalLabel"><img src="/img/shopping-bag.png" alt="">&emsp;您的訂單&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
+                    <h5 class="modal-title" id="shoppingBagModalLabel"><img src="/img/shopping-bag2.png" alt="">&emsp;您的訂單&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="/img/close.png" alt=""></span>
                     </button>
@@ -152,7 +150,7 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <a href="#" class="d-flex justify-content-between" id="shoppingBagModalCheckOutDiv">
+                    <a href="/orderDetail" class="d-flex justify-content-between" id="shoppingBagModalCheckOutDiv">
                         <div id="shoppingBagModalCheckOutItem">@{{shoppingBagTotalQuantity}}</div>
                         <div>下一步：結帳</div>
                         <div>$@{{shoppingBagTotalPrice}}</div>
@@ -163,6 +161,11 @@
     </div> {{-- shoppingBagModal --}}
     
    <script>
+        // local storage
+        let mealNameArray = [];
+        let mealPriceArray = [];
+        let mealQuantityArray = [];
+
         var navBar = new Vue({
             el:"#navbarItem",
             data:{
@@ -211,6 +214,8 @@
             }
         });  
 
+
+
         var shoppingBagModalApp = new Vue ({
             el:"#shoppingBagModal",
             data:{
@@ -230,20 +235,27 @@
             watch: {
                 // watch 餐點數量變化
                 shoppingBagMealQuantity: function (value) {
-                    console.log(value);
+                    // console.log(value);
                     _this = this;
                     this.shoppingBagTotalQuantity = 0;
                     // 每筆 數量 和 順序
                     value.forEach((element,index) => {
-                        console.log(element);
+                        // console.log(element);
                         // 根據數量變化 改變每筆的總價
                         _this.shoppingBagMealTotalPrice[index] = _this.shoppingBagMealPrice[index] * element;
-                        console.log(_this.shoppingBagMealTotalPrice);
+                        // console.log(_this.shoppingBagMealTotalPrice);
                         // 餐點總數 更新
                         _this.shoppingBagTotalQuantity += parseInt(element);
                         // navbar 餐點總數 更新
                         navBar.shoppingBagTotalQuantity = _this.shoppingBagTotalQuantity;
                     });
+
+                    // 數量變化 新增到 localstorage
+                    if (value != 0) {
+                        localStorage.setItem("mealQuantityArray", JSON.stringify(value));
+                        localStorage.setItem("mealTotalPriceArray", JSON.stringify(this.shoppingBagMealTotalPrice));
+                    };
+
                     // 總價 更新
                     this.shoppingBagTotalPrice = 0;
                     this.shoppingBagMealTotalPrice.forEach(element => {
@@ -255,7 +267,27 @@
                 // 數量選擇框
                 for(var i=1; i<=99; i++){
                     this.quantitySelectLists.push(i);
+                }            
+                
+                // console.log(localStorage.getItem('mealPriceArray'));
+                if (localStorage.getItem('mealPriceArray') != null ){
+                // 取出localstorage資料
+                let storedMealNameArray = JSON.parse(localStorage.getItem('mealNameArray'));
+                let storedMealPriceArray = JSON.parse(localStorage.getItem('mealPriceArray'));
+                let storedMealQuantityArray = JSON.parse(localStorage.getItem('mealQuantityArray'));
+                let storedMealTotalPriceArray = JSON.parse(localStorage.getItem('mealTotalPriceArray'));
+                // console.log(storedMealNameArray);
+                // console.log(storedMealPriceArray);
+                // console.log(storedMealQuantityArray);
+                // console.log(storedMealTotalPriceArray);
+                // localstorage如果有資料 丟到 購物袋
+                this.shoppingBagMealName = storedMealNameArray;
+                this.shoppingBagMealPrice = storedMealPriceArray;
+                this.shoppingBagMealQuantity = storedMealQuantityArray;
+                this.shoppingBagMealTotalPrice = storedMealTotalPriceArray;
+                // console.log(this.shoppingBagMealQuantity);
                 }
+
             },
         })
     

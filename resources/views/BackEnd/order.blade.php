@@ -38,10 +38,12 @@
                     <div class="col text-center ellipsis">@{{item.OrdersDetails.memberName}}</div>
                     <div class="col text-center ellipsis">@{{item.OrdersCreate}}</div>
                     <div class="col text-right">
-                        <button id="singlebutton" name="singlebutton" class="btn btn-primary">查詢或修改</button>
+                        <button id="singlebutton" name="singlebutton" 
+                        v-on:click="edit(item.OrdersID)" class="btn btn-primary">查詢或修改</button>
                     </div>
                     <div class="col text-center">
-                        <button id="singlebutton" name="singlebutton" class="btn btn-danger">刪除訂單</button>
+                        <button id="singlebutton" name="singlebutton" 
+                        v-on:click="remove(item.OrdersID)" class="btn btn-danger">刪除訂單</button>
                     </div>
                 </div>
             </div>
@@ -56,7 +58,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="col-11 modal-title text-center">新增訂單</h4>
+                    <h4 class="col-11 modal-title text-center">@{{title}}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -69,7 +71,7 @@
                         </div>
                         <div class="form-group row col-sm-6">
                             <label class="col-form-label col-sm-4 text-center">訂單狀態: </label>
-                            <select class="custom-select col-sm-8" v-model="list.OrdersFinish">
+                            <select class="custom-select col-sm-8" v-model="list.OrdersStatus">
                                 <option value="0">取消訂單</option>
                                 <option value="1" selected>等待接單</option>
                                 <option value="2">處理中</option>
@@ -168,7 +170,8 @@
                         </div>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary form-control">修改</button>
+                    <button type="button" class="btn btn-primary form-control"
+                    v-on:click="modalOK">修改</button>
                     <button type="button" class="btn btn-secondary form-control" data-dismiss="modal">取消</button>
                 </div>
             </div>
@@ -182,6 +185,9 @@
         var treeData = {"OrdersNum":"","OrdersDetails":{"restaurant":"","memberName":"",
         "meal":[{"mealQuantity":"","mealName":"","mealUnitPrice":"","mealDetail":[{"type":0,"mealNum":"meal0","detail": "","price":"","check":false}] }] },
         "OrdersCreate":"2019-10-04","OrdersUpdate":"2019-10-04","OrdersFinish":1,"MemberID":1,"MealID":34};
+        
+        var currentIndex = 0;
+        
         var order = new Vue({
             el:"#App",
             data:{
@@ -196,10 +202,10 @@
                         .then(function (response) {
                             _this.list  = response.data;
                             _this.list.forEach((element,index) => {
-                                 console.log(element.OrdersDetails);
+                                //  console.log(element.OrdersDetails);
                                 _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                             });
-                            // console.log(_this.list);
+                            console.log(_this.list);
                         })
                         .catch(function (response) {
                             console.log(response);
@@ -219,7 +225,7 @@
                         cancelButtonText: '取消'
                         }).then((result) => {
                             if (result.value)
-                                axios.delete('/api/coupon/' + id)
+                                axios.delete('/api/order/' + id)
                                 .then(function (response) {
                                     if (response.data['ok']) {
                                         _this.init();
@@ -237,15 +243,17 @@
                     currentIndex = -1;
                 },
                 edit: function(select){
-                    Modal.title = "修改優惠";
-                    coupon.list.forEach((element,index) => {
-                        if(element.CouponID == select)currentIndex = index;
+                    Modal.title = "修改訂單";
+                    order.list.forEach((element,index) => {
+                        if(element.OrdersID == select)currentIndex = index;
                     });
-                    Modal.CouponCode = coupon.list[currentIndex].CouponCode;
-                    Modal.CouponType = coupon.list[currentIndex].CouponType;
-                    Modal.CouponDiscount = coupon.list[currentIndex].CouponDiscount;
-                    Modal.CouponStart = coupon.list[currentIndex].CouponStart;
-                    Modal.CouponDeadline = coupon.list[currentIndex].CouponDeadline;
+                    Modal.list = this.list[currentIndex];
+
+                    // Modal.CouponCode = coupon.list[currentIndex].CouponCode;
+                    // Modal.CouponType = coupon.list[currentIndex].CouponType;
+                    // Modal.CouponDiscount = coupon.list[currentIndex].CouponDiscount;
+                    // Modal.CouponStart = coupon.list[currentIndex].CouponStart;
+                    // Modal.CouponDeadline = coupon.list[currentIndex].CouponDeadline;
                     $("#orderModal").modal();
                 }
             },
@@ -278,10 +286,45 @@
             }
         });         //vue-coupon tail
 
+        Date.prototype.format = function (format) {
+            //eg:format="yyyy-MM-dd hh:mm:ss";
+
+            if (!format) {
+                format = "yyyy-MM-dd hh:mm:ss";
+            }
+
+            var o = {
+                "M+": this.getMonth() + 1,  // month
+                "d+": this.getDate(),       // day
+                "H+": this.getHours(),      // hour
+                "h+": this.getHours(),      // hour
+                "m+": this.getMinutes(),    // minute
+                "s+": this.getSeconds(),    // second
+                "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
+                "S": this.getMilliseconds()
+            };
+
+            if (/(y+)/.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + "")
+                    .substr(4 - RegExp.$1.length));
+            }
+
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                        ? o[k]
+                        : ("00" + o[k]).substr(("" + o[k]).length));
+                }
+            }
+
+            return format;
+        };
+
         var lastNum = 0;
         var Modal = new Vue({
             el:"#orderModal",
             data:{
+                title:"",
                 list: treeData,
                 total: [],
                 memberList:[],
@@ -332,22 +375,28 @@
                         order.list[currentIndex].CouponStart   = Modal.CouponStart;
                         order.list[currentIndex].OrdersFinish   = Modal.CouponDeadline;
                         // 未修改完畢
-                        axios.put('/api/order/'+coupon.list[currentIndex].CouponID, coupon.list[currentIndex])
+                        axios.put('/api/order/'+order.list[currentIndex].OrdersID, order.list[currentIndex])
                         .then(function (response) {
                             console.log(response.data['ok']);  // 成功回傳時就會顯示true
                             order.init();                //更新目前畫面
                         })
                     }else{
                         // 新增資料
-
+                        this.memberList.forEach(element => {
+                            if (element.MemberName == this.list.OrdersDetails.memberName){
+                                this.list.MemberID = element.MemberID;
+                            }
+                        });
                         var dataToSever = {
-                            CouponCode: this.CouponCode,
-                            CouponType: this.CouponType,
-                            CouponDiscount: this.CouponDiscount,
-                            CouponStart: this.CouponStart,
-                            CouponDeadline: this.CouponDeadline
+                            OrdersNum: this.list.OrdersNum,
+                            OrdersDetails: JSON.stringify(this.list.OrdersDetails),
+                            OrdersCreate: new Date().format(),
+                            OrdersUpdate: new Date().format(),
+                            OrdersStatus: this.list.OrdersStatus,
+                            MemberID: this.list.MemberID,
+                            ShopID: this.list.ShopID
                         }
-
+                        // console.log(dataToSever);
                         // 檢查資料 (有空再說)
 
                         ///////////
@@ -356,7 +405,7 @@
                         axios.post('/api/order', dataToSever)
                         .then(function (response) {
                             // console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            coupon.init();                //更新目前畫面
+                            order.init();                //更新目前畫面
                         })
                         
                     }
@@ -367,8 +416,10 @@
                 shopSelect:function(value){
                     // console.log(value);
                     this.shopList.forEach(element => {
-                        if (element.ShopID == value)
+                        if (element.ShopID == value){
                             this.list.OrdersDetails.restaurant = element.ShopName;
+                            this.list.ShopID = element.ShopID;
+                        }
                     });
                     let _this = this;
                     axios.get('/api/meal/'+value)

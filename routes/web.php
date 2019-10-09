@@ -76,7 +76,8 @@ Route::get('/reset/resetform/{token}',"HomeController@resetForm");
 
 Route::post('/reset/resetpassword',"HomeController@resetPassword");
 
-//======boardcast test=======
+//======web-socket=======
 Route::post('/socket/clientsend',"HomeController@clientSend");
 
 Route::post('/socket/shopsend',"HomeController@shopSend");
+
