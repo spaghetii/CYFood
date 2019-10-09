@@ -25,7 +25,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-3">預計時間</div>
-                            <div class="col-9">35 – 45 分鐘</div>
+                            <div class="col-9">@{{shiptime-5}} – @{{shiptime+5}} 分鐘</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-3">優惠卷</div>
@@ -52,11 +52,11 @@
                     </div>
                 </div>
                 {{-- 餐點詳情 --}}
-                <div class="orderDetailItemDiv">
+                <div class="orderDetailItemDiv" id="orderDetailItemDivApp">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>餐點份數&nbsp;(1)</h5>
-                            <small>訂餐餐廳：春水堂 中佑店</small>
+                            <h5>餐點份數&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
+                            <small>訂餐餐廳：@{{restaurantName}}</small>
                         </div>
                         <a href="" class="colorOrange aHoverColor">新增餐點</a>
                     </div>
@@ -65,15 +65,13 @@
                     </div>
                     <div>
                         <ul class="noPad">
-                            <li style="list-style-type:none">
+                            <li style="list-style-type:none" v-for="MealItem,index in shoppingBagMealName">
                                 <div class="d-flex justify-content-between">
                                     <div class="shoppingBagModalItemQuantity">
                                         <div class="form-group">
-                                            <select class="form-control">
-                                                <option>移除</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>    
+                                            <select class="form-control" v-model="shoppingBagMealQuantity[index]">
+                                                <option value="0">移除</option>
+                                                <option v-for="item in quantitySelectLists">@{{item}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -81,10 +79,10 @@
                                         <div class="d-flex flex-column">
                                             <div>
                                                 <div class="float-left">
-                                                    冰珍珠奶茶 Iced Pearl Milk Tea
+                                                    @{{shoppingBagMealName[index]}}
                                                 </div>
-                                                <div class="float-right">
-                                                    $130
+                                                <div class="float-right" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex">
+                                                    $@{{item}}
                                                 </div>
                                             </div>
                                             <div>
@@ -93,193 +91,8 @@
                                         </div>
                                     </a>
                                 </div>
-                            </li>
-                        </ul>
-                        <ul class="noPad">
-                            <li style="list-style-type:none">
-                                <div class="d-flex justify-content-between">
-                                    <div class="shoppingBagModalItemQuantity">
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option>移除</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <a href="" class="shoppingBagModalItemDetail">
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <div class="float-left">
-                                                    冰珍珠奶茶 Iced Pearl Milk Tea
-                                                </div>
-                                                <div class="float-right">
-                                                    $130
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <small class="colorOrange aHoverColor">編輯</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="noPad">
-                            <li style="list-style-type:none">
-                                <div class="d-flex justify-content-between">
-                                    <div class="shoppingBagModalItemQuantity">
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option>移除</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <a href="" class="shoppingBagModalItemDetail">
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <div class="float-left">
-                                                    冰珍珠奶茶 Iced Pearl Milk Tea
-                                                </div>
-                                                <div class="float-right">
-                                                    $130
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <small class="colorOrange aHoverColor">編輯</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="noPad">
-                            <li style="list-style-type:none">
-                                <div class="d-flex justify-content-between">
-                                    <div class="shoppingBagModalItemQuantity">
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option>移除</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <a href="" class="shoppingBagModalItemDetail">
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <div class="float-left">
-                                                    冰珍珠奶茶 Iced Pearl Milk Tea
-                                                </div>
-                                                <div class="float-right">
-                                                    $130
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <small class="colorOrange aHoverColor">編輯</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="noPad">
-                            <li style="list-style-type:none">
-                                <div class="d-flex justify-content-between">
-                                    <div class="shoppingBagModalItemQuantity">
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option>移除</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <a href="" class="shoppingBagModalItemDetail">
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <div class="float-left">
-                                                    冰珍珠奶茶 Iced Pearl Milk Tea
-                                                </div>
-                                                <div class="float-right">
-                                                    $130
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <small class="colorOrange aHoverColor">編輯</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="noPad">
-                            <li style="list-style-type:none">
-                                <div class="d-flex justify-content-between">
-                                    <div class="shoppingBagModalItemQuantity">
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option>移除</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <a href="" class="shoppingBagModalItemDetail">
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <div class="float-left">
-                                                    冰珍珠奶茶 Iced Pearl Milk Tea
-                                                </div>
-                                                <div class="float-right">
-                                                    $130
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <small class="colorOrange aHoverColor">編輯</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="noPad">
-                            <li style="list-style-type:none">
-                                <div class="d-flex justify-content-between">
-                                    <div class="shoppingBagModalItemQuantity">
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option>移除</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>    
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <a href="" class="shoppingBagModalItemDetail">
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <div class="float-left">
-                                                    冰珍珠奶茶 Iced Pearl Milk Tea
-                                                </div>
-                                                <div class="float-right">
-                                                    $130
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <small class="colorOrange aHoverColor">編輯</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
+                                <hr>
+                            </li> 
                         </ul>
                     </div>
                     <div>
@@ -289,16 +102,16 @@
             </div> {{-- leftdiv --}}
 
             {{-- rightdiv --}}
-            <div class="orderDetailRightDiv col-sm-6 col-12">
+            <div class="orderDetailRightDiv col-sm-6 col-12" id="orderDetailRightDiv">
                 <div class="orderSummaryDiv divCenter">
                     <div class="mb-4">
                         <h5>訂單摘要</h5>
                     </div>
                     <div class="mb-3">
-                       <img src="img/shopping-bag1.png" alt="">&ensp;透過春水堂&nbsp;中佑店訂購的&nbsp;1&nbsp;份餐點
+                        <img src="img/shopping-bag1.png" alt="">&ensp;透過&nbsp;@{{restaurantName}}&nbsp;訂購的&nbsp;@{{shoppingBagTotalQuantity}}&nbsp;份餐點
                     </div>
                     <div class="mb-3">
-                        <img src="img/clock.png" alt="">&ensp;預計在&nbsp;35&nbsp;到&nbsp;45&nbsp;分鐘內抵達
+                        <img src="img/clock.png" alt="">&ensp;預計在&nbsp;@{{shiptime-5}}&nbsp;到&nbsp;@{{shiptime+5}}&nbsp;分鐘內抵達
                     </div>
                     <div class="mb-3">
                         <img src="img/address.png" alt="">&ensp;外送到台中市南屯區公益路二段51號18樓
@@ -309,15 +122,15 @@
                     <ul class="noPad noMarg" style="list-style:none">
                         <li class="noPad noMarg mb-3 d-flex justify-content-between">
                             <div>小計</div>
-                            <div>NT$260</div>
+                            <div>NT$@{{shoppingBagTotalPrice}}</div>
                         </li>
                         <li class="noPad noMarg mb-4 d-flex justify-content-between">
                             <div>外送費</div>
-                            <div>NT$30</div>
+                            <div>NT$15</div>
                         </li>
                         <li class="noPad noMarg mb-3 d-flex justify-content-between">
                             <div><h5>總計</h5></div>
-                            <div><h4>NT$290</h4></div>
+                            <div><h4>NT$@{{orderTotalAmount}}</h4></div>
                         </li>
                     </ul>
                     <a v-on:click="sendOrders" style="text-decoration: none;">
@@ -333,12 +146,30 @@
 
 @section('script')
     <script>
-    
-        var sendOrders = new Vue({
-            el:".orderDetailRightDiv",
+        var orderDetailDivApp = new Vue ({
+            el:"#orderDetailDiv",
             data:{
                 header:"shopID",
-                id:1
+                id:1,
+                // 餐廳名稱
+                restaurantName: '',
+                // shiptime
+                shiptime: 0,
+                // 數量選擇框
+                quantitySelectLists: [],
+
+                // 購物袋 總數 總價
+                shoppingBagTotalQuantity: 0,
+                shoppingBagTotalPrice: 0,
+
+                // 加運費 訂單總金額
+                orderTotalAmount: 0,
+
+                // 購物袋 各個資料
+                shoppingBagMealQuantity: [],
+                shoppingBagMealTotalPrice: [],
+                shoppingBagMealName: [],
+                shoppingBagMealPrice: [],
             },
             methods:{
                 sendOrders: function(){
@@ -365,7 +196,71 @@
                             });
                     });
                 }
-            }
+            },
+            watch: {
+                // watch 餐點數量變化
+                shoppingBagMealQuantity: function (value) {
+                    // console.log(value);
+                    _this = this;
+                    this.shoppingBagTotalQuantity = 0;
+                    // 每筆 數量 和 順序
+                    value.forEach((element,index) => {
+                        // console.log(element);
+                        // 根據數量變化 改變每筆的總價
+                        _this.shoppingBagMealTotalPrice[index] = _this.shoppingBagMealPrice[index] * element;
+                        // console.log(_this.shoppingBagMealTotalPrice);
+                        // 餐點總數 更新
+                        _this.shoppingBagTotalQuantity += parseInt(element);
+                        // navbar 餐點總數 更新
+                        navBar.shoppingBagTotalQuantity = _this.shoppingBagTotalQuantity;
+                    });
+
+                    // 數量變化 新增到 localstorage
+                    if (value != 0) {
+                        localStorage.setItem("mealQuantityArray", JSON.stringify(value));
+                        localStorage.setItem("mealTotalPriceArray", JSON.stringify(this.shoppingBagMealTotalPrice));
+                    };
+
+                    // 總價 更新
+                    this.shoppingBagTotalPrice = 0;
+                    this.shoppingBagMealTotalPrice.forEach(element => {
+                        _this.shoppingBagTotalPrice += element;
+                    });
+                    // 加運費 總價 更新
+                    this.orderTotalAmount = this.shoppingBagTotalPrice + 15 ;
+                },
+            },
+            mounted: function () {
+                // 數量選擇框
+                for(var i=1; i<=99; i++){
+                    this.quantitySelectLists.push(i);
+                }
+
+                // console.log(localStorage.getItem('mealPriceArray'));
+                if (localStorage.getItem('mealPriceArray') != null ){
+                // 取出localstorage資料
+                let storedMealNameArray = JSON.parse(localStorage.getItem('mealNameArray'));
+                let storedMealPriceArray = JSON.parse(localStorage.getItem('mealPriceArray'));
+                let storedMealQuantityArray = JSON.parse(localStorage.getItem('mealQuantityArray'));
+                let storedMealTotalPriceArray = JSON.parse(localStorage.getItem('mealTotalPriceArray'));
+                let storedRestautantName = JSON.parse(localStorage.getItem('restautantName'));
+                let storedShipTime = JSON.parse(localStorage.getItem('shipTime'));
+                // console.log(storedMealNameArray);
+                // console.log(storedMealPriceArray);
+                // console.log(storedMealQuantityArray);
+                // console.log(storedMealTotalPriceArray);
+                // console.log(storedRestautantName);
+                // localstorage如果有資料 丟到 購物袋
+                this.shoppingBagMealName = storedMealNameArray;
+                this.shoppingBagMealPrice = storedMealPriceArray;
+                this.shoppingBagMealQuantity = storedMealQuantityArray;
+                this.shoppingBagMealTotalPrice = storedMealTotalPriceArray;
+                this.restaurantName = storedRestautantName;
+                this.shiptime = storedShipTime;
+                // console.log(this.restaurantName);
+                // 資料傳到 orderDetailRightDivApp
+                }
+            },
         })
     
     </script>
