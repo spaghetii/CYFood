@@ -119,6 +119,18 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
 
+    function orderInsert(Request $request) {
+        $order = new Orders;
+        $order->OrdersNum = $request->OrdersNum;
+        $order->OrdersDetails = $request->OrdersDetails;
+        $order->OrdersStatus = $request->OrdersStatus;
+        $order->OrdersCreate = $request->OrdersCreate;
+        $order->MemberID = $request->MemberID;
+        $order->ShopID = $request->ShopID;
+        $ok = $order->save();
+        return response()->json(['ok' => $ok], 200);
+    }
+
     function orderUpdate(Request $request, $id) {
         $ok='';
         $msg = "";
