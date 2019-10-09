@@ -206,6 +206,7 @@
                     // 餐廳名稱、外送時間 傳入 local
                     localStorage.setItem("restautantName", JSON.stringify(this.shop.ShopName));
                     localStorage.setItem("shipTime", JSON.stringify(this.shop.ShipTime));
+                    localStorage.setItem("shopID", JSON.stringify(this.shop.ShopID));
                     // console.log(this.shop);
                 }
             }
