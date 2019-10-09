@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     <title>CYFood-BackEnd</title>
-
+ 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -25,20 +25,20 @@
 
 <body>
 
-    <div class="container-fluid" id="App">
+    <div class="container-fluid h-100" id="App">
 
         {{-- 上排 --}}
         <div class="row">
 
             <!-- Logo -->
-            <div class="line1 col row text-left"><img src="/img/BElogo.png" class="col"><div class="col"></div></div>
+            <div class="line1 col row text-left"><img id="cyImg" src="/img/BElogo.png" class="col"><div class="col"></div></div>
             
             <!-- 下拉式選單 -->
             @yield('selectOption')
 
             <!-- 搜索輸入框 -->
             <div class="line1 col">
-                <input id="searchinput" name="searchinput" type="search" placeholder="我是輸入框......"
+                <input id="searchinput" name="searchinput" type="search" placeholder="請輸入關鍵字"
                     class="form-control input-md" v-model="search">
             </div>
 
@@ -49,16 +49,18 @@
         </div>
         <hr>
         {{-- 左側 --}}
-        <div id="divleft" class="col-2 text-center h-100" >
-            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='order'" target="_blank" rel="nofollow"><span>訂&emsp;單</a></div>
-            <hr>
-            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='restaurant'" target="_blank" rel="nofollow"><span>餐&emsp;廳</a></div>
-            <hr>
-            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='member'" target="_blank" rel="nofollow"><span>會&emsp;員</a></div>
-            <hr>
-            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='coupon'" target="_blank" rel="nofollow"><span>優&emsp;惠</a></div>                    
-            <br>
+        <div id="divleft" class="col-2 text-center" >
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='order'" target="_blank" rel="nofollow"><img id="leftImg" src="/img/backOrder.png" alt=""><span>&nbsp;訂&nbsp;單</a></div>
+            {{-- <hr> --}}
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='restaurant'" target="_blank" rel="nofollow"><img id="leftImg" src="/img/backRestaurant.png" alt=""><span>&nbsp;餐&nbsp;廳</a></div>
+            {{-- <hr> --}}
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='member'" target="_blank" rel="nofollow"><img id="leftImg" src="/img/backMember.png" alt=""><span>&nbsp;會&nbsp;員</a></div>
+            {{-- <hr> --}}
+            <div class="button_cont indexBTN col"><a class="indexBTN list-group-item list-group-item-action" onclick="location.href='coupon'" target="_blank" rel="nofollow"><img id="leftImg" src="/img/backCoupon.png" alt=""><span>&nbsp;優&nbsp;惠</a></div>                    
+            {{-- <br> --}}
+            
         </div>
+        
         
         {{-- 右側 --}}
         @yield('content')

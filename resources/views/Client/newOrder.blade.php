@@ -37,8 +37,6 @@
                     <div class="row" id="detailsTotal">
                         <div class="col-9 text-right">Total</div>
                         <div class="col-3 text-right">$@{{total[index]}}</div>
-                    
-                       
                     </div>
                 </h3>
                 <hr class="my-4">
@@ -96,7 +94,7 @@
                 axios.get('/api/order')
                     .then(function (response) {
                         // console.log(response.data[0])
-                        _this.list  = response.data;
+                        _this.list = response.data;
                         _this.list.forEach((element,index) => {
                             // console.log(element);
                             _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
@@ -121,9 +119,7 @@
                 // console.log(this.list[index].OrdersID);
                 // console.log(index);
                 this.list[index].OrdersStatus = 2;
-                console.log(JSON.stringify(this.list[index].OrdersDetails));
-                this.list[index].OrdersDetails = JSON.stringify(this.list[index].OrdersDetails);
-                console.log(typeof this.list[index].OrdersDetails);
+                // this.list[index].OrdersDetails = JSON.stringify(this.list[index].OrdersDetails);
              
                 $(".jumbotron").css("display","none");
                 let _this = this;
@@ -150,14 +146,14 @@
                         .catch(function (response) {
                             console.log(response)
                         });
-                // this.list[this.currentIndex].OrdersStatus = 0;
-                // let _this = this;
-                // axios.put('/api/order/'+_this.list[_this.currentIndex].OrdersID,_this.list[_this.currentIndex])
-                //     .then(function(response){
-                //         console.log(response.data['ok']);
-                //         _this.init();
-                //     })
-                // $(".jumbotron").css("display","none");
+                this.list[this.currentIndex].OrdersStatus = 0;
+                let _this = this;
+                axios.put('/api/order/'+_this.list[_this.currentIndex].OrdersID,_this.list[_this.currentIndex])
+                    .then(function(response){
+                        console.log(response.data['ok']);
+                        _this.init();
+                    })
+                $(".jumbotron").css("display","none");
                 $("#rejectModal").modal('hide');
             }
         }

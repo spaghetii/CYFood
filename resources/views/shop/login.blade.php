@@ -138,6 +138,7 @@
                                             }, 100)
                                         },
                                         onClose: () => {
+                                            clearInterval(timerInterval);
                                             window.location = "/shop/newOrder/"+id;
                                         }
                                     })

@@ -9,6 +9,7 @@ use Crypt;
 use Mail;
 use Session;
 use App\Member;
+use App\Coupon;
 use App\Events\OrdersEvent;
 
 class HomeController extends Controller
@@ -123,7 +124,7 @@ class HomeController extends Controller
         if($token == $member->token){
             return view("home.resetform");
         }else{
-            echo "此連結已過期";
+            return redirect("/");
         }
     }
 
@@ -147,6 +148,10 @@ class HomeController extends Controller
             return response()->json(['ok' => false], 200);
         }
         else{
+            
+
+
+            //註冊
             $me =new Member();
             $me->MemberName = $request->registerName;
             $me->MemberEmail = $request->registerEmail;
@@ -155,7 +160,23 @@ class HomeController extends Controller
             $hashed = Hash::make($password);
             $me->MemberPassword = $hashed;
             $me->save();
-            return response()->json(['ok' => true], 200);
+
+            //生成隨機優惠券代碼並存入資料庫
+            $code = "0123456789abcdefghijklmnopqrstuvwxyz";
+            $n = 10;
+            $new ="";
+            $len = strlen($code)-1;
+            for($i=0 ; $i<$n; $i++){
+            $new .= $code[rand(0,$len)];
+            }
+            
+            $coupon =new Coupon();
+            $coupon->CouponCode = $new;
+            $coupon->CouponType = "freeship";
+            $coupon->CouponStart = "2019-10-09";
+            $coupon->CouponDeadline = "2019-10-30";
+            $coupon->save();
+            return response()->json(['ok' => true , 'coupon' => $new], 200);
         }
     }
 

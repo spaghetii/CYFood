@@ -4,7 +4,7 @@
     <div class="line1 row">
         <div class="col"></div>
         <div class="col"></div>
-        <div class="select ">
+        <div class="select">
             <select id="selectbasic" name="selectbasic" class="form-control col" v-model="selected">
                 <option value="CouponCode" >代碼</option>
                 <option value="CouponType" >種類</option>
@@ -19,15 +19,15 @@
     
     <div id="divright" class="col-10">
         <div>
-            <div class="line2 row">
-                <div class="col text-center">優惠代碼</div>
-                <div class="col text-center">優惠種類</div>
-                <div class="col text-center">生效日期</div>
-                <div class="col text-center">結束日期</div>
+            <div class="line2 row" id="tableTitle">
+                <div class="col text-center tableTitle">優惠代碼</div>
+                <div class="col text-center tableTitle">優惠種類</div>
+                <div class="col text-center tableTitle">生效日期</div>
+                <div class="col text-center tableTitle">結束日期</div>
                 <div class="col"></div>
                 <div id="neworder" class="col text-center">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-primary" 
-                    v-on:click="insertData">新增優惠</button>
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary tableTitle" 
+                    v-on:click="insertData">✚</button>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
                 <hr>
             </div>
         </div>
-        <div class="page" style="background-color:transparent;margin-top: -10px;">
+        <div class="page" style="background-color:transparent;margin-top: 0px;margin-left:30%">
             <ul class="pagination">
                 <li class="page-item" v-on:click="changePage(currentPage-1)" :class="{'disabled':(currentPage === 1)}" ><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item" v-for="page in totalPage" v-on:click="currentPage = page" :class="{'active': (currentPage === page)}">
