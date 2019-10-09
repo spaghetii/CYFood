@@ -31,7 +31,7 @@
             </div>
 
             <hr>
-            <div v-for="item,index in items" v-if="item.OrdersFinish != 0">
+            <div v-for="item,index in items.slice(start,numForPage+start)" v-if="item.OrdersFinish != 0">
                 <div class="line3 row">
                     <div class="col text-center ellipsis">@{{item.OrdersNum}}</div>
                     <div class="col text-center ellipsis">@{{item.OrdersDetails.restaurant}}</div>
@@ -48,7 +48,14 @@
                 </div>
             </div>
             <hr>
-
+        </div>
+        <div class="page" style="background-color:transparent;margin-top: 0px;margin-left:30%">
+            <ul class="pagination">
+                <li class="page-item" v-on:click.prevent="changePage(currentPage-1)" :class="{'disabled':(currentPage === 1)}" ><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item" v-for="page in totalPage" v-on:click="currentPage = page" :class="{'active': (currentPage === page)}">
+                <a class="page-link" href="#">@{{page}}</a></li>
+                <li class="page-item" v-on:click.prevent="changePage(currentPage+1)" :class="{'disabled':(currentPage === totalPage)}"><a class="page-link" href="#">Next</a></li>
+            </ul>
         </div>
     </div>
 @endsection
@@ -193,7 +200,9 @@
             data:{
                 selected:"OrdersNum",
                 search:"",
-                list:[]
+                list:[],
+                numForPage:6,
+                currentPage:1
             },
             methods:{
                 init: function () {
@@ -255,6 +264,13 @@
                     // Modal.CouponStart = coupon.list[currentIndex].CouponStart;
                     // Modal.CouponDeadline = coupon.list[currentIndex].CouponDeadline;
                     $("#orderModal").modal();
+                },
+                changePage:function(page){
+                    if(page === 0 || page > this.totalPage){
+                        return;
+                    }
+                    this.currentPage = page;
+
                 }
             },
             mounted: function () {
@@ -282,6 +298,12 @@
                         })
                     }
                     return this.list;
+                },
+                totalPage: function(){
+                    return Math.ceil(this.items.length/this.numForPage);
+                },
+                start: function(){
+                    return (this.currentPage-1)*this.numForPage;
                 }
             }
         });         //vue-coupon tail
