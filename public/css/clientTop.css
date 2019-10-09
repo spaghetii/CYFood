@@ -7,7 +7,7 @@ body {
 .container-fuild {
     width: 100%;
     height: 100%;
-}
+} 
 
 #fixedDiv {
     height: 140px;
@@ -19,6 +19,9 @@ body {
     width: 300px;
     height: 120px;
     margin: 10px auto;
+}
+.fixedItem:hover{
+    background-color: #EFA747;
 }
 
 img {

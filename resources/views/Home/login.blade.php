@@ -76,6 +76,7 @@
                             <div class="form-group ">
                                 <label for="registerEmail">電子郵件</label>
                                 <span v-if="checkEmail" class="resetalert">@{{errorEmail}}</span>
+                                <span v-if="okEmail" class="okalert">@{{okMsg}}</span>
                                 <input type="email" class="form-control" v-model.lazy="registerEmail" id="registerEmail"
                                     name="registerEmail">
                             </div>
@@ -172,7 +173,7 @@
                                             }, 100)
                                         },
                                         onClose: () => {
-                                            clearInterval(timerInterval)
+                                            clearInterval(timerInterval);
                                             window.self.location=window.document.referrer;  
 
                                         }
@@ -202,7 +203,9 @@
                 checkEmail: false,
                 errorEmail: '',
                 checkRegister: false,
-                errorMsg: ''
+                errorMsg: '',
+                okEmail:false,
+                okMsg:''
             },
             watch:{
                 registerEmail:function(){
@@ -219,8 +222,8 @@
                             .then(function (response) {
                                 console.log(response.data['ok']);
                                 if (response.data['ok']) {
-                                    self.checkEmail = true;
-                                    self.errorEmail = "電子郵件無重複";
+                                    self.okEmail = true;
+                                    self.okMsg = "電子郵件無重複";
                                 } else {
                                     self.checkEmail = true;
                                     self.errorEmail = "電子郵件重複，請更換別的電子郵件";
@@ -256,12 +259,21 @@
                                     Swal.fire({
                                         type: 'success',
                                         title: '<strong>註冊成功</strong>',
-                                        html: '立刻登入選取餐點吧!!',
-                                        showCloseButton: true,
+                                        html: '為了慶祝CYFood開幕<br>'+
+                                              '目前每位新用戶註冊都贈送免運費優惠券<br>'+
+                                              '請妥善保存<br>'+
+                                              '代碼:'+response.data['coupon'],
                                         confirmButtonText:
                                             '<i class="fa fa-thumbs-up"></i> Great!',
                                         confirmButtonAriaLabel: 'Thumbs up, great!',
-                                    })
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            self.registerName = "";
+                                            self.registerEmail = "";
+                                            self.registerPhone = "";
+                                            self.registerPassword = "";
+                                        }
+                                        })
                                 } else {
                                     self.checkEmail = true;
                                     self.errorEmail = "電子郵件重複，請更換別的電子郵件";

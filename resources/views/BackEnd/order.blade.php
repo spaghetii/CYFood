@@ -18,15 +18,15 @@
 @section('content')
     <div id="divright" class="col-10">
         <div>
-            <div class="line2 row">
-                <div class="col text-center">訂單編號</div>
-                <div class="col text-center">餐廳名稱</div>
-                <div class="col text-center">會員名稱</div>
-                <div class="col text-center">下單時間</div>
+            <div class="line2 row" id="tableTitle">
+                <div class="col text-center tableTitle">訂單編號</div>
+                <div class="col text-center tableTitle">餐廳名稱</div>
+                <div class="col text-center tableTitle">會員名稱</div>
+                <div class="col text-center tableTitle">下單日期</div>
                 <div class="col"></div>
                 <div id="neworder" class="col text-center">
                     <button id="singlebutton" name="singlebutton"
-                    v-on:click="insertData" class="btn btn-primary">新增訂單</button>
+                    v-on:click="insertData" class="btn btn-primary tableTitle">✚</button>
                 </div>
             </div>
 
