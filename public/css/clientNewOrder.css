@@ -49,7 +49,7 @@
 }
 .detailsBtn{
     font-size: 28px;
-    margin: 10% auto;
+    margin: 10% auto -10% auto;
     display: block;
     font-weight: bold;
 }
