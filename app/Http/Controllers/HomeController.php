@@ -124,7 +124,7 @@ class HomeController extends Controller
         if($token == $member->token){
             return view("home.resetform");
         }else{
-            echo "此連結已過期";
+            return redirect("/");
         }
     }
 

@@ -152,9 +152,9 @@
                             .then(function (response) {
                                 console.log(response.data['ok']);
                                 if (response.data['ok']) {
-                                    sessionStorage.setItem("status","1");
-                                    sessionStorage.setItem("memberID",response.data['id']);
-                                    sessionStorage.setItem("memberName",response.data['name']);
+                                    
+                                    localStorage.setItem("memberID",response.data['id']);
+                                    
                                     console.log(response.data['id']);
                                     console.log(response.data['lastPage']);
                                     Swal.fire({
