@@ -163,12 +163,14 @@
             }
         })
 
+
         var orderModal = new Vue({
             el: "#orderModalCenter",
             data: {
                 meals:[],
                 count: 1,
                 totalPrice: null,
+                shop:[],
             },
             methods: {
                 subButton: function () {
@@ -182,26 +184,29 @@
                     this.totalPrice += parseInt(this.meals.MealPrice);
                 },
                 orderBtn: function () {
-                    // console.log(this.meals);
                     // 跳出 model
                     $('#orderModalCenter').modal('toggle');
 
-                    // 餐點object 和 餐點數量 存入 localStorage 
-                    localStorage.setItem('orderMeal', JSON.stringify(this.meals));
-                    localStorage.setItem('orderMealQuantity', this.count);
+                    // 餐點資料 存入 localStorage 
+                    mealNameArray.push(this.meals.MealName);
+                    mealPriceArray.push(this.meals.MealPrice);
+                    mealQuantityArray.push(this.count);
+                    localStorage.setItem("mealNameArray", JSON.stringify(mealNameArray));
+                    localStorage.setItem("mealPriceArray", JSON.stringify(mealPriceArray));
+                    localStorage.setItem("mealQuantityArray", JSON.stringify(mealQuantityArray));
 
-                    // 取出 localStorage
-                    let orderMeal = localStorage.getItem('orderMeal');
-                    orderMeal = JSON.parse(orderMeal);
-                    let orderMealQuantity = localStorage.getItem('orderMealQuantity');
-                    // console.log(orderMeal);
-                    
                     // 資料傳入到 shoppingBagModalApp-Vue
-                    shoppingBagModalApp.shoppingBagMealName.push(orderMeal.MealName);
-                    shoppingBagModalApp.shoppingBagMealPrice.push(orderMeal.MealPrice);
-                    shoppingBagModalApp.shoppingBagMealQuantity.push(orderMealQuantity);  
-                    shoppingBagModalApp.shoppingBagMealTotalPrice.push(orderMeal.MealPrice * orderMealQuantity);  
-                    // console.log(shoppingBagModalApp.shoppingBagMealName);
+                    shoppingBagModalApp.shoppingBagMealName.push(this.meals.MealName);
+                    shoppingBagModalApp.shoppingBagMealPrice.push(this.meals.MealPrice);
+                    shoppingBagModalApp.shoppingBagMealQuantity.push(this.count);  
+                    shoppingBagModalApp.shoppingBagMealTotalPrice.push(this.meals.MealPrice * this.count);  
+                    // 餐點總金額 傳入 local
+                    localStorage.setItem("mealTotalPriceArray", JSON.stringify(shoppingBagModalApp.shoppingBagMealTotalPrice));
+
+                    // 餐廳名稱、外送時間 傳入 local
+                    localStorage.setItem("restautantName", JSON.stringify(this.shop.ShopName));
+                    localStorage.setItem("shipTime", JSON.stringify(this.shop.ShipTime));
+                    // console.log(this.shop);
                 }
             }
         })
@@ -264,6 +269,9 @@
                     _this.shop= response.data;
                     // 店家地址傳給地址modal的vue
                     RestaurantAddressModal.restaurantAddr = _this.shop.ShopAddress;  
+
+                    orderModal.shop = _this.shop;
+                    // console.log(_this.shop.ShopName);
                 })
                 .catch(function (response) {
                     console.log(response);
