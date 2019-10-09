@@ -67,4 +67,6 @@ Route::get('/meal/{id}', function($id) {
     return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
 });
 
+Route::get('/testorder',"BackEnd@ordertest")
+
 ?>
