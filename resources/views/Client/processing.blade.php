@@ -17,7 +17,7 @@
                 <!-- 訂單標題 -->
                 <div class="row" id="rowTop">
                     <div class="col-10" id="detailsTitle">
-                        @{{item.OrdersNum}}⎯ @{{item.OrdersDetails.memberName}}
+                        @{{item.OrdersNum}}⎯ @{{item.OrdersDetails.memberName}}&emsp;
                     </div>
                     <div class="col-2 btn-group" id="detailsGroup">
                         <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -199,7 +199,7 @@
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block");
                 //聯絡顧客 名稱
-                // contactModal.messageName = this.list[this.currentIndex].OrdersDetails[0].memberName;
+                contactModal.messageName = this.list[this.currentIndex].OrdersDetails.memberName;
             },
             callOut:function(index){
                     axios.post('/socket/shopsend', {
