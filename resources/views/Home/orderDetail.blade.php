@@ -153,8 +153,11 @@
                 id:1,
                 // 餐廳名稱
                 restaurantName: '',
-                // shiptime
                 shiptime: 0,
+                ShopID: -1,
+                // 會員
+                memberName:'',
+                memberID:'',
                 // 數量選擇框
                 quantitySelectLists: [],
 
@@ -183,17 +186,45 @@
                         confirmButtonText: '送出訂單',
                         cancelButtonText: '再考慮一下'
                         }).then((result) => {
-                            if (result.value)
-                            axios.post('/socket/clientsend', {
-                                header: this.header,
-                                id:this.id
-                            })
-                            .then(function (response) {
-                                console.log(response.data);
-                            })
-                            .catch(function (response) {
-                                console.log(response)
-                            });
+                            if (result.value){
+
+                                let dataToSever = {
+                                    OrdersDetails: {
+                                        restaurant: _this.restaurantName,
+                                        memberName: _this.memberName,
+                                        coupon: '',
+                                        meal:[]
+                                    },
+                                    OrdersStatus: 1,
+                                    MemberID: _this.memberID,
+                                    ShopID: _this.ShopID,
+                                }
+                                
+                                _this.shoppingBagMealQuantity.forEach((element,index) => {
+                                    dataToSever.OrdersDetails.meal.push({   mealQuantity:element,
+                                                                            mealName:_this.shoppingBagMealName[index],
+                                                                            mealUnitPrice:_this.shoppingBagMealPrice[index],
+                                                                            mealDetail:[{type:0,mealNum:"meal0",detail:"",price:"",check:false}]
+                                                                        });      
+                                });
+                                dataToSever.OrdersDetails = JSON.stringify(dataToSever.OrdersDetails);
+                                console.log(dataToSever);
+
+
+                                axios.post('/api/order', dataToSever)
+                                .then(function (response) {
+                                    axios.post('/socket/clientsend', {
+                                        header: _this.header,
+                                        id:_this.id
+                                    })
+                                    .then(function (response) {
+                                        console.log(response.data);
+                                    })
+                                    .catch(function (response) {
+                                        console.log(response)
+                                    });
+                                })
+                            }
                     });
                 }
             },
@@ -213,13 +244,32 @@
                         _this.shoppingBagTotalQuantity += parseInt(element);
                         // navbar 餐點總數 更新
                         navBar.shoppingBagTotalQuantity = _this.shoppingBagTotalQuantity;
+
+                        // 移除餐點 更新data array值
+                        if (element == '0'){
+                            this.shoppingBagMealQuantity.splice(index, 1);
+                            this.shoppingBagMealTotalPrice.splice(index, 1);
+                            this.shoppingBagMealName.splice(index, 1);
+                            this.shoppingBagMealPrice.splice(index, 1);
+                        }
                     });
 
                     // 數量變化 新增到 localstorage
                     if (value != 0) {
                         localStorage.setItem("mealQuantityArray", JSON.stringify(value));
                         localStorage.setItem("mealTotalPriceArray", JSON.stringify(this.shoppingBagMealTotalPrice));
-                    };
+                        localStorage.setItem("mealNameArray", JSON.stringify(this.shoppingBagMealName));
+                        localStorage.setItem("mealPriceArray", JSON.stringify(this.shoppingBagMealPrice));
+                    }else{
+                        window.self.location=window.document.referrer;  
+                        localStorage.removeItem('mealNameArray');
+                        localStorage.removeItem('mealPriceArray');
+                        localStorage.removeItem('mealQuantityArray');
+                        localStorage.removeItem('mealTotalPriceArray');
+                        localStorage.removeItem('restautantName');
+                        localStorage.removeItem('shipTime');
+                        localStorage.removeItem('shopID');
+                    }
 
                     // 總價 更新
                     this.shoppingBagTotalPrice = 0;
@@ -231,6 +281,11 @@
                 },
             },
             mounted: function () {
+                // 結帳畫面隱藏遊覽列購物袋圖示
+                if (this.shoppingBagTotalQuantity >= 0) {
+                    $("#shoppingBag").css("display","none");
+                }
+
                 // 數量選擇框
                 for(var i=1; i<=99; i++){
                     this.quantitySelectLists.push(i);
@@ -245,6 +300,10 @@
                 let storedMealTotalPriceArray = JSON.parse(localStorage.getItem('mealTotalPriceArray'));
                 let storedRestautantName = JSON.parse(localStorage.getItem('restautantName'));
                 let storedShipTime = JSON.parse(localStorage.getItem('shipTime'));
+                let storedShopID = JSON.parse(localStorage.getItem('shopID'));
+
+                let memberName = sessionStorage.getItem('memberName');
+                let memberID = sessionStorage.getItem('memberID');
                 // console.log(storedMealNameArray);
                 // console.log(storedMealPriceArray);
                 // console.log(storedMealQuantityArray);
@@ -257,8 +316,10 @@
                 this.shoppingBagMealTotalPrice = storedMealTotalPriceArray;
                 this.restaurantName = storedRestautantName;
                 this.shiptime = storedShipTime;
+                this.ShopID = storedShopID;
+                this.memberID = memberID;
+                this.memberName = memberName;
                 // console.log(this.restaurantName);
-                // 資料傳到 orderDetailRightDivApp
                 }
             },
         })

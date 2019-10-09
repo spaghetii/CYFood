@@ -62,10 +62,12 @@
                         <div v-if="navlogin"><a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;@{{userName}}</a></div>
                         
                         {{-- 購物袋 --}}
+                        <div id="shoppingBag">
                         <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal" v-if="shoppingBagTotalQuantity!=0">
                             <img src="/img/shopping-bag2.png" alt="">
                             <span style="font-size:1.2rem;">@{{shoppingBagTotalQuantity}}</span>
                         </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -248,13 +250,33 @@
                         _this.shoppingBagTotalQuantity += parseInt(element);
                         // navbar 餐點總數 更新
                         navBar.shoppingBagTotalQuantity = _this.shoppingBagTotalQuantity;
+
+                        // console.log(element);
+                        // 移除餐點 更新data array值
+                        if (element == '0'){
+                            this.shoppingBagMealQuantity.splice(index, 1);
+                            this.shoppingBagMealTotalPrice.splice(index, 1);
+                            this.shoppingBagMealName.splice(index, 1);
+                            this.shoppingBagMealPrice.splice(index, 1);
+                        }  
                     });
 
                     // 數量變化 新增到 localstorage
                     if (value != 0) {
                         localStorage.setItem("mealQuantityArray", JSON.stringify(value));
                         localStorage.setItem("mealTotalPriceArray", JSON.stringify(this.shoppingBagMealTotalPrice));
-                    };
+                        localStorage.setItem("mealNameArray", JSON.stringify(this.shoppingBagMealName));
+                        localStorage.setItem("mealPriceArray", JSON.stringify(this.shoppingBagMealPrice));
+                    }else{
+                        $('#shoppingBagModal').modal('toggle');
+                        localStorage.removeItem('mealNameArray');
+                        localStorage.removeItem('mealPriceArray');
+                        localStorage.removeItem('mealQuantityArray');
+                        localStorage.removeItem('mealTotalPriceArray');
+                        localStorage.removeItem('restautantName');
+                        localStorage.removeItem('shipTime');
+                        localStorage.removeItem('shopID');
+                    }
 
                     // 總價 更新
                     this.shoppingBagTotalPrice = 0;
