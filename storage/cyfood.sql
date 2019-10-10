@@ -40,7 +40,8 @@ CREATE TABLE `coupons` (
   `CouponType` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `CouponDiscount` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `CouponStart` date NOT NULL,
-  `CouponDeadline` date NOT NULL
+  `CouponDeadline` date NOT NULL,
+  `CouponStatus` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -51,31 +52,10 @@ CREATE TABLE `coupons` (
 -- 傾印資料表的資料 `coupons`
 --
 
-INSERT INTO `coupons` (`CouponID`, `CouponCode`, `CouponType`, `CouponDiscount`, `CouponStart`, `CouponDeadline`) VALUES
-(2, 'fdsfdsfdkiu', 'freeship', 'fdsfdsfd', '2019-10-01', '2019-10-30'),
-(3, 'fds', 'freeship', 'sdfsgd', '2019-10-01', '2019-10-30');
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `failed_jobs`
---
--- 建立時間： 
---
-
-DROP TABLE IF EXISTS `failed_jobs`;
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- 資料表的關聯 `failed_jobs`:
---
+INSERT INTO `coupons` (`CouponID`, `CouponCode`, `CouponType`, `CouponDiscount`, `CouponStart`, `CouponDeadline`, `CouponStatus`) VALUES
+(2, 'fdsfdsfdkiu', 'freeship', 'fdsfdsfd', '2019-10-01', '2019-10-30', 1),
+(3, 'fds', 'freeship', 'sdfsgd', '2019-10-01', '2019-10-30', 1),
+(4, 'cs876ujxbs', 'freeship', NULL, '2019-10-09', '2019-10-30', 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +63,6 @@ CREATE TABLE `failed_jobs` (
 -- 資料表結構 `meals`
 --
 -- 建立時間： 
--- 最後更新： 
 --
 
 DROP TABLE IF EXISTS `meals`;
@@ -910,7 +889,6 @@ CREATE TABLE `members` (
   `MemberEmail` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `MemberPhone` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `MemberPassword` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `MemberImage` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `MemberPermission` tinyint(1) NOT NULL DEFAULT 0,
   `MemberCredit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `token` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
@@ -924,11 +902,14 @@ CREATE TABLE `members` (
 -- 傾印資料表的資料 `members`
 --
 
-INSERT INTO `members` (`MemberID`, `MemberName`, `MemberEmail`, `MemberPhone`, `MemberPassword`, `MemberImage`, `MemberPermission`, `MemberCredit`, `token`) VALUES
-(1, 'RF', 'e32990@gmail.com', '645645756767', '$2y$10$U7bn640OigvgN7evjNifhO.29G1x8InxGapIKWpth3/p2ryhIRpDK', NULL, 0, NULL, 'eyJpdiI6InRveU5cL1FXVFRzaVJ2RjlGQmZ1M3JnPT0iLCJ2YWx1ZSI6Ik9NXC9pR0orYmZJYkJ1OXhYWXcwT0pnPT0iLCJtYWMiOiIzM2ZlOGZkMTE2OWIzZWY2MjRjYWZhODdiMzFmZjE5YmIwNDFkMDllOWNhNDJhNzM2YzgxMGVhMzdlYTNiMTFhIn0='),
-(2, 'mumi', 'rinfeng3370@gmail.com', '4943759476', '$2y$10$SajHiKBeMYNv0pdarFyX7O.002H8OUfFCUPMSLbuCj8Ix3zfhd6nu', NULL, 0, NULL, NULL),
-(3, 'mumi', 'XXX@aaa.com', '4943759476', '$2y$10$7.n8sCkHPya2GIuuZZreOerquAMlTdKyUuYcF1l/uwSMzVy3UeRVG', NULL, 0, NULL, NULL),
-(4, '展', 'eric211924@gmail.com', '0910672167', '$2y$10$K5TpBQn8h3KIjbA78FWeweYuWueb2tCmtkJYrx9v8Th1R06aSKuHi', NULL, 0, NULL, 'eyJpdiI6ImZGZVFHSlNoeXREandDVkFKWkdYOFE9PSIsInZhbHVlIjoicERrZUEyZjdmMjROWEZPZzY0cW5vQT09IiwibWFjIjoiNzA4MzI2YzM0NGFlZGVjMzg4ZDkzYzIzZWJlMWNhNmRhMWU0ZjI5NGZiY2EzN2NmNjQ1NTgyOTdjZWVmYzJiYSJ9');
+INSERT INTO `members` (`MemberID`, `MemberName`, `MemberEmail`, `MemberPhone`, `MemberPassword`, `MemberPermission`, `MemberCredit`, `token`) VALUES
+(1, 'RF', 'e32990@gmail.com', '645645756767', '$2y$10$U7bn640OigvgN7evjNifhO.29G1x8InxGapIKWpth3/p2ryhIRpDK', 0, NULL, 'eyJpdiI6ImVUQmlvSUtlS0xDZWZuOUd2SFlmTVE9PSIsInZhbHVlIjoiWEFlWVkwYjZKQmR4RlpKK3hUc21BQT09IiwibWFjIjoiNzI0ODI5MDI2NTFjNDkyZjRmNmJlNjRiOWQ5ZDdmNmFhMjU2ZmUxZTI1OWFhZGYxN2UwY2JhYzM0YzBkOTNkMyJ9'),
+(2, 'mumi', 'rinfeng3370@gmail.com', '4943759476', '$2y$10$SajHiKBeMYNv0pdarFyX7O.002H8OUfFCUPMSLbuCj8Ix3zfhd6nu', 0, NULL, NULL),
+(3, 'mumi', 'XXX@aaa.com', '4943759476', '$2y$10$7.n8sCkHPya2GIuuZZreOerquAMlTdKyUuYcF1l/uwSMzVy3UeRVG', 0, NULL, NULL),
+(4, '展', 'eric211924@gmail.com', '0910672167', '$2y$10$K5TpBQn8h3KIjbA78FWeweYuWueb2tCmtkJYrx9v8Th1R06aSKuHi', 0, NULL, 'eyJpdiI6ImZGZVFHSlNoeXREandDVkFKWkdYOFE9PSIsInZhbHVlIjoicERrZUEyZjdmMjROWEZPZzY0cW5vQT09IiwibWFjIjoiNzA4MzI2YzM0NGFlZGVjMzg4ZDkzYzIzZWJlMWNhNmRhMWU0ZjI5NGZiY2EzN2NmNjQ1NTgyOTdjZWVmYzJiYSJ9'),
+(11, 'mumi', 'XXX@aaa43.com', '0912132456', '$2y$10$sIyn4BhH5F5QwwFYuBp5.uec4CD04lpRDlMcDmFANoGf/VbeQZJ9y', 0, NULL, NULL),
+(12, 'mumi', 'XXX@aaaad.com', '13434576', '$2y$10$pLHKht6/ywyGA7F9a5E5g.3.65AVeb4y.rR.C0Zzeyi4y2FzLSAMu', 0, NULL, NULL),
+(13, 'mumi', 'XXX@aaa123.com', '0912345678', '$2y$10$WYNM7FN0pbBinzHxcl1sL.HFMMLot6LpMZCIU/w7RuqxMUHwo1UuS', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -962,7 +943,38 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2019_09_26_031434_create_members_table', 1),
 (13, '2019_09_26_031549_create_coupons_table', 1),
 (14, '2019_09_26_053201_create_orders_table', 2),
-(15, '2019_10_07_082400_create_jobs_table', 3);
+(15, '2019_10_07_082400_create_jobs_table', 3),
+(16, '2019_10_09_032508_create_orderdetails_table', 4);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `orderdetails`
+--
+-- 建立時間： 
+--
+
+DROP TABLE IF EXISTS `orderdetails`;
+CREATE TABLE `orderdetails` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 資料表的關聯 `orderdetails`:
+--
+
+--
+-- 傾印資料表的資料 `orderdetails`
+--
+
+INSERT INTO `orderdetails` (`id`, `created_at`, `updated_at`) VALUES
+(1, '2019-10-08 19:43:07', '2019-10-08 19:43:07'),
+(2, '2019-10-08 19:43:14', '2019-10-08 19:43:14'),
+(3, '2019-10-08 19:43:17', '2019-10-08 19:43:17'),
+(4, '2019-10-08 19:43:19', '2019-10-08 19:43:19'),
+(5, '2019-10-08 19:43:21', '2019-10-08 19:43:21');
 
 -- --------------------------------------------------------
 
@@ -970,7 +982,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- 資料表結構 `orders`
 --
 -- 建立時間： 
--- 最後更新： 
 --
 
 DROP TABLE IF EXISTS `orders`;
@@ -978,9 +989,10 @@ CREATE TABLE `orders` (
   `OrdersID` bigint(20) UNSIGNED NOT NULL,
   `OrdersNum` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `OrdersDetails` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `OrdersCreate` datetime NOT NULL,
-  `OrdersUpdate` datetime DEFAULT NULL,
+  `OrdersCreate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `OrdersUpdate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `OrdersStatus` tinyint(4) NOT NULL DEFAULT 0,
+  `OrdersRemark` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `MemberID` bigint(20) UNSIGNED NOT NULL,
   `ShopID` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -999,36 +1011,17 @@ CREATE TABLE `orders` (
 -- 傾印資料表的資料 `orders`
 --
 
-INSERT INTO `orders` (`OrdersID`, `OrdersNum`, `OrdersDetails`, `OrdersCreate`, `OrdersUpdate`, `OrdersStatus`, `MemberID`, `ShopID`) VALUES
-(1, 'CY20191004001', '{\"restaurant\":\"CY\",\"memberName\":\"Jennifer\",\"meal\":[{\"mealQuantity\":\"1\",\"mealName\":\"冰淇淋紅茶\",\"mealUnitPrice\":\"70\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"2\",\"mealName\":\"珍珠奶茶\",\"mealUnitPrice\":\"70\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 00:00:00', '2019-10-04 00:00:00', 3, 1, 1),
-(2, 'CY20191004002', '{\"restaurant\":\"CY5\",\"memberName\":\"Panda\",\"meal\":[{\"mealQuantity\":\"4\",\"mealName\":\"紅茶\",\"mealUnitPrice\":\"10\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"2\",\"mealName\":\"奶茶\",\"mealUnitPrice\":\"70\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 3, 1, 1),
-(3, 'CY20191004003', '{\"restaurant\":\"CY\",\"memberName\":\"Bear\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"1\",\"mealName\":\"青菜\",\"mealUnitPrice\":\"30\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 3, 1, 1),
-(4, 'CY20191004004', '{\"restaurant\":\"CY5\",\"memberName\":\"Lebron\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 3, 1, 1),
-(5, 'CY20191004005', '{\"restaurant\":\"CY\",\"memberName\":\"Chris\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 1, 1, 1),
-(6, 'CY20191004006', '{\"restaurant\":\"CY3\",\"memberName\":\"Chris\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 1, 1, 1),
-(7, 'CY20191004007', '{\"restaurant\":\"CY3\",\"memberName\":\"克里斯伊凡\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 1, 1, 1),
-(8, 'CY20191004009', '{\"restaurant\":\"CY\",\"memberName\":\"克里斯伊凡\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 1, 1, 1),
-(9, 'CY20191004010', '{\"restaurant\":\"CY2\",\"memberName\":\"霸王花\",\"meal\":[{\"mealQuantity\":\"1\",\"mealName\":\"白開水\",\"mealUnitPrice\":\"10\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"衛生紙\",\"mealUnitPrice\":\"20\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 1, 1, 1),
-(10, 'CY20191004011', '{\"restaurant\":\"CY2\",\"memberName\":\"蚊香蝌蚪\",\"meal\":[{\"mealQuantity\":\"1\",\"mealName\":\"蚊香\",\"mealUnitPrice\":\"10\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青蛙\",\"mealUnitPrice\":\"20\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-05 00:00:00', '2019-10-05 00:00:00', 1, 1, 1);
-
--- --------------------------------------------------------
-
---
--- 資料表結構 `password_resets`
---
--- 建立時間： 
---
-
-DROP TABLE IF EXISTS `password_resets`;
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- 資料表的關聯 `password_resets`:
---
+INSERT INTO `orders` (`OrdersID`, `OrdersNum`, `OrdersDetails`, `OrdersCreate`, `OrdersUpdate`, `OrdersStatus`, `OrdersRemark`, `MemberID`, `ShopID`) VALUES
+(1, 'CY20191004001', '{\"restaurant\":\"CY\",\"memberName\":\"Jennifer\",\"meal\":[{\"mealQuantity\":\"1\",\"mealName\":\"冰淇淋紅茶\",\"mealUnitPrice\":\"70\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"2\",\"mealName\":\"珍珠奶茶\",\"mealUnitPrice\":\"70\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-03 16:00:00', '2019-10-03 16:00:00', 1, NULL, 1, 1),
+(2, 'CY20191004002', '{\"restaurant\":\"CY5\",\"memberName\":\"Panda\",\"meal\":[{\"mealQuantity\":\"4\",\"mealName\":\"紅茶\",\"mealUnitPrice\":\"10\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"2\",\"mealName\":\"奶茶\",\"mealUnitPrice\":\"70\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(3, 'CY20191004003', '{\"restaurant\":\"CY\",\"memberName\":\"Bear\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"1\",\"mealName\":\"青菜\",\"mealUnitPrice\":\"30\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(4, 'CY20191004004', '{\"restaurant\":\"CY5\",\"memberName\":\"Lebron\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(5, 'CY20191004005', '{\"restaurant\":\"CY\",\"memberName\":\"Chris\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(6, 'CY20191004006', '{\"restaurant\":\"CY3\",\"memberName\":\"Chris\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(7, 'CY20191004007', '{\"restaurant\":\"CY3\",\"memberName\":\"克里斯伊凡\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(8, 'CY20191004009', '{\"restaurant\":\"CY\",\"memberName\":\"克里斯伊凡\",\"meal\":[{\"mealQuantity\":\"2\",\"mealName\":\"可不可紅茶超級大杯中杯小杯\",\"mealUnitPrice\":\"66\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n    {\"mealQuantity\":\"50\",\"mealName\":\"超級滷肉飯加滷蛋\",\"mealUnitPrice\":\"100\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青菜不要高麗菜\",\"mealUnitPrice\":\"199\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(9, 'CY20191004010', '{\"restaurant\":\"CY2\",\"memberName\":\"霸王花\",\"meal\":[{\"mealQuantity\":\"1\",\"mealName\":\"白開水\",\"mealUnitPrice\":\"10\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"衛生紙\",\"mealUnitPrice\":\"20\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-04 16:00:00', 1, NULL, 1, 1),
+(10, 'CY20191009011', '{\"restaurant\":\"CY2\",\"memberName\":\"蚊香蝌蚪\",\"meal\":[{\"mealQuantity\":\"1\",\"mealName\":\"蚊香\",\"mealUnitPrice\":\"10\",\r\n    \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] },\r\n   {\"mealQuantity\":\"1\",\"mealName\":\"青蛙\",\"mealUnitPrice\":\"20\",\r\n   \"mealDetail\":[{\"type\":0,\"mealNum\":\"meal0\",\"detail\": \"\",\"price\":\"\",\"check\":false}] } ]}', '2019-10-04 16:00:00', '2019-10-09 08:47:35', 2, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1029,6 @@ CREATE TABLE `password_resets` (
 -- 資料表結構 `shops`
 --
 -- 建立時間： 
--- 最後更新： 
 --
 
 DROP TABLE IF EXISTS `shops`;
@@ -1087,30 +1079,6 @@ INSERT INTO `shops` (`ShopID`, `ShopName`, `ShopType`, `ShipTime`, `ShopImage`, 
 (24, '大胖肉羹 中國醫店', '中式料理', 30, '/storage/uploads/shops/DuliDGLerrwttM4TtiipURQbgLRbCdRLs4hXULl3.jpeg', '台中市北區梅亭街253號, Taichung, 404 ', 'xxx24@email.com', '09xx-xxx-xxx', '$2y$10$3wJ0ClgJa1tHHNawO6DOY.3sgvsrnAXzpr9FoD2BzcyapmQbovXnO'),
 (25, '吃茶三千 大英概念店', '珍珠奶茶', 15, '/storage/uploads/shops/OoxZDqha0VVeAbgBoTDG3j6cJKb2cnx3o8tyIvYt.jpeg', '台中市南屯區大英街607號, Taichung', 'xxx25@email.com', '09xx-xxx-xxx', '$2y$10$NDHO4arZB/zd3B4RUTgQK.S..xZQ5/JwmwGVuJMWv3jbYl33Ix/LO');
 
--- --------------------------------------------------------
-
---
--- 資料表結構 `users`
---
--- 建立時間： 
---
-
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- 資料表的關聯 `users`:
---
-
 --
 -- 已傾印資料表的索引
 --
@@ -1121,12 +1089,6 @@ CREATE TABLE `users` (
 ALTER TABLE `coupons`
   ADD PRIMARY KEY (`CouponID`),
   ADD UNIQUE KEY `coupons_couponcode_unique` (`CouponCode`);
-
---
--- 資料表索引 `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- 資料表索引 `meals`
@@ -1149,18 +1111,18 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 資料表索引 `orderdetails`
+--
+ALTER TABLE `orderdetails`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 資料表索引 `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`OrdersID`),
   ADD KEY `MemberID` (`MemberID`),
   ADD KEY `ShopID` (`ShopID`);
-
---
--- 資料表索引 `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- 資料表索引 `shops`
@@ -1171,13 +1133,6 @@ ALTER TABLE `shops`
   ADD UNIQUE KEY `shops_shopaddress_unique` (`ShopAddress`);
 
 --
--- 資料表索引 `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
 -- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
@@ -1185,13 +1140,7 @@ ALTER TABLE `users`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `CouponID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `CouponID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `meals`
@@ -1203,13 +1152,19 @@ ALTER TABLE `meals`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `members`
 --
 ALTER TABLE `members`
-  MODIFY `MemberID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `MemberID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `orderdetails`
+--
+ALTER TABLE `orderdetails`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `orders`
@@ -1222,12 +1177,6 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `shops`
   MODIFY `ShopID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- 已傾印資料表的限制式
