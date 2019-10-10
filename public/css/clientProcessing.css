@@ -91,3 +91,6 @@
 .modal{
     font-family: Microsoft JhengHei;
 }
+[v-cloak] {
+    display: none;
+}
