@@ -73,3 +73,6 @@
         min-height: 544px;
     }
 }
+[v-cloak] {
+    display: none;
+}

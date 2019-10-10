@@ -77,3 +77,6 @@
 #modalFooter{
     margin: 1% auto 5% auto;
 }
+[v-cloak] {
+    display: none;
+}

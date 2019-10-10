@@ -3,7 +3,7 @@
 @section('content')
 <link rel="stylesheet" href="/css/clientTakeout.css">
 <!-- buttom -->
-<div class="row no-gutters" id="buttomDiv">
+<div class="row no-gutters" id="buttomDiv" v-cloak>
     <div class="col-4">
         <div id="leftButtom">
             <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick(index)" v-for="item,index in list" v-if="item.OrdersStatus==3">
