@@ -22,10 +22,10 @@
                 <div class="col text-center tableTitle">電子郵件</div>
                 <div class="col text-center tableTitle">連絡電話</div>
                 <div class="col"></div>
-                {{-- <div id="neworder" class="col text-center">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-primary tableTitle"
-                    v-on:click="insertData">✚</button>
-                </div> --}}
+                <div id="neworder" class="col text-center">
+                    {{-- <button id="singlebutton" name="singlebutton" class="btn btn-primary tableTitle"
+                    v-on:click="insertData">✚</button> --}}
+                </div>
             </div>
 
             <hr>
