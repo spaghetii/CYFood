@@ -74,7 +74,7 @@
                     <div class="form-group row">
                         <div class="form-group row col-sm-6">
                             <label class="col-form-label col-sm-4 text-center">訂單編號: </label>
-                            <input type="text" class="form-control col-sm-8" v-model="list.OrdersNum">
+                            <input type="text" class="form-control col-sm-8" v-model="list.OrdersNum" disabled>
                         </div>
                         <div class="form-group row col-sm-6">
                             <label class="col-form-label col-sm-4 text-center">訂單狀態: </label>
@@ -90,13 +90,13 @@
                     <div class="form-group row">
                         <div class="form-group row col-sm-6">
                             <label class="col-form-label col-sm-4 text-center">會員名稱: </label>
-                            <select class="custom-select col-sm-8" v-model="list.OrdersDetails.memberName">
+                            <select class="custom-select col-sm-8" v-model="list.OrdersDetails.memberName" disabled>
                                 <option v-for="memberitem in memberList" :value="memberitem.MemberName">@{{memberitem.MemberName}}</option>
                             </select>
                         </div>
                         <div class="form-group row col-sm-6">
                             <label class="col-form-label col-sm-4 text-center">餐廳名稱: </label>
-                            <select class="custom-select col-sm-8" v-model="shopSelect">
+                            <select class="custom-select col-sm-8" v-model="shopSelect" disabled>
                                 <option v-for="shopitem in shopList" :value="shopitem.ShopID">@{{shopitem.ShopName}}</option>
                             </select>
                         </div>
@@ -118,12 +118,12 @@
                             <tbody class="text-center">
                                 <tr style="border: 1px solid black;"  >
                                     <td style="border: 1px solid black;width: 28%;">
-                                    <select class="custom-select" v-model="item.mealName" v-if="!status">
+                                    {{-- <select class="custom-select" v-model="item.mealName" v-if="!status">
                                         <option v-for="mealitem in mealList" :value="mealitem.MealName">@{{mealitem.MealName}}</option>
-                                    </select>
-                                    <input type="text" class="form-control" v-model="item.mealName" v-if="status"></td>
+                                    </select> --}}
+                                    <input type="text" class="form-control" v-model="item.mealName" disabled></td>
                                     <td style="border: 1px solid black;width: 28%;">
-                                    <input type="text" class="form-control" v-model="item.mealQuantity" ></td>
+                                    <input type="text" class="form-control" v-model="item.mealQuantity" disabled></td>
                                     <td style="border: 1px solid black;width: 28%;" >
                                         <input type="text" class="text-center" v-for="mealitem in mealList" v-if="item.mealName == mealitem.MealName" 
                                         v-model="item.mealUnitPrice = mealitem.MealPrice" disabled>
@@ -170,11 +170,16 @@
                         </div>
                     </div>
                     <div class="row text-center" style="margin:20px 0px ;">
-                        <div class="col-sm-2"></div>
+                        <div class="row col-sm-2 text-center">訂單備註:</div>
+                        <div class="row col-sm-10">
+                            <textarea name="" id="" cols="120" rows="5"></textarea>
+                        </div>
+                        
+                        {{-- <div class="col-sm-2"></div>
                         <div class="col-sm-8">
                             <button type="button" class="btn btn-primary form-control"
                             v-on:click="addMeal">新增餐點</button>
-                        </div>
+                        </div> --}}
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary form-control"
