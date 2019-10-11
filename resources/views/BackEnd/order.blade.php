@@ -25,8 +25,8 @@
                 <div class="col text-center tableTitle">下單日期</div>
                 <div class="col"></div>
                 <div id="neworder" class="col text-center">
-                    <button id="singlebutton" name="singlebutton"
-                    v-on:click="insertData" class="btn btn-primary tableTitle">✚</button>
+                    {{-- <button id="singlebutton" name="singlebutton"
+                    v-on:click="insertData" class="btn btn-primary tableTitle">✚</button> --}}
                 </div>
             </div>
 
@@ -159,20 +159,20 @@
                                         <input type="text" placeholder="請輸入細項單價" class="form-control col-sm-4" v-model="mealDetailItem.price">
                                     </div>
                                 </div>
-                                <div class="row text-center">
+                                {{-- <div class="row text-center">
                                     <div class="col-sm-4"></div>
                                     <div class="col-sm-4">
                                         <button type="button" class="btn btn-primary form-control"
                                         v-on:click="addDetail(index)">新增細項</button>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
-                    <div class="row text-center" style="margin:20px 0px ;">
-                        <div class="row col-sm-2 text-center">訂單備註:</div>
-                        <div class="row col-sm-10">
-                            <textarea name="" id="" cols="120" rows="5"></textarea>
+                    <div class="row text-center" style="margin:20px ;">
+                        <div class="row col-sm-2">訂單備註:</div>
+                        <div class="row col-sm-12">
+                            <textarea cols="120" rows="5" v-model="list.OrdersRemark"></textarea>
                         </div>
                         
                         {{-- <div class="col-sm-2"></div>
@@ -219,7 +219,7 @@
                                 //  console.log(element.OrdersDetails);
                                 _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                             });
-                            console.log(_this.list);
+                            // console.log(_this.list);
                         })
                         .catch(function (response) {
                             console.log(response);
@@ -262,7 +262,7 @@
                         if(element.OrdersID == select)currentIndex = index;
                     });
                     Modal.list = this.list[currentIndex];
-
+                    Modal.init();
                     // Modal.CouponCode = coupon.list[currentIndex].CouponCode;
                     // Modal.CouponType = coupon.list[currentIndex].CouponType;
                     // Modal.CouponDiscount = coupon.list[currentIndex].CouponDiscount;
@@ -313,40 +313,6 @@
             }
         });         //vue-coupon tail
 
-        // Date.prototype.format = function (format) {
-        //     //eg:format="yyyy-MM-dd hh:mm:ss";
-
-        //     if (!format) {
-        //         format = "yyyy-MM-dd hh:mm:ss";
-        //     }
-
-        //     var o = {
-        //         "M+": this.getMonth() + 1,  // month
-        //         "d+": this.getDate(),       // day
-        //         "H+": this.getHours(),      // hour
-        //         "h+": this.getHours(),      // hour
-        //         "m+": this.getMinutes(),    // minute
-        //         "s+": this.getSeconds(),    // second
-        //         "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
-        //         "S": this.getMilliseconds()
-        //     };
-
-        //     if (/(y+)/.test(format)) {
-        //         format = format.replace(RegExp.$1, (this.getFullYear() + "")
-        //             .substr(4 - RegExp.$1.length));
-        //     }
-
-        //     for (var k in o) {
-        //         if (new RegExp("(" + k + ")").test(format)) {
-        //             format = format.replace(RegExp.$1, RegExp.$1.length == 1
-        //                 ? o[k]
-        //                 : ("00" + o[k]).substr(("" + o[k]).length));
-        //         }
-        //     }
-
-        //     return format;
-        // };
-
         var lastNum = 0;
         var Modal = new Vue({
             el:"#orderModal",
@@ -366,18 +332,17 @@
                     let _this = this;
                     axios.get('/api/member')
                         .then(function (response) {
-                            _this.list.OrdersDetails.memberName = response.data[0].MemberName;
+                            // _this.list.OrdersDetails.memberName = response.data[0].MemberName;
                             _this.memberList  = response.data;
                         })
                     axios.get('/api/shop')
                         .then(function (response) {
-                            _this.list.OrdersDetails.restaurant = response.data[0].ShopName;
-                            _this.shopSelect = response.data[0].ShopID;
+                            // _this.list.OrdersDetails.restaurant = response.data[0].ShopName;
+                            // _this.shopSelect = response.data[0].ShopID;
                             _this.shopList  = response.data;
                         })
                     this.list.OrdersDetails.meal.forEach((element,index) => {
                         element.mealDetail.forEach((ele,inIndex) =>{
-                            // console.log(ele);
                             _this.total[index] = "#" + ele.mealNum;  //boostrap
                         })
                     });
@@ -388,7 +353,7 @@
                     });
                 },
                 addMeal:function(){
-                    console.log(this.list.OrdersDetails.meal[lastNum]);
+                    // console.log(this.list.OrdersDetails.meal[lastNum]);
                     var temp = 'meal'+ (++lastNum);
                     // console.log(this.list);
                     this.list.OrdersDetails.meal.push({"mealQuantity":"","mealName":"","mealUnitPrice":"","mealDetail":[{"type":0,"detail": "","mealNum":temp,"price":"","check":false}] })
@@ -396,16 +361,14 @@
                 },
                 modalOK: function(){
                     if (currentIndex >= 0){
-                        // order.list[currentIndex].OrdersNum      = Modal.OrdersNum;
-                        // order.list[currentIndex].OrdersDetails   = Modal.OrdersDetails;
-                        // order.list[currentIndex].OrdersUpdate   = Modal.OrdersUpdate;
-                        console.log(this.list);
+                        _this = this;
+                        console.log(_this.list);
                         // 未修改完畢
-                        // axios.put('/api/order/'+order.list[currentIndex].OrdersID, order.list[currentIndex])
-                        // .then(function (response) {
-                        //     console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                        //     order.init();                //更新目前畫面
-                        // })
+                        axios.put('/api/order/'+_this.list.OrdersID, _this.list)
+                        .then(function (response) {
+                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                            order.init();                //更新目前畫面
+                        })
                     }else{
                         // 新增資料
                         this.memberList.forEach(element => {
@@ -450,7 +413,7 @@
                     let _this = this;
                     axios.get('/api/meal/'+value)
                         .then(function (response) {
-                            console.log(_this.mealList)
+                            // console.log(_this.mealList)
                             if(Object.keys(response.data).length != 0){
                                 _this.list.OrdersDetails.meal[lastNum].mealName = response.data[0].MealName;
                                 _this.mealList  = response.data;
@@ -458,7 +421,7 @@
                                 _this.list.OrdersDetails.meal[lastNum].mealName = "";
                                 _this.mealList  = [];
                             }
-                            console.log(_this.mealList)
+                            // console.log(_this.mealList)
                     })
                 }
             },
