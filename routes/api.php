@@ -43,14 +43,9 @@ Route::delete('/order/{id}', "BackEnd@orderDelete");
 Route::get('/member', 'BackEnd@memberAll');
 // 新增資料
 Route::post('/member', 'BackEnd@memberInsert');
-<<<<<<< HEAD
-// 修改訂單
-Route::put('/member/{id}', 'BackEnd@memberUpdate');
-
-=======
 // 修改會員資料
 Route::put('/member/{id}', 'BackEnd@memberUpdate');
->>>>>>> 42a833133ff829152a24dc40e0e3fc3c0c865bdf
+
 // shop
 // 顯示全部
 Route::get('/shop', 'BackEnd@shopAll');
