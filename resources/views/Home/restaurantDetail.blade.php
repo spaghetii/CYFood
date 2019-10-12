@@ -73,7 +73,7 @@
                                     $@{{meal.MealPrice}}
                                 </div>
                             </div>
-                            <img :src="meal.MealImage" class="categoryItemImg" v-if="meal.MealImage" alt="">
+                            <img :src="meal.MealImage" class="categoryItemImg"  alt="">
                         </div>
                     </a>
                 </div>                       
