@@ -220,7 +220,7 @@ class BackEnd extends Controller
         }
         return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
-    
+
     function memberUpdate(Request $request, $id) {
         $ok='';
         $msg = "";
@@ -229,6 +229,8 @@ class BackEnd extends Controller
             $member->MemberName = $request->MemberName;
             $member->MemberEmail = $request->MemberEmail;
             $member->MemberPhone = $request->MemberPhone;
+            $member->MemberPassword = $request->MemberPassword;
+            $member->MemberPermission = $request->MemberPermission;
             $ok = $member->save();
             if (!$ok) $msg = 'Error';
             else $msg = "suessfull";
@@ -256,8 +258,6 @@ class BackEnd extends Controller
             $OrdersNum ="CY".$suborder;
             echo $OrdersNum;
         }
-
-
     }
     
 }

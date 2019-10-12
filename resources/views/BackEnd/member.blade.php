@@ -40,7 +40,7 @@
                     </div>
                     <div class="col change text-center">
                         <button id="singlebutton" name="singlebutton" 
-                        v-on:click="remove(item.MemberID)" class="btn btn-danger">刪除會員</button>
+                        v-on:click="remove(item.MemberID)" class="btn btn-danger">會員停權</button>
                     </div>
                 </div>
 
@@ -130,13 +130,13 @@
                     }).then((result) => {
                         if (result.value){
                             member.list.forEach((element,index) => {
-                                if(element.CouponID == id)currentIndex = index;
+                                if(element.MemberID == id)currentIndex = index;
                             });
                             member.list[currentIndex].MemberPermission = true;
-                            axios.put('/api/coupon/'+id, member.list[currentIndex])
+                            axios.put('/api/member/'+id, member.list[currentIndex])
                             .then(function (response) {
                                 console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                                coupon.init();                //更新目前畫面
+                                member.init();                //更新目前畫面
                             })
                             .catch(function (response) {
                                 console.log(response);

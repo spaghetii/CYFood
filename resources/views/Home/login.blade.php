@@ -52,9 +52,9 @@
                                 <label for="loginEmail">密碼 </label>
                                 <input v-model="loginPassword" type="password" class="form-control" id="loginPassword"
                                     name="loginPassword">
-                                <a href="#resetModal" data-toggle="modal" data-target="#resetModal">忘記密碼</a><br>
-                                <span v-if="space" class="resetalert">電子郵件或密碼不能為空</span>
-                                <span v-if="checklogin" class="resetalert">電子郵件或密碼錯誤</span>
+                                <a href="javascript:void(0);" v-on:click="resetModal">忘記密碼</a><br>
+                                <span v-cloak v-if="space" class="resetalert">電子郵件或密碼不能為空</span>
+                                <span v-cloak v-if="checklogin" class="resetalert">電子郵件或密碼錯誤</span>
                             </div>
 
                             <button v-on:click="login" type="button"
@@ -76,8 +76,8 @@
                             </div>
                             <div class="form-group ">
                                 <label for="registerEmail">電子郵件</label>
-                                <span v-if="checkEmail" class="resetalert">@{{errorEmail}}</span>
-                                <span v-if="okEmail" class="okalert">@{{okMsg}}</span>
+                                <span v-cloak v-if="checkEmail" class="resetalert ">@{{errorEmail}}</span>
+                                <span v-cloak v-if="okEmail" class="okalert ">@{{okMsg}}</span>
                                 <input type="email" class="form-control" v-model.lazy="registerEmail" id="registerEmail"
                                     name="registerEmail">
                             </div>
@@ -91,7 +91,7 @@
                                 <input type="password" class="form-control" v-model="registerPassword"
                                     id="registerPassword" name="registerPassword">
                             </div>
-                            <span v-if="checkRegister" class="resetalert">@{{errorMsg}}</span>
+                            <span v-cloak v-if="checkRegister" class="resetalert ">@{{errorMsg}}</span>
                             <button type="button" v-on:click="register"
                                 class="btn btn-primary btn-block btn-lg">註冊</button>
                         </form>
@@ -116,7 +116,7 @@
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">請輸入電子郵件</label>
                             <input v-model="email" type="text" class="form-control" id="email" name="email">
-                            <span v-if="checkemail" class="resetalert">請輸入正確的電子郵件</span>
+                            <span v-if="repeatEmail" class="resetalert">請輸入正確的電子郵件</span>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -189,6 +189,10 @@
                             });
 
                     }
+                },
+                resetModal:function(){
+                    reset.repeatEmail = false;
+                    $("#resetModal").modal( { backdrop: "static" } );
                 }
             }
         })
@@ -210,8 +214,13 @@
             },
             watch:{
                 registerEmail:function(){
+                    this.errorEmail = "";
+                    this.okMsg="";
                     let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)+$/;
-                    if (!reg.test(this.registerEmail)) {
+                    if(this.registerEmail == ""){
+                        this.checkEmail = false;
+                    }
+                    else if (!reg.test(this.registerEmail)) {
                         this.checkEmail = true;
                         this.errorEmail = "請輸入正確的格式";
                     }else{
@@ -239,10 +248,9 @@
             },
             methods: {
                 register: function () {
-                    this.checkEmail = false;
                     this.checkRegister = false;
-                    this.errorEmail = "";
                     this.errorMsg = "";
+                    var self = this;
                     if (this.registerName == "" || this.registerEmail == "" ||
                         this.registerPhone == "" || this.registerPassword == "") {
                         this.checkRegister = true;
@@ -265,14 +273,16 @@
                                               '請妥善保存<br>'+
                                               '代碼:'+response.data['coupon'],
                                         confirmButtonText:
-                                            '<i class="fa fa-thumbs-up"></i> Great!',
-                                        confirmButtonAriaLabel: 'Thumbs up, great!',
+                                            '我知道了!'
                                     }).then((result) => {
+                                        console.log(result.value);
                                         if (result.value) {
                                             self.registerName = "";
                                             self.registerEmail = "";
                                             self.registerPhone = "";
                                             self.registerPassword = "";
+                                            self.checkRegister = false;
+                                            self.okEmail = false;
                                         }
                                         })
                                 } else {
@@ -295,7 +305,7 @@
             el: "#resetModal",
             data: {
                 email: '',
-                checkemail: false
+                repeatEmail: false
             },
             methods: {
                 submit: function () {
@@ -321,7 +331,7 @@
                                         "/"; //will redirect to your blog page (an ex: blog.html)
                                 }, 6000);
                             } else {
-                                self.checkemail = true;
+                                self.repeatEmail = true;
                                 self.email = '';
                             }
                         })
