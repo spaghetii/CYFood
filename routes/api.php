@@ -43,7 +43,8 @@ Route::delete('/order/{id}', "BackEnd@orderDelete");
 Route::get('/member', 'BackEnd@memberAll');
 // 新增資料
 Route::post('/member', 'BackEnd@memberInsert');
-
+// 修改會員資料
+Route::put('/member/{id}', 'BackEnd@memberUpdate');
 // shop
 // 顯示全部
 Route::get('/shop', 'BackEnd@shopAll');

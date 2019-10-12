@@ -111,3 +111,7 @@ form {
     font-size: 20px;
 }
 
+[v-cloak] {
+    display: none;
+}
+

@@ -100,6 +100,25 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok], 200);
     }
 
+    function memberUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $member = Member::find($id);
+        if ($member) {
+            $member->MemberName = $request->MemberName;
+            $member->MemberEmail = $request->MemberEmail;
+            $member->MemberPhone = $request->MemberPhone;
+            $member->MemberPassword = $request->MemberPassword;
+            $member->MemberPermission = $request->MemberPermission;
+            $ok = $member->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
+
     function couponUpdate(Request $request, $id) {
         $ok='';
         $msg = "";
