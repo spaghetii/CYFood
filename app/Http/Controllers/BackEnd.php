@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Storage;
 use App\Coupon;
 use App\Orders;
 use App\Member;
@@ -69,6 +71,7 @@ class BackEnd extends Controller
     }
 
     ////////////////   delete by id   ////////////////
+    
 
     function couponDelete($id) {
         $rows = Coupon::destroy($id);
@@ -111,14 +114,34 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok], 200);
     }
 
-    function shopInsert(Request $request) {
+    function shopInsert(Request $request){
         $shop = new Shop;
-        $member->MemberName = $request->MemberName;
-        $member->MemberEmail = $request->MemberEmail;
-        $member->MemberPhone = $request->MemberPhone;
-        $member->MemberPassword = $request->MemberPassword;
-        $ok = $member->save();
-        return response()->json(['ok' => $ok], 200);
+        $shop->ShopName = $request->ShopName;
+        $shop->ShopType = $request->ShopType;
+        // $shop->ShipTime = $request->stime;
+        $shop->ShopAddress = $request->ShopAddress;
+        $shop->ShopEmail = $request->ShopEmail;
+        $shop->ShopPhone = $request->ShopPhone;
+        
+
+        $password = $request->ShopPassword;
+        $hashed = Hash::make($password);
+        $shop->ShopPassword = $hashed;
+
+        if ($request->hasFile('ShopImage')) {
+            //
+            $avatar = $request->file('ShopImage');
+            
+            if ($avatar->isValid()) {
+                $path = Storage::putFile('public/uploads/shops', $avatar);
+                $shop->ShopImage = Storage::url($path); 
+            }
+
+        }
+        
+        if($shop->save()){
+            return response()->json(['ok' => true], 200);
+        }
     }
 
     function orderInsert(Request $request) {
