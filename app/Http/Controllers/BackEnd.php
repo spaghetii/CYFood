@@ -7,6 +7,7 @@ use App\Coupon;
 use App\Orders;
 use App\Member;
 use App\Shop;
+use App\Meal;
 use Session;
 
 class BackEnd extends Controller
@@ -31,6 +32,8 @@ class BackEnd extends Controller
         }
     }
 
+    ////////////////   index   ////////////////
+
     function couponIndex(){
         return view("BackEnd.coupon");
     }
@@ -47,6 +50,8 @@ class BackEnd extends Controller
         return view("BackEnd.restaurant");
     }
     
+    ////////////////   get all data   ////////////////
+
     function couponAll() {
         return response()->json(Coupon::all(), 200);
     }
@@ -63,9 +68,7 @@ class BackEnd extends Controller
         return response()->json(Shop::all(), 200);
     }
 
-    function couponSelect($id) {
-        return response()->json(Coupon::find($id), 200);
-    }
+    ////////////////   delete by id   ////////////////
 
     function couponDelete($id) {
         $rows = Coupon::destroy($id);
@@ -78,6 +81,14 @@ class BackEnd extends Controller
         $ok = ($rows > 0);
         return response()->json(['ok' => $ok], 200);
     }
+
+    function shopDelete($id) {
+        $rows = Shop::destroy($id);
+        $ok = ($rows > 0);
+        return response()->json(['ok' => $ok], 200);
+    }
+
+    ////////////////   insert new data   ////////////////
 
     function couponInsert(Request $request) {
         $coupon = new Coupon;
@@ -100,23 +111,14 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok], 200);
     }
 
-    function couponUpdate(Request $request, $id) {
-        $ok='';
-        $msg = "";
-        $coupon = Coupon::find($id);
-        if ($coupon) {
-            $coupon->CouponCode = $request->CouponCode;
-            $coupon->CouponType = $request->CouponType;
-            $coupon->CouponDiscount = $request->CouponDiscount;
-            $coupon->CouponStart = $request->CouponStart;
-            $coupon->CouponDeadline = $request->CouponDeadline;
-            $ok = $coupon->save();
-            if (!$ok) $msg = 'Error';
-            else $msg = "suessfull";
-        } else {
-            $msg = ' cant find anything';
-        }
-        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    function shopInsert(Request $request) {
+        $shop = new Shop;
+        $member->MemberName = $request->MemberName;
+        $member->MemberEmail = $request->MemberEmail;
+        $member->MemberPhone = $request->MemberPhone;
+        $member->MemberPassword = $request->MemberPassword;
+        $ok = $member->save();
+        return response()->json(['ok' => $ok], 200);
     }
 
     function orderInsert(Request $request) {
@@ -149,6 +151,27 @@ class BackEnd extends Controller
         $ok = $order->save();
         return response()->json(['ok' => $ok], 200);
     }
+    
+    ////////////////   update data   ////////////////
+
+    function couponUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $coupon = Coupon::find($id);
+        if ($coupon) {
+            $coupon->CouponCode = $request->CouponCode;
+            $coupon->CouponType = $request->CouponType;
+            $coupon->CouponDiscount = $request->CouponDiscount;
+            $coupon->CouponStart = $request->CouponStart;
+            $coupon->CouponDeadline = $request->CouponDeadline;
+            $ok = $coupon->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
 
     function orderUpdate(Request $request, $id) {
         $ok='';
@@ -166,6 +189,54 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
 
+    function shopUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $order = Shop::find($id);
+        if ($order) {
+            $order->OrdersStatus = $request->OrdersStatus;
+            $order->OrdersRemark = $request->OrdersRemark;
+            $ok = $order->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
+
+    function mealUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $order = Meal::find($id);
+        if ($order) {
+            $order->OrdersStatus = $request->OrdersStatus;
+            $order->OrdersRemark = $request->OrdersRemark;
+            $ok = $order->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
+    
+    function memberUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $member = Member::find($id);
+        if ($member) {
+            $member->MemberName = $request->MemberName;
+            $member->MemberEmail = $request->MemberEmail;
+            $member->MemberPhone = $request->MemberPhone;
+            $ok = $member->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
 
     function ordertest(){
         //產生流水號

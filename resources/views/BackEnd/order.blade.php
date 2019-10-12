@@ -129,7 +129,7 @@
                                         v-model="item.mealUnitPrice = mealitem.MealPrice" disabled>
                                     </td>
                                     <td style="border: 1px solid black;width: 15%;"data-toggle="collapse"
-                                    :data-target="total[index]" class="btn-info h6" >展開或收合</td>
+                                    :data-target="recombind[index]" class="btn-info h6" >展開或收合</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -319,7 +319,7 @@
             data:{
                 title:"",
                 list: treeData,
-                total: [],
+                recombind: [],
                 memberList:[],
                 shopList:[],
                 shopSelect:'',
@@ -343,7 +343,7 @@
                         })
                     this.list.OrdersDetails.meal.forEach((element,index) => {
                         element.mealDetail.forEach((ele,inIndex) =>{
-                            _this.total[index] = "#" + ele.mealNum;  //boostrap
+                            _this.recombind[index] = "#" + ele.mealNum;  //boostrap
                         })
                     });
                 },

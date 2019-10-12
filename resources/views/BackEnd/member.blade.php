@@ -224,12 +224,12 @@
                             member.list[currentIndex].MemberName     = Modal.MemberName;
                             member.list[currentIndex].MemberEmail    = Modal.MemberEmail;
                             member.list[currentIndex].MemberPhone    = Modal.MemberPhone;
-                            member.list[currentIndex].MemberPassword = Modal.MemberPassword;
+                            // member.list[currentIndex].MemberPassword = Modal.MemberPassword;
                             // 未修改完畢
-                            axios.put('/api/coupon/'+member.list[currentIndex].MemberID, member.list[currentIndex])
+                            axios.put('/api/member/'+member.list[currentIndex].MemberID, member.list[currentIndex])
                             .then(function (response) {
                                 console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                                coupon.init();                //更新目前畫面
+                                member.init();                //更新目前畫面
                             })
                         }else{
                             // 新增資料
