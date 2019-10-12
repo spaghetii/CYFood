@@ -148,8 +148,6 @@ class HomeController extends Controller
             return response()->json(['ok' => false], 200);
         }
         else{
-            
-
 
             //註冊
             $me =new Member();

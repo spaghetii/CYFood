@@ -117,7 +117,7 @@
                             
                             //取前3或6筆
                             _this.recommend = _this.temp.filter(function(item, index, array){
-                                return index < 3;    // 取得陣列中雙數的物件
+                                return index < 3;    
                                 });
                             console.log(_this.recommend);
                         })

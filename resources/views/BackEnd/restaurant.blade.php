@@ -49,12 +49,10 @@
             </div>
             
         </div>
-        <div class="page" style="background-color:transparent;margin-top: 0px;margin-left:30%">
+        <div class="page" style="background-color:transparent;margin-top: 0px;margin-left:37%">
             <ul class="pagination">
-                <li class="page-item" v-on:click.prevent="changePage(currentPage-1)" :class="{'disabled':(currentPage === 1)}" ><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item" v-for="page in totalPage" v-on:click="currentPage = page" :class="{'active': (currentPage === page)}">
                 <a class="page-link" href="#">@{{page}}</a></li>
-                <li class="page-item" v-on:click.prevent="changePage(currentPage+1)" :class="{'disabled':(currentPage === totalPage)}"><a class="page-link" href="#">Next</a></li>
             </ul>
         </div>
     </div>
@@ -105,13 +103,6 @@
                                 console.log(response);
                             });
                     });
-                },
-                changePage:function(page){
-                    if(page === 0 || page > this.totalPage){
-                        return;
-                    }
-                    this.currentPage = page;
-
                 }
             },
             mounted: function () {
