@@ -49,6 +49,8 @@ Route::put('/member/{id}', 'BackEnd@memberUpdate');
 // shop
 // 顯示全部
 Route::get('/shop', 'BackEnd@shopAll');
+//新增資料
+Route::post('/shop','BackEnd@shopInsert');
 
 Route::put('/shop/{id}', 'BackEnd@shopUpdate');
 

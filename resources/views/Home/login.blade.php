@@ -129,7 +129,7 @@
     </div>
 
     <script>
-        //登入驗證
+        //登入相關
         var loginform = new Vue({
             el: "#login-form",
             data: {
@@ -197,7 +197,7 @@
             }
         })
 
-        //註冊驗證
+        //註冊相關
         var registerform = new Vue({
             el: "#register-form",
             data: {
