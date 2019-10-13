@@ -10,53 +10,66 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//===========客戶端====================
-Route::get('/', "HomeController@index")->middleware('check');
 
-Route::get('/login',"HomeController@login");
+//===========會員端====================
+Route::get('/', "HomeController@index")->middleware('check');                       // 未登入主頁
 
-Route::get('/logout',"HomeController@logout");
+Route::get('/login',"HomeController@login");                                        // 會員登入
 
-Route::post('/login/check',"HomeController@logincheck");
+Route::get('/logout',"HomeController@logout");                                      // 會員登出
 
-Route::post('/login/checkRe',"HomeController@checkRegister");
+Route::post('/login/check',"HomeController@logincheck");                            // 會員登入驗證
 
-Route::post('/login/checkReID',"HomeController@checkRegisterID");
+Route::post('/login/checkRe',"HomeController@checkRegister");                       // 會員註冊驗證
 
-Route::get('/loginHomepage', "HomeController@loginHomepage")->middleware('check');
+Route::post('/login/checkReID',"HomeController@checkRegisterID");                   // ???????????
 
-Route::get('/restaurant/{id}', "HomeController@restaurantDetail");
+Route::get('/loginHomepage', "HomeController@loginHomepage")->middleware('check');  // 會員登入主頁
 
-Route::get('/orderDetail', "HomeController@orderDetail");
+Route::get('/restaurant/{id}', "HomeController@restaurantDetail");                  // 餐廳、餐點頁面
 
-Route::get('/userOrderDetail', "HomeController@userOrderDetail");
+Route::get('/orderDetail', "HomeController@orderDetail");                           // 訂單細項頁面
 
-Route::get('/userProfile', "HomeController@userProfile");
+Route::get('/userOrderDetail', "HomeController@userOrderDetail");                   // 會員的目前、歷史訂單
 
-Route::get('/trackingOrder', "HomeController@trackingOrder");
+Route::get('/userProfile', "HomeController@userProfile");                           // 會員個人資料頁
 
-Route::get('/session',"HomeController@checkMemberSession" );
+Route::get('/trackingOrder', "HomeController@trackingOrder");                       // 安排訂單後的頁面
+
+Route::get('/session',"HomeController@checkMemberSession" );                        // 檢查會員session
 
 
 
 //===============店家端======================
-Route::get('/shop/login',"ShopController@rLogin");
-Route::post('/shop/login/check',"ShopController@rLogincheck");
-Route::get('/shop/register',"ShopController@rRegister");
-Route::get('/shop/newOrder/{id}',"ShopController@newOrder");
-Route::get('/shop/processing/{id}',"ShopController@processing");
-Route::get('/shop/takeout/{id}',"ShopController@takeout");
-Route::get('/shop/user/{id}',"ShopController@user");
+Route::get('/shop/login',"ShopController@rLogin");              // 店家登入
+
+Route::post('/shop/login/check',"ShopController@rLogincheck");  // 店家登入驗證
+
+Route::get('/shop/register',"ShopController@rRegister");        // 店家註冊
+
+Route::get('/shop/newOrder/{id}',"ShopController@newOrder");    // 店家畫面--新訂單
+
+Route::get('/shop/processing/{id}',"ShopController@processing");// 店家畫面--處理中
+
+Route::get('/shop/takeout/{id}',"ShopController@takeout");      // 店家畫面--待取餐
+
+Route::get('/shop/user/{id}',"ShopController@user");            // 店家畫面--店家資訊
 
 
 //===============後端=================
-Route::get('/BackEnd/login','BackEnd@loginIndex');
-Route::post('/BackEnd/login/check','BackEnd@bLogincheck');
-Route::get('/BackEnd/coupon','BackEnd@couponIndex');
-Route::get('/BackEnd/member','BackEnd@memberIndex');
-Route::get('/BackEnd/order','BackEnd@orderIndex');
-Route::get('/BackEnd/restaurant','BackEnd@restaurantIndex');
+Route::get('/BackEnd/login','BackEnd@loginIndex');              // 管理端登入畫面
 
+Route::post('/BackEnd/login/check','BackEnd@bLogincheck');      // 管理端登入驗證
+
+Route::get('/BackEnd/coupon','BackEnd@couponIndex');            // 管理端畫面--優惠券
+
+Route::get('/BackEnd/member','BackEnd@memberIndex');            // 管理端畫面--會員
+
+Route::get('/BackEnd/order','BackEnd@orderIndex');              // 管理端畫面--訂單
+
+Route::get('/BackEnd/restaurant','BackEnd@restaurantIndex');    // 管理端畫面--餐廳
+
+// 待移除
 
 Route::resource('coupon','CouponController');
 
