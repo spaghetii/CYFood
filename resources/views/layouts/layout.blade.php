@@ -153,7 +153,7 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <a href="/orderDetail" class="d-flex justify-content-between" id="shoppingBagModalCheckOutDiv">
+                    <a href="javascript:void(0);" v-on:click="checkOut" class="d-flex justify-content-between" id="shoppingBagModalCheckOutDiv">
                         <div id="shoppingBagModalCheckOutItem">@{{shoppingBagTotalQuantity}}</div>
                         <div>下一步：結帳</div>
                         <div>$@{{shoppingBagTotalPrice}}</div>
@@ -203,6 +203,7 @@
                     axios.get('/logout')
                         .then(function (response) {
                             if (response.data['ok']) {
+                                localStorage.removeItem('memberID');
                                 sessionStorage.clear();
                                 location.reload();
                             }
@@ -286,6 +287,38 @@
                     });
                 }
             },
+            //結帳前登入判斷
+            methods:{
+                checkOut:function(){
+                    if (sessionStorage.getItem("name")) {
+                        window.location.href="/orderDetail";
+                    }else{
+                        Swal.fire({
+                            type: 'error',
+                            title: '尚未登入',
+                            html: '請登入後再結帳<br>' +
+                                '本畫面於<strong></strong>秒跳轉至登入頁',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            onBeforeOpen: () => {
+                                Swal.showLoading()
+                                timerInterval = setInterval(() => {
+                                    Swal.getContent().querySelector(
+                                            'strong')
+                                        .textContent = parseInt(Math
+                                            .ceil(Swal.getTimerLeft() /
+                                                1000))
+                                }, 100)
+                            },
+                            onClose: () => {
+                                clearInterval(timerInterval);
+                                window.location = "/login";
+                            }
+                        })
+
+                    }
+                }
+            },
             mounted: function () {
                 // 數量選擇框
                 for(var i=1; i<=99; i++){
@@ -310,7 +343,6 @@
                 this.shoppingBagMealTotalPrice = storedMealTotalPriceArray;
                 // console.log(this.shoppingBagMealQuantity);
                 }
-
             },
         })
     
