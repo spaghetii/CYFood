@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>CYfood</title>
+    <title>CYFood</title>
     <!-- 網頁 icon -->
     <link rel="icon" href="/img/burger.ico" type="image/x-icon">
     <!-- Bootstrap -->
@@ -56,7 +56,7 @@
                                         <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
                                         <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
                                         <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
-                                        <a class="dropdown-item" v-on:click="logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" v-on:click="logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
                                       </div>
                             </div>
                         {{-- 登入 --}}

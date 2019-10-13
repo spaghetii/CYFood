@@ -60,15 +60,18 @@
         data:{
             list:[],
             total:[],
-            currentIndex:0
+            currentIndex:0,
+            shopID:-1
         },
         mounted:function(){
+            let shopID = location.pathname.substr(14);
+            this.shopID = shopID;
             this.init();
         },
         methods:{
             init:function(){
                 let _this = this;
-                axios.get('/api/order')
+                axios.get('/api/order/'+this.shopID)   //改為依shopID抓order資料 by林培誠
                     .then(function(response){
                         _this.list = response.data;
                         _this.list.forEach((element,index)=>{

@@ -130,11 +130,11 @@
 
     <script>
         //防止登入後還能進來登入頁 待改進
-        $(document).ready(function(){
-            if (localStorage.getItem("memberID")) {
-                window.location.href="/loginHomepage";
-            }
-        })
+        // $(document).ready(function(){
+        //     if (localStorage.getItem("memberID")) {
+        //         window.location.href="/loginHomepage";
+        //     }
+        // })
         //登入相關
         var loginform = new Vue({
             el: "#login-form",
@@ -162,8 +162,8 @@
                                     
                                     localStorage.setItem("memberID",response.data['id']);
                                     
-                                    console.log(response.data['id']);
-                                    console.log(response.data['lastPage']);
+                                    // console.log(response.data['id']);
+                                    
                                     Swal.fire({
                                         type: 'success',
                                         title: '登入成功',

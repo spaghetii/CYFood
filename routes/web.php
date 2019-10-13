@@ -22,7 +22,7 @@ Route::post('/login/check',"HomeController@logincheck");                        
 
 Route::post('/login/checkRe',"HomeController@checkRegister");                       // 會員註冊驗證
 
-Route::post('/login/checkReID',"HomeController@checkRegisterID");                   // ???????????
+Route::post('/login/checkReID',"HomeController@checkRegisterID");                   // 會員註冊檢查電子郵件是否重複
 
 Route::get('/loginHomepage', "HomeController@loginHomepage")->middleware('check');  // 會員登入主頁
 
