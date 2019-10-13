@@ -111,16 +111,6 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok], 200);
     }
 
-    function shopInsert(Request $request) {
-        $shop = new Shop;
-        $member->MemberName = $request->MemberName;
-        $member->MemberEmail = $request->MemberEmail;
-        $member->MemberPhone = $request->MemberPhone;
-        $member->MemberPassword = $request->MemberPassword;
-        $ok = $member->save();
-        return response()->json(['ok' => $ok], 200);
-    }
-
     function orderInsert(Request $request) {
         //產生流水號
         $order = Orders::max('OrdersNum');
@@ -192,11 +182,14 @@ class BackEnd extends Controller
     function shopUpdate(Request $request, $id) {
         $ok='';
         $msg = "";
-        $order = Shop::find($id);
-        if ($order) {
-            $order->OrdersStatus = $request->OrdersStatus;
-            $order->OrdersRemark = $request->OrdersRemark;
-            $ok = $order->save();
+        $shop = Shop::find($id);
+        if ($shop) {
+            $shop->ShopName = $request->ShopName;
+            $shop->ShopType = $request->ShopType;
+            $shop->ShopAddress = $request->ShopAddress;
+            $shop->ShopEmail = $request->ShopEmail;
+            $shop->ShopPhone = $request->ShopPhone;
+            $ok = $shop->save();
             if (!$ok) $msg = 'Error';
             else $msg = "suessfull";
         } else {
@@ -207,18 +200,24 @@ class BackEnd extends Controller
 
     function mealUpdate(Request $request, $id) {
         $ok='';
-        $msg = "";
-        $order = Meal::find($id);
-        if ($order) {
-            $order->OrdersStatus = $request->OrdersStatus;
-            $order->OrdersRemark = $request->OrdersRemark;
-            $ok = $order->save();
-            if (!$ok) $msg = 'Error';
-            else $msg = "suessfull";
+        $log = "";
+        $meal = Meal::find($request->meals[0]["MealID"]);
+        if ($meal) {
+            foreach ($request->meals as $key => $value) {
+                $meal = Meal::find($value["MealID"]);
+                $meal->MealName = $value["MealName"];
+                $meal->MealDesc = $value["MealDesc"];
+                $meal->MealPrice = $value["MealPrice"];
+                $meal->MealType = $value["MealType"];
+                $meal->MealDetails = $value["MealDetails"];
+                $meal->MealQuantity = $value["MealQuantity"];
+                $ok = $meal->save();
+                if (!$ok) $log = 'Error';
+            }
         } else {
-            $msg = ' cant find anything';
+            $log = ' cant find anything';
         }
-        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+        return response()->json(['ok' => $ok, 'log' => $log], 200);
     }
 
     function memberUpdate(Request $request, $id) {

@@ -54,6 +54,13 @@ Route::put('/shop/{id}', 'BackEnd@shopUpdate');
 
 Route::delete('/shop/{id}', "BackEnd@shopDelete");
 
+//meal
+//顯示
+Route::get('/meal/{id}', function($id) {
+    return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
+});
+
+Route::put('/meal/{id}', 'BackEnd@mealUpdate');
 
 
 // 測試用
@@ -67,10 +74,6 @@ Route::get('/shop/{id}', function($id) {
 
 Route::get('/member/{name}', function($name) {
     return response()->json(App\Member::where('MemberName', $name)->first(), 200);     
-});
-
-Route::get('/meal/{id}', function($id) {
-    return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
 });
 
 Route::get('/testorder',"BackEnd@ordertest")

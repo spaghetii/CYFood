@@ -318,6 +318,7 @@
                 }
             }
         });
+
         var Modal = new Vue({
             el:"#restaurantModal",
             data:{
@@ -385,46 +386,74 @@
                     this.list.splice(index,1);
                     this.recombind.splice(index,1);
                 },
-                modalOK: function(){
+                modalOK:function(){
+
                     if (currentIndex >= 0){
                         _this = this;
-                        console.log(_this.list);
+                        this.shopList.ShopType = type[this.shopList.ShopType];
+                        this.list.forEach((element,index) => {
+                            // console.log(element.MealDetails)
+                            _this.list[index].MealDetails = JSON.stringify(element.MealDetails);
+                        });
+                        // console.log(_this.list)
+                        // console.log(_this.shopList.ShopID);
                         // 未修改完畢
-                        axios.put('/api/order/'+_this.list.OrdersID, _this.list)
+
+                        axios.put('/api/shop/'+_this.shopList.ShopID, _this.shopList)
                         .then(function (response) {
                             console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            order.init();                //更新目前畫面
+                            shop.init();                //更新目前畫面
                         })
+
+                        let dataToServer = {
+                            meals:_this.list
+                        }
+
+                        axios.put('/api/meal/'+_this.shopList.ShopID, dataToServer)
+                        .then(function (response) {
+                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                            shop.init();                //更新目前畫面
+                        })
+
+                    //    this.list.forEach((element,index) => {
+                    //         axios.put('/api/meal/'+element.MealID, element)
+                    //         .then(function (response) {
+                    //             console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                    //             shop.init();                //更新目前畫面
+                    //         })
+                    //     });
+                        
                     }else{
                         // 新增資料
-                        this.memberList.forEach(element => {
-                            if (element.MemberName == this.list.OrdersDetails.memberName){
-                                this.list.MemberID = element.MemberID;
-                            }
-                        });
-                        var dataToSever = {
-                            OrdersNum: this.list.OrdersNum,
-                            OrdersDetails: JSON.stringify(this.list.OrdersDetails),
-                            OrdersCreate: new Date().format(),
-                            OrdersUpdate: new Date().format(),
-                            OrdersStatus: this.list.OrdersStatus,
-                            MemberID: this.list.MemberID,
-                            ShopID: this.list.ShopID
-                        }
-                        // console.log(dataToSever);
-                        // 檢查資料 (有空再說)
+                        // this.memberList.forEach(element => {
+                        //     if (element.MemberName == this.list.OrdersDetails.memberName){
+                        //         this.list.MemberID = element.MemberID;
+                        //     }
+                        // });
+                        // var dataToSever = {
+                        //     OrdersNum: this.list.OrdersNum,
+                        //     OrdersDetails: JSON.stringify(this.list.OrdersDetails),
+                        //     OrdersCreate: new Date().format(),
+                        //     OrdersUpdate: new Date().format(),
+                        //     OrdersStatus: this.list.OrdersStatus,
+                        //     MemberID: this.list.MemberID,
+                        //     ShopID: this.list.ShopID
+                        // }
+                        // // console.log(dataToSever);
+                        // // 檢查資料 (有空再說)
 
-                        ///////////
+                        // ///////////
 
-                        // 傳送資料
-                        axios.post('/api/order', dataToSever)
-                        .then(function (response) {
-                            // console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            order.init();                //更新目前畫面
-                        })
+                        // // 傳送資料
+                        // axios.post('/api/order', dataToSever)
+                        // .then(function (response) {
+                        //     // console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                        //     order.init();                //更新目前畫面
+                        // })
                         
                     }
-                    $("#orderModal").modal("hide");  //隱藏對話盒
+                    $("#restaurantModal").modal("hide");  //隱藏對話盒
+
                 }
             },
             beforeMount:function(){
