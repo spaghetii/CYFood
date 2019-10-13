@@ -9,7 +9,7 @@
                 {{-- 抵達時間 --}}
                 <div class="d-flex flex-row mb-2">
                     <div>
-                       <h1 class="noMarg">12:15</h1>
+                    <h1 v-cloak class="noMarg">@{{arrivalTime}}</h1>
                     </div>
                     <div class="ml-auto mt-auto">
                         <small>預計抵達時間</small>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             {{-- 訂單摘要 --}}
-            <div class="d-flex flex-column trackingOrderDivStyle">
+            <div id="orderDetail"  class="d-flex flex-column trackingOrderDivStyle">
                 <div>
                    <h4 class="fontBold noMarg">訂單摘要</h4>
                 </div>
@@ -45,71 +45,23 @@
                     <h6>茶湯會 中佑店</h6>    
                 </div>
                 <div id="trackingOrderSummary">
-                    <ul class="noPad noMarg ml-2 mr-2" style="list-style:none;">
-                        <li>
+                    <ul class="noPad noMarg ml-2 mr-2" style="list-style:none;" v-for="MealItem,index in shoppingBagMealName">
+                        <li >
                             <div class="d-flex flex-row mb-3">
-                                <div class="mr-3" id="foodItemQuantity">
-                                    1
+                                <div v-cloak class="mr-3" id="foodItemQuantity">
+                                    @{{shoppingBagMealQuantity[index]}}
                                 </div>
                                 <div>
-                                    <div>
-                                        觀音拿鐵 Guanyin Latte
+                                    <div v-cloak>
+                                        @{{shoppingBagMealName[index]}}
                                     </div>
                                     <div>
-                                        <small>熱 Hot • 微糖 Less Sugar • 寒天晶球 Agar</small>
+                                        <small></small>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        <hr>
-                        <li>
-                            <div class="d-flex flex-row mb-3">
-                                <div class="mr-3" id="foodItemQuantity">
-                                    2
-                                </div>
-                                <div>
-                                    <div>
-                                        翡翠檸檬 Jade Lemon
-                                    </div>
-                                    <div>
-                                        <small>微糖 Less Sugar • 去冰 Ice-Free • 寒天晶球 Agar</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <hr>
-                        <li>
-                            <div class="d-flex flex-row mb-3">
-                                <div class="mr-3" id="foodItemQuantity">
-                                    3
-                                </div>
-                                <div>
-                                    <div>
-                                        紅茶珍珠拿鐵 Black Tea Latte with Tapioca
-                                    </div>
-                                    <div>
-                                        <small>無糖 Sugar-Free • 珍珠換波霸 Changed Tapioca to Pearl • 熱 Hot</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <hr>
-                        <li>
-                            <div class="d-flex flex-row mb-3">
-                                <div class="mr-3" id="foodItemQuantity">
-                                    99
-                                </div>
-                                <div>
-                                    <div>
-                                        塑膠袋 Plastic Bag
-                                    </div>
-                                    <div>
-                                        <small>1杯袋 One Cup</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <hr>
+                        <hr >
                     </ul>
                 </div>
                 <div>
@@ -118,11 +70,11 @@
                             <h5 class="noMarg">總計</h5>
                         </div>
                         <div class="ml-auto">
-                            <h5 class="noMarg">$999TWD</h5>
+                        <h5 v-cloak class="noMarg">$@{{orderTotalAmount}}TWD</h5>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> {{-- orderDetail --}}
         </div>
     </div>
 @endsection
@@ -136,7 +88,9 @@
             el: '#timerApp',
             data: {
                 barValue: '0%',
-                orderStatus: '餐廳正在確定訂單 ...'
+                orderStatus: '餐廳正在確定訂單 ...',
+                arrivalTime:"--:--",
+
             },
             methods:{
             progressbar : function(){
@@ -154,11 +108,50 @@
             }
         })
 
+
+        var orderDeatil = new Vue({
+            el:"#orderDetail",
+            data:{
+                // 餐廳名稱
+                restaurantName: '',
+                // 會員
+                memberID:0,
+                //訂單總金額
+                orderTotalAmount: 0,
+                // 購物袋 各個資料
+                shoppingBagMealQuantity: [],
+                shoppingBagMealName: [],
+
+            },
+            mounted:function(){
+                // 隱藏遊覽列購物袋圖示
+                $("#shoppingBag").css("display","none");
+                    
+                if (localStorage.getItem('mealPriceArray') != null ){
+                // 取出localstorage資料
+                let storedMealNameArray = JSON.parse(localStorage.getItem('mealNameArray'));
+                let storedMealQuantityArray = JSON.parse(localStorage.getItem('mealQuantityArray'));
+                let storedRestautantName = JSON.parse(localStorage.getItem('restautantName'));
+                let orderTotalAmount = JSON.parse(localStorage.getItem('orderTotalAmount'));    
+
+                let memberID = localStorage.getItem('memberID');
+                
+                this.shoppingBagMealName = storedMealNameArray;
+                this.shoppingBagMealQuantity = storedMealQuantityArray;
+                this.restaurantName = storedRestautantName;
+                this.memberID = memberID;
+                this.orderTotalAmount = orderTotalAmount;
+
+                
+                }
+            }
+        })
+
     // websocket
         window.Echo.channel('orders')
             .listen('OrdersEvent', (e) => {
                 
-                if(e.header == "memberID" && e.id == 1){
+                if(e.header == "memberID" && e.id == orderDeatil.memberID){
                     console.log(e.type);
                     switch(e.type){
                         //店家於新訂單頁拒絕訂單
@@ -171,7 +164,7 @@
                                 confirmButtonText: '點擊後返回首頁'
                                 }).then((result) => {
                                 if (result.value) {
-                                    // localStorage.clear();
+                                    // clearStorage();
                                     location.href="/";
                                 }
                             })
@@ -204,20 +197,41 @@
                                 confirmButtonText: '點擊後返回首頁'
                                 }).then((result) => {
                                 if (result.value) {
-                                    // localStorage.clear();
+                                    // clearStorage();
                                     location.href="/";
                                 }
                             })
                             break;
                         //店家呼叫外送員
                         case "ok":
+                            shipTime = localStorage.getItem('shipTime');
+                            let time = new Date();
+                            let hour = time.getHours();
+                            let min = time.getMinutes()+parseInt(shipTime);
+                            if(min >= 60){
+                                hour +=1;
+                                min  -=60;
+                            }
+                            timerApp.arrivalTime= hour+":"+min;
                             timerApp.progressbar();
+                            //clearStorage();
                             break;
                         //如有丟失訊息
                         default:
                             console.log(e);
                     }
                 }
-            });    
+            });
+        //清空餐點相關資訊
+        function clearStorage(){
+            localStorage.removeItem('mealNameArray');
+            localStorage.removeItem('mealPriceArray');
+            localStorage.removeItem('mealQuantityArray');
+            localStorage.removeItem('mealTotalPriceArray');
+            localStorage.removeItem('restautantName');
+            localStorage.removeItem('shipTime');
+            localStorage.removeItem('shopID');
+            localStorage.removeItem('orderTotalAmount');
+        }
     </script>
 @endsection

@@ -133,7 +133,7 @@
                             <div><h4>NT$@{{orderTotalAmount}}</h4></div>
                         </li>
                     </ul>
-                    <a v-on:click="sendOrders" style="text-decoration: none;">
+                    <a href="javascript:void(0);" v-on:click="sendOrders" style="text-decoration: none;">
                         <div class="orderConfirmDiv alignCenter bgOrange">
                             安排訂單
                         </div>
@@ -150,7 +150,6 @@
             el:"#orderDetailDiv",
             data:{
                 header:"shopID",
-                id:1,
                 // 餐廳名稱
                 restaurantName: '',
                 shiptime: 0,
@@ -177,7 +176,7 @@
             methods:{
                 sendOrders: function(){
                     let _this = this;
-                    Swal.fire({                 // delete form
+                    Swal.fire({                 // 送出訂單前確認視窗
                         title: '確定要安排訂單嗎?',
                         type: 'warning',
                         showCancelButton: true,
@@ -215,7 +214,7 @@
                                 .then(function (response) {
                                     axios.post('/socket/clientsend', {
                                         header: _this.header,
-                                        id:_this.id
+                                        id:_this.ShopID
                                     })
                                     .then(function (response) {
                                         console.log(response.data);
@@ -278,6 +277,8 @@
                     });
                     // 加運費 總價 更新
                     this.orderTotalAmount = this.shoppingBagTotalPrice + 15 ;
+                    // 加運費總價 trackingOrder要用到
+                    localStorage.setItem("orderTotalAmount", JSON.stringify(this.orderTotalAmount));
                 },
             },
             mounted: function () {
@@ -303,7 +304,7 @@
                 let storedShopID = JSON.parse(localStorage.getItem('shopID'));
 
                 let memberName = sessionStorage.getItem('memberName');
-                let memberID = sessionStorage.getItem('memberID');
+                let memberID = localStorage.getItem('memberID');
                 // console.log(storedMealNameArray);
                 // console.log(storedMealPriceArray);
                 // console.log(storedMealQuantityArray);

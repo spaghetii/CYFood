@@ -491,3 +491,7 @@ body {font-family:"Microsoft JhengHei";}
     overflow:scroll;
     overflow-X:hidden;
 }
+
+[v-cloak] {
+    display: none;
+}

@@ -129,6 +129,12 @@
     </div>
 
     <script>
+        //防止登入後還能進來登入頁 待改進
+        $(document).ready(function(){
+            if (localStorage.getItem("memberID")) {
+                window.location.href="/loginHomepage";
+            }
+        })
         //登入相關
         var loginform = new Vue({
             el: "#login-form",
@@ -175,8 +181,11 @@
                                         },
                                         onClose: () => {
                                             clearInterval(timerInterval);
-                                            window.self.location=window.document.referrer;  
-
+                                            if (localStorage.getItem("restautantName")) {
+                                                window.location.href="/orderDetail";
+                                            }else{
+                                                window.self.location=window.document.referrer;  
+                                            }
                                         }
                                     })
                                 } else {
@@ -322,14 +331,14 @@
                                     title: '已送出更改密碼的請求',
                                     html: '請貴用戶到您的信箱查看, ' +
                                         '並執行更改密碼的後續作業<br> ' +
-                                        '本畫面於6秒後回到首頁',
+                                        '本畫面於5秒後回到首頁',
                                     showConfirmButton: false,
-                                    timer: 6000
+                                    timer: 5000
                                 })
                                 setTimeout(function () {
-                                    window.location.href =
-                                        "/"; //will redirect to your blog page (an ex: blog.html)
-                                }, 6000);
+                                    window.location.href ="/"; 
+                                        
+                                }, 5000);
                             } else {
                                 self.repeatEmail = true;
                                 self.email = '';
