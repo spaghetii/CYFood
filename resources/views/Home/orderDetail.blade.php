@@ -203,7 +203,8 @@
                                     dataToSever.OrdersDetails.meal.push({   mealQuantity:element,
                                                                             mealName:_this.shoppingBagMealName[index],
                                                                             mealUnitPrice:_this.shoppingBagMealPrice[index],
-                                                                            mealDetail:[{type:0,mealNum:"meal0",detail:"",price:"",check:false}]
+                                                                            mealDetail:[{type:0,mealNum:"meal0",detail:"",price:"",check:false}],
+                                                                            orderTotalAmount:_this.orderTotalAmount
                                                                         });      
                                 });
                                 dataToSever.OrdersDetails = JSON.stringify(dataToSever.OrdersDetails);
@@ -217,6 +218,7 @@
                                         id:_this.ShopID
                                     })
                                     .then(function (response) {
+                                        window.location.href="/trackingOrder";
                                         console.log(response.data);
                                     })
                                     .catch(function (response) {

@@ -66,12 +66,9 @@
                     <select class="form-control">
                         <option selected disabled hidden>選擇類別</option>
                         <option>中式美食</option>
+                        <option>台灣美食</option>
                         <option>日式美食</option>
                         <option>美式美食</option>
-                        <option>韓式美食</option>
-                        <option>泰式美食</option>
-                        <option>義式美食</option>
-                        <option>甜點</option>
                         <option>飲料</option>
                     </select>
                 </div>  

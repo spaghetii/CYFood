@@ -30,6 +30,10 @@ Route::delete('/coupon/{id}', "BackEnd@couponDelete");
 //order
 // 顯示全部
 Route::get('/order', 'BackEnd@orderAll');
+// 根據shopID抓到資料
+Route::get('/order/{id}', function($id){
+    return response()->json(App\Orders::where('ShopID', $id)->get(), 200);
+});
 // 新增資料
 Route::post('/order', 'BackEnd@orderInsert');
 // 修改訂單
@@ -49,6 +53,10 @@ Route::put('/member/{id}', 'BackEnd@memberUpdate');
 // shop
 // 顯示全部
 Route::get('/shop', 'BackEnd@shopAll');
+// 抓取單項商店資料
+Route::get('/shop/{id}', function($id) {
+    return response()->json(App\Shop::where('ShopID', $id)->first(), 200);     
+});
 //新增資料
 Route::post('/shop','BackEnd@shopInsert');
 
@@ -68,10 +76,6 @@ Route::put('/meal/{id}', 'BackEnd@mealUpdate');
 // 測試用
 Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);
-});
-
-Route::get('/shop/{id}', function($id) {
-    return response()->json(App\Shop::where('ShopID', $id)->first(), 200);     
 });
 
 Route::get('/member/{name}', function($name) {

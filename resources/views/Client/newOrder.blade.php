@@ -83,15 +83,18 @@
         data:{
             list:[],
             total:[],
-            currentIndex:0
+            currentIndex:0,
+            shopID:-1
         },
         mounted: function () {
+            let shopID = location.pathname.substr(15);
+            this.shopID = shopID;
             this.init();
         },
         methods:{
             init:function(){
                 let _this = this;
-                axios.get('/api/order')
+                axios.get('/api/order/'+this.shopID)   //改為依shopID抓order資料 by林培誠
                     .then(function (response) {
                         // console.log(response.data[0])
                         _this.list = response.data;
@@ -134,10 +137,10 @@
             },
             yesReject:function(){
                 // console.log(this.currentIndex);
-                // console.log(this.list[this.currentIndex].OrdersID);
+                // console.log(this.list[this.currentIndex].MemberID);
                 axios.post('/socket/shopsend', {
                             header: "memberID",
-                            id:1,
+                            id:this.list[this.currentIndex].MemberID,
                             type:"reject"
                         })
                         .then(function (response) {
@@ -162,10 +165,15 @@
         //websocket
         window.Echo.channel('orders')
             .listen('OrdersEvent', (e) => {
-                if(e.header == "shopID" && e.id == 1){
+                if(e.header == "shopID" && e.id == appB.shopID){
                     Swal.fire({
-                        title: '您有新訂單'
-                        })
+                    title: '您有新訂單'
+                    }).then((result) => {
+                        // console.log(result.value);
+                        if (result.value) {
+                            appB.init();
+                        }
+                    })
                 }
             });
 

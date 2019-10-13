@@ -172,14 +172,17 @@
             list:[],
             total:[],
             currentIndex:0,
+            shopID:-1
         },
         mounted: function () {
+            let shopID = location.pathname.substr(17);
+            this.shopID = shopID;
             this.init();
         },
         methods:{
             init:function(){
                 let _this = this;
-                axios.get('/api/order')
+                axios.get('/api/order/'+this.shopID)    //改為依shopID抓order資料 by林培誠
                     .then(function (response) {
                         _this.list  = response.data;
                         _this.list.forEach((element,index) => {
@@ -202,9 +205,10 @@
                 contactModal.messageName = this.list[this.currentIndex].OrdersDetails.memberName;
             },
             callOut:function(index){
+                console.log(this.list[index].MemberID);
                     axios.post('/socket/shopsend', {
                             header: "memberID",
-                            id:1,
+                            id:this.list[index].MemberID,
                             type:"ok",      
                         })
                         .then(function (response) {
@@ -234,9 +238,10 @@
         },
         methods:{
             sendMessage:function(){
+                console.log(buttomDiv.list[buttomDiv.currentIndex].MemberID);
                 axios.post('/socket/shopsend', {
                             header: "memberID",
-                            id:1,
+                            id:buttomDiv.list[buttomDiv.currentIndex].MemberID,
                             type:"message",
                             message:this.messageText
                         })
@@ -261,7 +266,7 @@
             sendDTime:function(){
                 axios.post('/socket/shopsend', {
                             header: "memberID",
-                            id:1,
+                            id:buttomDiv.list[buttomDiv.currentIndex].MemberID,
                             type:"delay",
                             message:this.delayTime
                         })
@@ -285,7 +290,7 @@
             sendCancel:function(){
                 axios.post('/socket/shopsend', {
                             header: "memberID",
-                            id:1,
+                            id:buttomDiv.list[buttomDiv.currentIndex].MemberID,
                             type:"cancel",
                             message:this.cancelMsg
                         })

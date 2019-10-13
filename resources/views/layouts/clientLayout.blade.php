@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>CYFood-Restaurant</title>
+    <!-- 網頁 icon -->
+    <link rel="icon" href="/img/burger.ico" type="image/x-icon">
     <!-- vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- jQuery -->
