@@ -197,6 +197,7 @@
                                         coupon: '',
                                         meal:[],
                                         orderTotalAmount:_this.orderTotalAmount,   //新增的
+                                        shoppingBagTotalQuantity:_this.shoppingBagTotalQuantity,  //新增的 歷史訂單要用
                                         ShopImage:_this.ShopImage   //多塞一個餐廳圖片  歷史訂單要用 by 林培誠
                                     },
                                     OrdersStatus: 1,
