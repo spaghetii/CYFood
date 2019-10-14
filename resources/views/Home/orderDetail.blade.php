@@ -185,6 +185,8 @@
                         confirmButtonText: '送出訂單',
                         cancelButtonText: '再考慮一下'
                         }).then((result) => {
+                            _this.memberName = sessionStorage.getItem('memberName');
+                            console.log(_this.memberName);
                             if (result.value){
 
                                 let dataToSever = {

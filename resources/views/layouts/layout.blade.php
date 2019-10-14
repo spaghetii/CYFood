@@ -187,7 +187,7 @@
                                 _this.userName = response.data['name'];
                                 _this.navlogin = false;
                                 _this.navshow = true;
-                                sessionStorage.setItem("name",_this.userName);
+                                sessionStorage.setItem("memberName",_this.userName);
                             }else{
                                 _this.userName = "登入";
                                 _this.navlogin = true;
@@ -290,7 +290,7 @@
             //結帳前登入判斷
             methods:{
                 checkOut:function(){
-                    if (sessionStorage.getItem("name")) {
+                    if (sessionStorage.getItem("memberName")) {
                         window.location.href="/orderDetail";
                     }else{
                         Swal.fire({

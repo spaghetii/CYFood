@@ -363,7 +363,7 @@
                 },
                 removeDetail:function(mealIndex,detailIndex){
                     Swal.fire({
-                        title: '確定要刪除這道餐點?',
+                        title: '確定要刪除這條細項?',
                         text: "刪除之後就無法復原!!!",
                         type: 'warning',
                         showCancelButton: true,
@@ -371,7 +371,8 @@
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
-                        this.list[mealIndex].MealDetails.detail.splice(detailIndex,1);
+                        if (result.value)
+                            this.list[mealIndex].MealDetails.detail.splice(detailIndex,1);
                     });
                     
                 },
@@ -396,7 +397,7 @@
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
-                        if (result.value)
+                        if (result.value){
                             axios.delete('/api/meal/' + _this.list[index].MealID)
                             .then(function (response) {
                                 // if (response.data['ok']) {
@@ -408,6 +409,7 @@
                             });
                             _this.list.splice(index,1);
                             _this.recombind.splice(index,1);
+                        }
                     });
                     
                 },
