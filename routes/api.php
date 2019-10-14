@@ -34,6 +34,10 @@ Route::get('/order', 'BackEnd@orderAll');
 Route::get('/order/{id}', function($id){
     return response()->json(App\Orders::where('ShopID', $id)->get(), 200);
 });
+// 根據memberID抓到資料
+Route::get('/order/member/{id}', function($id){
+    return response()->json(App\Orders::where('MemberID', $id)->get(), 200);
+});
 // 新增資料
 Route::post('/order', 'BackEnd@orderInsert');
 // 修改訂單
