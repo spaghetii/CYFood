@@ -146,6 +146,27 @@
             </div>
         </div>
     </div>
+
+<!-- 新餐廳覆蓋訂單Modal -->
+<div class="modal fade" id="newOrderMadal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                 ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')
@@ -187,27 +208,59 @@
                     // 跳出 model
                     $('#orderModalCenter').modal('toggle');
 
-                    // 餐點資料 存入 localStorage 
-                    mealNameArray.push(this.meals.MealName);
-                    mealPriceArray.push(this.meals.MealPrice);
-                    mealQuantityArray.push(this.count);
-                    localStorage.setItem("mealNameArray", JSON.stringify(mealNameArray));
-                    localStorage.setItem("mealPriceArray", JSON.stringify(mealPriceArray));
-                    localStorage.setItem("mealQuantityArray", JSON.stringify(mealQuantityArray));
+                    // 判斷餐廳是否相同
+                    let firstShopID = localStorage.getItem('shopID');
+                    console.log(firstShopID);
+                    console.log(this.shop.ShopID);
+                    if ( firstShopID == null || firstShopID == this.shop.ShopID ) {
+                         // 餐點資料 存入 localStorage 
+                        mealNameArray.push(this.meals.MealName);
+                        mealPriceArray.push(this.meals.MealPrice);
+                        mealQuantityArray.push(this.count);
+                        localStorage.setItem("mealNameArray", JSON.stringify(mealNameArray));
+                        localStorage.setItem("mealPriceArray", JSON.stringify(mealPriceArray));
+                        localStorage.setItem("mealQuantityArray", JSON.stringify(mealQuantityArray));
 
-                    // 資料傳入到 shoppingBagModalApp-Vue
-                    shoppingBagModalApp.shoppingBagMealName.push(this.meals.MealName);
-                    shoppingBagModalApp.shoppingBagMealPrice.push(this.meals.MealPrice);
-                    shoppingBagModalApp.shoppingBagMealQuantity.push(this.count);  
-                    shoppingBagModalApp.shoppingBagMealTotalPrice.push(this.meals.MealPrice * this.count);  
-                    // 餐點總金額 傳入 local
-                    localStorage.setItem("mealTotalPriceArray", JSON.stringify(shoppingBagModalApp.shoppingBagMealTotalPrice));
+                        // 資料傳入到 shoppingBagModalApp-Vue
+                        shoppingBagModalApp.shoppingBagMealName.push(this.meals.MealName);
+                        shoppingBagModalApp.shoppingBagMealPrice.push(this.meals.MealPrice);
+                        shoppingBagModalApp.shoppingBagMealQuantity.push(this.count);  
+                        shoppingBagModalApp.shoppingBagMealTotalPrice.push(this.meals.MealPrice * this.count);  
+                        // 餐點總金額 傳入 local
+                        localStorage.setItem("mealTotalPriceArray", JSON.stringify(shoppingBagModalApp.shoppingBagMealTotalPrice));
 
-                    // 餐廳名稱、外送時間 傳入 local
-                    localStorage.setItem("restautantName", JSON.stringify(this.shop.ShopName));
-                    localStorage.setItem("shipTime", JSON.stringify(this.shop.ShipTime));
-                    localStorage.setItem("shopID", JSON.stringify(this.shop.ShopID));
-                    // console.log(this.shop);
+                        // 餐廳名稱、外送時間 傳入 local
+                        localStorage.setItem("restautantName", JSON.stringify(this.shop.ShopName));
+                        localStorage.setItem("shopID", JSON.stringify(this.shop.ShopID));
+                        localStorage.setItem("shipTime", JSON.stringify(this.shop.ShipTime));
+                        // console.log(this.shop);
+                        
+                    }else if ( firstShopID != this.shop.ShopID) {
+                        // $('#newOrderMadal').modal('toggle');
+                        mealNameArray = [];
+                        mealPriceArray = [];
+                        mealQuantityArray = [];
+                        mealNameArray.push(this.meals.MealName);
+                        mealPriceArray.push(this.meals.MealPrice);
+                        mealQuantityArray.push(this.count);
+                        localStorage.setItem("mealNameArray", JSON.stringify(mealNameArray));
+                        localStorage.setItem("mealPriceArray", JSON.stringify(mealPriceArray));
+                        localStorage.setItem("mealQuantityArray", JSON.stringify(mealQuantityArray));
+
+                        shoppingBagModalApp.shoppingBagMealName = [];
+                        shoppingBagModalApp.shoppingBagMealPrice = [];
+                        shoppingBagModalApp.shoppingBagMealQuantity = [];
+                        shoppingBagModalApp.shoppingBagMealTotalPrice = [];
+                        shoppingBagModalApp.shoppingBagMealName.push(this.meals.MealName);
+                        shoppingBagModalApp.shoppingBagMealPrice.push(this.meals.MealPrice);
+                        shoppingBagModalApp.shoppingBagMealQuantity.push(this.count);  
+                        shoppingBagModalApp.shoppingBagMealTotalPrice.push(this.meals.MealPrice * this.count); 
+                        localStorage.setItem("mealTotalPriceArray", JSON.stringify(shoppingBagModalApp.shoppingBagMealTotalPrice));
+
+                        localStorage.setItem("restautantName", JSON.stringify(this.shop.ShopName));
+                        localStorage.setItem("shopID", JSON.stringify(this.shop.ShopID));
+                        localStorage.setItem("shipTime", JSON.stringify(this.shop.ShipTime)); 
+                    }
                 }
             }
         })
@@ -285,7 +338,7 @@
                 initMap();
                 $("#RestaurantAddressModal").modal( { show: true } );
                 // 清除localStorge
-                localStorage.clear();
+                localStorage.removeItem('restaurantAddress');
             },
         },
         mounted: function () {

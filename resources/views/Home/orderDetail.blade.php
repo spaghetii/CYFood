@@ -302,8 +302,8 @@
                 let storedShipTime = JSON.parse(localStorage.getItem('shipTime'));
                 let storedShopID = JSON.parse(localStorage.getItem('shopID'));
 
-                let memberName = sessionStorage.getItem('memberName');
-                let memberID = sessionStorage.getItem('memberID');
+                let memberName = localStorage.getItem('memberName');
+                let memberID = localStorage.getItem('memberID');
                 // console.log(storedMealNameArray);
                 // console.log(storedMealPriceArray);
                 // console.log(storedMealQuantityArray);
