@@ -18,51 +18,56 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // coupon
-// 顯示全部
+// 顯示全部優惠券
 Route::get('/coupon', 'BackEnd@couponAll');
-// 新增資料
+// 新增優惠券
 Route::post('/coupon', 'BackEnd@couponInsert');
-// 修改優惠
+// 修改優惠券資訊
 Route::put('/coupon/{id}', 'BackEnd@couponUpdate');
-// 刪除
+// 刪除優惠
 Route::delete('/coupon/{id}', "BackEnd@couponDelete");
 
-//order
-// 顯示全部
+// order
+// 顯示全部訂單
 Route::get('/order', 'BackEnd@orderAll');
-// 新增資料
+// 新增訂單
 Route::post('/order', 'BackEnd@orderInsert');
-// 修改訂單
+// 修改訂單資訊
 Route::put('/order/{id}', 'BackEnd@orderUpdate');
-// 刪除
+// 刪除訂單
 Route::delete('/order/{id}', "BackEnd@orderDelete");
 
 
 // member
-// 顯示全部
+// 顯示全部會員
 Route::get('/member', 'BackEnd@memberAll');
-// 新增資料
+// 新增會員
 Route::post('/member', 'BackEnd@memberInsert');
-// 修改會員資料
+// 修改會員資訊
 Route::put('/member/{id}', 'BackEnd@memberUpdate');
 
 // shop
-// 顯示全部
+// 顯示全部店家
 Route::get('/shop', 'BackEnd@shopAll');
-//新增資料
+// 新增店家資料
 Route::post('/shop','BackEnd@shopInsert');
-
+// 修改店家資訊
 Route::put('/shop/{id}', 'BackEnd@shopUpdate');
-
+// 刪除店家
 Route::delete('/shop/{id}', "BackEnd@shopDelete");
 
 //meal
-//顯示
+// 根據店家編號顯示餐點
 Route::get('/meal/{id}', function($id) {
     return response()->json(App\Meal::where('ShopID', $id)->get(), 200);
 });
-
+// 新增店家餐點
+Route::post('/meal/{id}','BackEnd@mealInsert');
+// 修改店家的餐點資訊
 Route::put('/meal/{id}', 'BackEnd@mealUpdate');
+// 刪除餐點
+Route::delete('/meal/{id}', "BackEnd@mealDelete");
+
 
 
 // 測試用

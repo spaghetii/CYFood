@@ -91,6 +91,12 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok], 200);
     }
 
+    function mealDelete($id) {
+        $rows = Meal::destroy($id);
+        $ok = ($rows > 0);
+        return response()->json(['ok' => $ok], 200);
+    }
+
     ////////////////   insert new data   ////////////////
 
     function couponInsert(Request $request) {
@@ -142,6 +148,22 @@ class BackEnd extends Controller
         if($shop->save()){
             return response()->json(['ok' => true], 200);
         }
+    }
+
+    function mealInsert(Request $request, $id) {
+
+        foreach ($request->meals as $key => $value) {
+            $meal = new Meal;
+            $meal->MealName = $value["MealName"];
+            $meal->MealDesc = $value["MealDesc"];
+            $meal->MealPrice = $value["MealPrice"];
+            $meal->MealType = $value["MealType"];
+            $meal->MealDetails = $value["MealDetails"];
+            $meal->MealQuantity = $value["MealQuantity"];
+            $meal->ShopID = $id;
+            $ok = $meal->save();
+        }
+        return response()->json(['ok' => $ok], 200);
     }
 
     function orderInsert(Request $request) {
@@ -238,13 +260,15 @@ class BackEnd extends Controller
         if ($meal) {
             foreach ($request->meals as $key => $value) {
                 $meal = Meal::find($value["MealID"]);
-                $meal->MealName = $value["MealName"];
-                $meal->MealDesc = $value["MealDesc"];
-                $meal->MealPrice = $value["MealPrice"];
-                $meal->MealType = $value["MealType"];
-                $meal->MealDetails = $value["MealDetails"];
-                $meal->MealQuantity = $value["MealQuantity"];
-                $ok = $meal->save();
+                if ($id == $meal->ShopID){                  // 檢查shopid防止修改錯誤
+                    $meal->MealName = $value["MealName"];
+                    $meal->MealDesc = $value["MealDesc"];
+                    $meal->MealPrice = $value["MealPrice"];
+                    $meal->MealType = $value["MealType"];
+                    $meal->MealDetails = $value["MealDetails"];
+                    $meal->MealQuantity = $value["MealQuantity"];
+                    $ok = $meal->save();
+                }
                 if (!$ok) $log = 'Error';
             }
         } else {

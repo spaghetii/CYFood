@@ -208,6 +208,7 @@
         // shopType array
         var type = ["中式美食","台灣美食","日式美食","美式美食","飲品"];
         var currentIndex = 0;
+        var mealNum = 0;
         var lastNum = 0;
         
         var shop = new Vue({
@@ -249,7 +250,7 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.value)
-                            axios.delete('/api/coupon/' + id)
+                            axios.delete('/api/shop/' + id)
                             .then(function (response) {
                                 if (response.data['ok']) {
                                     _this.init();
@@ -328,7 +329,6 @@
                             // console.log(response.data[0])
                             _this.list = response.data;
                             _this.list.forEach((element,index) => {
-                                // console.log(temp);
                                 // console.log(_this.list[index].MealDetails);
                                 if (_this.list[index].MealDetails === null)
                                     _this.list[index].MealDetails = {"mealNum":"meal"+index,"detail":[{"type":0,"detailName": "","price":"","check":false}]};
@@ -343,7 +343,7 @@
 
                         })
                     this.combind();
-
+                    mealNum = lastNum + 1;
                 },
                 combind:function(){
                     _this = this;
@@ -354,6 +354,7 @@
                         _this.recombind[index] = "#" + element.MealDetails.mealNum;  //boostrap
                         lastNum = index;
                     });
+                    console.log(lastNum);
                 },
                 addDetail:function(mealIndex){
                     this.list[mealIndex].MealDetails.detail.push(
@@ -361,7 +362,18 @@
                     );                  
                 },
                 removeDetail:function(mealIndex,detailIndex){
-                    this.list[mealIndex].MealDetails.detail.splice(detailIndex,1);
+                    Swal.fire({
+                        title: '確定要刪除這道餐點?',
+                        text: "刪除之後就無法復原!!!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        this.list[mealIndex].MealDetails.detail.splice(detailIndex,1);
+                    });
+                    
                 },
                 addMeal:function(){
                     // console.log(this.list.OrdersDetails.meal[lastNum]);
@@ -371,76 +383,89 @@
                         "MealDetails":{"mealNum":temp,"detail":[{"type":0,"detailName": "","price":"","check":false}]},
                         "MealQuantity":10}
                     );
-                    this.init();
+                    this.combind();
                 },
                 removeMeal:function(index){
-                    this.list.splice(index,1);
-                    this.recombind.splice(index,1);
+                    _this = this;
+                    Swal.fire({
+                        title: '確定要刪除這道餐點?',
+                        text: "刪除之後就無法復原!!!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value)
+                            axios.delete('/api/meal/' + _this.list[index].MealID)
+                            .then(function (response) {
+                                // if (response.data['ok']) {
+                                //     _this.init();
+                                // }
+                            })
+                            .catch(function (response) {
+                                console.log(response);
+                            });
+                            _this.list.splice(index,1);
+                            _this.recombind.splice(index,1);
+                    });
+                    
                 },
                 modalOK:function(){
 
                     if (currentIndex >= 0){
                         _this = this;
                         this.shopList.ShopType = type[this.shopList.ShopType];
-                        this.list.forEach((element,index) => {
-                            // console.log(element.MealDetails)
-                            _this.list[index].MealDetails = JSON.stringify(element.MealDetails);
-                        });
-                        // console.log(_this.list)
-                        // console.log(_this.shopList.ShopID);
-                        // 未修改完畢
+                        // this.list.forEach((element,index) => {
+                        //     // console.log(element.MealDetails)
+                        //     _this.list[index].MealDetails = JSON.stringify(element.MealDetails);
+                        // });
 
                         axios.put('/api/shop/'+_this.shopList.ShopID, _this.shopList)
                         .then(function (response) {
-                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                            // console.log(response.data['ok']);  // 成功回傳時就會顯示true
                             shop.init();                //更新目前畫面
                         })
+
+
+                        // 新增新的餐點
+                        console.log(this.list);
+                        console.log(this.list.length);
+
+                        if (this.list.length > mealNum){
+
+                            let temp = [];
+                            
+                            for(let i = mealNum; i < this.list.length; i++){
+                                temp.push(_this.list[i]);
+                            }
+                            
+                            let dataToServer = {
+                                meals:temp
+                            }
+                            // console.log(dataToServer);
+                            axios.post('/api/meal/'+_this.shopList.ShopID, dataToServer)
+                            .then(function (response) {
+                                // console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                                // shop.init();                //更新目前畫面
+                            })
+                            
+                            this.list.splice(mealNum,this.list.length - mealNum);
+                        }
+                        // console.log(this.list);
+                            
+                        // 新增餐點結束
 
                         let dataToServer = {
                             meals:_this.list
                         }
+                        console.log(this.list);
 
                         axios.put('/api/meal/'+_this.shopList.ShopID, dataToServer)
                         .then(function (response) {
-                            console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                            // console.log(response.data['ok']);  // 成功回傳時就會顯示true
                             shop.init();                //更新目前畫面
                         })
-
-                    //    this.list.forEach((element,index) => {
-                    //         axios.put('/api/meal/'+element.MealID, element)
-                    //         .then(function (response) {
-                    //             console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                    //             shop.init();                //更新目前畫面
-                    //         })
-                    //     });
-                        
-                    }else{
-                        // 新增資料
-                        // this.memberList.forEach(element => {
-                        //     if (element.MemberName == this.list.OrdersDetails.memberName){
-                        //         this.list.MemberID = element.MemberID;
-                        //     }
-                        // });
-                        // var dataToSever = {
-                        //     OrdersNum: this.list.OrdersNum,
-                        //     OrdersDetails: JSON.stringify(this.list.OrdersDetails),
-                        //     OrdersCreate: new Date().format(),
-                        //     OrdersUpdate: new Date().format(),
-                        //     OrdersStatus: this.list.OrdersStatus,
-                        //     MemberID: this.list.MemberID,
-                        //     ShopID: this.list.ShopID
-                        // }
-                        // // console.log(dataToSever);
-                        // // 檢查資料 (有空再說)
-
-                        // ///////////
-
-                        // // 傳送資料
-                        // axios.post('/api/order', dataToSever)
-                        // .then(function (response) {
-                        //     // console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                        //     order.init();                //更新目前畫面
-                        // })
                         
                     }
                     $("#restaurantModal").modal("hide");  //隱藏對話盒
