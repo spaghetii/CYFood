@@ -25,7 +25,7 @@
                 <div class="col text-center tableTitle">餐廳地址</div>
                 <div class="col"></div>
                 <div id="neworder" class="col text-center">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-primary tableTitle">✚</button>
+                    {{-- <button id="singlebutton" name="singlebutton" class="btn btn-primary tableTitle">✚</button> --}}
                 </div>
             </div>
 
