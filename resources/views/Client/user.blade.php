@@ -254,7 +254,7 @@
         methods:{
             init:function(){
                 let _this = this;
-                axios.get('/api/order/'+this.shopID)  //改為依shopID抓order資料 by林培誠
+                axios.get('/api/order/shop/'+this.shopID)  //改為依shopID抓order資料 by林培誠
                     .then(function(response){
                         _this.list = response.data;
                         _this.list.forEach((element,index)=>{
