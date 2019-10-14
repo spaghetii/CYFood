@@ -130,19 +130,19 @@
                     <div class="form-group row">
                         <label for="restName" class="col-sm-3 col-form-label">餐廳名稱</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control-plaintext" id="restName" value="可不可熟成紅茶 中佑店">
+                            <input type="text" class="form-control-plaintext" id="restName" v-model="shop.ShopName">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="restAddr" class="col-sm-3 col-form-label">餐廳地址</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control-plaintext" id="restAddr" value="台中市公益路二段58號">
+                            <input type="text" class="form-control-plaintext" id="restAddr" v-model="shop.ShopAddress">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="restTel" class="col-sm-3 col-form-label">餐廳電話</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control-plaintext" id="restTel" value="04-12345678">
+                            <input type="text" class="form-control-plaintext" id="restTel" v-model="shop.ShopPhone">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -153,18 +153,15 @@
                     </div>
                     <div class="form-group row">
                         <label for="restCategory" class="col-sm-3 col-form-label">餐廳種類</label>
-                        <select class="col-sm-5 form-control">
-                            <option>中式美食</option>
-                            <option>台灣美食</option>
-                            <option>日式美食</option>
-                            <option>美式美食</option>
-                            <option>飲料</option>
+                        <select v-model="shop.ShopType" class="col-sm-5 form-control">
+                        <option v-for="total in shopType">@{{total.type}}</option>
+                            
                         </select>
                     </div>
                     <div class="form-group row">
                         <label for="restEmail" class="col-sm-3 col-form-label">電子郵件</label>
                         <div class="col-sm-9">
-                            <input type="text" readonly class="form-control-plaintext" id="restEmail" value="email@example.com" v-on:click="emailHelp">
+                            <input type="text" readonly class="form-control-plaintext" id="restEmail" v-model="shop.ShopEmail" v-on:click="emailHelp">
                             <div id="emailHelp">如欲修改信箱，請聯絡客服．</div>
                         </div>
                     </div>
@@ -179,7 +176,7 @@
                     <div class="form-group row">
                         <label for="pswdNow" class="col-sm-3 col-form-label">現有密碼</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="pswdNow" placeholder="Password">
+                            <input type="password" class="form-control" id="pswdNow" v-model="shop.ShopPassword" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -246,15 +243,18 @@
             list:[],
             total:[],
             orderSelect:"OrdersNum",
-            search:""
+            search:"",
+            shopID:-1
         },
         mounted:function(){
+            let shopID = location.pathname.substr(11);
+            this.shopID = shopID;
             this.init();
         },
         methods:{
             init:function(){
                 let _this = this;
-                axios.get('/api/order')
+                axios.get('/api/order/'+this.shopID)  //改為依shopID抓order資料 by林培誠
                     .then(function(response){
                         _this.list = response.data;
                         _this.list.forEach((element,index)=>{
@@ -299,10 +299,35 @@
 
     var restInfo = new Vue({
         el:"#restInfo",
+        data:{
+            shop:[],
+            shopType:[
+                {type:"中式美食"},
+                {type:"台灣美食"},
+                {type:"日式美食"},
+                {type:"美式美食"},
+                {type:"飲料"},
+            ]
+        },
         methods:{
             emailHelp:function(){
                 $("#emailHelp").css("display","block")
+            },
+            init:function(){
+                let _this = this;
+                axios.get('/api/shop/'+restOrder.shopID)  
+                    .then(function(response){
+                        console.log(response.data);
+                        _this.shop = response.data;
+                        // console.log(_this.list);
+                    })
+                    .catch(function(response){
+                        console.log(response);
+                    })
             }
+        },
+        mounted:function(){
+            this.init();
         }
     })
 

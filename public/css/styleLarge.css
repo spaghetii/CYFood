@@ -508,4 +508,6 @@ body {font-family:"Microsoft JhengHei";}
     overflow-X: hidden;
 }
 
-
+[v-cloak] {
+    display: none;
+}
