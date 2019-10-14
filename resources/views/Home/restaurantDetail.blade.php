@@ -207,6 +207,7 @@
                     localStorage.setItem("restautantName", JSON.stringify(this.shop.ShopName));
                     localStorage.setItem("shipTime", JSON.stringify(this.shop.ShipTime));
                     localStorage.setItem("shopID", JSON.stringify(this.shop.ShopID));
+                    localStorage.setItem("shopImage", JSON.stringify(this.shop.ShopImage));     //多塞一個餐廳圖片  歷史訂單要用 by 林培誠
                     // console.log(this.shop);
                 }
             }

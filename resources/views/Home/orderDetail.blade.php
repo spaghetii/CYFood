@@ -154,6 +154,7 @@
                 restaurantName: '',
                 shiptime: 0,
                 ShopID: -1,
+                ShopImage:"",
                 // 會員
                 memberName:'',
                 memberID:'',
@@ -194,7 +195,9 @@
                                         restaurant: _this.restaurantName,
                                         memberName: _this.memberName,
                                         coupon: '',
-                                        meal:[]
+                                        meal:[],
+                                        orderTotalAmount:_this.orderTotalAmount,   //新增的
+                                        ShopImage:_this.ShopImage   //多塞一個餐廳圖片  歷史訂單要用 by 林培誠
                                     },
                                     OrdersStatus: 1,
                                     MemberID: _this.memberID,
@@ -205,8 +208,7 @@
                                     dataToSever.OrdersDetails.meal.push({   mealQuantity:element,
                                                                             mealName:_this.shoppingBagMealName[index],
                                                                             mealUnitPrice:_this.shoppingBagMealPrice[index],
-                                                                            mealDetail:[{type:0,mealNum:"meal0",detail:"",price:"",check:false}],
-                                                                            orderTotalAmount:_this.orderTotalAmount
+                                                                            mealDetail:[{type:0,mealNum:"meal0",detail:"",price:"",check:false}]
                                                                         });      
                                 });
                                 dataToSever.OrdersDetails = JSON.stringify(dataToSever.OrdersDetails);
@@ -272,6 +274,8 @@
                         localStorage.removeItem('restautantName');
                         localStorage.removeItem('shipTime');
                         localStorage.removeItem('shopID');
+                        localStorage.removeItem('shopImage');         //新增的
+                        localStorage.removeItem('orderTotalAmount');
                     }
 
                     // 總價 更新
@@ -306,6 +310,7 @@
                 let storedRestautantName = JSON.parse(localStorage.getItem('restautantName'));
                 let storedShipTime = JSON.parse(localStorage.getItem('shipTime'));
                 let storedShopID = JSON.parse(localStorage.getItem('shopID'));
+                let storedShopImage = JSON.parse(localStorage.getItem('shopImage'));
 
                 let memberName = sessionStorage.getItem('memberName');
                 let memberID = localStorage.getItem('memberID');
@@ -322,6 +327,7 @@
                 this.restaurantName = storedRestautantName;
                 this.shiptime = storedShipTime;
                 this.ShopID = storedShopID;
+                this.ShopImage = storedShopImage;        //新增的
                 this.memberID = memberID;
                 this.memberName = memberName;
                 // console.log(this.restaurantName);

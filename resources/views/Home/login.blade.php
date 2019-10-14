@@ -55,6 +55,7 @@
                                 <a href="javascript:void(0);" v-on:click="resetModal">忘記密碼</a><br>
                                 <span v-cloak v-if="space" class="resetalert">電子郵件或密碼不能為空</span>
                                 <span v-cloak v-if="checklogin" class="resetalert">電子郵件或密碼錯誤</span>
+                                <span v-cloak v-if="suspended" class="resetalert">此帳號已停權，請聯絡本公司</span>
                             </div>
 
                             <button v-on:click="login" type="button"
@@ -142,7 +143,8 @@
                 loginEmail: '',
                 loginPassword: '',
                 space: false,
-                checklogin: false
+                checklogin: false,
+                suspended:false
             },
             methods: {
                 login: function () {
@@ -152,6 +154,7 @@
                     } else {
                         this.space = false;
                         this.checklogin = false;
+                        this.suspended = false;
                         axios.post('/login/check', {
                                 loginEmail: this.loginEmail,
                                 loginPassword: this.loginPassword
@@ -189,7 +192,11 @@
                                         }
                                     })
                                 } else {
-                                    self.checklogin = true;
+                                    if(response.data['Permission']){
+                                        self.suspended = true;
+                                    }else{
+                                        self.checklogin = true;
+                                    }
                                 }
 
                             })
