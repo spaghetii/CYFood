@@ -111,7 +111,7 @@
                 methods:{
                     init: function(){
                         var _this = this;
-                        this.username = sessionStorage.getItem('name');
+                        this.username = sessionStorage.getItem('memberName');
                         axios.get('/api/member/'+this.username)
                         .then(function (response) {
                             _this.profile = response.data;

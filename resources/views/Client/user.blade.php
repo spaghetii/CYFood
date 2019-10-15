@@ -247,8 +247,8 @@
             shopID:-1
         },
         mounted:function(){
-            let shopID = location.pathname.substr(11);
-            this.shopID = shopID;
+            let test = (location.href).split("/");
+            this.shopID = test[test.length-1];
             this.init();
         },
         methods:{
