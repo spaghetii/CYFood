@@ -217,6 +217,8 @@
 
                                 axios.post('/api/order', dataToSever)
                                 .then(function (response) {
+                                    clearStorage();
+                                    localStorage.setItem("OrdersNum", response.data['OrdersNum']);
                                     axios.post('/socket/clientsend', {
                                         header: _this.header,
                                         id:_this.ShopID,
@@ -267,16 +269,8 @@
                         localStorage.setItem("mealNameArray", JSON.stringify(this.shoppingBagMealName));
                         localStorage.setItem("mealPriceArray", JSON.stringify(this.shoppingBagMealPrice));
                     }else{
+                        clearStorage();
                         window.self.location=window.document.referrer;  
-                        localStorage.removeItem('mealNameArray');
-                        localStorage.removeItem('mealPriceArray');
-                        localStorage.removeItem('mealQuantityArray');
-                        localStorage.removeItem('mealTotalPriceArray');
-                        localStorage.removeItem('restautantName');
-                        localStorage.removeItem('shipTime');
-                        localStorage.removeItem('shopID');
-                        localStorage.removeItem('shopImage');         //新增的
-                        localStorage.removeItem('orderTotalAmount');
                     }
 
                     // 總價 更新
@@ -286,8 +280,7 @@
                     });
                     // 加運費 總價 更新
                     this.orderTotalAmount = this.shoppingBagTotalPrice + 15 ;
-                    // 加運費總價 trackingOrder要用到
-                    localStorage.setItem("orderTotalAmount", JSON.stringify(this.orderTotalAmount));
+                    
                 },
             },
             mounted: function () {
@@ -335,6 +328,16 @@
                 }
             },
         })
+    
+    function clearStorage(){
+        localStorage.removeItem('mealNameArray');
+        localStorage.removeItem('mealPriceArray');
+        localStorage.removeItem('mealQuantityArray');
+        localStorage.removeItem('mealTotalPriceArray');
+        localStorage.removeItem('restautantName');
+        localStorage.removeItem('shopID');
+        localStorage.removeItem('shopImage');         //新增的
+    }
     
     </script>
 @endsection
