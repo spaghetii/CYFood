@@ -227,7 +227,7 @@
                 remove: function (id) {
                     let _this = this;
                     Swal.fire({                 // delete form
-                        title: '確定要刪除這筆優惠?',
+                        title: '確定要刪除這筆訂單?',
                         text: "刪除之後就無法復原!!!",
                         type: 'warning',
                         showCancelButton: true,

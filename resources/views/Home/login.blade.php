@@ -112,7 +112,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/reset">
+                    <form>
                         @csrf
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">請輸入電子郵件</label>
@@ -184,11 +184,8 @@
                                         },
                                         onClose: () => {
                                             clearInterval(timerInterval);
-                                            if (localStorage.getItem("restautantName")) {
-                                                window.location.href="/orderDetail";
-                                            }else{
-                                                window.self.location=window.document.referrer;  
-                                            }
+                                            window.self.location=window.document.referrer;  
+                                            
                                         }
                                     })
                                 } else {
@@ -232,7 +229,7 @@
                 registerEmail:function(){
                     this.errorEmail = "";
                     this.okMsg="";
-                    let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)+$/;
+                    let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)*$/;
                     if(this.registerEmail == ""){
                         this.checkEmail = false;
                     }

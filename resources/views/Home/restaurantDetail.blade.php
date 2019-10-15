@@ -273,14 +273,15 @@
             list: [],
             shop: [],
             temp: [],
-            types:[]
+            types:[],
+            shopID:-1
             
         },
         methods: {
             init: function () {
                 let _this = this;
                 
-                axios.get("/api/meal/{{$id}}")
+                axios.get("/api/meal/"+this.shopID)
                     .then(function (response) {
                         _this.list = response.data;
                         // console.log(_this.list);
@@ -307,6 +308,8 @@
             }
         },
         mounted: function () {
+            let test = (location.href).split("/");
+            this.shopID = test[test.length-1];
             this.init();
         }
     });

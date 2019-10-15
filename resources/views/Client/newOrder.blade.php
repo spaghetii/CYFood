@@ -87,8 +87,9 @@
             shopID:-1
         },
         mounted: function () {
-            let shopID = location.pathname.substr(15);
-            this.shopID = shopID;
+            let test = (location.href).split("/");
+            this.shopID = test[test.length-1];
+            // console.log(test[test.length-1]);
             this.init();
         },
         methods:{
@@ -166,14 +167,35 @@
         window.Echo.channel('orders')
             .listen('OrdersEvent', (e) => {
                 if(e.header == "shopID" && e.id == appB.shopID){
-                    Swal.fire({
-                    title: '您有新訂單'
-                    }).then((result) => {
-                        // console.log(result.value);
-                        if (result.value) {
-                            appB.init();
-                        }
-                    })
+                    console.log(e.type);
+                    switch(e.type){
+                        //新訂單
+                        case "addOrders":
+                            Swal.fire({
+                                title: '您有新訂單'
+                                }).then((result) => {
+                                    // console.log(result.value);
+                                    if (result.value) {
+                                        appB.init();
+                                    }
+                                })
+                            break;
+                        //客戶取消訂單
+                        case "cancelOrders":
+                            Swal.fire({
+                                title: '客戶已取消一筆訂單'
+                                }).then((result) => {
+                                    // console.log(result.value);
+                                    if (result.value) {
+                                        appB.init();
+                                    }
+                                })
+                            break;
+                        //如有丟失訊息
+                        default:
+                            console.log(e);
+                    }
+                    
                 }
             });
 

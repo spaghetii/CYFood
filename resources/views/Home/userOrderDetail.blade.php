@@ -17,7 +17,8 @@
                     </div>
                     <div class="mb-2">
                         <span>
-                            @{{item.OrdersDetails.shoppingBagTotalQuantity}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•&nbsp;9月20日&nbsp;的&nbsp;下午12:27
+                        @{{totalCount[index]}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•
+                        &nbsp;@{{month[index]}}月@{{day[index]}}日&nbsp;的&nbsp;@{{time[index]}}
                         </span>
                     </div>
                     <div>
@@ -48,7 +49,7 @@
                 </div>
                 <div class="col-sm-1 col-12"></div>
                 <div class="col-sm-3 col-12">
-                    <button type="button" class="btn btn-warning" id="reorderBtn" v-if="item.OrdersStatus == 1">取消訂單</button>
+                    <button type="button" class="btn btn-warning" id="reorderBtn" v-on:click="cancelOrder(index)" v-if="item.OrdersStatus == 1">取消訂單</button>
                 </div>
             </div> <!-- row -->
         </div> <!-- 目前訂單 -->
@@ -73,7 +74,8 @@
                     </div>
                     <div class="mb-2">
                         <span>
-                            @{{item.OrdersDetails.shoppingBagTotalQuantity}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•&nbsp;9月20日&nbsp;的&nbsp;下午12:27
+                            @{{item.OrdersDetails.shoppingBagTotalQuantity}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•
+                            &nbsp;@{{month[index]}}月20日&nbsp;的&nbsp;12:27
                         </span>
                     </div>
                     <div>
@@ -107,16 +109,16 @@
 
 @section('script')
     <script>
-        // var displayApp = new Vue ({
-        //         el: '#displayDivApp',
-                
-        //     })
 
         var userOrder = new Vue({
             el: '#userOrderDetailDiv',
             data:{
                 list:[],
-                memberID:0
+                memberID:0,
+                month:[],
+                day:[],
+                time:[],
+                totalCount:[]
             },
             methods:{
                 clickDispayDiv: function(){
@@ -127,11 +129,23 @@
                     let _this = this;
                     axios.get('/api/order/member/'+this.memberID)   
                         .then(function (response) {
-                            console.log(response.data)
+                            
                             _this.list = response.data;
                             _this.list.forEach((element,index) => {
-                                // console.log(element);
+                                
                                 _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
+                                //訂單建立時機
+                                let time = element.OrdersCreate.split(" ");
+                                _this.month[index] = time[0].substr(5,2);
+                                _this.day[index] = time[0].substr(9,2);
+                                _this.time[index] = time[1].substr(0,5);
+                                _this.totalCount[index] = 0;
+                                //每個訂單餐點總數量
+                                _this.list[index].OrdersDetails.meal.forEach(ele => {
+                                    console.log(ele.mealQuantity);
+                                    _this.totalCount[index] += parseInt(ele.mealQuantity);
+                                    console.log(_this.totalCount);
+                                })
                                 
                             });
                             
@@ -139,6 +153,43 @@
                         .catch(function (response) {
                             console.log(response);
                         });
+                },
+                cancelOrder:function(e){
+                    console.log(this.list[e].OrdersID);
+                    let _this = this;
+                    Swal.fire({                 // delete form
+                        title: '確定要取消這筆訂單?',
+                        text: "刪除之後就無法復原!!!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '確定',
+                        cancelButtonText: '取消'
+                        }).then((result) => {
+                            if (result.value)
+                            this.list[e].OrdersStatus = 0;
+                            let _this = this;
+                            axios.put('/api/order/'+this.list[e].OrdersID,this.list[e])
+                            .then(function(response){
+                                if(response.data['ok']){
+                                    _this.init();
+                                    console.log(_this.list[e].ShopID);
+                                    axios.post('/socket/clientsend', {
+                                        header: "shopID",
+                                        id:_this.list[e].ShopID,
+                                        type:"cancelOrders"
+                                    })
+                                    .then(function (response) {
+                                        console.log(response.data);
+                                    })
+                                    .catch(function (response) {
+                                        console.log(response)
+                                    });
+                                }
+                                
+                            })
+                    });
                 }
             },
             mounted:function(){
