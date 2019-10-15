@@ -20,7 +20,7 @@
                     <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" v-bind:style="{width: barValue}" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 {{-- 狀態顯示 --}}
-                <div>
+                <div v-cloak>
                     <small>@{{orderStatus}}</small>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <ul class="noPad noMarg ml-2 mr-2" style="list-style:none;" v-for="MealItem,index in shoppingBagMealName">
                         <li >
                             <div class="d-flex flex-row mb-3">
-                                <div v-cloak class="mr-3" id="foodItemQuantity">
+                                <div v-cloak class="mr-3" id="foodItemQuantity" v-cloak>
                                     @{{shoppingBagMealQuantity[index]}}
                                 </div>
                                 <div>

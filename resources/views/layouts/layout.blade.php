@@ -53,21 +53,21 @@
                         <div class="dropdown show" v-if="navshow" v-once>
                                 <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="" >&ensp;@{{userName}}</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
-                                        <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
-                                        <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
-                                        <a class="dropdown-item" href="javascript:void(0);" v-on:click="logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
-                                      </div>
+                                    <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
+                                    <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
+                                    <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" v-on:click="logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
+                                </div>
                             </div>
                         {{-- 登入 --}}
-                        <div v-if="navlogin"><a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;@{{userName}}</a></div>
+                        <div v-if="navlogin" v-cloak><a class="nav-item nav-link ml-4" href="/login"><img src="/img/user.png" alt="">&ensp;@{{userName}}</a></div>
                         
                         {{-- 購物袋 --}}
-                        <div id="shoppingBag">
-                        <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal" v-if="shoppingBagTotalQuantity!=0">
-                            <img src="/img/shopping-bag2.png" alt="">
-                            <span style="font-size:1.2rem;">@{{shoppingBagTotalQuantity}}</span>
-                        </a>
+                        <div id="shoppingBag" v-cloak>
+                            <a class="nav-item nav-link ml-4" href="#" role="button" data-toggle="modal" data-target="#shoppingBagModal" v-if="shoppingBagTotalQuantity!=0">
+                                <img src="/img/shopping-bag2.png" alt="">
+                                <span style="font-size:1.2rem;">@{{shoppingBagTotalQuantity}}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -92,15 +92,14 @@
                     </div>
                     <div class="col-sm-4 col-6 mt-4 mt-sm-0">
                         <p><a href="#">常見 Q&A</a></p>
-                        <p><a href="#">關於我們</a></p>
                     </div>
                 </div>
-                <div class="row mt-4 footerBottom">
+                <div class="row mt-4 footerBottom alignCenter">
                     <!-- footer 下區 -->
                     <div class="col-sm-5 col-6">
                         <small>Copyright © 2019 CY food</small>
                     </div>
-                    <div class="col-sm-3 col-6">
+                    <div class="col-sm-3 col-6 ">
                         <a href="https://www.facebook.com/groups/AI0101/"><img src="/img/facebook.png" alt="" class="mr-3"></a>
                         <a href="https://github.com/spaghetii/CYFood"><img src="/img/github.png" alt="" class="mr-3"></a>
                     </div>
@@ -108,13 +107,15 @@
             </div>
         </footer>
     </div> <!-- wrapper -->
-    
+
+    {{-- backtop --}}
+    <img id="backTop" src="/img/backTop.png" alt="" v-on:click="backTopImg">
 
     <!-- ShoppingBagModal -->
     <div class="modal right fade" id="shoppingBagModal" tabindex="-1" role="dialog" aria-labelledby="shoppingBagModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" v-cloak>
                     <h5 class="modal-title" id="shoppingBagModalLabel"><img src="/img/shopping-bag2.png" alt="">&emsp;您的訂單&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="/img/close.png" alt=""></span>
@@ -123,30 +124,21 @@
                 <div class="modal-body" id="shoppingBagModalBody">
                     <ul>
                         <li style="list-style-type:none" v-for="MealItem,index in shoppingBagMealName">
-                            <div class="d-flex justify-content-between">
-                                <div class="shoppingBagModalItemQuantity">
-                                    <div class="form-group">
+                            <div class="d-flex alignCenter noPad">
+                                <div class="shoppingBagModalItemQuantity noPad" >
+                                    <div class="form-group noMarg mr-3" v-cloak style="width:80px">
                                         <select class="form-control" v-model="shoppingBagMealQuantity[index]">
                                             <option value="0">移除</option>
                                             <option v-for="item in quantitySelectLists">@{{item}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <a href="" class="shoppingBagModalItemDetail">
-                                    <div class="d-flex flex-column">
-                                        <div>
-                                            <div class="float-left">
-                                                @{{shoppingBagMealName[index]}}
-                                            </div>
-                                            <div class="float-right" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex">
-                                                $@{{item}}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <small class="colorOrange aHoverColor">編輯</small>
-                                        </div>
-                                    </div>
-                                </a>
+                                <div v-cloak class="noPad" style="padding:0px 20px;">
+                                    @{{shoppingBagMealName[index]}}
+                                </div>       
+                                <div class="noPad ml-auto" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex" v-cloak>
+                                    $@{{item}}
+                                </div> 
                             </div>
                             <hr>
                         </li>
@@ -154,9 +146,9 @@
                 </div>
                 <div class="modal-footer">
                     <a href="javascript:void(0);" v-on:click="checkOut" class="d-flex justify-content-between" id="shoppingBagModalCheckOutDiv">
-                        <div id="shoppingBagModalCheckOutItem">@{{shoppingBagTotalQuantity}}</div>
+                        <div id="shoppingBagModalCheckOutItem" v-cloak>@{{shoppingBagTotalQuantity}}</div>
                         <div>下一步：結帳</div>
-                        <div>$@{{shoppingBagTotalPrice}}</div>
+                        <div v-cloak>$@{{shoppingBagTotalPrice}}</div>
                     </a>
                 </div>
             </div> {{-- modal-content --}}
@@ -343,6 +335,21 @@
                 this.shoppingBagMealTotalPrice = storedMealTotalPriceArray;
                 // console.log(this.shoppingBagMealQuantity);
                 }
+            },
+        })
+
+        var backTopApp = new Vue ({
+            el:'#backTop',
+            methods:{
+                backTopImg: function () {
+                    let scrollStep = - window.scrollY / (20 / 1),
+                    scrollInterval = setInterval(function(){
+                        if ( window.scrollY != 0 ) {
+                        window.scrollBy( 0, scrollStep );
+                    } 
+                        else clearInterval(scrollInterval); 
+                    },15);
+                },
             },
         })
     
