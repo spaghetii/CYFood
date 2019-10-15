@@ -21,7 +21,9 @@ body {
     margin: 10px auto;
 }
 .fixedItem:hover{
-    background-color: #EFA747;
+    background-color: #F49F05;
+    width: 302px;
+    height: 122px;
 }
 
 img {

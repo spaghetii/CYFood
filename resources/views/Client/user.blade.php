@@ -162,7 +162,7 @@
                         <label for="restEmail" class="col-sm-3 col-form-label">電子郵件</label>
                         <div class="col-sm-9">
                             <input type="text" readonly class="form-control-plaintext" id="restEmail" v-model="shop.ShopEmail" v-on:click="emailHelp">
-                            <div id="emailHelp">如欲修改信箱，請聯絡客服．</div>
+                            <div id="emailHelp" v-if="emailHelpShow">如欲修改信箱，請聯絡客服．</div>
                         </div>
                     </div>
                     <div class="row">
@@ -307,11 +307,12 @@
                 {type:"日式美食"},
                 {type:"美式美食"},
                 {type:"飲料"},
-            ]
+            ],
+            emailHelpShow:false
         },
         methods:{
             emailHelp:function(){
-                $("#emailHelp").css("display","block")
+                this.emailHelpShow=true;
             },
             init:function(){
                 let _this = this;
