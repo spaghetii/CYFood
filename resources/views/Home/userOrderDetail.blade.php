@@ -11,11 +11,11 @@
                 </div>
                 <div class="col-sm-5 col-12 mb-3">
                     <div class="d-flex justify-content-between">
-                        <div>
+                        <div v-cloak>
                             <h4>@{{item.OrdersDetails.restaurant}}</h4>
                         </div>
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2" v-cloak>
                         <span>
                         @{{totalCount[index]}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•
                         &nbsp;@{{month[index]}}月@{{day[index]}}日&nbsp;的&nbsp;@{{time[index]}}
@@ -25,14 +25,14 @@
                         <ul class="noPad noMarg" style="list-style:none;">
                             <li v-for="odDetail in item.OrdersDetails.meal">
                                 <div class="d-flex flex-row mb-3">
-                                    <div class="mr-3" id="foodItemQuantity">
+                                    <div class="mr-3" id="foodItemQuantity" v-cloak>
                                         @{{odDetail.mealQuantity}}
                                     </div>
                                     <div>
-                                        <div>
+                                        <div v-cloak>
                                             @{{odDetail.mealName}}
                                         </div>
-                                        <div>
+                                        <div v-cloak>
                                             <small>@{{odDetail.mealDetail.detail}}</small>
                                         </div>
                                     </div>
@@ -65,14 +65,14 @@
                 </div>
                 <div class="col-sm-5 col-12 mb-3">
                     <div class="d-flex justify-content-between">
-                        <div>
+                        <div v-cloak>
                             <h4>@{{item.OrdersDetails.restaurant}}</h4>
                         </div>
                         <div>
                             <img src="img/star1.png" alt="">4.7/5
                         </div>
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2" v-cloak>
                         <span>
                             @{{item.OrdersDetails.shoppingBagTotalQuantity}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•
                             &nbsp;@{{month[index]}}月20日&nbsp;的&nbsp;12:27
@@ -82,14 +82,14 @@
                         <ul class="noPad noMarg" style="list-style:none;">
                             <li v-for="odDetail in item.OrdersDetails.meal">
                                 <div class="d-flex flex-row mb-3">
-                                    <div class="mr-3" id="foodItemQuantity">
+                                    <div class="mr-3" id="foodItemQuantity" v-cloak>
                                         @{{odDetail.mealQuantity}}
                                     </div>
                                     <div>
-                                        <div>
+                                        <div v-cloak>
                                             @{{odDetail.mealName}}
                                         </div>
-                                        <div>
+                                        <div v-cloak>
                                             <small>@{{odDetail.mealDetail.detail}}</small>
                                         </div>
                                     </div>

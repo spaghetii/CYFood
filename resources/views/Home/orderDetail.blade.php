@@ -13,7 +13,7 @@
                 <div class="orderDetailItemDiv">
                     <div class="d-flex justify-content-between">
                         <h5>外送詳情</h5>
-                        <a href="" class="colorOrange aHoverColor">編輯</a>
+                        {{-- <a href="" class="colorOrange aHoverColor">編輯</a> --}}
                     </div>
                     <div>
                         <hr>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-3">預計時間</div>
-                            <div class="col-9">@{{shiptime-5}} – @{{shiptime+5}} 分鐘</div>
+                            <div class="col-9" v-cloak>@{{shiptime-5}} – @{{shiptime+5}} 分鐘</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-3">優惠卷</div>
@@ -54,7 +54,7 @@
                 {{-- 餐點詳情 --}}
                 <div class="orderDetailItemDiv" id="orderDetailItemDivApp">
                     <div class="d-flex justify-content-between">
-                        <div>
+                        <div v-cloak>
                             <h5>餐點份數&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
                             <small>訂餐餐廳：@{{restaurantName}}</small>
                         </div>
@@ -66,30 +66,21 @@
                     <div>
                         <ul class="noPad">
                             <li style="list-style-type:none" v-for="MealItem,index in shoppingBagMealName">
-                                <div class="d-flex justify-content-between">
-                                    <div class="shoppingBagModalItemQuantity">
-                                        <div class="form-group">
+                                <div class="d-flex alignCenter noPad">
+                                    <div class="shoppingBagModalItemQuantity noPad mr-3" >
+                                        <div class="form-group noMarg" v-cloak style="width:100px">
                                             <select class="form-control" v-model="shoppingBagMealQuantity[index]">
                                                 <option value="0">移除</option>
                                                 <option v-for="item in quantitySelectLists">@{{item}}</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <a href="" class="shoppingBagModalItemDetail">
-                                        <div class="d-flex flex-column">
-                                            <div>
-                                                <div class="float-left">
-                                                    @{{shoppingBagMealName[index]}}
-                                                </div>
-                                                <div class="float-right" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex">
-                                                    $@{{item}}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <small class="colorOrange aHoverColor">編輯</small>
-                                            </div>
-                                        </div>
-                                    </a>
+                                    <div v-cloak class="noPad">
+                                        @{{shoppingBagMealName[index]}}
+                                    </div>       
+                                    <div class="noPad ml-auto" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex" v-cloak>
+                                        $@{{item}}
+                                    </div> 
                                 </div>
                                 <hr>
                             </li> 
@@ -107,10 +98,10 @@
                     <div class="mb-4">
                         <h5>訂單摘要</h5>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" v-cloak>
                         <img src="img/shopping-bag1.png" alt="">&ensp;透過&nbsp;@{{restaurantName}}&nbsp;訂購的&nbsp;@{{shoppingBagTotalQuantity}}&nbsp;份餐點
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" v-cloak>
                         <img src="img/clock.png" alt="">&ensp;預計在&nbsp;@{{shiptime-5}}&nbsp;到&nbsp;@{{shiptime+5}}&nbsp;分鐘內抵達
                     </div>
                     <div class="mb-3">
@@ -122,7 +113,7 @@
                     <ul class="noPad noMarg" style="list-style:none">
                         <li class="noPad noMarg mb-3 d-flex justify-content-between">
                             <div>小計</div>
-                            <div>NT$@{{shoppingBagTotalPrice}}</div>
+                            <div v-cloak>NT$@{{shoppingBagTotalPrice}}</div>
                         </li>
                         <li class="noPad noMarg mb-4 d-flex justify-content-between">
                             <div>外送費</div>
@@ -130,7 +121,7 @@
                         </li>
                         <li class="noPad noMarg mb-3 d-flex justify-content-between">
                             <div><h5>總計</h5></div>
-                            <div><h4>NT$@{{orderTotalAmount}}</h4></div>
+                            <div v-cloak><h4>NT$@{{orderTotalAmount}}</h4></div>
                         </li>
                     </ul>
                     <a href="javascript:void(0);" v-on:click="sendOrders" style="text-decoration: none;">

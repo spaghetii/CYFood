@@ -93,11 +93,11 @@
                     <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
                         <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                         <div class="todayRecommendContent">
-                            <div class="row mt-2">
+                            <div class="row mt-2" v-cloak>
                                 @{{item.ShopName}}
                             </div>
                             <div class="row mt-2">
-                                <div class="mr-1 todayRecommendContentItem"><small>$.@{{item.ShopType}}</small></div>
+                                <div class="mr-1 todayRecommendContentItem" v-cloak><small>$.@{{item.ShopType}}</small></div>
                                 <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
                                 <div class="mr-1 todayRecommendContentItem"><small>15TWD 費用</small></div>
                             </div>
@@ -122,11 +122,11 @@
                     <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
                         <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                         <div class="popularRestaurantContent">
-                            <div class="row mt-2">
+                            <div class="row mt-2" v-cloak>
                                 @{{item.ShopName}}
                             </div>
                             <div class="row mt-2">
-                                <div class="mr-1 popularRestaurantContentItem"><small>$.@{{item.ShopType}}</small></div>
+                                <div class="mr-1 popularRestaurantContentItem" v-cloak><small>$.@{{item.ShopType}}</small></div>
                                 <div class="mr-1 popularRestaurantContentItem"><img src="img/star1.png" class="mr-1"><small>4.9/5</small></div>
                                 <div class="mr-1 popularRestaurantContentItem"><small>15TWD 費用</small></div>
                             </div>
@@ -137,7 +137,7 @@
              {{-- 顯示更多 btn --}}
             <div class="displayMore container-fluid">
                 <div class="row justify-content-center align-items-center mt-5 mb-5">
-                    <button type="button" class="btn btn-lg btn-dark" v-on:click="displayBtn" v-if="btnShow">顯示更多餐廳</button>
+                    <button type="button" class="btn btn-lg btn-warning" v-on:click="displayBtn" v-if="btnShow">顯示更多餐廳</button>
                 </div>
             </div>
             {{-- loading spinners --}}
@@ -242,7 +242,7 @@
                         if (_this.list.length == _this.listTotal.length){
                             _this.btnShow = false;
                             }}
-                    ,2000)
+                    ,500)
                     // console.log(this.list.length);
                     // console.log(this.listTotal.length);
                 },

@@ -183,15 +183,6 @@ body {font-family:"Microsoft JhengHei";}
     width: 20%;
 }
 
-.shoppingBagModalItemDetail {
-    width: 75%;
-    color: black;
-}
-
-.shoppingBagModalItemDetail:hover {
-    color: black;
-}
-
 .modal.right #shoppingBagModalCheckOutDiv {
     background-color: orange;
     color: white;
@@ -250,6 +241,16 @@ body {font-family:"Microsoft JhengHei";}
     color: #ffa500;
 }
 
+/* newOrderMadal */
+#newOrderMadal {
+    top:50px;
+}
+
+#newOrderMadalButton {
+    font-size:1.2rem;
+    padding: 10px 0px;
+}
+
 /* 分類排 */
 #categoryBarDiv {
     background-color: white;
@@ -261,6 +262,11 @@ body {font-family:"Microsoft JhengHei";}
 
 #categoryBarList a{
     font-size: 0.9rem;
+}
+
+#categoryBarList {
+    width:100%;
+    margin: 0px;
 }
 
 /* 分類內容 */
@@ -494,4 +500,12 @@ body {font-family:"Microsoft JhengHei";}
 
 [v-cloak] {
     display: none;
+}
+
+/* backtop */
+#backTop {
+    position:fixed;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
 }
