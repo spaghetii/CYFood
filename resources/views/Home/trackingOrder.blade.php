@@ -1,4 +1,9 @@
 @extends('layouts.layout')
+    <script> 
+        if (!localStorage.getItem("OrdersNum")) {
+            window.location.href="/loginHomepage";
+        } 
+    </script>
 
 @section('content')
     <div class="container-fluid alignCenter" id="trackingOrderBgDiv">
@@ -42,18 +47,18 @@
                    <h4 class="fontBold noMarg">訂單摘要</h4>
                 </div>
                 <div class="mb-2">
-                    <h6>茶湯會 中佑店</h6>    
+                    <h6>@{{details.restaurant}}</h6>    
                 </div>
                 <div id="trackingOrderSummary">
-                    <ul class="noPad noMarg ml-2 mr-2" style="list-style:none;" v-for="MealItem,index in shoppingBagMealName">
+                    <ul class="noPad noMarg ml-2 mr-2" style="list-style:none;" v-for="item in details.meal">
                         <li >
                             <div class="d-flex flex-row mb-3">
                                 <div v-cloak class="mr-3" id="foodItemQuantity">
-                                    @{{shoppingBagMealQuantity[index]}}
+                                    @{{item.mealQuantity}}
                                 </div>
                                 <div>
                                     <div v-cloak>
-                                        @{{shoppingBagMealName[index]}}
+                                        @{{item.mealName}}
                                     </div>
                                     <div>
                                         <small></small>
@@ -70,7 +75,7 @@
                             <h5 class="noMarg">總計</h5>
                         </div>
                         <div class="ml-auto">
-                        <h5 v-cloak class="noMarg">$@{{orderTotalAmount}}TWD</h5>
+                        <h5 v-cloak class="noMarg">$@{{details.orderTotalAmount}}TWD</h5>
                         </div>
                     </div>
                 </div>
@@ -83,6 +88,8 @@
     {{-- websocket --}}
     <script src="../js/app.js" type="text/javascript"></script>
     <script>
+        
+        
         var temp = 0;
         var timerApp =  new Vue({
             el: '#timerApp',
@@ -112,38 +119,37 @@
         var orderDeatil = new Vue({
             el:"#orderDetail",
             data:{
-                // 餐廳名稱
-                restaurantName: '',
+                list:[],
+                details:[],
                 // 會員
                 memberID:0,
-                //訂單總金額
-                orderTotalAmount: 0,
-                // 購物袋 各個資料
-                shoppingBagMealQuantity: [],
-                shoppingBagMealName: [],
-
+            },
+            methods:{
+                init:function(){
+                    let OrdersNum = localStorage.getItem('OrdersNum');
+                    let _this = this;
+                    axios.get("/api/order/"+OrdersNum)
+                        .then(function (response){
+                            _this.list = response.data;
+                            _this.details = JSON.parse(_this.list.OrdersDetails);
+                            _this.memberID = _this.list.MemberID;
+                            console.log(_this.list);
+                        })
+                        .catch(function (response) {
+                        console.log(response);
+                        });
+                    
+                }
             },
             mounted:function(){
+                
                 // 隱藏遊覽列購物袋圖示
                 $("#shoppingBag").css("display","none");
-                    
-                if (localStorage.getItem('mealPriceArray') != null ){
-                // 取出localstorage資料
-                let storedMealNameArray = JSON.parse(localStorage.getItem('mealNameArray'));
-                let storedMealQuantityArray = JSON.parse(localStorage.getItem('mealQuantityArray'));
-                let storedRestautantName = JSON.parse(localStorage.getItem('restautantName'));
-                let orderTotalAmount = JSON.parse(localStorage.getItem('orderTotalAmount'));    
-
-                let memberID = localStorage.getItem('memberID');
+                this.init();
                 
-                this.shoppingBagMealName = storedMealNameArray;
-                this.shoppingBagMealQuantity = storedMealQuantityArray;
-                this.restaurantName = storedRestautantName;
-                this.memberID = memberID;
-                this.orderTotalAmount = orderTotalAmount;
-
+            },
+            beforeCreate:function(){
                 
-                }
             }
         })
 
@@ -164,7 +170,7 @@
                                 confirmButtonText: '點擊後返回首頁'
                                 }).then((result) => {
                                 if (result.value) {
-                                    // clearStorage();
+                                    clearStorage();
                                     location.href="/";
                                 }
                             })
@@ -197,24 +203,26 @@
                                 confirmButtonText: '點擊後返回首頁'
                                 }).then((result) => {
                                 if (result.value) {
-                                    // clearStorage();
+                                    clearStorage();
                                     location.href="/";
                                 }
                             })
                             break;
                         //店家呼叫外送員
                         case "ok":
-                            shipTime = localStorage.getItem('shipTime');
+                            let shipTime = localStorage.getItem('shipTime');
                             let time = new Date();
                             let hour = time.getHours();
                             let min = time.getMinutes()+parseInt(shipTime);
                             if(min >= 60){
-                                hour +=1;
-                                min  -=60;
+                                hour += 1;
+                                min  -= 60;
+                                min  += 100;
+                                min = min.substr(1);
                             }
                             timerApp.arrivalTime= hour+":"+min;
                             timerApp.progressbar();
-                            //clearStorage();
+                            clearStorage();
                             break;
                         //如有丟失訊息
                         default:
@@ -222,16 +230,12 @@
                     }
                 }
             });
-        //清空餐點相關資訊
+        //清空localStorage
         function clearStorage(){
-            localStorage.removeItem('mealNameArray');
-            localStorage.removeItem('mealPriceArray');
-            localStorage.removeItem('mealQuantityArray');
-            localStorage.removeItem('mealTotalPriceArray');
-            localStorage.removeItem('restautantName');
+            localStorage.removeItem('OrdersNum');
             localStorage.removeItem('shipTime');
-            localStorage.removeItem('shopID');
-            localStorage.removeItem('orderTotalAmount');
         }
+
+        
     </script>
 @endsection

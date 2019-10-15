@@ -278,6 +278,7 @@
                         localStorage.removeItem('restautantName');
                         localStorage.removeItem('shipTime');
                         localStorage.removeItem('shopID');
+                        localStorage.removeItem('shopImage'); 
                     }
 
                     // 總價 更新

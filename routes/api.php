@@ -30,6 +30,10 @@ Route::delete('/coupon/{id}', "BackEnd@couponDelete");
 // order
 // 顯示全部訂單
 Route::get('/order', 'BackEnd@orderAll');
+// 根據orderNum抓到資料
+Route::get('/order/{ordernum}', function($ordernum){
+    return response()->json(App\Orders::where('OrdersNum', $ordernum)->first(), 200);
+});
 // 根據shopID抓到資料
 Route::get('/order/shop/{id}', function($id){
     return response()->json(App\Orders::where('ShopID', $id)->get(), 200);

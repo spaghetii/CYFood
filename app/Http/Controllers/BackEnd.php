@@ -194,7 +194,7 @@ class BackEnd extends Controller
         $order->MemberID = $request->MemberID;
         $order->ShopID = $request->ShopID;
         $ok = $order->save();
-        return response()->json(['ok' => $ok], 200);
+        return response()->json(['ok' => $ok , 'OrdersNum' => $OrdersNum], 200);
     }
     
     ////////////////   update data   ////////////////
