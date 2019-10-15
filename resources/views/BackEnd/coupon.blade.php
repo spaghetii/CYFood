@@ -26,7 +26,7 @@
                 <div class="col text-center tableTitle">結束日期</div>
                 <div class="col"></div>
                 <div id="neworder" class="col text-center">
-                    <button id="singlebutton" name="singlebutton" class="btn btn-primary tableTitle" 
+                    <button id="singlebutton" name="singlebutton" class="btn btn-primary tableTitle greenBtn" 
                     v-on:click="insertData">✚</button>
                 </div>
             </div>
@@ -39,11 +39,11 @@
                     <div class="col text-center">@{{item.CouponStart}}</div>
                     <div class="col text-center">@{{item.CouponDeadline}}</div>
                     <div class="col text-right">
-                        <button name="singlebutton" class="btn btn-primary "
+                        <button name="singlebutton" class="btn btn-primary greenBtn"
                         v-on:click="edit(item.CouponID)">修改優惠</button>
                     </div>
                     <div class="col text-center">
-                        <button name="singlebutton" class="btn btn-danger"
+                        <button name="singlebutton" class="btn btn-danger redBtn"
                         v-on:click="remove(item.CouponID)">刪除優惠</button>
                     </div>
                 </div>
