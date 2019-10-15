@@ -73,7 +73,10 @@ class HomeController extends Controller
     function logincheck(Request $request){
         $member = DB::table("members")->where("MemberEmail",$request->loginEmail)->first();
         if($member){
-            if(Hash::check($request->loginPassword, $member->MemberPassword)){
+            if($member->MemberPermission){
+                return response()->json(['ok' => false ,'Permission' => true], 200);
+            }
+            else if(Hash::check($request->loginPassword, $member->MemberPassword)){
                 Session::put('userName', $member->MemberName);
                 
                 return response()->json(['ok' => true , 'id' => $member->MemberID 
@@ -167,11 +170,11 @@ class HomeController extends Controller
             for($i=0 ; $i<$n; $i++){
             $new .= $code[rand(0,$len)];
             }
-            
+            $date = date('Y-m-d');
             $coupon =new Coupon();
             $coupon->CouponCode = $new;
             $coupon->CouponType = "freeship";
-            $coupon->CouponStart = "2019-10-09";
+            $coupon->CouponStart = $date;
             $coupon->CouponDeadline = "2019-10-30";
             $coupon->save();
             return response()->json(['ok' => true , 'coupon' => $new], 200);
