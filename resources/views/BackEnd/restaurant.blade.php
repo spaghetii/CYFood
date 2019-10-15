@@ -38,11 +38,11 @@
                     <div class="col text-center ellipsis" >@{{item.ShopAddress}}</div>
                     <div class="col text-right">
                         <button id="singlebutton" name="singlebutton" 
-                        v-on:click="edit(item.ShopID)" class="btn btn-primary">查詢或修改</button>
+                        v-on:click="edit(item.ShopID)" class="btn btn-primary greenBtn">查詢或修改</button>
                     </div>
                     <div class="col text-center">
                         <button id="singlebutton" name="singlebutton" 
-                        v-on:click="remove(item.ShopID)"   class="btn btn-danger">刪除餐廳</button>
+                        v-on:click="remove(item.ShopID)"   class="btn btn-danger redBtn">刪除餐廳</button>
                     </div>
                 </div>
 

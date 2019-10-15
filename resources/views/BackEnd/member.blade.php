@@ -35,12 +35,12 @@
                     <div class="col text-center">@{{item.MemberEmail}}</div>
                     <div class="col text-center">@{{item.MemberPhone}}</div>
                     <div class="col change text-right">
-                        <button id="singlebutton" name="singlebutton" class="btn btn-primary"
+                        <button id="singlebutton" name="singlebutton" class="btn btn-primary greenBtn"
                         v-on:click="edit(item.MemberID)">修改資訊</button>
                     </div>
                     <div class="col change text-center">
                         <button id="singlebutton" name="singlebutton" 
-                        v-on:click="remove(item.MemberID)" class="btn btn-danger">會員停權</button>
+                        v-on:click="remove(item.MemberID)" class="btn btn-danger redBtn">會員停權</button>
                     </div>
                 </div>
 

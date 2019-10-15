@@ -171,7 +171,7 @@ body {font-family:"Microsoft JhengHei";}
 /* edit */
 #searchinput{
     margin: 15px auto 0 0;
-    width: 93%;
+    width: 93%; 
 }
 .select{
     margin: 15px auto 0 auto;
@@ -182,45 +182,45 @@ body {font-family:"Microsoft JhengHei";}
 .btn{
     font-weight: bold;
 }
-.btn-primary {
+.greenBtn{
     background-color: #03353E;
     border-color: #03353E;
 }
-.btn-primary:hover {
+.greenBtn:hover {
     background-color: #515B51;
     border-color: #515B51;
 }
-.btn-primary:focus, .btn-primary.focus {
+.greenBtn:focus, .greenBtn.focus {
     box-shadow: 0 0 0 0.0rem #515B51;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
-.show > .btn-primary.dropdown-toggle {
+.greenBtn:not(:disabled):not(.disabled):active, .greenBtn:not(:disabled):not(.disabled).active,
+.show > .greenBtn.dropdown-toggle {
   background-color: #515B51;
   border-color: #515B51;
 }
-.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
-.show > .btn-primary.dropdown-toggle:focus {
+.greenBtn:not(:disabled):not(.disabled):active:focus, .greenBtn:not(:disabled):not(.disabled).active:focus,
+.show > .greenBtn.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem #515B51;
 }
-.btn-danger {
+.redBtn {
     background-color: #D96B0C;
     border-color:  #D96B0C;
 }
-.btn-danger:hover {
+.redBtn:hover {
     background-color: #B17052;
     border-color: #B17052;
 }
-.btn-danger:focus, .btn-danger.focus {
+.redBtn:focus, .redBtn.focus {
     box-shadow: 0 0 0 0.0rem #B17052;
 }
-.btn-danger:not(:disabled):not(.disabled):active, .btn-danger:not(:disabled):not(.disabled).active,
-.show > .btn-danger.dropdown-toggle {
+.redBtn:not(:disabled):not(.disabled):active, .redBtn:not(:disabled):not(.disabled).active,
+.show > .redBtn.dropdown-toggle {
   background-color: #B17052;
   border-color: #B17052;
 }
-.btn-danger:not(:disabled):not(.disabled):active:focus, .btn-danger:not(:disabled):not(.disabled).active:focus,
-.show > .btn-danger.dropdown-toggle:focus {
+.redBtn:not(:disabled):not(.disabled):active:focus, .redBtn:not(:disabled):not(.disabled).active:focus,
+.show > .redBtn.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem #B17052;
 }
 .page-item.active .page-link {
