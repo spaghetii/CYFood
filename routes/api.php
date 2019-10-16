@@ -71,6 +71,10 @@ Route::post('/shop','BackEnd@shopInsert');
 Route::put('/shop/{id}', 'BackEnd@shopUpdate');
 // 刪除店家
 Route::delete('/shop/{id}', "BackEnd@shopDelete");
+// 驗證店家密碼
+Route::post('/shop/checkpwd/{id}',"BackEnd@checkPassword");
+// 修改店家密碼
+Route::put('/shop/changepwd/{id}',"BackEnd@changeShopPwd");
 
 //meal
 // 根據店家編號顯示餐點
