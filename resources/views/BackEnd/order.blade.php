@@ -88,15 +88,17 @@
                     <div class="form-group row">
                         <div class="form-group row col-sm-6">
                             <label class="col-form-label col-sm-4 text-center">會員名稱: </label>
-                            <select class="custom-select col-sm-8" v-model="list.OrdersDetails.memberName" disabled>
+                            {{-- <select class="custom-select col-sm-8" v-model="list.OrdersDetails.memberName" disabled>
                                 <option v-for="memberitem in memberList" :value="memberitem.MemberName">@{{memberitem.MemberName}}</option>
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control col-sm-8" v-model="list.OrdersDetails.memberName" disabled>
                         </div>
                         <div class="form-group row col-sm-6">
                             <label class="col-form-label col-sm-4 text-center">餐廳名稱: </label>
-                            <select class="custom-select col-sm-8" v-model="shopSelect" disabled>
+                            {{-- <select class="custom-select col-sm-8" v-model="shopSelect" disabled>
                                 <option v-for="shopitem in shopList" :value="shopitem.ShopID">@{{shopitem.ShopName}}</option>
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control col-sm-8" v-model="list.OrdersDetails.restaurant" disabled>
                         </div>
                     </div>
                     <!-- 標題 -->
@@ -123,8 +125,7 @@
                                     <td style="border: 1px solid black;width: 28%;">
                                     <input type="text" class="form-control" v-model="item.mealQuantity" disabled></td>
                                     <td style="border: 1px solid black;width: 28%;" >
-                                        <input type="text" class="text-center" v-for="mealitem in mealList" v-if="item.mealName == mealitem.MealName" 
-                                        v-model="item.mealUnitPrice = mealitem.MealPrice" disabled>
+                                        <input type="text" class="text-center" v-model="item.mealUnitPrice" disabled>
                                     </td>
                                     <td style="border: 1px solid black;width: 15%;"data-toggle="collapse"
                                     :data-target="recombind[index]" class="btn-info h6" >展開或收合</td>
@@ -311,27 +312,21 @@
                 title:"",
                 list: treeData,
                 recombind: [],
-                memberList:[],
-                shopList:[],
-                shopSelect:'',
-                mealList:[],
-                status:false
-
             },
             methods:{
                 init:function(){
                     let _this = this;
-                    axios.get('/api/member')
-                        .then(function (response) {
-                            // _this.list.OrdersDetails.memberName = response.data[0].MemberName;
-                            _this.memberList  = response.data;
-                        })
-                    axios.get('/api/shop')
-                        .then(function (response) {
-                            // _this.list.OrdersDetails.restaurant = response.data[0].ShopName;
-                            // _this.shopSelect = response.data[0].ShopID;
-                            _this.shopList  = response.data;
-                        })
+                    // axios.get('/api/member')
+                    //     .then(function (response) {
+                    //         // _this.list.OrdersDetails.memberName = response.data[0].MemberName;
+                    //         _this.memberList  = response.data;
+                    //     })
+                    // axios.get('/api/shop')
+                    //     .then(function (response) {
+                    //         // _this.list.OrdersDetails.restaurant = response.data[0].ShopName;
+                    //         // _this.shopSelect = response.data[0].ShopID;
+                    //         _this.shopList  = response.data;
+                    //     })
                     this.list.OrdersDetails.meal.forEach((element,index) => {
                         element.mealDetail.forEach((ele,inIndex) =>{
                             _this.recombind[index] = "#" + ele.mealNum;  //boostrap
@@ -362,59 +357,59 @@
                         })
                     }else{
                         // 新增資料
-                        this.memberList.forEach(element => {
-                            if (element.MemberName == this.list.OrdersDetails.memberName){
-                                this.list.MemberID = element.MemberID;
-                            }
-                        });
-                        var dataToSever = {
-                            OrdersNum: this.list.OrdersNum,
-                            OrdersDetails: JSON.stringify(this.list.OrdersDetails),
-                            OrdersCreate: new Date().format(),
-                            OrdersUpdate: new Date().format(),
-                            OrdersStatus: this.list.OrdersStatus,
-                            MemberID: this.list.MemberID,
-                            ShopID: this.list.ShopID
-                        }
-                        // console.log(dataToSever);
-                        // 檢查資料 (有空再說)
+                        // this.memberList.forEach(element => {
+                        //     if (element.MemberName == this.list.OrdersDetails.memberName){
+                        //         this.list.MemberID = element.MemberID;
+                        //     }
+                        // });
+                        // var dataToSever = {
+                        //     OrdersNum: this.list.OrdersNum,
+                        //     OrdersDetails: JSON.stringify(this.list.OrdersDetails),
+                        //     OrdersCreate: new Date().format(),
+                        //     OrdersUpdate: new Date().format(),
+                        //     OrdersStatus: this.list.OrdersStatus,
+                        //     MemberID: this.list.MemberID,
+                        //     ShopID: this.list.ShopID
+                        // }
+                        // // console.log(dataToSever);
+                        // // 檢查資料 (有空再說)
 
-                        ///////////
+                        // ///////////
 
-                        // 傳送資料
-                        axios.post('/api/order', dataToSever)
-                        .then(function (response) {
-                            // console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                            order.init();                //更新目前畫面
-                        })
+                        // // 傳送資料
+                        // axios.post('/api/order', dataToSever)
+                        // .then(function (response) {
+                        //     // console.log(response.data['ok']);  // 成功回傳時就會顯示true
+                        //     order.init();                //更新目前畫面
+                        // })
                         
                     }
                     $("#orderModal").modal("hide");  //隱藏對話盒
                 }
             },
             watch:{
-                shopSelect:function(value){
-                    // console.log(value);
-                    this.shopList.forEach(element => {
-                        if (element.ShopID == value){
-                            this.list.OrdersDetails.restaurant = element.ShopName;
-                            this.list.ShopID = element.ShopID;
-                        }
-                    });
-                    let _this = this;
-                    axios.get('/api/meal/'+value)
-                        .then(function (response) {
-                            // console.log(_this.mealList)
-                            if(Object.keys(response.data).length != 0){
-                                _this.list.OrdersDetails.meal[lastNum].mealName = response.data[0].MealName;
-                                _this.mealList  = response.data;
-                            }else{
-                                _this.list.OrdersDetails.meal[lastNum].mealName = "";
-                                _this.mealList  = [];
-                            }
-                            // console.log(_this.mealList)
-                    })
-                }
+                // shopSelect:function(value){
+                //     // console.log(value);
+                //     this.shopList.forEach(element => {
+                //         if (element.ShopID == value){
+                //             this.list.OrdersDetails.restaurant = element.ShopName;
+                //             this.list.ShopID = element.ShopID;
+                //         }
+                //     });
+                //     let _this = this;
+                //     axios.get('/api/meal/'+value)
+                //         .then(function (response) {
+                //             // console.log(_this.mealList)
+                //             if(Object.keys(response.data).length != 0){
+                //                 _this.list.OrdersDetails.meal[lastNum].mealName = response.data[0].MealName;
+                //                 _this.mealList  = response.data;
+                //             }else{
+                //                 _this.list.OrdersDetails.meal[lastNum].mealName = "";
+                //                 _this.mealList  = [];
+                //             }
+                //             // console.log(_this.mealList)
+                //     })
+                // }
             },
             beforeMount:function(){
                 this.init();

@@ -42,7 +42,7 @@
                     </div>
                     <div class="col text-center">
                         <button id="singlebutton" name="singlebutton" 
-                        v-on:click="remove(item.ShopID)"   class="btn btn-danger redBtn">刪除餐廳</button>
+                        v-on:click="remove(item.ShopID)"   class="btn btn-danger RedBtn">刪除餐廳</button>
                     </div>
                 </div>
 
@@ -168,7 +168,7 @@
                                         v-on:click="addDetail(index)">新增細項</button>
                                     </div>
                                     <div class="col-sm-4">
-                                        <button type="button" class="btn btn-primary form-control"
+                                        <button type="button" class="btn btn-danger form-control"
                                         v-on:click="removeMeal(index)">刪除餐點</button>
                                     </div>
                                 </div>
