@@ -22,8 +22,8 @@ class BackEnd extends Controller
         $adminName = $request->adminName;
         $adminPassword = $request->adminPassword;
 
-        if($adminName == "AI0101cyfood"){
-            if($adminPassword == "admincyfood0101"){
+        if($adminName == "admin"){
+            if($adminPassword == "admin"){
                 Session::put('adminname', $adminName);
                 return redirect("/BackEnd/order");
             }else{
@@ -194,7 +194,7 @@ class BackEnd extends Controller
         $order->MemberID = $request->MemberID;
         $order->ShopID = $request->ShopID;
         $ok = $order->save();
-        return response()->json(['ok' => $ok], 200);
+        return response()->json(['ok' => $ok , 'OrdersNum' => $OrdersNum], 200);
     }
     
     ////////////////   update data   ////////////////
@@ -296,24 +296,29 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
 
-    function ordertest(){
-        //產生流水號
-        $order = Orders::max('OrdersNum');
-        $date = date('Ymd');
-        $subdate = substr($order, -11, -3);
-        $suborder = substr($order, 2);
-        echo $order."<br>";
-        echo substr($order, -11, -3)."<br>"; 
-        
-        //判定日期
-        if($date !== $subdate){
-            $OrdersNum = "CY".$date."001";
-            // echo $OrdersNum;
-        }else{
-            $suborder += 1;
-            $OrdersNum ="CY".$suborder;
-            echo $OrdersNum;
+    ////////////////   餐廳端修改密碼相關   ////////////////
+
+    function checkPassword(Request $request,$id){
+        $shop = Shop::find($id);
+        if(!Hash::check($request->ShopPassword, $shop->ShopPassword)){
+            
+            return response()->json(['passwordError' => true], 200);
         }
+    }
+
+    function changeShopPwd(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $shop = Shop::find($id);
+        if ($shop) {
+            $shop->ShopPassword = Hash::make($request->ShopPassword);
+            $ok = $shop->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
     
 }

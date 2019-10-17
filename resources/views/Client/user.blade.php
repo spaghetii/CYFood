@@ -165,7 +165,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark" id="restEdit">確認修改</button>
+                        <button type="button" class="btn btn-outline-dark" v-on:click="restEdit" id="restEdit">確認修改</button>
                     </div> 
                 </form>
             </div>
@@ -175,23 +175,26 @@
                     <div class="form-group row">
                         <label for="pswdNow" class="col-sm-3 col-form-label">現有密碼</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="pswdNow" v-model="shop.ShopPassword" placeholder="Password">
-                        </div>
+                            <input type="password" class="form-control" v-bind:class="{ 'is-invalid': passwordError ,'is-valid': passwordOK }" id="pswdNow" v-model.lazy="shopPassword" placeholder="Password">
+                            <div class="invalid-feedback">
+                                密碼錯誤
+                            </div>
+                        </div> 
                     </div>
                     <div class="form-group row">
                         <label for="pswdNew1" class="col-sm-3 col-form-label">更新密碼</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="pswdNew1" placeholder="Password">
+                            <input type="password" class="form-control" id="pswdNew1" v-model="newPassword" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="pswdNew2" class="col-sm-3 col-form-label">確認密碼</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="pswdNew2" placeholder="Password">
+                            <input type="password" class="form-control" v-bind:class="{ 'is-invalid': repeatError ,'is-valid': repeatOK }" id="pswdNew2" v-model.lazy="repeatPassword" placeholder="Password">
                         </div>
                     </div>
                     <div class="row">
-                        <button type="button" class="btn btn-outline-dark" id="pswdEdit">確認修改</button>
+                        <button type="button" class="btn btn-outline-dark"   :disabled="isDisabled" v-on:click="changePassword" id="pswdEdit">確認修改</button>
                     </div> 
                 </form>
             </div>
@@ -245,8 +248,8 @@
             shopID:-1
         },
         mounted:function(){
-            let shopID = location.pathname.substr(11);
-            this.shopID = shopID;
+            let test = (location.href).split("/");
+            this.shopID = test[test.length-1];
             this.init();
         },
         methods:{
@@ -332,7 +335,14 @@
                 {type:"美式美食"},
                 {type:"飲料"},
             ],
-            emailHelpShow:false
+            emailHelpShow:false,
+            shopPassword:"",
+            newPassword:"",
+            repeatPassword:"",
+            passwordError:false,
+            passwordOK:false,
+            repeatError:false,
+            repeatOK:false, 
         },
         methods:{
             emailHelp:function(){
@@ -349,6 +359,91 @@
                     .catch(function(response){
                         console.log(response);
                     })
+            },
+            restEdit:function(){
+                let _this = this;
+                axios.put('/api/shop/'+restOrder.shopID, this.shop)
+                    .then(function (response) {
+                        if (response.data['ok']) {
+                            Swal.fire({
+                                type: 'success',
+                                title: '修改資料成功',
+                            }).then((result) => {
+                                console.log(result.value);
+                                if (result.value) {
+                                    _this.init(); //更新目前畫面
+                                }
+                            })   
+                        }           
+                    })
+            },
+            changePassword:function(){
+                let self = this;
+                axios.put('/api/shop/changepwd/'+restOrder.shopID, {
+                    ShopPassword: this.newPassword
+                })
+                .then(function (response) {
+                    if (response.data['ok']) {
+                        Swal.fire({
+                            type: 'success',
+                            title: '修改密碼成功',
+                        }).then((result) => {
+                            console.log(result.value);
+                            if (result.value) {
+                                self.shopPassword="";
+                                self.newPassword="";
+                                self.repeatPassword="";
+                            }
+                        })   
+                    }               
+                })
+            }
+        },
+        watch:{
+            shopPassword:function(){
+                if(this.shopPassword == ""){
+                    this.passwordError = false;
+                    this.passwordOK = false;
+                    return;
+                }
+                let self = this;
+                axios.post('/api/shop/checkpwd/'+restOrder.shopID, {
+                        ShopPassword: this.shopPassword,
+                    })
+                    .then(function (response) {
+                        console.log(response.data['passwordError']);
+                        if (response.data['passwordError']){
+                            self.passwordError = true;
+                            return;
+                        }
+                        self.passwordError = false;
+                        self.passwordOK = true;
+                            
+                    })
+                    .catch(function (response) {
+                        console.log(response)
+                    });
+            },
+            repeatPassword:function(){
+                if(this.repeatPassword == ""){
+                    this.repeatError = false;
+                    this.repeatOK = false;
+                    return;
+                }
+                if(this.repeatPassword != this.newPassword){
+                    this.repeatError = true;
+                    return;
+                }
+                this.repeatError = false;
+                this.repeatOK = true;
+            }
+        },
+        computed:{
+            isDisabled(){
+                if(this.repeatOK && this.passwordOK){
+                    return false;
+                }
+                return true;
             }
         },
         mounted:function(){

@@ -168,15 +168,6 @@ body {font-family:"Microsoft JhengHei";}
     width: 20%;
 }
 
-.shoppingBagModalItemDetail {
-    width: 75%;
-    color: black;
-}
-
-.shoppingBagModalItemDetail:hover {
-    color: black;
-}
-
 .modal.right #shoppingBagModalCheckOutDiv {
     background-color: orange;
     color: white;
@@ -246,6 +237,16 @@ body {font-family:"Microsoft JhengHei";}
 #restaurantAddressDesc {
     color: #ffa500;
     cursor: pointer;
+}
+
+/* newOrderMadal */
+#newOrderMadal {
+    top:50px;
+}
+
+#newOrderMadalButton {
+    font-size:1.2rem;
+    padding: 10px 0px;
 }
 
 /* 分類排 */
@@ -510,4 +511,12 @@ body {font-family:"Microsoft JhengHei";}
 
 [v-cloak] {
     display: none;
+}
+
+/* backtop */
+#backTop {
+    position:fixed;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
 }

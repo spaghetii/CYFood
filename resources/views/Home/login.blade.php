@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+    <script>
+        if (localStorage.getItem("memberID")) {
+            window.location.href="/loginHomepage";
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -112,7 +117,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/reset">
+                    <form>
                         @csrf
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">請輸入電子郵件</label>
@@ -132,9 +137,7 @@
     <script>
         //防止登入後還能進來登入頁 待改進
         // $(document).ready(function(){
-        //     if (localStorage.getItem("memberID")) {
-        //         window.location.href="/loginHomepage";
-        //     }
+        //     
         // })
         //登入相關
         var loginform = new Vue({
@@ -184,11 +187,8 @@
                                         },
                                         onClose: () => {
                                             clearInterval(timerInterval);
-                                            if (localStorage.getItem("restautantName")) {
-                                                window.location.href="/orderDetail";
-                                            }else{
-                                                window.self.location=window.document.referrer;  
-                                            }
+                                            window.self.location=window.document.referrer;  
+                                            
                                         }
                                     })
                                 } else {
@@ -232,7 +232,7 @@
                 registerEmail:function(){
                     this.errorEmail = "";
                     this.okMsg="";
-                    let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)+$/;
+                    let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)*$/;
                     if(this.registerEmail == ""){
                         this.checkEmail = false;
                     }

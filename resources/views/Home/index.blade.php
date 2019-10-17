@@ -3,7 +3,7 @@
 {{-- 隱藏式 header 地址搜尋 --}}
 @section('headerSearchLarge')
     <div class="input-group navbar-nav col-sm-6" id="headerSearchLarge">
-        <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
+        <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號" disabled>
         <div class="input-group-append">
             <button class="btn btn-warning" type="submit" id="headerSearchAddressButton">Go</button>
         </div>
@@ -20,7 +20,7 @@
             <div class="container">  
                 <!-- 地址搜尋 -->
                 <div class="input-group col-sm-12 col-12" id="SearchAddress">
-                    <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
+                    <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號" disabled>
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="submit" id="mainSearchAddressButton">Go</button>
                     </div>
@@ -38,22 +38,17 @@
                 <a :href="'/restaurant/'+ item.ShopID" class="restaurantLink">
                 <div><img :src="item.ShopImage" class="restaurantImage" alt=""></div>
                     <div class="todayRecommendContent">
-                        <div class="row mt-2">
+                        <div class="row mt-2" v-cloak>
                             @{{item.ShopName}}
                         </div>
                         <div class="row mt-2">
-                            <div class="mr-1 todayRecommendContentItem"><small>$.@{{item.ShopType}}</small></div>
+                            <div class="mr-1 todayRecommendContentItem" v-cloak><small>$.@{{item.ShopType}}</small></div>
                             <div class="mr-1 todayRecommendContentItem"><img src="img/star1.png" class="mr-1"><small>4.7/5</small></div>
                             <div class="mr-1 todayRecommendContentItem"><small>15TWD 費用</small></div>
                         </div>
                     </div>
                 </a>
-            </div>       
-             
-                  
-               
-              
-                
+            </div>           
         </div> <!-- row -->
     </div> <!-- todayRecommend -->
     

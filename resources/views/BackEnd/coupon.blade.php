@@ -43,7 +43,7 @@
                         v-on:click="edit(item.CouponID)">修改優惠</button>
                     </div>
                     <div class="col text-center">
-                        <button name="singlebutton" class="btn btn-danger redBtn"
+                        <button name="singlebutton" class="btn btn-danger RedBtn"
                         v-on:click="remove(item.CouponID)">刪除優惠</button>
                     </div>
                 </div>

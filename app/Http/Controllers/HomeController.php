@@ -201,7 +201,8 @@ class HomeController extends Controller
     function clientSend(Request $request){
         $header = $request->header;
         $id = $request->id;
-        broadcast (new OrdersEvent($header,$id))->toOthers();
+        $type =$request->type;
+        broadcast (new OrdersEvent($header,$id,$type))->toOthers();
         
     }
 

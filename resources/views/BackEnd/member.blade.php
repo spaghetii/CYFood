@@ -40,7 +40,7 @@
                     </div>
                     <div class="col change text-center">
                         <button id="singlebutton" name="singlebutton" 
-                        v-on:click="remove(item.MemberID)" class="btn btn-danger redBtn">會員停權</button>
+                        v-on:click="remove(item.MemberID)" class="btn btn-danger RedBtn">會員停權</button>
                     </div>
                 </div>
 

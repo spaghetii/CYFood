@@ -14,7 +14,7 @@
                         <img src="img/user1.png" alt="">
                     </div>
                     <div class="col-sm-8 col-8">
-                        <div class="mt-4 mb-3">
+                        <div class="mt-4 mb-3" v-cloak>
                         <h6 class="userProfileDisplay">@{{profile.MemberName}}</h6>
                             <div class="input-group-sm userProfileHidden">
                                 <input type="text" class="form-control" id="userProfileName" :placeholder="profile.MemberName">
@@ -32,7 +32,7 @@
                     <div class="col-sm-4 col-4">
                         <h6 class="floatRight">Tel</h6>
                     </div>
-                    <div class="col-sm-8 col-8 userProfileDisplay">
+                    <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
                         <h6>@{{profile.MemberPhone}}</h6>           
                     </div>
                     <div class="input-group-sm col-sm-8 col-8 userProfileHidden">
@@ -43,7 +43,7 @@
                     <div class="col-sm-4 col-4">
                         <h6 class="floatRight">E-mail</h6>
                     </div>
-                    <div class="col-sm-8 col-8 userProfileDisplay">
+                    <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
                         <h6>@{{profile.MemberEmail}}</h6>
                     </div>
                     <div class="col-sm-8 col-8">
@@ -111,7 +111,7 @@
                 methods:{
                     init: function(){
                         var _this = this;
-                        this.username = sessionStorage.getItem('name');
+                        this.username = sessionStorage.getItem('memberName');
                         axios.get('/api/member/'+this.username)
                         .then(function (response) {
                             _this.profile = response.data;
