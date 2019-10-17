@@ -100,24 +100,23 @@
             <div class="row no-gutters">
                 <div class="col-lg-2">
                     <div id="chartSearchDiv">
-                        <select class="form-control form-control-lg chartSearch" name="chartName" v-model="chartName">
+                        <select class="form-control form-control-lg chartSearch" name="chartName">
                             <option value="chartNameOrders">訂單數</option>
                             <option value="chartNameSales">銷售額</option>
                             <option value="chartNameProducts">商品</option>
                         </select>
-                        <select class="form-control form-control-lg chartSearch" name="chartYear" v-model="chartYear">
+                        <select class="form-control form-control-lg chartSearch" name="chartYear">
                             <option value="chartYear2019">2019</option>
                         </select>
-                        <select class="form-control form-control-lg chartSearch" name="chartMonth" v-model="chartMonth">
+                        <select class="form-control form-control-lg chartSearch" name="chartMonth">
                             <option value="chartMonth9">Semptember</option>
                             <option value="chartMonth10">October</option>
                             <option value="chartMonth11">November</option>
                         </select>
-                        @{{chartId}}
                     </div>
                 </div>
                 <div class="col-lg-8" id="chartDiv">
-                    <canvas :id="chartId"></canvas>
+                    <ve-histogram :data="chartData"></ve-histogram>
                 </div>
                 <div class="col-lg-2"></div>
             </div>
@@ -202,7 +201,6 @@
 @endsection
 
 @section('script')
-<script type="text/javascript" src="/js/charts.js" charset="UTF-8"></script>
 <script>
     var delay = new Vue({
         el:"#delay",
@@ -219,7 +217,7 @@
                     this.headerShow = false;
                     this.bodyShow = false;
                     this.btnShow = false;
-                    var flag = setInterval(goBack, 100);
+                    var flag = setInterval(goBack, 1000);
                     function goBack(){
                         delay.delayOptions--;
                         if(delay.delayOptions<=0){
@@ -265,6 +263,32 @@
                             })
                         })
                         // console.log(_this.list);
+                        //以下為charts:
+                        var finalDate = [];
+                        var counter = {};
+                        for(var ii=0;ii<_this.list.length;ii++){
+                            var beforeDate = _this.list[ii].OrdersCreate.split(" ",1);//取出2019-10-04
+                            var afterDate = beforeDate[0].split("-");//取出['2019','10','04']
+                            finalDate.push(afterDate[2]);//['04','05','05'.....]
+                        }
+                        finalDate.forEach(function(x){
+                            counter[x] = (counter[x] || 0) + 1;
+                        })
+                        console.log(counter["05"]);//=>9 共9筆
+                        var result = Array.from(new Set(finalDate));
+                        console.log(result);//['04','05','15','16']只取出不重複項目
+                        for(var index=0;index<result.length;index++){
+                            chartDiv.chartData.rows.push({'日期':result[index],'訂單數':counter[result[index]]});
+                        }
+                        
+
+                        // var y = 2019;
+                        // var m = 10;
+                        // var firstDay = new Date(y, m - 1, 1).getDate();
+                        // var lastDay = new Date(y, m, 0).getDate();
+                        // for(var i=firstDay;i<=lastDay;i++){
+                        //     chartDiv.chartData.rows.push({'日期':i,'訂單數':1});
+                        // }
                     })
                     .catch(function(response){
                         console.log(response);
@@ -332,19 +356,19 @@
         }
     })
 
-    var restSales = new Vue({
-        el:"#restSales",
-        data:{
-            chartName:"",
-            chartYear:"",
-            chartMonth:""
-        },
-        computed:{
-            chartId:function(){
-                return this.chartName+this.chartYear+this.chartMonth;
-            }
+    var chartDiv = new Vue({
+        el:"#chartDiv",
+        data:function () {
+            var chartData = {
+                columns:['日期','訂單數'],
+                rows:[]
+            };
+
+            return {chartData}
         }
     })
+
+   
   
 </script>
 @endsection
