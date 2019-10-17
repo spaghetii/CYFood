@@ -90,12 +90,12 @@ values ('CY20191004029',
 '2019/10/05','2019/10/05','1',1,1);
 insert into orders 
 (ordersNum,ordersDetails,ordersCreate,ordersUpdate,OrdersStatus,memberId,shopId) 
-values ('CY20191004030',
-'{"restaurant":"CY2","memberName":"蚊香蝌蚪","meal":[{"mealQuantity":"1","mealName":"蚊香","mealUnitPrice":"10",
+values ('CY20191004031',
+'{"restaurant":"CY2","memberName":"皮卡丘","meal":[{"mealQuantity":"1","mealName":"蚊香","mealUnitPrice":"10",
     "mealDetail":[{"type":0,"mealNum":"meal0","detail": "","price":"","check":false}] },
    {"mealQuantity":"1","mealName":"青蛙","mealUnitPrice":"20",
    "mealDetail":[{"type":0,"mealNum":"meal1","detail": "","price":"","check":false}] } ]}',
-'2019/10/05','2019/10/05','1',1,1);
+'2019/10/16','2019/10/16','1',1,1);
 
 
 
