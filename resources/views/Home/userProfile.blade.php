@@ -17,13 +17,13 @@
                         <div class="mt-4 mb-3" v-cloak>
                         <h6 class="userProfileDisplay">@{{profile.MemberName}}</h6>
                             <div class="input-group-sm userProfileHidden">
-                                <input type="text" class="form-control" id="userProfileName" :placeholder="profile.MemberName">
+                                <input type="text" class="form-control" v-model="profile.MemberName" id="userProfileName" :placeholder="profile.MemberName">
                             </div>
                         </div>
                         <div class="mb-3">
                             <h5 class="userProfileDisplay">·········</h5>
                             <div class="input-group-sm userProfileHidden">
-                                <input type="password" class="form-control" id="userProfilePassword" placeholder="Password" value="123456789">
+                                <input type="password" class="form-control" v-model="profile.MemberPassword" id="userProfilePassword" placeholder="Password" value="123456789">
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <h6>@{{profile.MemberPhone}}</h6>           
                     </div>
                     <div class="input-group-sm col-sm-8 col-8 userProfileHidden">
-                        <input type="text" class="form-control" id="userProfilePhone" :placeholder="profile.MemberPhone">
+                        <input type="text" class="form-control" v-model="profile.MemberPhone" id="userProfilePhone" :placeholder="profile.MemberPhone">
                     </div>
                 </div>
                 <div class="container-fluid alignCenter mb-3">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-sm-8 col-8">
                         <div class="input-group-sm userProfileHidden">
-                            <input type="email" class="form-control" id="userProfileEmail" :placeholder="profile.MemberEmail">
+                            <input type="email" class="form-control" v-model="profile.MemberEmail" id="userProfileEmail" :placeholder="profile.MemberEmail">
                         </div>
                         <div class="form-check alignCenter userProfileHidden">
                             <small>
