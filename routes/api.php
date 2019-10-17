@@ -26,6 +26,8 @@ Route::post('/coupon', 'BackEnd@couponInsert');
 Route::put('/coupon/{id}', 'BackEnd@couponUpdate');
 // 刪除優惠
 Route::delete('/coupon/{id}', "BackEnd@couponDelete");
+// orderdetail checkcoupon
+Route::post('/coupon/check',"BackEnd@couponCheck");
 
 // order
 // 顯示全部訂單
@@ -95,8 +97,8 @@ Route::get('/coupon/{id}', function($id) {
     return response()->json(App\Coupon::find($id), 200);
 });
 
-Route::get('/member/{name}', function($name) {
-    return response()->json(App\Member::where('MemberName', $name)->first(), 200);     
+Route::get('/member/{id}', function($id) {
+    return response()->json(App\Member::find($id), 200);     
 });
 
 Route::get('/testorder',"BackEnd@ordertest")

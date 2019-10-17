@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use DB;
 use Storage;
 use App\Coupon;
 use App\Orders;
@@ -37,18 +38,34 @@ class BackEnd extends Controller
     ////////////////   index   ////////////////
 
     function couponIndex(){
+        $adminName = Session::get("adminname" , "Guest");
+        if($adminName == "Guest"){
+            return view("errors.404");
+        }
         return view("BackEnd.coupon");
     }
     
     function memberIndex(){
+        $adminName = Session::get("adminname" , "Guest");
+        if($adminName == "Guest"){
+            return view("errors.404");
+        }
         return view("BackEnd.member");
     }
     
     function orderIndex(){
+        $adminName = Session::get("adminname" , "Guest");
+        if($adminName == "Guest"){
+            return view("errors.404");
+        }
         return view("BackEnd.order");
     }
     
     function restaurantIndex(){
+        $adminName = Session::get("adminname" , "Guest");
+        if($adminName == "Guest"){
+            return view("errors.404");
+        }
         return view("BackEnd.restaurant");
     }
     
@@ -185,6 +202,17 @@ class BackEnd extends Controller
             // echo $OrdersNum;
         }
 
+        $OrdersDetails = json_decode($request->OrdersDetails,true);
+        
+        if ($OrdersDetails["coupon"]) {
+            $coupon = Coupon::where('CouponCode', $OrdersDetails["coupon"])->first();
+            if($coupon){
+                $coupon->CouponStatus = false;
+                $coupon->save();
+            }
+        }
+        
+
         $order = new Orders;
         $order->OrdersNum = $OrdersNum;
         $order->OrdersDetails = $request->OrdersDetails;
@@ -285,7 +313,7 @@ class BackEnd extends Controller
             $member->MemberName = $request->MemberName;
             $member->MemberEmail = $request->MemberEmail;
             $member->MemberPhone = $request->MemberPhone;
-            $member->MemberPassword = $request->MemberPassword;
+            $member->MemberPassword = Hash::make($request->MemberPassword);
             $member->MemberPermission = $request->MemberPermission;
             $ok = $member->save();
             if (!$ok) $msg = 'Error';
@@ -321,4 +349,18 @@ class BackEnd extends Controller
         return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
     
+    ////////////////   檢查優惠券   ////////////////
+    
+    function couponCheck(Request $request){
+        $coupon = DB::table('coupons')->where('CouponCode', $request->CouponCode)->first();
+
+        if($coupon){
+            if($coupon->CouponStatus == false){
+                return response()->json(['ok' => false], 200); 
+            }
+                return response()->json(['ok' => true], 200);
+        }
+        return response()->json(['ok' => false], 200);
+        
+    }
 }

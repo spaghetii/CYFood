@@ -29,7 +29,8 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-3">優惠卷</div>
-                            <div class="col-9"><input type="text" class="form-control form-control-sm"></div>
+                            <div class="col-9"><input type="text" v-bind:class="{ 'is-invalid': couponError ,'is-valid': couponOK }" 
+                                                v-model.lazy="coupon" class="form-control form-control-sm"></div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-3 alignCenter">付款方式</div>
@@ -58,7 +59,7 @@
                             <h5>餐點份數&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
                             <small>訂餐餐廳：@{{restaurantName}}</small>
                         </div>
-                        <a href="" class="colorOrange aHoverColor">新增餐點</a>
+                        {{-- <a href="" class="colorOrange aHoverColor">新增餐點</a> --}}
                     </div>
                     <div>
                         <hr>
@@ -117,7 +118,7 @@
                         </li>
                         <li class="noPad noMarg mb-4 d-flex justify-content-between">
                             <div>外送費</div>
-                            <div>NT$15</div>
+                            <div>NT$@{{shippingfee}}</div>
                         </li>
                         <li class="noPad noMarg mb-3 d-flex justify-content-between">
                             <div><h5>總計</h5></div>
@@ -146,6 +147,7 @@
                 shiptime: 0,
                 ShopID: -1,
                 ShopImage:"",
+                shippingfee:15,
                 // 會員
                 memberName:'',
                 memberID:'',
@@ -157,16 +159,27 @@
                 shoppingBagTotalPrice: 0,
 
                 // 加運費 訂單總金額
-                orderTotalAmount: 0,
+                // orderTotalAmount: 0,
 
                 // 購物袋 各個資料
                 shoppingBagMealQuantity: [],
                 shoppingBagMealTotalPrice: [],
                 shoppingBagMealName: [],
                 shoppingBagMealPrice: [],
+                //優惠券
+                coupon:"",
+                couponError:false,
+                couponOK:false
             },
             methods:{
                 sendOrders: function(){
+                    if(this.couponError == true){
+                        Swal.fire({
+                            type: 'error',
+                            title: '無此優惠券或已失效',
+                        })
+                        return;
+                    }
                     let _this = this;
                     Swal.fire({                 // 送出訂單前確認視窗
                         title: '確定要安排訂單嗎?',
@@ -185,8 +198,8 @@
                                     OrdersDetails: {
                                         restaurant: _this.restaurantName,
                                         memberName: _this.memberName,
-                                        coupon: '',
                                         meal:[],
+                                        coupon: _this.coupon,
                                         orderTotalAmount:_this.orderTotalAmount,   //新增的
                                         ShopImage:_this.ShopImage   //多塞一個餐廳圖片  歷史訂單要用 by 林培誠
                                     },
@@ -270,9 +283,40 @@
                         _this.shoppingBagTotalPrice += element;
                     });
                     // 加運費 總價 更新
-                    this.orderTotalAmount = this.shoppingBagTotalPrice + 15 ;
+                    // this.orderTotalAmount = this.shoppingBagTotalPrice + this.shippingfee;
                     
                 },
+                coupon:function(){
+                    let self = this;
+                    if(this.coupon == ""){
+                        this.couponError = false;
+                        this.couponOK =false;
+                        this.shippingfee = 15;
+                        return;
+                    }
+                    axios.post('/api/coupon/check', {
+                        CouponCode: this.coupon,
+                    })
+                    .then(function (response) {
+                        if (response.data['ok']) {
+                            self.couponOK=true;
+                            self.shippingfee = 0;
+                            return;
+                        }
+                        self.shippingfee = 15;
+                        self.couponOK=false;
+                        self.couponError=true;
+                        
+                    })
+                    .catch(function (response) {
+                        console.log(response)
+                    });
+                }
+            },
+            computed:{
+                orderTotalAmount : function(){
+                    return this.shoppingBagTotalPrice + this.shippingfee;
+                }
             },
             mounted: function () {
                 // 結帳畫面隱藏遊覽列購物袋圖示
