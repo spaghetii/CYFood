@@ -25,11 +25,13 @@ class HomeController extends Controller
     }
 
     function restaurantDetail($id,Request $request) {
-        // $url = "/restaurant"."/".$request->route('id');
-        // dd($id);
-        $test = $id;
         
-        // dd($url);
+        $shopCount = DB::table('shops')->count();
+        
+        if($id > $shopCount || $id<1){
+            return view("errors.404");
+        }
+        
         
         return view('home.restaurantDetail',compact("id"));      
     }
