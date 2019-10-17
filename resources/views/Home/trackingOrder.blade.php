@@ -218,7 +218,7 @@
                                 hour += 1;
                                 min  -= 60;
                                 min  += 100;
-                                min = min.substr(1);
+                                min = min.toString().substr(1);
                             }
                             timerApp.arrivalTime= hour+":"+min;
                             timerApp.progressbar();
