@@ -43,7 +43,7 @@
                 <div class="row" id="detailsButton">
                     <div class="col-12">
                         <div class="alert alert-dark" role="alert" id="takeoutTime">
-                            外送員將於<span id="timeInterval"> 5:00 </span>後抵達
+                            外送員將於<span id="timeInterval"> @{{remainingTime}} </span>後抵達
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,8 @@
             list:[],
             total:[],
             currentIndex:0,
-            shopID:-1
+            shopID:-1,
+            remainingTime:"XX:XX"
         },
         mounted:function(){
             let test = (location.href).split("/");
@@ -81,7 +82,7 @@
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             })
                         })
-                        // console.log(_this.list);
+                        console.log(_this.list);
                     })
                     .catch(function(response){
                         console.log(response);
@@ -89,8 +90,34 @@
             },
             orderClick:function(index){
                 this.currentIndex = index;
+                this.init();
+                this.delivertime(index);
                 $(".jumbotron").css("display","block");
-            }
+            },
+            delivertime :async function(index){
+                _this = this;
+                clearInterval(flag);
+
+                    var flag = setInterval(() => {
+                        
+                        let temp = (15*60) - Math.ceil((new Date().getTime()-new Date(_this.list[index].OrdersUpdate).getTime())/(1000));
+                        // console.log(temp);
+                        if(temp <= 0){
+                            _this.list[index].OrdersStatus = 4;
+                            axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
+                            .then(function(response){
+                                console.log(response.data['ok']);
+                                _this.init();
+                                clearInterval(flag);
+                                $(".jumbotron").css("display","block");
+                            })
+                        }
+                        let min = Math.floor(temp / 60);
+                        let sec = ((temp % 60) + 100).toString().substr(1) ;
+                        _this.remainingTime = min + ":" + sec;    
+                    }, 1000);
+            },
+            
         }
     })
 </script>

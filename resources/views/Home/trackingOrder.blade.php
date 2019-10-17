@@ -95,22 +95,22 @@
             el: '#timerApp',
             data: {
                 barValue: '0%',
-                orderStatus: '餐廳正在確定訂單 ...',
+                orderStatus: '餐廳正在準備餐點 ...',
                 arrivalTime:"--:--",
 
             },
             methods:{
             progressbar : function(){
                     var flag = setInterval(() => {
-                        temp += 20;
+                        console.log(new Date().getTime()-new Date(orderDeatil.list.OrdersUpdate).getTime());
+                        temp = (new Date().getTime()-new Date(orderDeatil.list.OrdersUpdate).getTime())/(parseInt(localStorage.getItem('shipTime'))*600);
                         this.barValue = temp + "%";
                         console.log(this.barValue);
-                        if  (temp == 20 )   { this.orderStatus = '餐點正在準備中 ...' } else if
-                            (temp == 40 )   { this.orderStatus = '外送員正在領取您的餐點' } else if
-                            (temp == 60 )   { this.orderStatus = '外送員正在前往您所在位置' } else if
-                            (temp == 80 )   { this.orderStatus = '請前往門口與外送員碰面' } else if
-                            (temp == 100)   { this.orderStatus = '已完成訂單'; clearInterval(flag);};      
-                    }, 2000);
+                        if  (temp <= 33 && temp != 0)   { this.orderStatus = '外送員正在領取您的餐點' } else if
+                            (temp <= 66 )   { this.orderStatus = '外送員正在前往您所在位置' } else if
+                            (temp <= 99 )   { this.orderStatus = '請前往門口與外送員碰面' } else if
+                            (temp >= 100)   { this.orderStatus = '已完成訂單'; clearInterval(flag);};      
+                    }, 1000);
                 },
             }
         })
@@ -221,6 +221,7 @@
                                 min = min.toString().substr(1);
                             }
                             timerApp.arrivalTime= hour+":"+min;
+                            orderDeatil.init();
                             timerApp.progressbar();
                             clearStorage();
                             break;
