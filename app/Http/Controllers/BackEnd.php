@@ -40,7 +40,7 @@ class BackEnd extends Controller
     function couponIndex(){
         $adminName = Session::get("adminname" , "Guest");
         if($adminName == "Guest"){
-            return view("errors.404");
+            return redirect("/BackEnd/login");
         }
         return view("BackEnd.coupon");
     }
@@ -48,7 +48,7 @@ class BackEnd extends Controller
     function memberIndex(){
         $adminName = Session::get("adminname" , "Guest");
         if($adminName == "Guest"){
-            return view("errors.404");
+            return redirect("/BackEnd/login");
         }
         return view("BackEnd.member");
     }
@@ -56,7 +56,7 @@ class BackEnd extends Controller
     function orderIndex(){
         $adminName = Session::get("adminname" , "Guest");
         if($adminName == "Guest"){
-            return view("errors.404");
+            return redirect("/BackEnd/login");
         }
         return view("BackEnd.order");
     }
@@ -64,7 +64,7 @@ class BackEnd extends Controller
     function restaurantIndex(){
         $adminName = Session::get("adminname" , "Guest");
         if($adminName == "Guest"){
-            return view("errors.404");
+            return redirect("/BackEnd/login");
         }
         return view("BackEnd.restaurant");
     }

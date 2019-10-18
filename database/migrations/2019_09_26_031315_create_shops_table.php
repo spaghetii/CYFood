@@ -17,12 +17,12 @@ class CreateShopsTable extends Migration
             $table->bigIncrements('ShopID');
             $table->string('ShopName',50)->unique();
             $table->string('ShopType',20);
-            $table->string('ShipTime',20);
+            $table->integer('ShipTime')->nullable();
             $table->string('ShopImage');
             $table->string('ShopAddress')->unique();
             $table->string('ShopEmail',50)->nullable();
             $table->string('ShopPhone',30)->nullable();
-            $table->string('ShopPassword')->nullable();
+            $table->string('ShopPassword',60)->nullable();
             
         });
     }

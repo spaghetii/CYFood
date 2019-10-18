@@ -15,12 +15,13 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->bigIncrements('MemberID');
-            $table->string('MemberName');
+            $table->string('MemberName',80);
             $table->string('MemberEmail',50)->unique();
             $table->string('MemberPhone',30);
-            $table->string('MemberPassword');
-            $table->string('MemberImage')->nullable();
-            
+            $table->string('MemberPassword',60);
+            $table->boolean('MemberPermission')->default(false);
+            $table->string("MemberCredit")->nullable();
+            $table->text('token')->nullable();
         });
     }
 

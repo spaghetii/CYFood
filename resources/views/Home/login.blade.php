@@ -207,6 +207,7 @@
                     }
                 },
                 resetModal:function(){
+                    reset.email="";
                     reset.repeatEmail = false;
                     $("#resetModal").modal( { backdrop: "static" } );
                 }
@@ -280,6 +281,7 @@
                             })
                             .then(function (response) {
                                 console.log(response.data['ok']);
+                                localStorage.setItem("memberID",response.data['id']);
                                 if (response.data['ok']) {
                                     Swal.fire({
                                         type: 'success',
@@ -299,6 +301,7 @@
                                             self.registerPassword = "";
                                             self.checkRegister = false;
                                             self.okEmail = false;
+                                            window.location.href ="/loginHomepage"; 
                                         }
                                         })
                                 } else {
