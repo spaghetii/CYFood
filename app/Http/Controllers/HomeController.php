@@ -170,7 +170,7 @@ class HomeController extends Controller
             $new ="";
             $len = strlen($code)-1;
             for($i=0 ; $i<$n; $i++){
-            $new .= $code[rand(0,$len)];
+                $new .= $code[rand(0,$len)];
             }
             $date = date('Y-m-d');
             $coupon =new Coupon();
@@ -179,7 +179,11 @@ class HomeController extends Controller
             $coupon->CouponStart = $date;
             $coupon->CouponDeadline = "2019-10-30";
             $coupon->save();
-            return response()->json(['ok' => true , 'coupon' => $new], 200);
+
+            //註冊後直接登入
+            $MemberID = Member::max('MemberID');
+            Session::put('userName', $request->registerName);
+            return response()->json(['ok' => true , 'coupon' => $new , 'id' => $MemberID], 200);
         }
     }
 

@@ -12,30 +12,34 @@ use Illuminate\Support\Facades\Hash;
 class ShopController extends Controller
 {
     function newOrder($id){
-        $shopName = Session::get("shopName" , "Guest");
-        if($shopName == "Guest"){
-            return view("errors.404");
+        $shopID = Session::get("shopID" , "Guest");
+        if($shopID == "Guest" || $shopID != $id){
+            Session::forget('shopID');
+            return redirect("/shop/login");
         }
         return view('Client.newOrder',compact("id"));
     }
     function processing($id){
-        $shopName = Session::get("shopName" , "Guest");
-        if($shopName == "Guest"){
-            return view("errors.404");
+        $shopID = Session::get("shopID" , "Guest");
+        if($shopID == "Guest" || $shopID != $id){
+            Session::forget('shopID');
+            return redirect("/shop/login");
         }
         return view('Client.processing',compact("id"));
     }
     function takeout($id){
-        $shopName = Session::get("shopName" , "Guest");
-        if($shopName == "Guest"){
-            return view("errors.404");
+        $shopID = Session::get("shopID" , "Guest");
+        if($shopID == "Guest" || $shopID != $id){
+            Session::forget('shopID');
+            return redirect("/shop/login");
         }
         return view('Client.takeout',compact("id"));
     }
     function user($id){
-        $shopName = Session::get("shopName" , "Guest");
-        if($shopName == "Guest"){
-            return view("errors.404");
+        $shopID = Session::get("shopID" , "Guest");
+        if($shopID == "Guest" || $shopID != $id){
+            Session::forget('shopID');
+            return redirect("/shop/login");
         }
         return view('Client.user',compact("id"));
     }
@@ -50,7 +54,7 @@ class ShopController extends Controller
         $shop = DB::table("shops")->where("ShopEmail",$request->loginEmail)->first();
         if($shop){
             if(Hash::check($request->loginPassword, $shop->ShopPassword)){
-                Session::put('shopName', $shop->ShopName);
+                Session::put('shopID', $shop->ShopID);
                 
                 return response()->json(['ok' => true , 'id' => $shop->ShopID], 200);
             }else{

@@ -197,7 +197,7 @@
                             if (response.data['ok']) {
                                 localStorage.removeItem('memberID');
                                 sessionStorage.clear();
-                                location.reload();
+                                window.location.href="/";
                             }
                         })
                         .catch(function (response) {

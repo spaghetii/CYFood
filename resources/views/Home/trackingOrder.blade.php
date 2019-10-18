@@ -109,7 +109,12 @@
                         if  (temp <= 33 && temp != 0)   { this.orderStatus = '外送員正在領取您的餐點' } else if
                             (temp <= 66 )   { this.orderStatus = '外送員正在前往您所在位置' } else if
                             (temp <= 99 )   { this.orderStatus = '請前往門口與外送員碰面' } else if
-                            (temp >= 100)   { this.orderStatus = '已完成訂單'; clearInterval(flag);};      
+                            (temp >= 100)   { 
+                                this.orderStatus = '已完成訂單'; 
+                                clearInterval(flag);
+                                localStorage.removeItem('OrdersNum');
+                                localStorage.removeItem('shipTime');
+                            };      
                     }, 1000);
                 },
             }
@@ -211,6 +216,7 @@
                         //店家呼叫外送員
                         case "ok":
                             let shipTime = localStorage.getItem('shipTime');
+                            console.log(shipTime);
                             let time = new Date();
                             let hour = time.getHours();
                             let min = time.getMinutes()+parseInt(shipTime);
@@ -223,7 +229,7 @@
                             timerApp.arrivalTime= hour+":"+min;
                             orderDeatil.init();
                             timerApp.progressbar();
-                            clearStorage();
+                            
                             break;
                         //如有丟失訊息
                         default:
