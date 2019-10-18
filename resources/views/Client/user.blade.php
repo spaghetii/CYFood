@@ -108,11 +108,12 @@
                         <select class="form-control form-control-lg chartSearch" name="chartYear">
                             <option value="chartYear2019">2019</option>
                         </select>
-                        <select class="form-control form-control-lg chartSearch" name="chartMonth">
-                            <option value="chartMonth9">Semptember</option>
-                            <option value="chartMonth10">October</option>
-                            <option value="chartMonth11">November</option>
+                        <select class="form-control form-control-lg chartSearch" name="chartMonth" v-model="chartMonth">
+                            <option value="09">9月</option>
+                            <option value="10">10月</option>
+                            <option value="11">11月</option>
                         </select>
+                        <button type="button" class="btn btn-outline-secondary" id="chartSearchBtn" v-on:click="chartSearchClick">搜尋</button>
                     </div>
                 </div>
                 <div class="col-lg-8" id="chartDiv">
@@ -272,26 +273,36 @@
                         for(var ii=0;ii<_this.list.length;ii++){
                             var beforeDate = _this.list[ii].OrdersCreate.split(" ",1);//取出2019-10-04
                             var afterDate = beforeDate[0].split("-");//取出['2019','10','04']
-                            finalDate.push(afterDate[2]);//['04','05','05'.....]
+                            if(chartSearchDiv.chartMonth==afterDate[1]){
+                                finalDate.push(afterDate[2]);//['04','05','05'.....]
+                            }
                         }
                         finalDate.forEach(function(x){
                             counter[x] = (counter[x] || 0) + 1;
                         })
-                        console.log(counter["05"]);//=>9 共9筆
+                        // console.log(counter["05"]);//=>9 共9筆
                         var result = Array.from(new Set(finalDate));
-                        console.log(result);//['04','05','15','16']只取出不重複項目
-                        for(var index=0;index<result.length;index++){
-                            chartDiv.chartData.rows.push({'日期':result[index],'訂單數':counter[result[index]]});
+                        // console.log(result);//['04','05','15','16']只取出不重複項目
+                        var y = 2019;
+                        var m = chartSearchDiv.chartMonth;
+                        var firstDay = new Date(y, m - 1, 1).getDate();
+                        var lastDay = new Date(y, m, 0).getDate();
+                        var allDay = []
+                        for(var i=firstDay;i<=lastDay;i++){
+                            allDay.push(i);
+                            allDay[i-1]=allDay[i-1]+100;
+                            allDay[i-1]=allDay[i-1].toString();
+                            allDay[i-1]=allDay[i-1].substring(1,3);
                         }
-                        
-
-                        // var y = 2019;
-                        // var m = 10;
-                        // var firstDay = new Date(y, m - 1, 1).getDate();
-                        // var lastDay = new Date(y, m, 0).getDate();
-                        // for(var i=firstDay;i<=lastDay;i++){
-                        //     chartDiv.chartData.rows.push({'日期':i,'訂單數':1});
-                        // }
+                        // console.log(allDay);//['01','02',.....]
+                        chartDiv.chartData.rows = [];//清空資料
+                        for(var index=firstDay-1;index<=lastDay-1;index++){
+                            var torf = result.some(e=>e==allDay[index]);
+                            var temp = ((index+1)<10)?'0'+(index+1):(index+1);
+                            chartDiv.chartData.rows.push({'日期':allDay[index],'訂單數':
+                                torf?counter[temp]:0
+                            });
+                        }
                     })
                     .catch(function(response){
                         console.log(response);
@@ -448,6 +459,18 @@
         },
         mounted:function(){
             this.init();
+        }
+    })
+
+    var chartSearchDiv = new Vue({
+        el:"#chartSearchDiv",
+        data:{
+            chartMonth:""
+        },
+        methods:{
+            chartSearchClick:function(){
+                restOrder.init();
+            }
         }
     })
 
