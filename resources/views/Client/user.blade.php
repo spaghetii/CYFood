@@ -177,9 +177,6 @@
                         <label for="pswdNow" class="col-sm-3 col-form-label">現有密碼</label>
                         <div class="col-sm-9">
                             <input type="password" class="form-control" v-bind:class="{ 'is-invalid': passwordError ,'is-valid': passwordOK }" id="pswdNow" v-model.lazy="shopPassword" placeholder="Password">
-                            <div class="invalid-feedback">
-                                密碼錯誤
-                            </div>
                         </div> 
                     </div>
                     <div class="form-group row">

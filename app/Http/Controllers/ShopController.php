@@ -12,15 +12,31 @@ use Illuminate\Support\Facades\Hash;
 class ShopController extends Controller
 {
     function newOrder($id){
+        $shopName = Session::get("shopName" , "Guest");
+        if($shopName == "Guest"){
+            return view("errors.404");
+        }
         return view('Client.newOrder',compact("id"));
     }
     function processing($id){
+        $shopName = Session::get("shopName" , "Guest");
+        if($shopName == "Guest"){
+            return view("errors.404");
+        }
         return view('Client.processing',compact("id"));
     }
     function takeout($id){
+        $shopName = Session::get("shopName" , "Guest");
+        if($shopName == "Guest"){
+            return view("errors.404");
+        }
         return view('Client.takeout',compact("id"));
     }
     function user($id){
+        $shopName = Session::get("shopName" , "Guest");
+        if($shopName == "Guest"){
+            return view("errors.404");
+        }
         return view('Client.user',compact("id"));
     }
     function rLogin(){

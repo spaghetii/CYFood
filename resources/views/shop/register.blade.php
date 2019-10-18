@@ -143,7 +143,7 @@
                     formData.append("ShopPhone",this.ShopPhone);
                     formData.append("ShopPassword",this.ShopPassword);
                     formData.append("ShopImage",this.ShopImage);
-
+                    
                     let config={
                         header:{
                             'Content-Type': 'multipart/form-data'
