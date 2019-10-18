@@ -15,11 +15,11 @@ class CreateMealsTable extends Migration
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->bigIncrements('MealID');
-            $table->string('MealName');
-            $table->string('MealDesc',100)->nullable();
-            $table->string('MealPrice',30);
+            $table->string('MealName',100);
+            $table->string('MealDesc')->nullable();
+            $table->integer('MealPrice');
             $table->string('MealType',50);
-            $table->string('MealImage')->nullable();
+            $table->string('MealImage')->nullable()->default("/storage/uploads/meals/default.png");
             $table->text('MealDetails')->nullable();
             $table->integer('MealQuantity')->unsigned()->nullable();
             $table->bigInteger('ShopID')->unsigned();

@@ -20,7 +20,7 @@ class CreateCouponsTable extends Migration
             $table->string("CouponDiscount",20)->nullable();
             $table->date("CouponStart");
             $table->date("CouponDeadline");
-            
+            $table->boolean('CouponStatus')->default(true);      
         });
     }
 

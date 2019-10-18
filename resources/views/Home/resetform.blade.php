@@ -73,19 +73,19 @@
         <div class="resetPassword">
             <h3 class="title">重置密碼</h3>
             <div class="reset-form  w-100  " id="reset-form">
-                <form method="post" action="/reset/resetpassword/">
+                <form v-on:submit.prevent="checkpassword">
                     @csrf
                     
                     <div class="form-group">
                         <label for="newPassword">輸入新密碼</label>
-                        <input v-model="newPassword" type="password" class="form-control" id="newPassword" name="newPassword">
+                        <input v-model="newPassword" type="password" class="form-control" id="newPassword" name="newPassword" required>
                     </div>
                     <div class="form-group">
                         <label for="repeatPassword">再輸入一次新密碼</label>
-                        <input v-model="repeatPassword" type="password" class="form-control" id="repeatPassword" name="repeatPassword">
+                        <input v-model="repeatPassword" type="password" class="form-control" id="repeatPassword" name="repeatPassword" required>
                     </div>
                     <span v-if="wrongcheck" class="wrongcheck">您兩次輸入的密碼不一致</span> <br>
-                    <button type="button" v-on:click="checkpassword" class="btn btn-primary btn-block btn-lg">送出</button>
+                    <button type="submit"  class="btn btn-primary btn-block btn-lg">送出</button>
                     
                 </form>
             </div>
