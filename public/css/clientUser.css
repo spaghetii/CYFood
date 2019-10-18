@@ -96,6 +96,10 @@ input:focus {
 .chartSearch{
     margin: 10% auto;
 }
+#chartSearchBtn{
+    display: block;
+    margin: 0% auto;
+}
 #chartDiv{
     margin:3% auto;
 }
