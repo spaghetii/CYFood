@@ -75,6 +75,11 @@ body{
     border-color: rgba(255, 166, 0, 0.856);
 }
 
+.btn-primary:disabled{
+    background-color: orange;
+    border-color: orange;
+}
+
 .form-control {
     border-radius: 0;
 }
