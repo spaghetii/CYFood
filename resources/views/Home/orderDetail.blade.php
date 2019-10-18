@@ -299,6 +299,7 @@
                     })
                     .then(function (response) {
                         if (response.data['ok']) {
+                            self.couponError=false;
                             self.couponOK=true;
                             self.shippingfee = 0;
                             return;
