@@ -62,7 +62,8 @@
             total:[],
             currentIndex:0,
             shopID:-1,
-            remainingTime:"XX:XX"
+            remainingTime:"",
+            flag:''
         },
         mounted:function(){
             let test = (location.href).split("/");
@@ -91,16 +92,16 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 this.init();
+                this.remainingTime = '';
+                clearInterval(this.flag);
                 this.delivertime(index);
                 $(".jumbotron").css("display","block");
             },
             delivertime :async function(index){
                 _this = this;
-                clearInterval(flag);
-
-                    var flag = setInterval(() => {
+                    this.flag = setInterval(() => {
                         
-                        let temp = (15*60) - Math.ceil((new Date().getTime()-new Date(_this.list[index].OrdersUpdate).getTime())/(1000));
+                        let temp = (1*60) - Math.ceil((new Date().getTime()-new Date(_this.list[index].OrdersUpdate).getTime())/(1000));
                         // console.log(temp);
                         if(temp <= 0){
                             _this.list[index].OrdersStatus = 4;
@@ -108,9 +109,9 @@
                             .then(function(response){
                                 console.log(response.data['ok']);
                                 _this.init();
-                                clearInterval(flag);
-                                $(".jumbotron").css("display","block");
+                                clearInterval(_this.flag);
                             })
+                            $(".jumbotron").css("display","none");
                         }
                         let min = Math.floor(temp / 60);
                         let sec = ((temp % 60) + 100).toString().substr(1) ;
