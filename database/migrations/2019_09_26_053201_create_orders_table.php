@@ -17,9 +17,9 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('OrdersID');
             $table->string('OrdersNum');
             $table->text('OrdersDetails');
-            $table->dateTime('OrdersCreate');
-            $table->dateTime('OrdersUpdate');
-            $table->boolean('OrdersFinish');
+            $table->timestamp('OrdersCreate')->default(DB::raw('CURRENT_TIMESTAMP')); 
+            $table->timestamp('OrdersUpdate')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP')); 
+            $table->tinyInteger('OrdersStatus',4);
             $table->bigInteger('MemberID')->unsigned();
             $table->bigInteger('MealID')->unsigned();
             $table->foreign('MemberID')->references('MemberID')->on('members');
