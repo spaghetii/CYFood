@@ -73,33 +73,34 @@
                 <div class="col-md-5 col-12 w-100 register">
                     <h3 class="registertitle">註冊</h3>
                     <div class="register-form" id="register-form">
-                        <form action="/member" method="POST">
+                        <form v-on:submit.prevent="register">
                             @csrf
                             <div class="form-group ">
                                 <label for="registerName">暱稱</label>
-                                <input type="text" class="form-control" v-model="registerName" id="registerName"
-                                    name="registerName">
+                                <small v-cloak v-if="checkName" class="resetalert ">@{{errorName}}</small>
+                                <input type="text" class="form-control" v-model.lazy="registerName" id="registerName"
+                                v-bind:class="{ 'is-valid': okName }"  placeholder="中、英、數字皆可，最大18個字"  name="registerName" required >
                             </div>
                             <div class="form-group ">
                                 <label for="registerEmail">電子郵件</label>
-                                <span v-cloak v-if="checkEmail" class="resetalert ">@{{errorEmail}}</span>
-                                <span v-cloak v-if="okEmail" class="okalert ">@{{okMsg}}</span>
+                                <small v-cloak v-if="checkEmail" class="resetalert ">@{{errorEmail}}</small>
                                 <input type="email" class="form-control" v-model.lazy="registerEmail" id="registerEmail"
-                                    name="registerEmail">
+                                v-bind:class="{ 'is-valid': okEmail }"  placeholder="如電子郵件重複，將無法註冊"    name="registerEmail" required>
                             </div>
                             <div class="form-group ">
                                 <label for="registerPhone">手機號碼</label>
-                                <input type="text" class="form-control" v-model="registerPhone" id="registerPhone"
-                                    name="registerPhone">
+                                <small v-cloak v-if="checkPhone" class="resetalert ">@{{errorPhone}}</small>
+                                <input type="text" class="form-control" v-model.lazy="registerPhone" id="registerPhone"
+                                v-bind:class="{ 'is-valid': okPhone }"  placeholder="例 : 0918654321"    name="registerPhone" required>
                             </div>
                             <div class="form-group">
                                 <label for="registerPassword">密碼</label>
-                                <input type="password" class="form-control" v-model="registerPassword"
-                                    id="registerPassword" name="registerPassword">
+                                <small v-cloak v-if="checkPwd" class="resetalert ">@{{errorPwd}}</small>
+                                <input type="password" class="form-control" v-model.lazy="registerPassword" id="registerPassword"
+                                v-bind:class="{ 'is-valid': okPwd }"  placeholder="英、數字皆可，最少6碼"     name="registerPassword" required>
                             </div>
-                            <span v-cloak v-if="checkRegister" class="resetalert ">@{{errorMsg}}</span>
-                            <button type="button" v-on:click="register"
-                                class="btn btn-primary btn-block btn-lg">註冊</button>
+                            <button type="submit" :disabled="isDisabled"
+                                class="btn btn-primary btn-block btn-lg" >註冊</button>
                         </form>
                     </div>
                 </div>
@@ -219,102 +220,162 @@
             el: "#register-form",
             data: {
                 registerName: '',
+                checkName:false,
+                errorName:"",
+                okName:false,
                 registerEmail: '',
-                registerPhone: '',
-                registerPassword: '',
                 checkEmail: false,
                 errorEmail: '',
-                checkRegister: false,
-                errorMsg: '',
                 okEmail:false,
-                okMsg:''
+                registerPhone: '',
+                checkPhone: false,
+                errorPhone: '',
+                okPhone:false,
+                registerPassword: '',
+                checkPwd: false,
+                errorPwd: '',
+                okPwd:false,
             },
             watch:{
+                registerName:function(){
+                    let reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{1,18}$/;
+                    if(this.registerName == ""){
+                        this.checkName = false;
+                        this.okName = false;
+                        return;
+                    }
+
+                    if(!reg.test(this.registerName)){
+                        this.okName = false;
+                        this.checkName = true;
+                        this.errorName = "請輸入正確的格式";
+                        return;
+                    }
+                    this.checkName = false;
+                    this.okName = true;
+
+                },
                 registerEmail:function(){
-                    this.errorEmail = "";
-                    this.okMsg="";
                     let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)*$/;
                     if(this.registerEmail == ""){
+                        this.okEmail = false;
                         this.checkEmail = false;
                     }
                     else if (!reg.test(this.registerEmail)) {
+                        this.okEmail = false;
                         this.checkEmail = true;
                         this.errorEmail = "請輸入正確的格式";
                     }else{
                         this.checkEmail = false;
                         let self = this;
                         axios.post('/login/checkReID', {
-                                registerEmail: this.registerEmail,
-                            })
-                            .then(function (response) {
-                                console.log(response.data['ok']);
-                                if (response.data['ok']) {
-                                    self.okEmail = true;
-                                    self.okMsg = "電子郵件無重複";
-                                } else {
-                                    self.checkEmail = true;
-                                    self.errorEmail = "電子郵件重複，請更換別的電子郵件";
-                                }
+                            registerEmail: this.registerEmail,
+                        })
+                        .then(function (response) {
+                            console.log(response.data['ok']);
+                            if (response.data['ok']) {
+                                self.checkEmail = false;
+                                self.okEmail = true;
+                            } else {
+                                self.okEmail = false;
+                                self.checkEmail = true;
+                                self.errorEmail = "電子郵件重複，請更換別的電子郵件";
+                            }
 
-                            })
-                            .catch(function (response) {
-                                console.log(response)
-                            });
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
                     }
+                },
+                registerPhone:function(){
+                    let reg = /^09\d{8}$/;
+                    if(this.registerPhone == ""){
+                        this.checkPhone = false;
+                        this.okPhone = false;
+                        return;
+                    }
+
+                    if(!reg.test(this.registerPhone)){
+                        this.okPhone = false;
+                        this.checkPhone= true;
+                        this.errorPhone = "請輸入正確的格式";
+                        return;
+                    }
+                    this.checkPhone = false;
+                    this.okPhone = true;
+
+                },
+                registerPassword:function(){
+                    let reg = /^[a-zA-Z0-9]{6,}$/;
+                    if(this.registerPassword == ""){
+                        this.checkPwd = false;
+                        this.okPwd = false;
+                        return;
+                    }
+
+                    if(!reg.test(this.registerPassword)){
+                        this.okPwd = false;
+                        this.checkPwd= true;
+                        this.errorPwd = "密碼至少6碼，且應是英數字";
+                        return;
+                    }
+                    this.checkPwd = false;
+                    this.okPwd = true;
+
+                }
+            },
+            computed:{
+                isDisabled(){
+                    if(this.okName && this.okEmail && this.okPhone && this.okPwd){
+                        return false;
+                    }
+                    return true;
                 }
             },
             methods: {
                 register: function () {
-                    this.checkRegister = false;
-                    this.errorMsg = "";
-                    var self = this;
-                    if (this.registerName == "" || this.registerEmail == "" ||
-                        this.registerPhone == "" || this.registerPassword == "") {
-                        this.checkRegister = true;
-                        this.errorMsg = "欄位不能為空"
-                    } else {
-                        axios.post('/login/checkRe', {
-                                    registerName: this.registerName,
-                                    registerEmail: this.registerEmail,
-                                    registerPhone: this.registerPhone,
-                                    registerPassword: this.registerPassword
-                            })
-                            .then(function (response) {
-                                console.log(response.data['ok']);
-                                localStorage.setItem("memberID",response.data['id']);
-                                if (response.data['ok']) {
-                                    Swal.fire({
-                                        type: 'success',
-                                        title: '<strong>註冊成功</strong>',
-                                        html: '為了慶祝CYFood開幕<br>'+
-                                              '目前每位新用戶註冊都贈送免運費優惠券<br>'+
-                                              '請妥善保存<br>'+
-                                              '代碼:'+response.data['coupon'],
-                                        confirmButtonText:
-                                            '我知道了!'
-                                    }).then((result) => {
-                                        console.log(result.value);
-                                        if (result.value) {
-                                            self.registerName = "";
-                                            self.registerEmail = "";
-                                            self.registerPhone = "";
-                                            self.registerPassword = "";
-                                            self.checkRegister = false;
-                                            self.okEmail = false;
-                                            window.location.href ="/loginHomepage"; 
-                                        }
-                                        })
-                                } else {
-                                    self.checkEmail = true;
-                                    self.errorEmail = "電子郵件重複，請更換別的電子郵件";
-                                }
+                    let self = this;
+                    axios.post('/login/checkRe', {
+                                registerName: this.registerName,
+                                registerEmail: this.registerEmail,
+                                registerPhone: this.registerPhone,
+                                registerPassword: this.registerPassword
+                        })
+                        .then(function (response) {
+                            console.log(response.data['ok']);
+                            localStorage.setItem("memberID",response.data['id']);
+                            if (response.data['ok']) {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: '<strong>註冊成功</strong>',
+                                    html: '為了慶祝CYFood開幕<br>'+
+                                            '目前每位新用戶註冊都贈送免運費優惠券<br>'+
+                                            '請妥善保存<br>'+
+                                            '代碼:'+response.data['coupon'],
+                                    confirmButtonText:
+                                        '我知道了!'
+                                }).then((result) => {
+                                    console.log(result.value);
+                                    if (result.value) {
+                                        self.registerName = "";
+                                        self.registerEmail = "";
+                                        self.registerPhone = "";
+                                        self.registerPassword = "";
+                                        self.checkRegister = false;
+                                        self.okEmail = false;
+                                        window.location.href ="/loginHomepage"; 
+                                    }
+                                    })
+                            } else {
+                                self.checkEmail = true;
+                                self.errorEmail = "電子郵件重複，請更換別的電子郵件";
+                            }
 
-                            })
-                            .catch(function (response) {
-                                console.log(response)
-                            });
-                    }
-
+                        })
+                        .catch(function (response) {
+                            console.log(response)
+                        });
                 }
             }
 
