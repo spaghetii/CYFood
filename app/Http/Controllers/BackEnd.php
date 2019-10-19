@@ -251,6 +251,7 @@ class BackEnd extends Controller
         $msg = "";
         $order = Orders::find($id);
         if ($order) {
+            $order->OrdersDetails = $request->OrdersDetails;
             $order->OrdersStatus = $request->OrdersStatus;
             $order->OrdersRemark = $request->OrdersRemark;
             $ok = $order->save();

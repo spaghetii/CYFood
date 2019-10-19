@@ -268,11 +268,6 @@
                     });
                     Modal.shopList = this.list[currentIndex];
                     Modal.init();
-                    // Modal.CouponCode = coupon.list[currentIndex].CouponCode;
-                    // Modal.CouponType = coupon.list[currentIndex].CouponType;
-                    // Modal.CouponDiscount = coupon.list[currentIndex].CouponDiscount;
-                    // Modal.CouponStart = coupon.list[currentIndex].CouponStart;
-                    // Modal.CouponDeadline = coupon.list[currentIndex].CouponDeadline;
                     $("#restaurantModal").modal();
                 }
             },

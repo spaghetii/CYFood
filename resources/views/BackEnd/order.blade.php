@@ -169,16 +169,15 @@
                         </div>
                     </div>
                     <div class="row text-center" style="margin:20px ;">
-                        <div class="row col-sm-2">訂單備註:</div>
+                        <div class="row col-sm-12">
+                            <div class="col-sm-2">訂單備註:</div>
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-2 text-right">訂單總價:</div>
+                            <input type="text" placeholder="請輸入細項內容" class="col-sm-2 text-center" v-model="list.OrdersDetails.orderTotalAmount">
+                        </div>
                         <div class="row col-sm-12">
                             <textarea cols="120" rows="5" v-model="list.OrdersRemark"></textarea>
                         </div>
-                        
-                        {{-- <div class="col-sm-2"></div>
-                        <div class="col-sm-8">
-                            <button type="button" class="btn btn-primary form-control"
-                            v-on:click="addMeal">新增餐點</button>
-                        </div> --}}
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary form-control"
@@ -218,7 +217,7 @@
                                 //  console.log(element.OrdersDetails);
                                 _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                             });
-                            // console.log(_this.list);
+                            console.log(_this.list);
                         })
                         .catch(function (response) {
                             console.log(response);
@@ -262,11 +261,6 @@
                     });
                     Modal.list = this.list[currentIndex];
                     Modal.init();
-                    // Modal.CouponCode = coupon.list[currentIndex].CouponCode;
-                    // Modal.CouponType = coupon.list[currentIndex].CouponType;
-                    // Modal.CouponDiscount = coupon.list[currentIndex].CouponDiscount;
-                    // Modal.CouponStart = coupon.list[currentIndex].CouponStart;
-                    // Modal.CouponDeadline = coupon.list[currentIndex].CouponDeadline;
                     $("#orderModal").modal();
                 }
             },
@@ -316,17 +310,6 @@
             methods:{
                 init:function(){
                     let _this = this;
-                    // axios.get('/api/member')
-                    //     .then(function (response) {
-                    //         // _this.list.OrdersDetails.memberName = response.data[0].MemberName;
-                    //         _this.memberList  = response.data;
-                    //     })
-                    // axios.get('/api/shop')
-                    //     .then(function (response) {
-                    //         // _this.list.OrdersDetails.restaurant = response.data[0].ShopName;
-                    //         // _this.shopSelect = response.data[0].ShopID;
-                    //         _this.shopList  = response.data;
-                    //     })
                     this.list.OrdersDetails.meal.forEach((element,index) => {
                         element.mealDetail.forEach((ele,inIndex) =>{
                             _this.recombind[index] = "#" + ele.mealNum;  //boostrap
@@ -349,67 +332,21 @@
                     if (currentIndex >= 0){
                         _this = this;
                         console.log(_this.list);
+                        dataToSever = {
+                            OrdersDetails: _this.list.OrdersDetails,
+                            OrdersStatus: _this.list.OrdersStatus,
+                            OrdersRemark: _this.list.OrdersRemark,
+                        }
+                        console.log(dataToSever);
                         // 未修改完畢
                         axios.put('/api/order/'+_this.list.OrdersID, _this.list)
                         .then(function (response) {
                             console.log(response.data['ok']);  // 成功回傳時就會顯示true
                             order.init();                //更新目前畫面
                         })
-                    }else{
-                        // 新增資料
-                        // this.memberList.forEach(element => {
-                        //     if (element.MemberName == this.list.OrdersDetails.memberName){
-                        //         this.list.MemberID = element.MemberID;
-                        //     }
-                        // });
-                        // var dataToSever = {
-                        //     OrdersNum: this.list.OrdersNum,
-                        //     OrdersDetails: JSON.stringify(this.list.OrdersDetails),
-                        //     OrdersCreate: new Date().format(),
-                        //     OrdersUpdate: new Date().format(),
-                        //     OrdersStatus: this.list.OrdersStatus,
-                        //     MemberID: this.list.MemberID,
-                        //     ShopID: this.list.ShopID
-                        // }
-                        // // console.log(dataToSever);
-                        // // 檢查資料 (有空再說)
-
-                        // ///////////
-
-                        // // 傳送資料
-                        // axios.post('/api/order', dataToSever)
-                        // .then(function (response) {
-                        //     // console.log(response.data['ok']);  // 成功回傳時就會顯示true
-                        //     order.init();                //更新目前畫面
-                        // })
-                        
                     }
                     $("#orderModal").modal("hide");  //隱藏對話盒
                 }
-            },
-            watch:{
-                // shopSelect:function(value){
-                //     // console.log(value);
-                //     this.shopList.forEach(element => {
-                //         if (element.ShopID == value){
-                //             this.list.OrdersDetails.restaurant = element.ShopName;
-                //             this.list.ShopID = element.ShopID;
-                //         }
-                //     });
-                //     let _this = this;
-                //     axios.get('/api/meal/'+value)
-                //         .then(function (response) {
-                //             // console.log(_this.mealList)
-                //             if(Object.keys(response.data).length != 0){
-                //                 _this.list.OrdersDetails.meal[lastNum].mealName = response.data[0].MealName;
-                //                 _this.mealList  = response.data;
-                //             }else{
-                //                 _this.list.OrdersDetails.meal[lastNum].mealName = "";
-                //                 _this.mealList  = [];
-                //             }
-                //             // console.log(_this.mealList)
-                //     })
-                // }
             },
             beforeMount:function(){
                 this.init();
