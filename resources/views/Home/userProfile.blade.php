@@ -14,7 +14,6 @@
                     <div class="col-sm-4 col-4" id="userImgDiv">
                         <img src="img/user1.png" alt="">
                     </div>
-                
                     <div class="col-sm-8 col-8">
                         <div class="mt-4 mb-3" v-cloak>
                         <h6 class="userProfileDisplay">@{{profile.MemberName}}</h6>
