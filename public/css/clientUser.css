@@ -44,6 +44,19 @@ th{
 td{
     color:#5b5b5b;
 }
+.page-link{
+    color: black;
+}
+.page-item.active .page-link {
+    background-color: #F3B05A;
+    border-color: #F3B05A;
+}
+.page-link:hover {
+    color: black;
+}
+.page-link:focus {
+    box-shadow: 0 0 0 0.0rem #F3B05A;
+}
 /* 餐廳資訊 */
 #information1{
     width: 40%;
@@ -103,17 +116,6 @@ input:focus {
 #chartDiv{
     margin:3% auto;
 }
-/* up */
-/* #upDiv{
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 80px;
-    height: 80px;
-    background-image: url('/img/client/arrowUp.png');
-    background-position: center;
-    background-size: 100%;
-} */
 
 /* bootstrap echarts衝突 */
 .tab-content > .tab-pane,

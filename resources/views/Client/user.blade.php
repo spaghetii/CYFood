@@ -84,16 +84,21 @@
                     <th>訂單金額</th>
                     <th>訂單狀況</th>
                 </tr>
-                <tr v-for="item,index in searchData" v-if="item.OrdersStatus==4">
+                <tr v-for="item,index in searchData.slice(start,start+numPerPage)" v-if="item.OrdersStatus==5">
                     <td>@{{item.OrdersNum}}</td>
                     <td>@{{item.OrdersCreate}}</td>
                     <td>@{{item.OrdersDetails.memberName}}</td>
                     <td>@{{total[index]}}</td>
                     <td>已完成</td>
                 </tr>
-                
             </table>
-            {{-- <div href="#"><div id="upDiv"></div></div> --}}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" v-for="page in totalPage"  v-on:click="currentPage = page" :class="{'active': (currentPage == page)}">
+                    <a class="page-link" href="#">@{{page}}</a>
+                  </li>
+                </ul>
+            </nav>
         </div>
         {{-- 銷售統計 --}}
         <div class="tab-pane fade" id="restSales" role="tabpanel" aria-labelledby="profile-tab">
@@ -246,7 +251,9 @@
             total:[],
             orderSelect:"OrdersNum",
             search:"",
-            shopID:-1
+            shopID:-1,
+            numPerPage:10,
+            currentPage:1
         },
         mounted:function(){
             let test = (location.href).split("/");
@@ -271,11 +278,12 @@
                         var finalDate = [];
                         var counter = {};
                         for(var ii=0;ii<_this.list.length;ii++){
+                            if(_this.list[ii].OrdersStatus==5){
                             var beforeDate = _this.list[ii].OrdersCreate.split(" ",1);//取出2019-10-04
                             var afterDate = beforeDate[0].split("-");//取出['2019','10','04']
                             if(chartSearchDiv.chartMonth==afterDate[1]){
                                 finalDate.push(afterDate[2]);//['04','05','05'.....]
-                            }
+                            }}
                         }
                         finalDate.forEach(function(x){
                             counter[x] = (counter[x] || 0) + 1;
@@ -332,6 +340,12 @@
                     })
                 }
                 return this.list;
+            },
+            totalPage:function(){
+                return Math.ceil(this.searchData.length/this.numPerPage);
+            },
+            start:function(){
+                return (this.currentPage-1)*this.numPerPage;
             }
         }
     })
@@ -482,7 +496,7 @@
                 columns:['日期','訂單數'],
                 rows:[]
             };
-            this.colors = ['#585A56'];
+            this.colors = ['#4E7BA7'];
             return {chartData}
         }
     })

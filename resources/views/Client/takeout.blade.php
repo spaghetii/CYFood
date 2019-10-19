@@ -6,7 +6,7 @@
 <div class="row no-gutters" id="buttomDiv" v-cloak>
     <div class="col-4">
         <div id="leftButtom">
-            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick(index)" v-for="item,index in list" v-if="item.OrdersStatus==3">
+            <button type="button" class="btn btn-light btn-block" id="orderBtn" v-on:click="orderClick(index)" v-for="item,index in list" v-if="item.OrdersStatus==3||item.OrdersStatus==4">
                 @{{item.OrdersNum}}<br>@{{item.OrdersDetails.memberName}}
             </button>
         </div>
@@ -42,7 +42,8 @@
                 <hr class="my-4">
                 <div class="row" id="detailsButton">
                     <div class="col-12">
-                        <div class="alert alert-dark" role="alert" id="takeoutTime">
+                        <button type="button" class="btn btn-dark detailsBtn" v-on:click="alreadyTake(index)" v-if="item.OrdersStatus==3">外送員已抵達取餐</button>
+                        <div class="alert alert-dark" role="alert" id="takeoutTime" v-if="item.OrdersStatus==4">
                             外送員將於<span id="timeInterval"> @{{remainingTime}} </span>後抵達
                         </div>
                     </div>
@@ -63,7 +64,7 @@
             currentIndex:0,
             shopID:-1,
             remainingTime:"",
-            flag:''
+            flag:'',
         },
         mounted:function(){
             let test = (location.href).split("/");
@@ -91,20 +92,35 @@
             },
             orderClick:function(index){
                 this.currentIndex = index;
+                if(this.list[index].OrdersStatus==4){
+                    this.init();
+                    this.remainingTime = '';
+                    clearInterval(this.flag);
+                    this.delivertime(index);
+                }
+                $(".jumbotron").css("display","block");
+            },
+            alreadyTake:function(index){
                 this.init();
                 this.remainingTime = '';
                 clearInterval(this.flag);
                 this.delivertime(index);
-                $(".jumbotron").css("display","block");
+                this.list[index].OrdersStatus = 4;
+                let _this = this;
+                axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
+                    .then(function(response){
+                        console.log(response.data['ok']);
+                        _this.init();
+                    })
             },
             delivertime :async function(index){
                 _this = this;
                     this.flag = setInterval(() => {
                         
-                        let temp = (1*60) - Math.ceil((new Date().getTime()-new Date(_this.list[index].OrdersUpdate).getTime())/(1000));
+                        let temp = (10*60) - Math.ceil((new Date().getTime()-new Date(_this.list[index].OrdersUpdate).getTime())/(1000));
                         // console.log(temp);
                         if(temp <= 0){
-                            _this.list[index].OrdersStatus = 4;
+                            _this.list[index].OrdersStatus = 5;
                             axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
                             .then(function(response){
                                 console.log(response.data['ok']);
