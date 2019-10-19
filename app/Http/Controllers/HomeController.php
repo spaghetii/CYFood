@@ -152,7 +152,7 @@ class HomeController extends Controller
         if($register){
             return response()->json(['ok' => false], 200);
         }
-        else{
+        
 
             //註冊
             $me =new Member();
@@ -184,7 +184,7 @@ class HomeController extends Controller
             $MemberID = Member::max('MemberID');
             Session::put('userName', $request->registerName);
             return response()->json(['ok' => true , 'coupon' => $new , 'id' => $MemberID], 200);
-        }
+        
     }
 
     function checkRegisterID(Request $request){

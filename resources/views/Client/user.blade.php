@@ -439,6 +439,7 @@
                     .then(function (response) {
                         console.log(response.data['passwordError']);
                         if (response.data['passwordError']){
+                            self.passwordOK = false;
                             self.passwordError = true;
                             return;
                         }
@@ -457,6 +458,7 @@
                     return;
                 }
                 if(this.repeatPassword != this.newPassword){
+                    this.repeatOK = false;
                     this.repeatError = true;
                     return;
                 }

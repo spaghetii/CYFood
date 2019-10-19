@@ -59,6 +59,10 @@ Route::get('/member', 'BackEnd@memberAll');
 Route::post('/member', 'BackEnd@memberInsert');
 // 修改會員資訊
 Route::put('/member/{id}', 'BackEnd@memberUpdate');
+// 驗證會員密碼
+Route::post('/member/checkpwd/{id}',"BackEnd@checkMemberPwd");
+// 修改店家密碼
+Route::put('/member/changepwd/{id}',"BackEnd@changeMemberPwd");
 
 // shop
 // 顯示全部店家
@@ -74,7 +78,7 @@ Route::put('/shop/{id}', 'BackEnd@shopUpdate');
 // 刪除店家
 Route::delete('/shop/{id}', "BackEnd@shopDelete");
 // 驗證店家密碼
-Route::post('/shop/checkpwd/{id}',"BackEnd@checkPassword");
+Route::post('/shop/checkpwd/{id}',"BackEnd@checkShopPwd");
 // 修改店家密碼
 Route::put('/shop/changepwd/{id}',"BackEnd@changeShopPwd");
 
