@@ -3,7 +3,7 @@
 {{-- 隱藏式 header 地址搜尋 --}}
 @section('headerSearchLarge')
     <div class="input-group navbar-nav col-sm-6" id="headerSearchLarge">
-        <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號" disabled>
+        <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
         <div class="input-group-append">
             <button class="btn btn-warning" type="submit" id="headerSearchAddressButton">Go</button>
         </div>
@@ -20,7 +20,7 @@
             <div class="container">  
                 <!-- 地址搜尋 -->
                 <div class="input-group col-sm-12 col-12" id="SearchAddress">
-                    <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號" disabled>
+                    <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="submit" id="mainSearchAddressButton">Go</button>
                     </div>

@@ -33,20 +33,25 @@
                                                 v-model.lazy="coupon" class="form-control form-control-sm"></div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-3 alignCenter">付款方式</div>
+                            <div class="col-3">付款方式</div>
                             <div class="col-9">
                                 <div class="form-check mb-1">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="optradio">現金
+                                        <input type="radio" class="form-check-input" name="optradio" checked>現金
                                     </label>
                                 </div>
-                                <div class="form-check d-flex justify-content-between">
+                                <div class="form-check d-flex justify-content-between mb-3">
                                     <label class="form-check-label">
                                         <input type="radio" class="form-check-input" name="optradio">信用卡
                                     </label>
                                     <select class="form-control form-control-sm" style="width:83%">
                                         <option>選擇信用卡</option>
                                     </select>
+                                </div>
+                                <div>
+                                    <div class="bgOrange textWhite" id="addCreditCardBtn" data-toggle="modal" data-target="#addCreditCardModal">
+                                        新增信用卡號
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +64,6 @@
                             <h5>餐點份數&nbsp;(@{{shoppingBagTotalQuantity}})</h5>
                             <small>訂餐餐廳：@{{restaurantName}}</small>
                         </div>
-                        {{-- <a href="" class="colorOrange aHoverColor">新增餐點</a> --}}
                     </div>
                     <div>
                         <hr>
@@ -134,6 +138,33 @@
             </div> {{-- rightdiv --}}
         </div>     {{-- row --}}
     </div> {{-- orderDetailDiv --}}
+
+    <!-- addCreditCardModal -->
+    <div class="modal fade" id="addCreditCardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">新增信用卡號</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><img src="/img/close1.png" alt=""></span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">卡號</label>
+                <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
+                    <div class="invalid-feedback">
+                        @{{ creditCardErrMsg }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:30%">取消</button>
+                <button type="button" class="btn btn-warning" style="width:30%" v-on:click="addCreditCardBtnClick">儲存</button>
+            </div>
+          </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -373,6 +404,41 @@
         localStorage.removeItem('shopID');
         localStorage.removeItem('shopImage');         //新增的
     }
+        // 新增信用卡 modal
+        var addCreditCardModalnApp = new Vue ({
+            el:'#addCreditCardModal',
+            data: {
+                creditInput: '',
+                creditInputError: false,
+                creditInputCorrect: false,
+                creditCardErrMsg: '',
+            },
+            watch: {
+                creditInput: function () {
+                    // 四字元補空格
+                    this.creditInput = this.creditInput.replace(/(\d{4})(?=\d)/g, "$1-");                
+                },
+            },
+            methods: {
+                // input 失去焦點後 驗證格式
+                creditInputBlur: function () {
+                    let checkCredit = this.creditInput.replace(/-/g, '');
+                    let isCredit = /^\d+$/;
+                    if (!isCredit.test(checkCredit)) {
+                        this.creditInputError = true;
+                        this.creditCardErrMsg = '請輸入數字';
+                    } else if (checkCredit.length < 16) {
+                        this.creditInputError = true;
+                        this.creditCardErrMsg = '請完整輸入卡號';
+                    } else {
+                        this.creditInputError = false;
+                    }  
+                },
+                addCreditCardBtnClick: function (){
+
+                },
+            }
+        })
     
     </script>
 @endsection
