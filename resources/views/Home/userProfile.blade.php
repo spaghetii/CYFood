@@ -5,86 +5,83 @@
         <div class="col-sm-6" id="blankDiv">
         </div>
         <div class="col-sm-4 col-12 displayProfileDivApp" id="userProfileOuterDiv">
-            <form v-on:submit.prevent="profileChange">
-                <div class="d-flex flex-column" id="userProfileInnerDiv">
-                    <div class="mb-3 ml-2 container">
-                        <h5>基本資料</h5>
+        <form v-on:submit.prevent="profileChange">
+            <div class="d-flex flex-column" id="userProfileInnerDiv">
+                <div class="mb-3 ml-2 container">
+                    <h5>基本資料</h5>
+                </div>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4" id="userImgDiv">
+                        <img src="img/user1.png" alt="">
                     </div>
-                    <div class="container-fluid alignCenter mb-3">
-                        <div class="col-sm-4 col-4" id="userImgDiv">
-                            <img src="img/user1.png" alt="">
-                        </div>
-                        <div class="col-sm-8 col-8">
-                            <div class="mt-4 mb-3" v-cloak>
-                            <h6 class="userProfileDisplay">@{{profile.MemberName}}</h6>
-                                <div class="input-group-sm userProfileHidden">
-                                    <input type="text" class="form-control" v-model="MemberName" id="userProfileName" placeholder="請輸入暱稱" required>
-                                </div>
-                            </div>
-                            <div class="userProfileHidden">
-                                <div class="bgOrange textWhite" id="passwardChangeBtn" data-toggle="modal" data-target="#passwardChangeModal">
-                                    更改密碼
-                                </div>
+                    <div class="col-sm-8 col-8">
+                        <div class="mt-4 mb-3" v-cloak>
+                        <h6 class="userProfileDisplay">@{{profile.MemberName}}</h6>
+                            <div class="input-group-sm userProfileHidden">
+                                <input type="text" class="form-control" v-model="MemberName" id="userProfileName" placeholder="請輸入暱稱" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="container-fluid alignCenter mb-3">
-                        <div class="col-sm-4 col-4">
-                            <h6 class="floatRight">Tel</h6>
-                        </div>
-                        <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
-                            <h6>@{{profile.MemberPhone}}</h6>           
-                        </div>
-                        <div class="input-group-sm col-sm-8 col-8 userProfileHidden">
-                            <input type="text" class="form-control" v-model="MemberPhone" id="userProfilePhone" placeholder="請輸入電話" required>
+                        <div class="userProfileHidden">
+                            <div class="bgOrange textWhite" id="passwardChangeBtn" data-toggle="modal" data-target="#passwardChangeModal">
+                                更改密碼
+                            </div>
                         </div>
                     </div>
-                    <div class="container-fluid alignCenter mb-3">
-                        <div class="col-sm-4 col-4">
-                            <h6 class="floatRight">E-mail</h6>
-                        </div>
-                        <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
-                            <h6>@{{profile.MemberEmail}}</h6>
+                </div>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4">
+                        <h6 class="floatRight">Tel</h6>
+                    </div>
+                    <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
+                        <h6>@{{profile.MemberPhone}}</h6>           
+                    </div>
+                    <div class="input-group-sm col-sm-8 col-8 userProfileHidden">
+                        <input type="text" class="form-control" v-model="MemberPhone" id="userProfilePhone" placeholder="請輸入電話" required>
+                    </div>
+                </div>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4">
+                        <h6 class="floatRight">E-mail</h6>
+                    </div>
+                    <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
+                        <h6>@{{profile.MemberEmail}}</h6>
+                    </div>
                     <div class="col-sm-8 col-8">
                         <div class="input-group-sm userProfileHidden">
                             <input type="email" class="form-control" v-model="MemberEmail" id="userProfileEmail" placeholder="請輸入E-mail" required>
                         </div>
-                        <div class="col-sm-8 col-8">
-                            <div class="input-group-sm userProfileHidden">
-                                <input type="email" class="form-control" v-model="MemberEmail" id="userProfileEmail" :placeholder="profile.MemberEmail" required>
-                            </div>
-                            <div class="form-check alignCenter userProfileHidden">
-                                <small>
-                                    <input class="form-check-input" type="checkbox" value="" id="Check">是否訂閱電子報
-                                </small>
-                            </div>
+                        <div class="form-check alignCenter userProfileHidden">
+                            <small>
+                                <input class="form-check-input" type="checkbox" value="" id="Check">是否訂閱電子報
+                            </small>
                         </div>
-                    </div>
-                    <div class="container-fluid alignCenter mb-3">
-                        <div class="col-sm-4 col-4">
-                            <h6 class="floatRight">信用卡號</h6>
-                        </div>
-                        <div class="col-sm-8 col-8 userProfileDisplay">
-                            <h6>1654-4654-5612-1616</h6>
-                        </div>
-                        <div class="input-group input-group-sm creditInputWidth userProfileHidden col-sm-8 col-8" id="creditInputGroup">
-                            <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
-                            <div class="invalid-feedback">
-                                @{{ creditCardErrMsg }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- 確認 Btn --}}
-                    <div>
-                        <button type="button" class="btn btn-warning floatRight changeProfileBtn mt-3" id="changeProfileBtn" v-on:click="clickDispayProfileBtn">變更資料</button>
-                    </div>
-                    {{-- 取消和儲存 Btn --}}
-                    <div class="changeProfileBtnDiv mt-4">
-                        <button type="submit" class="btn btn-warning floatRight changeProfileBtn" >儲存</button>
-                        <button type="button" class="btn btn-secondary floatRight changeProfileBtn mr-2" v-on:click="clickHiddenChangeBtn">取消</button>
                     </div>
                 </div>
-            </form>
+                <div class="container-fluid alignCenter mb-3">
+                    <div class="col-sm-4 col-4">
+                        <h6 class="floatRight">信用卡號</h6>
+                    </div>
+                    <div class="col-sm-8 col-8 userProfileDisplay">
+                        <h6>1654-4654-5612-1616</h6>
+                    </div>
+                    <div class="input-group input-group-sm creditInputWidth userProfileHidden col-sm-8 col-8" id="creditInputGroup">
+                        <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
+                        <div class="invalid-feedback">
+                            @{{ creditCardErrMsg }}
+                        </div>
+                    </div>
+                </div>
+                {{-- 確認 Btn --}}
+                <div>
+                    <button type="button" class="btn btn-warning floatRight changeProfileBtn mt-3" id="changeProfileBtn" v-on:click="clickDispayProfileBtn">變更資料</button>
+                </div>
+                {{-- 取消和儲存 Btn --}}
+                <div class="changeProfileBtnDiv mt-4">
+                    <button type="submit" class="btn btn-warning floatRight changeProfileBtn" >儲存</button>
+                    <button type="button" class="btn btn-secondary floatRight changeProfileBtn mr-2" v-on:click="clickHiddenChangeBtn">取消</button>
+                </div>
+            </div>
+        </form>
         </div>
     </div>
 
