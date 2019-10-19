@@ -70,10 +70,10 @@
                     <option value="OrdersNum">訂單編號</option>
                     <option value="OrdersCreate">訂單日期</option>
                     <option value="memberName">客戶名稱</option>
-                    <option value="total">訂單金額</option>
+                    {{-- <option value="total">訂單金額</option> --}}
                     <option value="OrdersStatus">訂單狀況</option>
                 </select>
-                <input type="text" class="form-control" placeholder="Please Enter Keyword" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="search">
+                <input type="text" class="form-control" placeholder="請輸入關鍵字" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="search">
             </div>
             {{-- 表格 --}}
             <table>
@@ -84,42 +84,50 @@
                     <th>訂單金額</th>
                     <th>訂單狀況</th>
                 </tr>
-                <tr v-for="item,index in searchData">
+                <tr v-for="item,index in searchData.slice(start,start+numPerPage)" v-if="item.OrdersStatus==5">
                     <td>@{{item.OrdersNum}}</td>
                     <td>@{{item.OrdersCreate}}</td>
                     <td>@{{item.OrdersDetails.memberName}}</td>
                     <td>@{{total[index]}}</td>
-                    <td>@{{item.OrdersStatus}}</td>
+                    <td>已完成</td>
                 </tr>
-                
             </table>
-            <a href="#"><div id="upDiv"></div></a>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" v-for="page in totalPage"  v-on:click="currentPage = page" :class="{'active': (currentPage == page)}">
+                    <a class="page-link" href="#">@{{page}}</a>
+                  </li>
+                </ul>
+            </nav>
         </div>
         {{-- 銷售統計 --}}
         <div class="tab-pane fade" id="restSales" role="tabpanel" aria-labelledby="profile-tab">
             <div class="row no-gutters">
                 <div class="col-lg-2">
                     <div id="chartSearchDiv">
-                        <select class="form-control form-control-lg chartSearch" name="chartName">
+                        {{-- <select class="form-control form-control-lg chartSearch" name="chartName">
                             <option value="chartNameOrders">訂單數</option>
                             <option value="chartNameSales">銷售額</option>
                             <option value="chartNameProducts">商品</option>
-                        </select>
+                        </select> --}}
                         <select class="form-control form-control-lg chartSearch" name="chartYear">
                             <option value="chartYear2019">2019</option>
                         </select>
                         <select class="form-control form-control-lg chartSearch" name="chartMonth" v-model="chartMonth">
+                            <option value="default" selected hidden disabled>請選擇月份</option>
                             <option value="09">9月</option>
                             <option value="10">10月</option>
                             <option value="11">11月</option>
+                            <option value="12">12月</option>
                         </select>
                         <button type="button" class="btn btn-outline-secondary" id="chartSearchBtn" v-on:click="chartSearchClick">搜尋</button>
                     </div>
                 </div>
                 <div class="col-lg-8" id="chartDiv">
-                    <ve-histogram :data="chartData"></ve-histogram>
+                    <ve-histogram :data="chartData" :colors="colors"></ve-histogram>
                 </div>
-                <div class="col-lg-2"></div>
+                <div class="col-lg-2">
+                </div>
             </div>
         </div>
         {{-- 餐廳資訊 --}}
@@ -243,7 +251,9 @@
             total:[],
             orderSelect:"OrdersNum",
             search:"",
-            shopID:-1
+            shopID:-1,
+            numPerPage:10,
+            currentPage:1
         },
         mounted:function(){
             let test = (location.href).split("/");
@@ -268,11 +278,12 @@
                         var finalDate = [];
                         var counter = {};
                         for(var ii=0;ii<_this.list.length;ii++){
+                            if(_this.list[ii].OrdersStatus==5){
                             var beforeDate = _this.list[ii].OrdersCreate.split(" ",1);//取出2019-10-04
                             var afterDate = beforeDate[0].split("-");//取出['2019','10','04']
                             if(chartSearchDiv.chartMonth==afterDate[1]){
                                 finalDate.push(afterDate[2]);//['04','05','05'.....]
-                            }
+                            }}
                         }
                         finalDate.forEach(function(x){
                             counter[x] = (counter[x] || 0) + 1;
@@ -312,6 +323,7 @@
                 var _search = this.search;
                 var _orderSelect = this.orderSelect;
                 if(_search){
+                    _search = _search.toLowerCase();
                     return this.list.filter(function(data,index){
                         
                         return Object.keys(data).some(function(key){
@@ -328,6 +340,12 @@
                     })
                 }
                 return this.list;
+            },
+            totalPage:function(){
+                return Math.ceil(this.searchData.length/this.numPerPage);
+            },
+            start:function(){
+                return (this.currentPage-1)*this.numPerPage;
             }
         }
     })
@@ -421,6 +439,7 @@
                     .then(function (response) {
                         console.log(response.data['passwordError']);
                         if (response.data['passwordError']){
+                            self.passwordOK = false;
                             self.passwordError = true;
                             return;
                         }
@@ -439,6 +458,7 @@
                     return;
                 }
                 if(this.repeatPassword != this.newPassword){
+                    this.repeatOK = false;
                     this.repeatError = true;
                     return;
                 }
@@ -462,7 +482,7 @@
     var chartSearchDiv = new Vue({
         el:"#chartSearchDiv",
         data:{
-            chartMonth:""
+            chartMonth:"default"
         },
         methods:{
             chartSearchClick:function(){
@@ -478,7 +498,7 @@
                 columns:['日期','訂單數'],
                 rows:[]
             };
-
+            this.colors = ['#4E7BA7'];
             return {chartData}
         }
     })

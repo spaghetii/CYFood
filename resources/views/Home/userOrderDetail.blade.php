@@ -75,7 +75,7 @@
                     <div class="mb-2" v-cloak>
                         <span>
                             @{{item.OrdersDetails.shoppingBagTotalQuantity}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•
-                            &nbsp;@{{month[index]}}月20日&nbsp;的&nbsp;12:27
+                            &nbsp;@{{month[index]}}月@{{day[index]}}日&nbsp;的&nbsp;@{{time[index]}}
                         </span>
                     </div>
                     <div>

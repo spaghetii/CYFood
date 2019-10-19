@@ -20,7 +20,7 @@
                 <!-- 訂單內容 -->
                 <h3 id="detailsItem">
                     <div class="row" v-for="i,index in item.OrdersDetails.meal">
-                    <div class="col-1 text-center"><span class="badge badge-light">@{{index+1}}</span></div>
+                        <div class="col-1 text-center"><span class="badge badge-light">@{{index+1}}</span></div>
                         <div class="col-2 text-left">
                             <span>@{{i.mealQuantity}}x</span>
                         </div>
@@ -67,6 +67,22 @@
             </div>
         </div>
     </div>
+    {{-- toast --}}
+    <div aria-live="polite" role="alert" aria-live="polite" aria-atomic="true" data-delay="50000" style="position: relative; min-height:200px;">
+        <div role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast" style="position: absolute; top: 0px; right: 700px;">
+            <div class="toast-header">
+                <strong class="mr-auto">Bootstrap</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                此訂單已移置到處理中
+            </div>
+        </div>
+        </div>
+    </div>
 </div>
 
 
@@ -84,7 +100,7 @@
             list:[],
             total:[],
             currentIndex:0,
-            shopID:-1
+            shopID:-1,
         },
         mounted: function () {
             let test = (location.href).split("/");
@@ -122,6 +138,7 @@
             acceptClick:function(index){
                 // console.log(this.list[index].OrdersID);
                 // console.log(index);
+                $(".toast").toast('show');
                 this.list[index].OrdersStatus = 2;
                 // this.list[index].OrdersDetails = JSON.stringify(this.list[index].OrdersDetails);
              

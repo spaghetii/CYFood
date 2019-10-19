@@ -382,6 +382,16 @@ body {font-family:"Microsoft JhengHei";}
     width: 92%;
 }
 
+#addCreditCardBtn {
+    width: 30%;
+    height: 50px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .orderDetailItemDiv{
     padding-top: 20px;
 }

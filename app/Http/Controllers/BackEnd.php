@@ -327,7 +327,7 @@ class BackEnd extends Controller
 
     ////////////////   餐廳端修改密碼相關   ////////////////
 
-    function checkPassword(Request $request,$id){
+    function checkShopPwd(Request $request,$id){
         $shop = Shop::find($id);
         if(!Hash::check($request->ShopPassword, $shop->ShopPassword)){
             
@@ -363,5 +363,30 @@ class BackEnd extends Controller
         }
         return response()->json(['ok' => false], 200);
         
+    }
+
+    ////////////////   會員修改密碼相關   ////////////////
+
+    function checkMemberPwd(Request $request,$id){
+        $Member = Member::find($id);
+        if(!Hash::check($request->MemberPassword, $Member->MemberPassword)){
+            
+            return response()->json(['passwordError' => true], 200);
+        }
+    }
+
+    function changeMemberPwd(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $Member = Member::find($id);
+        if ($Member) {
+            $Member->MemberPassword = Hash::make($request->MemberPassword);
+            $ok = $Member->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
 }
