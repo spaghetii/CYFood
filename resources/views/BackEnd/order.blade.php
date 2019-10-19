@@ -170,7 +170,7 @@
                     </div>
                     <div class="row text-center" style="margin:20px ;">
                         <div class="row col-sm-12">
-                            <div class="col-sm-2">訂單備註:</div>
+                            <div class="col-sm-2 text-left" style="padding-left: 0px;">訂單備註:</div>
                             <div class="col-sm-6"></div>
                             <div class="col-sm-2 text-right">訂單總價:</div>
                             <input type="text" placeholder="請輸入細項內容" class="col-sm-2 text-center" v-model="list.OrdersDetails.orderTotalAmount">
