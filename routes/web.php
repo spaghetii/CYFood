@@ -47,6 +47,8 @@ Route::post('/shop/login/check',"ShopController@rLogincheck");  // 店家登入�
 
 Route::get('/shop/register',"ShopController@rRegister");        // 店家註冊
 
+Route::post('/shop/register/check',"ShopController@rRegistercheck");        // 店家註冊驗證
+
 Route::get('/shop/newOrder/{id}',"ShopController@newOrder");    // 店家畫面--新訂單
 
 Route::get('/shop/processing/{id}',"ShopController@processing");// 店家畫面--處理中

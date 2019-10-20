@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use DB;
 use Storage;
+use Validator;
 use App\Coupon;
 use App\Orders;
 use App\Member;
@@ -138,6 +139,21 @@ class BackEnd extends Controller
     }
 
     function shopInsert(Request $request){
+        //驗證
+        $validator = Validator::make($request->all(), [
+            'ShopName' => ['required','regex:/^[\x{4e00}-\x{9fa5}a-zA-Z0-9\s]{1,18}$/u','unique:shops'],
+            'ShopAddress' => ['required','regex:/^[\x{4e00}-\x{9fa5}a-zA-Z0-9\s\.\,]{1,}$/u','unique:shops'],
+            'ShopEmail' => ['required','regex:/^\w+([.-]\w+)*@\w+([.-]\w+)*$/','unique:shops'],
+            'ShopPhone' => ['required','regex:/^09\d{8}$/'],
+            'ShopPassword' => ['required','regex:/^[a-zA-Z0-9]{6,20}$/']
+        ]);
+
+        if ($validator->fails())
+        {
+            return $validator->errors();
+        }
+
+        //註冊
         $shop = new Shop;
         $shop->ShopName = $request->ShopName;
         $shop->ShopType = $request->ShopType;

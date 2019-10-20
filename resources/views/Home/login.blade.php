@@ -97,7 +97,7 @@
                                 <label for="registerPassword">密碼</label>
                                 <small v-cloak v-if="checkPwd" class="resetalert ">@{{errorPwd}}</small>
                                 <input type="password" class="form-control" v-model.lazy="registerPassword" id="registerPassword"
-                                v-bind:class="{ 'is-valid': okPwd }"  placeholder="英、數字皆可，最少6碼"     name="registerPassword" required>
+                                v-bind:class="{ 'is-valid': okPwd }"  placeholder="英、數字皆可，6-20碼" name="registerPassword" required>
                             </div>
                             <button type="submit" :disabled="isDisabled"
                                 class="btn btn-primary btn-block btn-lg" >註冊</button>
@@ -260,33 +260,37 @@
                     if(this.registerEmail == ""){
                         this.okEmail = false;
                         this.checkEmail = false;
+                        return;
                     }
-                    else if (!reg.test(this.registerEmail)) {
+                    
+                    if (!reg.test(this.registerEmail)) {
                         this.okEmail = false;
                         this.checkEmail = true;
                         this.errorEmail = "請輸入正確的格式";
-                    }else{
-                        this.checkEmail = false;
-                        let self = this;
-                        axios.post('/login/checkReID', {
-                            registerEmail: this.registerEmail,
-                        })
-                        .then(function (response) {
-                            console.log(response.data['ok']);
-                            if (response.data['ok']) {
-                                self.checkEmail = false;
-                                self.okEmail = true;
-                            } else {
-                                self.okEmail = false;
-                                self.checkEmail = true;
-                                self.errorEmail = "電子郵件重複，請更換別的電子郵件";
-                            }
-
-                        })
-                        .catch(function (response) {
-                            console.log(response)
-                        });
+                        return;
                     }
+
+                    let self = this;
+                    axios.post('/login/checkReID', {
+                        registerEmail: this.registerEmail,
+                    })
+                    .then(function (response) {
+                        console.log(response.data['ok']);
+                        if (response.data['ok']) {
+                            self.checkEmail = false;
+                            self.okEmail = true;
+                            return;
+                        } 
+                            
+                        self.okEmail = false;
+                        self.checkEmail = true;
+                        self.errorEmail = "電子郵件重複，請更換別的電子郵件";
+                        
+                    })
+                    .catch(function (response) {
+                        console.log(response)
+                    });
+                    
                 },
                 registerPhone:function(){
                     let reg = /^09\d{8}$/;
@@ -307,7 +311,7 @@
 
                 },
                 registerPassword:function(){
-                    let reg = /^[a-zA-Z0-9]{6,}$/;
+                    let reg = /^[a-zA-Z0-9]{6,20}$/;
                     if(this.registerPassword == ""){
                         this.checkPwd = false;
                         this.okPwd = false;
@@ -322,7 +326,6 @@
                     }
                     this.checkPwd = false;
                     this.okPwd = true;
-
                 }
             },
             computed:{
@@ -337,48 +340,46 @@
                 register: function () {
                     let self = this;
                     axios.post('/login/checkRe', {
-                                registerName: this.registerName,
-                                registerEmail: this.registerEmail,
-                                registerPhone: this.registerPhone,
-                                registerPassword: this.registerPassword
-                        })
-                        .then(function (response) {
-                            console.log(response.data['ok']);
-                            localStorage.setItem("memberID",response.data['id']);
-                            if (response.data['ok']) {
-                                Swal.fire({
-                                    type: 'success',
-                                    title: '<strong>註冊成功</strong>',
-                                    html: '為了慶祝CYFood開幕<br>'+
-                                            '目前每位新用戶註冊都贈送免運費優惠券<br>'+
-                                            '請妥善保存<br>'+
-                                            '代碼:'+response.data['coupon'],
-                                    confirmButtonText:
-                                        '我知道了!'
-                                }).then((result) => {
-                                    console.log(result.value);
-                                    if (result.value) {
-                                        self.registerName = "";
-                                        self.registerEmail = "";
-                                        self.registerPhone = "";
-                                        self.registerPassword = "";
-                                        self.checkRegister = false;
-                                        self.okEmail = false;
-                                        window.location.href ="/loginHomepage"; 
-                                    }
-                                    })
-                            } else {
-                                self.checkEmail = true;
-                                self.errorEmail = "電子郵件重複，請更換別的電子郵件";
-                            }
-
-                        })
-                        .catch(function (response) {
-                            console.log(response)
-                        });
+                        registerName: this.registerName,
+                        registerEmail: this.registerEmail,
+                        registerPhone: this.registerPhone,
+                        registerPassword: this.registerPassword
+                    })
+                    .then(function (response) {
+                        console.log(response.data['ok']);
+                        localStorage.setItem("memberID",response.data['id']);
+                        if (response.data['ok']) {
+                            Swal.fire({
+                                type: 'success',
+                                title: '<strong>註冊成功</strong>',
+                                html: '為了慶祝CYFood開幕<br>'+
+                                        '目前每位新用戶註冊都贈送免運費優惠券<br>'+
+                                        '請妥善保存<br>'+
+                                        '代碼:'+response.data['coupon'],
+                                confirmButtonText:
+                                    '我知道了!'
+                            }).then((result) => {
+                                console.log(result.value);
+                                if (result.value) {
+                                    self.registerName = "";
+                                    self.registerEmail = "";
+                                    self.registerPhone = "";
+                                    self.registerPassword = "";
+                                    self.checkRegister = false;
+                                    self.okEmail = false;
+                                    window.location.href ="/loginHomepage"; 
+                                }
+                                else {
+                                    self.checkEmail = true;
+                                    self.errorEmail = "電子郵件重複，請更換別的電子郵件";
+                                }
+                            }).catch(function (response) {
+                                console.log(response)
+                            })
+                        } 
+                    })                         
                 }
             }
-
         })
         //忘記密碼相關
         var reset = new Vue({

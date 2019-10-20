@@ -8,6 +8,7 @@ use DB;
 use Crypt;
 use Mail;
 use Session;
+use Validator;
 use App\Member;
 use App\Coupon;
 use App\Events\OrdersEvent;
@@ -153,6 +154,18 @@ class HomeController extends Controller
             return response()->json(['ok' => false], 200);
         }
         
+            //驗證
+            $validator = Validator::make($request->all(), [
+                'registerName' => ['required','regex:/^[\x{4e00}-\x{9fa5}A-Za-z0-9]{1,18}$/u'],
+                'registerEmail' => ['required','regex:/^\w+([.-]\w+)*@\w+([.-]\w+)*$/','unique:members,MemberEmail'],
+                'registerPhone' => ['required','regex:/^09\d{8}$/'],
+                'registerPassword' => ['required','regex:/^[a-zA-Z0-9]{6,20}$/']
+            ]);
+
+            if ($validator->fails())
+            {
+                return $validator->errors();
+            }
 
             //註冊
             $me =new Member();
