@@ -313,6 +313,7 @@ class BackEnd extends Controller
             $member->MemberName = $request->MemberName;
             $member->MemberEmail = $request->MemberEmail;
             $member->MemberPhone = $request->MemberPhone;
+            $member->MemberCredit = $request->MemberCredit;
             $member->MemberPassword = Hash::make($request->MemberPassword);
             $member->MemberPermission = $request->MemberPermission;
             $ok = $member->save();
@@ -369,7 +370,6 @@ class BackEnd extends Controller
     function checkMemberPwd(Request $request,$id){
         $Member = Member::find($id);
         if(!Hash::check($request->MemberPassword, $Member->MemberPassword)){
-            
             return response()->json(['passwordError' => true], 200);
         }
     }
@@ -381,6 +381,22 @@ class BackEnd extends Controller
         if ($Member) {
             $Member->MemberPassword = Hash::make($request->MemberPassword);
             $ok = $Member->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
+
+    ////////////////   會員修改信用卡相關   ////////////////
+    function changeMemberCredit (Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $member = Member::find($id);
+        if ($member) {
+            $member->MemberCredit = $request->MemberCredit;
+            $ok = $member->save();
             if (!$ok) $msg = 'Error';
             else $msg = "suessfull";
         } else {
