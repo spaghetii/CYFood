@@ -12,15 +12,15 @@
 ## 如何使用 CYFood
 ------------------
 ### 首先先下載專案 or clone本專案
-* <pre><code>git clone https://github.com/spaghetii/CYFood.git
+* <pre><code>git clone https://github.com/spaghetii/CYFood.git</pre>
 
 ### 進入資料夾
-* <pre><code>cd CYFood
+* <pre><code>cd CYFood</pre>
 
 ### 安裝套件 (請先確定資料庫是否已引入CYFood.sql)
-1. <pre><code>composer install
-2. <pre><code>cp .env.example .env
-3. <pre><code>php artisan key:generate
+1. <pre><code>composer install</pre>
+2. <pre><code>cp .env.example .env</pre>
+3. <pre><code>php artisan key:generate</pre>
 
 ### 測試是否可以在本機端執行
-* <pre><code> php artisan serve
+* <pre><code> php artisan serve</pre>
