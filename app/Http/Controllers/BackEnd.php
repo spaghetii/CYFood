@@ -172,8 +172,8 @@ class BackEnd extends Controller
             $avatar = $request->file('ShopImage');
             
             if ($avatar->isValid()) {
-                $path = Storage::putFile('public/uploads/shops', $avatar);
-                $shop->ShopImage = Storage::url($path); 
+                $path = Storage::putFile('/storage/uploads/shops', $avatar);
+                $shop->ShopImage = $path; 
             }
 
         }

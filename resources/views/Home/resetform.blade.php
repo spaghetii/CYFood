@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CYFood</title>
     <!-- 網頁 icon -->
-    <link rel="icon" href="img/burger.ico" type="image/x-icon">
+    <link rel="icon" href="/img/burger.ico" type="image/x-icon">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -59,11 +59,12 @@
             background-color: rgba(255, 166, 0, 0.856);
             border-color: rgba(255, 166, 0, 0.856);
         }
-        .wrongcheck{
-            color:red;
-            font-size: 25px;
-            
+
+        .btn-primary:disabled{
+            background-color: orange;
+            border-color: orange;
         }
+
 
     </style>
 </head>
@@ -78,14 +79,15 @@
                     
                     <div class="form-group">
                         <label for="newPassword">輸入新密碼</label>
-                        <input v-model="newPassword" type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        <input v-model.lazy="newPassword" type="password" class="form-control" id="newPassword" 
+                        v-bind:class="{ 'is-invalid': pwdError ,'is-valid': pwdOK }" placeholder="英、數字皆可，6-20碼" name="newPassword" required>
                     </div>
                     <div class="form-group">
                         <label for="repeatPassword">再輸入一次新密碼</label>
-                        <input v-model="repeatPassword" type="password" class="form-control" id="repeatPassword" name="repeatPassword" required>
+                        <input v-model.lazy="repeatPassword" type="password" class="form-control" id="repeatPassword" 
+                        v-bind:class="{ 'is-invalid': repeatError ,'is-valid': repeatOK }" placeholder="英、數字皆可，6-20碼" name="repeatPassword" required>
                     </div>
-                    <span v-if="wrongcheck" class="wrongcheck">您兩次輸入的密碼不一致</span> <br>
-                    <button type="submit"  class="btn btn-primary btn-block btn-lg">送出</button>
+                    <button type="submit" :disabled="isDisabled"  class="btn btn-primary btn-block btn-lg">送出</button>
                     
                 </form>
             </div>
@@ -99,52 +101,93 @@ var resetform = new Vue({
     el:"#reset-form",
     data:{
         newPassword:'',
+        pwdError:false,
+        pwdOK:false,
         repeatPassword:'',
+        repeatError:false,
+        repeatOK:false,
         token:"",
-        wrongcheck:false
+    },
+    watch:{
+        newPassword:function(){
+            let reg = /^[a-zA-Z0-9]{6,20}$/;
+            if(this.newPassword == ""){
+                this.pwdError = false;
+                this.pwdOK = false;
+                return;
+            }
+
+            if(!reg.test(this.newPassword)){
+                this.pwdOK = false;
+                this.pwdError= true;
+                return;
+            }
+            this.pwdError = false;
+            this.pwdOK = true;
+        },
+        repeatPassword:function(){
+            if(this.repeatPassword == ""){
+                this.repeatError = false;
+                this.repeatOK = false;
+                return;
+            }
+            if(this.repeatPassword != this.newPassword){
+                this.repeatOK = false;
+                this.repeatError = true;
+                return;
+            }
+            this.repeatError = false;
+            this.repeatOK = true;  
+        }
+    },
+    computed:{
+        isDisabled(){
+            if(this.repeatOK && this.pwdOK){
+                return false;
+            }
+            return true;
+        }
     },
     methods:{
         checkpassword:function(){
             console.log(this.token);
             let self = this;
-            if(this.newPassword !== this.repeatPassword){
-                this.wrongcheck = true;
-            }else{
-                this.wrongcheck = false;
-                axios.post('/reset/resetpassword', {newPassword:this.newPassword,token:this.token})
-                        .then(function (response) {
-                            console.log(response);
-                            if (response.data['ok']) {
-                                Swal.fire({
-                                    type: 'success',
-                                    title: '密碼修改成功',
-                                    html: '本畫面於<strong></strong>秒後回到登入頁',
-                                    timer: 3000,
-                                    onBeforeOpen: () => {
-                                        Swal.showLoading()
-                                        timerInterval = setInterval(() => {
-                                        Swal.getContent().querySelector('strong')
-                                            .textContent = parseInt(Math.ceil(Swal.getTimerLeft()/1000))
-                                        }, 100)
-                                    },
-                                    onClose: () => {
-                                        clearInterval(timerInterval)
-                                        window.location.href = "/login"; 
-                                    }     
-                                    })       
-                            }
-                            
-                        })
-                        .catch(function (response) {
-                            console.log(response)
-                        });
-            }
+            axios.post('/reset/resetpassword',{ 
+                newPassword:this.newPassword,
+                repeatPassword:this.repeatPassword,
+                token:this.token
+            })
+            .then(function (response) {
+                console.log(response);
+                if (response.data['ok']) {
+                    Swal.fire({
+                        type: 'success',
+                        title: '密碼修改成功',
+                        html: '本畫面於<strong></strong>秒後回到登入頁',
+                        timer: 3000,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                            timerInterval = setInterval(() => {
+                            Swal.getContent().querySelector('strong')
+                                .textContent = parseInt(Math.ceil(Swal.getTimerLeft()/1000))
+                            }, 100)
+                        },
+                        onClose: () => {
+                            clearInterval(timerInterval)
+                            window.location.href = "/login"; 
+                        }     
+                    })       
+                }  
+            })
+            .catch(function (response) {
+                console.log(response)
+            });  
         }
     },
     mounted:function(){
-        let newtoken = location.pathname.substr(17);
-        this.token = newtoken;
-        
+        let test = (location.href).split("/");
+        this.token = test[test.length-1];
+        console.log(this.token);
     }
     
 
