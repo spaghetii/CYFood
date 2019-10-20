@@ -61,7 +61,7 @@ Route::post('/member', 'BackEnd@memberInsert');
 Route::put('/member/{id}', 'BackEnd@memberUpdate');
 // 驗證會員密碼
 Route::post('/member/checkpwd/{id}',"BackEnd@checkMemberPwd");
-// 修改店家密碼
+// 修改會員密碼
 Route::put('/member/changepwd/{id}',"BackEnd@changeMemberPwd");
 
 // shop
