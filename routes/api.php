@@ -63,6 +63,8 @@ Route::put('/member/{id}', 'BackEnd@memberUpdate');
 Route::post('/member/checkpwd/{id}',"BackEnd@checkMemberPwd");
 // 修改會員密碼
 Route::put('/member/changepwd/{id}',"BackEnd@changeMemberPwd");
+// 修改會員信用卡
+Route::put('/member/changecredit/{id}',"BackEnd@changeMemberCredit");
 
 // shop
 // 顯示全部店家

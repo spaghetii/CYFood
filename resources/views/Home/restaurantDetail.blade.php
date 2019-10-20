@@ -99,6 +99,157 @@
                 @{{meals.MealDesc}}
             </div>
         </div>
+        {{-- 餐點細項 --}}
+        <div>
+            <ul style="list-style: none;" class="noPad noMarg ">
+                <li>
+                    {{-- 細項抬頭 --}}
+                    <div id="orderDetailTitleDiv">
+                        <div>
+                            <h6 class="noMarg">份量 Size</h6>
+                        </div>
+                        <div>
+                            <small>必填</small>
+                        </div>
+                    </div>
+                    {{-- 細項選項 --}}
+                    <div>
+                        <p class="noMarg">
+                            <input type="radio" id="test1" name="radio-group" class="orangeRad">
+                            <label for="test1" class="d-flex flex-row" id="orederDetailDescDiv">
+                                中 Medium 
+                                <span class="ml-auto mr-4"></span>
+                            </label>
+                        </p>
+                        <p class="noMarg">
+                            <input type="radio" id="test2" name="radio-group" class="orangeRad">
+                            <label for="test2" class="d-flex flex-row" id="orederDetailDescDiv">
+                                大 Large
+                                <span class="ml-auto mr-4">+$10</span>
+                            </label>  
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    {{-- 細項抬頭 --}}
+                    <div id="orderDetailTitleDiv">
+                        <div>
+                            <h6 class="noMarg">飲品溫度 Beverage Temperature</h6>
+                        </div>
+                        <div>
+                            <small>必填</small>
+                        </div>
+                    </div>
+                    {{-- 細項選項 --}}
+                    <div>
+                        <p class="noMarg">
+                            <input type="radio" id="test3" name="radio-group1" class="orangeRad">
+                            <label for="test3" class="d-flex flex-row" id="orederDetailDescDiv">
+                                正常冰 Regular Ice 
+                                <span class="ml-auto mr-4"></span>
+                            </label>
+                        </p>
+                        <p class="noMarg">
+                            <input type="radio" id="test4" name="radio-group1" class="orangeRad">
+                            <label for="test4" class="d-flex flex-row" id="orederDetailDescDiv">
+                                常溫 Room Temperature
+                                <span class="ml-auto mr-4"></span>
+                            </label>  
+                        </p>
+                        <p class="noMarg">
+                            <input type="radio" id="test5" name="radio-group1" class="orangeRad">
+                            <label for="test5" class="d-flex flex-row" id="orederDetailDescDiv">
+                                熱 Hot
+                                <span class="ml-auto mr-4"></span>
+                            </label>  
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    {{-- 細項抬頭 --}}
+                    <div id="orderDetailTitleDiv">
+                        <div>
+                            <h6 class="noMarg">甜度 Sweetness Level</h6>
+                        </div>
+                        <div>
+                            <small>必填</small>
+                        </div>
+                    </div>
+                    {{-- 細項選項 --}}
+                    <div>
+                        <p class="noMarg">
+                            <input type="radio" id="test6" name="radio-group2" class="orangeRad">
+                            <label for="test6" class="d-flex flex-row" id="orederDetailDescDiv">
+                                正常糖 Regular Sugar
+                                <span class="ml-auto mr-4"></span>
+                            </label>
+                        </p>
+                        <p class="noMarg">
+                            <input type="radio" id="test7" name="radio-group2" class="orangeRad">
+                            <label for="test7" class="d-flex flex-row" id="orederDetailDescDiv">
+                                半糖 Half Sugar
+                                <span class="ml-auto mr-4"></span>
+                            </label>  
+                        </p>
+                        <p class="noMarg">
+                            <input type="radio" id="test8" name="radio-group2" class="orangeRad">
+                            <label for="test8" class="d-flex flex-row" id="orederDetailDescDiv">
+                                無糖 Sugar-Free
+                                <span class="ml-auto mr-4"></span>
+                            </label>  
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    {{-- 細項抬頭 --}}
+                    <div id="orderDetailTitleDiv">
+                        <div>
+                            <h6 class="noMarg">加點 Add-ons</h6>
+                        </div>
+                        <div>
+                            <small>最多可選擇 1 個項目</small>
+                        </div>
+                    </div>
+                    {{-- 細項選項 --}}
+                    <div>
+                        <p class="noMarg">
+                            <input type="checkbox" id="test9" name="radio-group3" class="orangeRad">
+                            <label for="test9" class="d-flex flex-row" id="orederDetailDescDiv">
+                                珍珠 Tapioca
+                                <span class="ml-auto mr-4">+$10</span>
+                            </label>
+                        </p>
+                        <p class="noMarg">
+                            <input type="checkbox" id="test10" name="radio-group3" class="orangeRad">
+                            <label for="test10" class="d-flex flex-row" id="orederDetailDescDiv">
+                                仙草凍 Herb Jelly
+                                <span class="ml-auto mr-4">+$10</span>
+                            </label>  
+                        </p>
+                        <p class="noMarg">
+                            <input type="checkbox" id="test11" name="radio-group3" class="orangeRad">
+                            <label for="test11" class="d-flex flex-row" id="orederDetailDescDiv">
+                                紅豆 Red Bean
+                                <span class="ml-auto mr-4">+$10</span>
+                            </label>  
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    {{-- 細項抬頭 --}}
+                    <div id="orderDetailTitleDiv">
+                        <div>
+                            <h6 class="noMarg">特殊指示</h6>
+                        </div>
+                    </div>
+                    {{-- 細項選項 --}}
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1" class="noMarg"></label>
+                        <textarea class="form-control" style="border-style:none;" id="exampleFormControlTextarea1" rows="3" placeholder="留下備註給店家"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
         <div class="modal-footer" id="orderModalCenterFooter" v-cloak>
             <button type="button" class="btn btn-lg" v-on:click="subButton">-</button>
             <span class="badge badge-white">@{{count}}</span>
@@ -173,6 +324,11 @@
 
 @section('script')
     <script>
+        // checkbox select one at a time 20191020
+        $(document).on('click', 'input[type="checkbox"]', function() {      
+            $('input[type="checkbox"]').not(this).prop('checked', false);      
+        });
+
         //滾輪滾到navbar
         $(document).ready().scroll(function () {
             var winTop = $("#restaurantDetailHeaderSearchLarge").offset().top;
