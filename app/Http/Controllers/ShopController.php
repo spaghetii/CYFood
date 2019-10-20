@@ -65,6 +65,35 @@ class ShopController extends Controller
         }
     }
 
+    function rRegistercheck(Request $request){
+        if ($request->has('ShopName')) {
+            $checkShop = Shop::where('ShopName','=',$request->ShopName)->first();
+
+            if($checkShop){
+                return response()->json(['ok' => false], 200);
+            }
+            return response()->json(['ok' => true], 200);   
+        }
+
+        if ($request->has('ShopAddress')) {
+            $checkAddress = Shop::where('ShopAddress','=',$request->ShopAddress)->first();
+
+            if($checkAddress){
+                return response()->json(['ok' => false], 200);
+            }
+            return response()->json(['ok' => true], 200);  
+        }
+
+        if ($request->has('ShopEmail')) {
+            $checkEmail = Shop::where('ShopEmail','=',$request->ShopEmail)->first();
+
+            if($checkEmail){
+                return response()->json(['ok' => false], 200);
+            }
+            return response()->json(['ok' => true], 200);  
+        }
+    }
+
 
     /**
      * Display a listing of the resource.
