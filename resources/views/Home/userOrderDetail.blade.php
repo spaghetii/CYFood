@@ -69,7 +69,7 @@
                             <h4>@{{item.OrdersDetails.restaurant}}</h4>
                         </div>
                         <div>
-                            <img src="img/star1.png" alt="">4.7/5
+                            <img src="/img/star1.png" alt="">4.7/5
                         </div>
                     </div>
                     <div class="mb-2" v-cloak>
@@ -193,8 +193,8 @@
                 }
             },
             mounted:function(){
-                let memberID = localStorage.getItem('memberID');
-                this.memberID = memberID;
+                let test = (location.href).split("/");
+                this.memberID = test[test.length-1];
                 this.init();
                 console.log(this.memberID);
             }

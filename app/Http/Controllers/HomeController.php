@@ -41,26 +41,33 @@ class HomeController extends Controller
         return view('home.orderDetail');
     }
 
-    function userOrderDetail() {
+    function userOrderDetail($id) {
         $userName = Session::get("userName" , "Guest");
-        
+        $userID = Session::get("userID" , 0);
+        // dd($id);
         if($userName == "Guest"){
             return redirect("/login");
-        }else{
-            return view('home.userOrderDetail');
         }
         
+        if($id != $userID){
+            return view("errors.404");
+        }
+        return view('home.userOrderDetail');
+             
     }
 
-    function userProfile() {
+    function userProfile($id) {
         $userName = Session::get("userName" , "Guest");
-        
+        $userID = Session::get("userID" , 0);
         // dd($userName);
         if($userName == "Guest"){
             return redirect("/login");
-        }else{
-            return view('home.userProfile');
         }
+        if($id != $userID){
+            return view("errors.404");
+        }
+        return view('home.userProfile');
+        
         
     }
 
@@ -70,7 +77,15 @@ class HomeController extends Controller
 
 
     function login(){
-        return view("home.login");
+        $userName = Session::get("userName" , "Guest");
+        
+        // dd($userName);
+        if($userName == "Guest"){
+            return view("home.login");
+        }else{
+            return redirect("/loginHomepage");
+        }
+        
     }
 
     function logincheck(Request $request){
@@ -81,6 +96,8 @@ class HomeController extends Controller
             }
             else if(Hash::check($request->loginPassword, $member->MemberPassword)){
                 Session::put('userName', $member->MemberName);
+                //此session檢驗用
+                Session::put('userID', $member->MemberID);
                 
                 return response()->json(['ok' => true , 'id' => $member->MemberID 
                 , 'name' => $member->MemberName], 200);
@@ -94,6 +111,7 @@ class HomeController extends Controller
 
     function logout(){
         Session::forget('userName');
+        Session::forget('userID');
         return response()->json(['ok' => true], 200);
     }
 
@@ -135,6 +153,18 @@ class HomeController extends Controller
     }
 
     function resetPassword(Request $request){
+        //驗證
+        $validator = Validator::make($request->all(), [
+            'newPassword' => ['required','regex:/^[a-zA-Z0-9]{6,20}$/'],
+            'repeatPassword' => ['required','same:newPassword']
+        ]);
+
+        if ($validator->fails())
+        {
+            return $validator->errors();
+        }
+
+        //重設密碼處理
         $decryptID = Crypt::decrypt($request->token);
         $member = Member::find($decryptID);
         $password = $request->newPassword;
@@ -143,8 +173,7 @@ class HomeController extends Controller
         $member->token = "";
         if($member->save()){
             return response()->json(['ok' => true], 200);
-        }
-        
+        }    
     }
 
     function checkRegister(Request $request) {

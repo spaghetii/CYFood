@@ -51,10 +51,10 @@
                     <div class="navbar-nav collapse navbar-collapse justify-content-end" id="navbarItem">
                         {{-- 登入後資訊欄 --}}
                         <div class="dropdown show" v-if="navshow" v-once>
-                                <a class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="" >&ensp;@{{userName}}</a>
+                                <a v-cloak class="nav-item nav-link ml-4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><img src="/img/user.png" alt="" >&ensp;@{{userName}}</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="/userOrderDetail"><img src="/img/bill.png" alt="">&emsp;訂單</a>
-                                    <a class="dropdown-item" href="/userProfile"><img src="/img/user.png" alt="">&emsp;帳戶</a>
+                                    <a class="dropdown-item" :href="'/userOrderDetail/'+userID"><img src="/img/bill.png" alt="">&emsp;訂單</a>
+                                    <a class="dropdown-item" :href="'/userProfile/'+userID"><img src="/img/user.png" alt="">&emsp;帳戶</a>
                                     <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
                                     <a class="dropdown-item" href="javascript:void(0);" v-on:click="logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
                                 </div>
@@ -167,6 +167,7 @@
                 navlogin:true,
                 navshow:false,
                 userName:'',
+                userID:-1,
                 shoppingBagTotalQuantity:'',
             },
             methods:{
@@ -205,7 +206,8 @@
                     });
                 }
             },
-            mounted: function () {      
+            mounted: function () {
+                this.userID = localStorage.getItem('memberID');      
                 this.init();            //initial
             }
         });  

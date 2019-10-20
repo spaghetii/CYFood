@@ -12,7 +12,7 @@
                 </div>
                 <div class="container-fluid alignCenter mb-3">
                     <div class="col-sm-4 col-4" id="userImgDiv">
-                        <img src="img/user1.png" alt="">
+                        <img src="/img/user1.png" alt="">
                     </div>
                     <div class="col-sm-8 col-8">
                         <div class="mt-4 mb-3" v-cloak>
@@ -136,7 +136,7 @@
                 el: '#userProfileOuterDiv',
                 data:{
                     profile:[],
-                    userID:'',
+                    userID:0,
                     MemberName:"",
                     MemberPassword:"",
                     MemberPhone:"",
@@ -223,9 +223,8 @@
                     },
                 },
                 mounted: function (){
-                    
-                    console.log(localStorage.getItem('memberID'));
-                    this.userID = localStorage.getItem('memberID');
+                    let test = (location.href).split("/");
+                    this.userID = test[test.length-1];
                     this.init();
                 }
             });
