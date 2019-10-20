@@ -315,6 +315,7 @@ body {font-family:"Microsoft JhengHei";}
 #orderModalCenterContent {
     width: 680px;
     left: -90px;
+    position: relative;
 }
 
 #orderModalCenterHeader {
@@ -339,6 +340,13 @@ body {font-family:"Microsoft JhengHei";}
     font-size: 0.9rem;
 }
 
+#orderModalCenterFooter {
+    position:sticky;
+    bottom:0;
+    border-style:none;
+    background-color: rgb(255, 255, 255, 0.6);
+}
+
 #orderModalCenterFooter .badge {
     font-size: 1.1rem;
 }
@@ -346,6 +354,15 @@ body {font-family:"Microsoft JhengHei";}
 #orderModalCenterFooter .btn {
     color: white;
     background-color: orange;
+}
+
+#orderDetailTitleDiv {
+    padding: 16px 24px;
+    background: #F6F6F6;
+}
+
+#orederDetailDescDiv {
+    padding-left: 70px;
 }
 
 .floatRight {
@@ -540,4 +557,60 @@ body {font-family:"Microsoft JhengHei";}
     bottom: 5px;
     right: 5px;
     cursor: pointer;
+}
+
+/* orangeRad */
+.orangeRad:checked,
+.orangeRad:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+.orangeRad:checked+label,
+.orangeRad:not(:checked)+label {
+    position: relative;
+    padding-left:70px;
+    cursor: pointer;
+    line-height: 50px;
+    display: inline-block;
+    color: #666;
+}
+
+.orangeRad:checked+label:before,
+.orangeRad:not(:checked)+label:before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 11px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+
+.orangeRad:checked+label:after,
+.orangeRad:not(:checked)+label:after {
+    content: '';
+    left: 18.5px;
+    top: 14.5px;
+    width: 23px;
+    height: 23px;
+    background: orange;
+    position: absolute;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.orangeRad:not(:checked)+label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+.orangeRad:checked+label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
 }

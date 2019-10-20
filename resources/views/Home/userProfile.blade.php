@@ -62,7 +62,7 @@
                         <h6 class="floatRight">信用卡號</h6>
                     </div>
                     <div class="col-sm-8 col-8 userProfileDisplay">
-                        <h6>1654-4654-5612-1616</h6>
+                        <h6>@{{profile.MemberCredit}}</h6>
                     </div>
                     <div class="input-group input-group-sm creditInputWidth userProfileHidden col-sm-8 col-8" id="creditInputGroup">
                         <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
@@ -99,21 +99,21 @@
                 <div class="form-group">
                     <div>
                         <label>舊密碼</label>
-                        <input type="text" class="form-control" name="oldPasswd" v-bind:class="{ 'is-invalid': oldPasswdError }" v-model="oldPasswd" required>
+                        <input type="password" class="form-control" name="oldPasswd" v-on:blur="oldPasswdCheckBlur" v-bind:class="{ 'is-invalid': oldPasswdError }" v-model="oldPasswd" required>
                         <div class="invalid-feedback">
                             @{{ oldPasswdErrMsg }}
                         </div>
                     </div>
                     <div>
                         <label>新密碼</label>
-                        <input type="text" class="form-control" name="newPasswd" v-model="newPasswd" v-bind:class="{ 'is-invalid': newPasswdError }" required>
+                        <input type="password" class="form-control" name="newPasswd" v-model="newPasswd" v-bind:class="{ 'is-invalid': newPasswdError }" required>
                         <div class="invalid-feedback">
                             @{{ newPasswdErrMsg }}
                         </div>
                     </div>
                     <div>
                         <label>確認新密碼</label>
-                        <input type="text" class="form-control" name="newPasswdCheck" v-on:blur="newPasswdCheckBlur" v-bind:class="{ 'is-invalid': newPasswdCheckError }" v-model="newPasswdCheck" required>
+                        <input type="password" class="form-control" name="newPasswdCheck" v-on:blur="newPasswdCheckBlur" v-bind:class="{ 'is-invalid': newPasswdCheckError }" v-model="newPasswdCheck" required>
                         <div class="invalid-feedback">
                             @{{ newPasswdCheckErrMsg }}
                         </div>
@@ -184,7 +184,7 @@
                                 MemberName:this.MemberName,
                                 MemberEmail:this.MemberEmail,
                                 MemberPhone:this.MemberPhone,
-                                // MemberPassword:this.MemberPassword,
+                                MemberCredit:this.creditInput,
                                 MemberPermission:0
                             })
                             .then(function (response) {
@@ -201,7 +201,7 @@
                                             self.MemberName="";
                                             self.MemberEmail="";
                                             self.MemberPhone="";
-                                            // self.MemberPassword="";
+                                            self.creditInput="";
                                         }
                                     })   
                                 }
@@ -245,8 +245,27 @@
                 oldPasswdErrMsg: '',
                 newPasswdErrMsg: '',
                 newPasswdCheckErrMsg: '',
+                userID:'',
             },
             methods: {
+                oldPasswdCheckBlur: function () {
+                    var _this = this;
+                    axios.post('/api/member/checkpwd/'+this.userID,{
+                            MemberPassword: this.oldPasswd,
+                    })
+                    .then(function (response) {
+                        console.log(response.data['passwordError']);
+                        if (response.data['passwordError']){
+                            _this.oldPasswdError = true;
+                            _this.oldPasswdErrMsg = '請輸入正確密碼';
+                            return;
+                        }
+                        _this.oldPasswdError = false;
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+                },
                 // newPasswdCheck 失去焦點後 驗證跟上方新密碼是否相同
                 newPasswdCheckBlur: function () {
                     if (this.newPasswdCheck != this.newPasswd){
@@ -260,11 +279,30 @@
                     }
                 },
                 passwdChangeClick: function() {
-                    $('#passwardChangeModal').modal('hide');
-                    this.oldPasswd= '';
-                    this.newPasswd= '';
-                    this.newPasswdCheck= '';
+                    let _this = this;
+                    axios.put('/api/member/changepwd/'+this.userID, {
+                        MemberPassword: this.newPasswdCheck,
+                    })
+                    .then(function (response) {
+                        if (response.data['ok']) {
+                            Swal.fire({
+                                type: 'success',
+                                title: '修改密碼成功',
+                            }).then((result) => {
+                                console.log(result.value);
+                                if (result.value) {
+                                    $('#passwardChangeModal').modal('toggle');
+                                    _this.oldPasswd= '';
+                                    _this.newPasswd= '';
+                                    _this.newPasswdCheck= '';
+                                }
+                            })   
+                        }               
+                    })
                 },
+            },
+            mounted: function (){
+                this.userID = localStorage.getItem('memberID');
             }
         })
             </script>

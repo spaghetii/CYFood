@@ -40,12 +40,13 @@
                                         <input type="radio" class="form-check-input" name="optradio" checked>現金
                                     </label>
                                 </div>
-                                <div class="form-check d-flex justify-content-between mb-3">
+                                <div class="form-check d-flex justify-content-between mb-3"  v-if="profile.MemberCredit != null" v-cloak>
                                     <label class="form-check-label">
                                         <input type="radio" class="form-check-input" name="optradio">信用卡
                                     </label>
                                     <select class="form-control form-control-sm" style="width:83%">
-                                        <option>選擇信用卡</option>
+                                        {{-- <option>選擇信用卡</option> --}}
+                                        <option>@{{profile.MemberCredit}}</option>
                                     </select>
                                 </div>
                                 <div>
@@ -172,6 +173,7 @@
         var orderDetailDivApp = new Vue ({
             el:"#orderDetailDiv",
             data:{
+                profile:[],
                 header:"shopID",
                 // 餐廳名稱
                 restaurantName: '',
@@ -203,6 +205,20 @@
                 couponOK:false
             },
             methods:{
+                init: function(){
+                    var _this = this;
+                    
+                    axios.get('/api/member/'+this.memberID)
+                    .then(function (response) {
+                        _this.profile = response.data;
+                        console.log(_this.profile);
+                        addCreditCardModalnApp.memberID = _this.profile.MemberID;
+                        // console.log(addCreditCardModalnApp.memberID);
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+                },
                 sendOrders: function(){
                     if(this.couponError == true){
                         Swal.fire({
@@ -392,7 +408,9 @@
                 this.memberID = memberID;
                 this.memberName = memberName;
                 // console.log(this.restaurantName);
+                this.init();
                 }
+                
             },
         })
     
@@ -413,6 +431,7 @@
                 creditInputError: false,
                 creditInputCorrect: false,
                 creditCardErrMsg: '',
+                memberID:'',
             },
             watch: {
                 creditInput: function () {
@@ -436,7 +455,25 @@
                     }  
                 },
                 addCreditCardBtnClick: function (){
-
+                    let _this = this;
+                    axios.put('/api/member/changecredit/'+this.memberID, {
+                        MemberCredit:this.creditInput,
+                    })
+                    .then(function (response) {
+                        if (response.data['ok']) {
+                            Swal.fire({
+                                type: 'success',
+                                title: '新增成功',
+                            }).then((result) => {
+                                console.log(result.value);
+                                if (result.value) {
+                                    orderDetailDivApp.init();
+                                    $('#addCreditCardModal').modal('toggle');
+                                    _this.creditInput="";
+                                }
+                            })   
+                        }               
+                    })
                 },
             }
         })
