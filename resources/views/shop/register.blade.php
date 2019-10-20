@@ -101,6 +101,7 @@
                     <div class="form-group">
                         <label for="ShopType">餐廳種類</label>
                         <select class="form-control" v-model="ShopType" id="ShopType" name="ShopType" required>
+                            <option value="default" selected disabled hidden>請選擇餐廳種類</option>
                             <option value="中式美食">中式美食</option>
                             <option value="台灣美食">台灣美食</option>
                             <option value="日式美食">日式美食</option>
@@ -153,7 +154,7 @@
                 checkAddress:false,
                 errorAddress:"",
                 okAddress:false,
-                ShopType:"",
+                ShopType:"default",
                 ShopEmail:"",
                 checkEmail:false,
                 errorEmail:"",
