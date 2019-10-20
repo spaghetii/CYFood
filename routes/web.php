@@ -30,9 +30,9 @@ Route::get('/restaurant/{id}', "HomeController@restaurantDetail");              
 
 Route::get('/orderDetail', "HomeController@orderDetail");                           // 訂單細項頁面
 
-Route::get('/userOrderDetail', "HomeController@userOrderDetail");                   // 會員的目前、歷史訂單
+Route::get('/userOrderDetail/{id}', "HomeController@userOrderDetail");                   // 會員的目前、歷史訂單
 
-Route::get('/userProfile', "HomeController@userProfile");                           // 會員個人資料頁
+Route::get('/userProfile/{id}', "HomeController@userProfile");                           // 會員個人資料頁
 
 Route::get('/trackingOrder', "HomeController@trackingOrder");                       // 安排訂單後的頁面
 
