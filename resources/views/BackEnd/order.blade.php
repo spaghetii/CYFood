@@ -81,7 +81,8 @@
                                 <option value="1" selected>等待接單</option>
                                 <option value="2">處理中</option>
                                 <option value="3">餐點完成</option>
-                                <option value="4">訂單完成</option>
+                                <option value="4">送餐中</option>
+                                <option value="5">訂單完成</option>
                             </select>
                         </div>
                     </div>
