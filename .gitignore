@@ -2,6 +2,8 @@
 /public/hot
 /public/storage
 /storage/*.key
+/ssl
+/public/web.config
 /vendor
 .env
 .env.backup
