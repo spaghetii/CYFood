@@ -155,6 +155,8 @@
         </div> {{-- modal-dialog --}}
     </div> {{-- shoppingBagModal --}}
     
+   {{-- websocket --}}
+   <script src="../js/app.js" type="text/javascript"></script>
    <script>
         // local storage
         let mealNameArray = [];
@@ -355,6 +357,153 @@
                 },
             },
         })
+
+        // websocket
+            window.Echo.channel('orders')
+            .listen('OrdersEvent', (e) => {
+                //取網址
+                let test = (location.href).split("/");
+                let selfName = test[test.length-1];
+                
+                if(e.header == "memberID" && e.id == navBar.userID){
+                    console.log(e.type);
+                    switch(e.type){
+                        //店家於新訂單頁拒絕訂單
+                        case "reject":
+                            if(selfName == "trackingOrder"){
+                                Swal.fire({
+                                    title: '很抱歉，店家已取消您的訂單',
+                                    text: "請重新選購您的餐點",
+                                    type: 'warning',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: '點擊後返回首頁'
+                                    }).then((result) => {
+                                    if (result.value) {
+                                        clearStorage();
+                                        location.href="/";
+                                    }
+                                })
+                            return;
+                            } 
+                                Swal.fire({
+                                    title: '很抱歉，店家已取消您的訂單',
+                                    text: "請重新選購您的餐點",
+                                    type: 'warning',
+                                    toast:true,
+                                    position: 'top-end'
+                                    }).then((result) => {
+                                    if (result.value) {
+                                        clearLayoutStorage();
+                                    }
+                                })
+                            break;
+                        //店家聯絡顧客
+                        case "message":
+                            if(selfName == "trackingOrder"){
+                                Swal.fire({
+                                    title: '店家向您傳訊息',
+                                    text: e.message,
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: '確定'
+                                })
+                                return;
+                            }
+                                Swal.fire({
+                                    toast:true,
+                                    position: 'top-end',
+                                    title: '店家向您傳訊息:',
+                                    text: e.message
+                                })
+                            break;
+                        //店家延遲訂單
+                        case "delay":
+                            if(selfName == "trackingOrder"){
+                                Swal.fire({
+                                    title: '此訂單將延遲'+e.message+'分鐘出餐',
+                                    type: 'warning',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: '確定'
+                                })
+                                return;
+                            }
+                                Swal.fire({
+                                    toast:true,
+                                    position: 'top-end',
+                                    title: '此訂單將延遲'+e.message+'分鐘出餐',
+                                    type: 'warning',
+                                })
+                            break;
+                        //店家於處理訂單頁因故取消訂單
+                        case "cancel":
+                            if(selfName == "trackingOrder"){
+                                Swal.fire({
+                                    title: '很抱歉<br>店家因'+e.message+'已取消您的訂單',
+                                    text: "請重新選購您的餐點",
+                                    type: 'warning',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: '點擊後返回首頁'
+                                    }).then((result) => {
+                                    if (result.value) {
+                                        clearStorage();
+                                        location.href="/";
+                                    }
+                                })
+                                return;
+                            }
+                                Swal.fire({
+                                    toast:true,
+                                    position: 'top-end',
+                                    title: '很抱歉<br>店家因'+e.message+'已取消您的訂單',
+                                    text: "請重新選購您的餐點",
+                                    type: 'warning'
+                                    }).then((result) => {
+                                    if (result.value) {
+                                        clearLayoutStorage();
+                                    }
+                                })
+                            break;
+                        //店家呼叫外送員
+                        case "ok":
+                            let shipTime = localStorage.getItem('shipTime');
+                            console.log(shipTime);
+                            let time = new Date();
+                            let hour = time.getHours();
+                            let min = time.getMinutes()+parseInt(shipTime);
+                            if(min >= 60){
+                                hour += 1;
+                                min  -= 60;
+                                min  += 100;
+                                min = min.toString().substr(1);
+                            }
+                            if(selfName == "trackingOrder"){
+                                timerApp.arrivalTime= hour+":"+min;
+                                orderDeatil.init();
+                                timerApp.progressbar();
+                                return;
+                            }
+                                Swal.fire({
+                                    toast:true,
+                                    position: 'top-end',
+                                    title: '您的餐點預計將在'+hour+":"+min+'抵達',
+                                    type: 'warning',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        clearLayoutStorage();
+                                    }
+                                })
+                            break;
+                        //如有丟失訊息
+                        default:
+                            console.log(e);
+                    }
+                }
+            });
+        
+        //清空localStorage
+        function clearLayoutStorage(){
+            localStorage.removeItem('OrdersNum');
+            localStorage.removeItem('shipTime');
+        }
     
    </script>
     @yield('script')
