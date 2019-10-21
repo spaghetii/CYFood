@@ -84,15 +84,17 @@
                                 _this.total[index] += ele.mealQuantity * ele.mealUnitPrice;
                             })
                         })
-                        console.log(_this.list);
+                        // console.log(_this.list);
                     })
                     .catch(function(response){
                         console.log(response);
                     })
+                // console.log(_this.list)
             },
             orderClick:function(index){
                 this.currentIndex = index;
                 if(this.list[index].OrdersStatus==4){
+                    console.log("hi");
                     this.init();
                     this.remainingTime = '';
                     clearInterval(this.flag);
@@ -101,19 +103,19 @@
                 $(".jumbotron").css("display","block");
             },
             alreadyTake:function(index){
-                this.init();
-                this.remainingTime = '';
-                clearInterval(this.flag);
-                this.delivertime(index);
-                this.list[index].OrdersStatus = 4;
                 let _this = this;
+                
+                this.list[index].OrdersStatus = 4;
                 axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
                     .then(function(response){
                         console.log(response.data['ok']);
                         _this.init();
+                        _this.remainingTime = '';
+                        clearInterval(_this.flag);
+                        _this.delivertime(index);
                     })
             },
-            delivertime :async function(index){
+            delivertime :function(index){
                 _this = this;
                     this.flag = setInterval(() => {
                         

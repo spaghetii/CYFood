@@ -276,7 +276,7 @@
             },
             computed: {
                 items: function () {
-                    var _search = this.search;
+                    var _search = this.search.toLowerCase().trim();
                     var _selected = this.selected;
                     if (_search) {
                         return this.list.filter(function (item) {

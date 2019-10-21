@@ -320,10 +320,9 @@
         computed:{
             searchData:function(){
                 let _this = this;
-                var _search = this.search;
+                var _search = this.search.toLowerCase().trim();
                 var _orderSelect = this.orderSelect;
                 if(_search){
-                    _search = _search.toLowerCase();
                     return this.list.filter(function(data,index){
                         
                         return Object.keys(data).some(function(key){
