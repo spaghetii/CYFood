@@ -18,7 +18,7 @@
                     <div class="mb-2" v-cloak>
                         <span>
                         @{{totalCount[index]}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•
-                        &nbsp;@{{month[index]}}月@{{day[index]}}日&nbsp;的&nbsp;@{{time[index]}}
+                        &nbsp;@{{createMonth[index]}}月@{{createDay[index]}}日&nbsp;的&nbsp;@{{createTime[index]}}
                         </span>
                     </div>
                     <div>
@@ -75,7 +75,7 @@
                     <div class="mb-2" v-cloak>
                         <span>
                             @{{item.OrdersDetails.shoppingBagTotalQuantity}}&nbsp;份餐點，$@{{item.OrdersDetails.orderTotalAmount}}&nbsp;•
-                            &nbsp;@{{month[index]}}月@{{day[index]}}日&nbsp;的&nbsp;@{{time[index]}}
+                            &nbsp;@{{updateMonth[index]}}月@{{updateDay[index]}}日&nbsp;的&nbsp;@{{updateTime[index]}}
                         </span>
                     </div>
                     <div>
@@ -115,9 +115,12 @@
             data:{
                 list:[],
                 memberID:0,
-                month:[],
-                day:[],
-                time:[],
+                createMonth:[],
+                createDay:[],
+                createTime:[],
+                updateMonth:[],
+                updateDay:[],
+                updateTime:[],
                 totalCount:[]
             },
             methods:{
@@ -135,12 +138,17 @@
                                 
                                 _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
                                 //訂單建立時機
-                                let time = element.OrdersCreate.split(" ");
-                                _this.month[index] = time[0].substr(5,2);
-                                _this.day[index] = time[0].substr(9,2);
-                                _this.time[index] = time[1].substr(0,5);
-                                _this.totalCount[index] = 0;
+                                let createTime = element.OrdersCreate.split(" ");
+                                _this.createMonth[index] = createTime[0].substr(5,2);
+                                _this.createDay[index] = createTime[0].substr(9,2);
+                                _this.createTime[index] = createTime[1].substr(0,5);
+                                //訂單修改時機
+                                let updateTime = element.OrdersUpdate.split(" ");
+                                _this.updateMonth[index] = updateTime[0].substr(5,2);
+                                _this.updateDay[index] = updateTime[0].substr(9,2);
+                                _this.updateTime[index] = updateTime[1].substr(0,5);
                                 //每個訂單餐點總數量
+                                _this.totalCount[index] = 0;
                                 _this.list[index].OrdersDetails.meal.forEach(ele => {
                                     console.log(ele.mealQuantity);
                                     _this.totalCount[index] += parseInt(ele.mealQuantity);
