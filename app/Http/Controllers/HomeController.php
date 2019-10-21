@@ -44,7 +44,7 @@ class HomeController extends Controller
     function userOrderDetail($id) {
         $userName = Session::get("userName" , "Guest");
         $userID = Session::get("userID" , 0);
-        // dd($id);
+        // dd($userID);
         if($userName == "Guest"){
             return redirect("/login");
         }
@@ -225,6 +225,7 @@ class HomeController extends Controller
             //註冊後直接登入
             $MemberID = Member::max('MemberID');
             Session::put('userName', $request->registerName);
+            Session::put('userID', $MemberID);
             return response()->json(['ok' => true , 'coupon' => $new , 'id' => $MemberID], 200);
         
     }
