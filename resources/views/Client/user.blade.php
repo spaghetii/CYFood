@@ -226,7 +226,7 @@
                     this.headerShow = false;
                     this.bodyShow = false;
                     this.btnShow = false;
-                    var flag = setInterval(goBack, 1000);
+                    let flag = setInterval(goBack, 1000);
                     function goBack(){
                         delay.delayOptions--;
                         if(delay.delayOptions<=0){
@@ -274,29 +274,31 @@
                             })
                         })
                         // console.log(_this.list);
+                        
                         //以下為charts:
-                        var finalDate = [];
-                        var counter = {};
-                        for(var ii=0;ii<_this.list.length;ii++){
+                        let finalDate = [];
+                        let counter = {};
+                        for(let ii=0;ii<_this.list.length;ii++){
+                            //只抓已完成訂單
                             if(_this.list[ii].OrdersStatus==5){
-                            var beforeDate = _this.list[ii].OrdersCreate.split(" ",1);//取出2019-10-04
-                            var afterDate = beforeDate[0].split("-");//取出['2019','10','04']
-                            if(chartSearchDiv.chartMonth==afterDate[1]){
-                                finalDate.push(afterDate[2]);//['04','05','05'.....]
+                            let beforeDate = _this.list[ii].OrdersCreate.split(" ",1);//取出2019-10-04
+                            let afterDate = beforeDate[0].split("-");//取出['2019','10','04']
+                            if(chartSearchDiv.chartMonth==afterDate[1]){//只選出選擇到的月份的日期
+                                finalDate.push(afterDate[2]);//['04','05','05','05'.....]
                             }}
                         }
                         finalDate.forEach(function(x){
-                            counter[x] = (counter[x] || 0) + 1;
+                            counter[x] = (counter[x] || 0) + 1; 
                         })
                         // console.log(counter["05"]);//=>9 共9筆
-                        var result = Array.from(new Set(finalDate));
+                        let result = Array.from(new Set(finalDate));
                         // console.log(result);//['04','05','15','16']只取出不重複項目
-                        var y = 2019;
-                        var m = chartSearchDiv.chartMonth;
-                        var firstDay = new Date(y, m - 1, 1).getDate();
-                        var lastDay = new Date(y, m, 0).getDate();
-                        var allDay = []
-                        for(var i=firstDay;i<=lastDay;i++){
+                        let y = 2019;
+                        let m = chartSearchDiv.chartMonth;
+                        let firstDay = new Date(y, m - 1, 1).getDate();
+                        let lastDay = new Date(y, m, 0).getDate();
+                        let allDay = []
+                        for(let i=firstDay;i<=lastDay;i++){
                             allDay.push(i);
                             allDay[i-1]=allDay[i-1]+100;
                             allDay[i-1]=allDay[i-1].toString();
@@ -304,11 +306,12 @@
                         }
                         // console.log(allDay);//['01','02',.....]
                         chartDiv.chartData.rows = [];//清空資料
-                        for(var index=firstDay-1;index<=lastDay-1;index++){
-                            var torf = result.some(e=>e==allDay[index]);
-                            var temp = ((index+1)<10)?'0'+(index+1):(index+1);
+                        for(let index=firstDay-1;index<=lastDay-1;index++){
+                            //allDay[0]='01' 比對到result[]裡沒有'01' 顯示false
+                            let torf = result.some(e=>e==allDay[index]);
+                            let temp = ((index+1)<10)?'0'+(index+1):(index+1);//將1~9變成01~09
                             chartDiv.chartData.rows.push({'日期':allDay[index],'訂單數':
-                                torf?counter[temp]:0
+                                torf?counter[temp]:0//如果torf是true 就計算幾筆 false就顯示0
                             });
                         }
                     })
@@ -320,8 +323,8 @@
         computed:{
             searchData:function(){
                 let _this = this;
-                var _search = this.search.toLowerCase().trim();
-                var _orderSelect = this.orderSelect;
+                let _search = this.search.toLowerCase().trim();
+                let _orderSelect = this.orderSelect;
                 if(_search){
                     return this.list.filter(function(data,index){
                         
