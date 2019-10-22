@@ -201,7 +201,7 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 $(".jumbotron").css("display","block");
-                //聯絡顧客 名稱
+                //聯絡:顧客名稱
                 contactModal.messageName = this.list[this.currentIndex].OrdersDetails.memberName;
             },
             callOut:function(index){

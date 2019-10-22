@@ -94,7 +94,6 @@
             orderClick:function(index){
                 this.currentIndex = index;
                 if(this.list[index].OrdersStatus==4){
-                    console.log("hi");
                     this.init();
                     this.remainingTime = '';
                     clearInterval(this.flag);
