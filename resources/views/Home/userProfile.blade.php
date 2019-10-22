@@ -18,7 +18,9 @@
                         <div class="mt-4 mb-3" v-cloak>
                         <h6 class="userProfileDisplay">@{{profile.MemberName}}</h6>
                             <div class="input-group-sm userProfileHidden">
-                                <input type="text" class="form-control" v-model="MemberName" id="userProfileName" placeholder="請輸入暱稱" required>
+                                <input type="text" class="form-control" v-model="MemberName" 
+                                    v-on:blur="memberNameBlur" v-bind:class="{ 'is-invalid': memberNameError }"
+                                    id="userProfileName" placeholder="中、英、數字，最大18個字" required>
                             </div>
                         </div>
                         <div class="userProfileHidden">
@@ -30,17 +32,6 @@
                 </div>
                 <div class="container-fluid alignCenter mb-3">
                     <div class="col-sm-4 col-4">
-                        <h6 class="floatRight">Tel</h6>
-                    </div>
-                    <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
-                        <h6>@{{profile.MemberPhone}}</h6>           
-                    </div>
-                    <div class="input-group-sm col-sm-8 col-8 userProfileHidden">
-                        <input type="text" class="form-control" v-model="MemberPhone" id="userProfilePhone" placeholder="請輸入電話" required>
-                    </div>
-                </div>
-                <div class="container-fluid alignCenter mb-3">
-                    <div class="col-sm-4 col-4">
                         <h6 class="floatRight">E-mail</h6>
                     </div>
                     <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
@@ -48,7 +39,9 @@
                     </div>
                     <div class="col-sm-8 col-8">
                         <div class="input-group-sm userProfileHidden">
-                            <input type="email" class="form-control" v-model="MemberEmail" id="userProfileEmail" placeholder="請輸入E-mail" required>
+                            <input type="email" class="form-control" v-model="MemberEmail" id="userProfileEmail"
+                            v-on:blur="memberEmailBlur" v-bind:class="{ 'is-invalid': memberEmailError }"
+                            :placeholder="profile.MemberEmail">
                         </div>
                         <div class="form-check alignCenter userProfileHidden">
                             <small>
@@ -59,13 +52,26 @@
                 </div>
                 <div class="container-fluid alignCenter mb-3">
                     <div class="col-sm-4 col-4">
+                        <h6 class="floatRight">Tel</h6>
+                    </div>
+                    <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
+                        <h6>@{{profile.MemberPhone}}</h6>           
+                    </div>
+                    <div class="input-group-sm col-sm-8 col-8 userProfileHidden">
+                        <input type="text" class="form-control" v-model="MemberPhone" 
+                            v-on:blur="memberPhoneBlur" v-bind:class="{ 'is-invalid': memberPhoneError }"
+                            id="userProfilePhone" placeholder="例 : 0987654321" required>
+                    </div>
+                </div>
+                <div class="container-fluid alignCenter mb-3" v-if="profile.MemberCredit != null">
+                    <div class="col-sm-4 col-4">
                         <h6 class="floatRight">信用卡號</h6>
                     </div>
                     <div class="col-sm-8 col-8 userProfileDisplay">
                         <h6>@{{profile.MemberCredit}}</h6>
                     </div>
                     <div class="input-group input-group-sm creditInputWidth userProfileHidden col-sm-8 col-8" id="creditInputGroup">
-                        <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
+                        <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" placeholder="輸入卡號16個數字" required>
                         <div class="invalid-feedback">
                             @{{ creditCardErrMsg }}
                         </div>
@@ -121,7 +127,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:30%">取消</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width:30%" v-on:click="passwdCancelClick">取消</button>
                 <button type="button" class="btn btn-warning" style="width:30%" v-on:click="passwdChangeClick">儲存</button>
             </div>
           </div>
@@ -138,9 +144,12 @@
                     profile:[],
                     userID:'',
                     MemberName:"",
+                    memberNameError: false,
                     MemberPassword:"",
                     MemberPhone:"",
+                    memberPhoneError:false,
                     MemberEmail:"",
+                    memberEmailError:false,
                     creditInput: '',
                     creditInputError: false,
                     creditInputCorrect: false,
@@ -169,13 +178,14 @@
                     clickDispayProfileBtn: function(){
                         $(".userProfileHidden").css("display", 'inline-flex');
                         $(".changeProfileBtnDiv").css("display", 'block');
-                        $(".userProfileDisplay,#changeProfileBtn").css("display", "none");
+                        $(".userProfileDisplay,#changeProfileBtn,.emailDisplay").css("display", "none");
                     },
                     // 隱藏Profile Div btn
                     clickHiddenChangeBtn: function(){
                         $(".userProfileHidden").css("display", 'none');
                         $(".changeProfileBtnDiv").css("display", 'none');
                         $(".userProfileDisplay,#changeProfileBtn").css("display", "block");
+                        $(".emailDisplay").css("display", 'inline-flex');
                     },
                     profileChange: function(){
                         let self = this;
@@ -211,6 +221,10 @@
                     creditInputBlur: function () {
                         let checkCredit = this.creditInput.replace(/-/g, '');
                         let isCredit = /^\d+$/;
+                        if(checkCredit == "" ) {
+                            this.creditInputError = false;
+                            return;
+                        }
                         if (!isCredit.test(checkCredit)) {
                             this.creditInputError = true;
                             this.creditCardErrMsg = '請輸入數字';
@@ -220,6 +234,42 @@
                         } else {
                             this.creditInputError = false;
                         }  
+                    },
+                    memberNameBlur:function () {
+                        let reg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{1,18}$/;
+                        if(this.MemberName == "" ) {
+                            this.memberNameError = false;
+                            return;
+                        }
+                        if(!reg.test(this.MemberName)) {
+                            this.memberNameError = true;
+                            return;
+                        }
+                        this.memberNameError = false;
+                    },
+                    memberPhoneBlur:function(){
+                        let reg = /^09\d{8}$/;
+                        if(this.MemberPhone == "" ) {
+                            this.memberPhoneError = false;
+                            return;
+                        }
+                        if(!reg.test(this.MemberPhone)) {
+                            this.memberPhoneError = true;
+                            return;
+                        }
+                        this.memberPhoneError = false;
+                    },
+                    memberEmailBlur:function(){
+                        let reg = /^\w+([.-]\w+)*@\w+([.-]\w+)*$/;
+                        if(this.MemberEmail == "" ) {
+                            this.memberEmailError = false;
+                            return;
+                        }
+                        if(!reg.test(this.MemberEmail)) {
+                            this.memberEmailError = true;
+                            return;
+                        }
+                        this.memberEmailError = false;
                     },
                 },
                 mounted: function (){
@@ -299,6 +349,14 @@
                             })   
                         }               
                     })
+                },
+                passwdCancelClick: function(){
+                    this.oldPasswd= '';
+                    this.newPasswd= '';
+                    this.newPasswdCheck= '';
+                    this.newPasswdError = false;
+                    this.newPasswdCheckError = false;
+                    this.oldPasswdError = false;
                 },
             },
             mounted: function (){

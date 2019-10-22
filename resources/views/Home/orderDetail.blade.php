@@ -50,8 +50,11 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <div class="bgOrange textWhite" id="addCreditCardBtn" data-toggle="modal" data-target="#addCreditCardModal">
+                                    <div v-if="profile.MemberCredit == null" class="bgOrange textWhite" id="addCreditCardBtn" data-toggle="modal" data-target="#addCreditCardModal">
                                         新增信用卡號
+                                    </div>
+                                    <div v-if="profile.MemberCredit != null" class="bgOrange textWhite" id="addCreditCardBtn" data-toggle="modal" data-target="#addCreditCardModal">
+                                        更改信用卡號
                                     </div>
                                 </div>
                             </div>
