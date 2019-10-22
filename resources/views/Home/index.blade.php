@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 {{-- 隱藏式 header 地址搜尋 --}}
-@section('headerSearchLarge')
+@section('headerSearchLarge') 
     <div class="input-group navbar-nav col-sm-6" id="headerSearchLarge">
         <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
         <div class="input-group-append">

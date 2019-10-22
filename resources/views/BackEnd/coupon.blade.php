@@ -3,7 +3,7 @@
 @section('selectOption')
     <div class="line1 row">
         <div class="col"></div>
-        <div class="col"></div>
+        <div class="col"></div> 
         <div class="select">
             <select id="selectbasic" name="selectbasic" class="form-control col" v-model="selected">
                 <option value="CouponCode" >代碼</option>
