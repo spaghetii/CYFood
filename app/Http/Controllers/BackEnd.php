@@ -421,4 +421,22 @@ class BackEnd extends Controller
         }
         return response()->json(['ok' => $ok, 'msg' => $msg], 200);
     }
+    ////////////////   會員修改暱稱、電話、卡號   ////////////////
+    function memberProfileUpdate(Request $request, $id) {
+        $ok='';
+        $msg = "";
+        $member = Member::find($id);
+        if ($member) {
+            $member->MemberName = $request->MemberName;
+            $member->MemberPhone = $request->MemberPhone;
+            $member->MemberCredit = $request->MemberCredit;
+            $member->MemberPermission = $request->MemberPermission;
+            $ok = $member->save();
+            if (!$ok) $msg = 'Error';
+            else $msg = "suessfull";
+        } else {
+            $msg = ' cant find anything';
+        }
+        return response()->json(['ok' => $ok, 'msg' => $msg], 200);
+    }
 }
