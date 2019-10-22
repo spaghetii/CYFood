@@ -34,20 +34,20 @@
                     <div class="col-sm-4 col-4">
                         <h6 class="floatRight">E-mail</h6>
                     </div>
-                    <div class="col-sm-8 col-8 userProfileDisplay" v-cloak>
+                    <div class="col-sm-8 col-8" v-cloak>
                         <h6>@{{profile.MemberEmail}}</h6>
                     </div>
                     <div class="col-sm-8 col-8">
-                        <div class="input-group-sm userProfileHidden">
+                        {{-- <div class="input-group-sm userProfileHidden">
                             <input type="email" class="form-control" v-model="MemberEmail" id="userProfileEmail"
                             v-on:blur="memberEmailBlur" v-bind:class="{ 'is-invalid': memberEmailError }"
                             :placeholder="profile.MemberEmail">
-                        </div>
-                        <div class="form-check alignCenter userProfileHidden">
+                        </div> --}}
+                        {{-- <div class="form-check alignCenter userProfileHidden">
                             <small>
                                 <input class="form-check-input" type="checkbox" value="" id="Check">是否訂閱電子報
                             </small>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="container-fluid alignCenter mb-3">
@@ -65,18 +65,41 @@
                 </div>
                 <div class="container-fluid alignCenter mb-3" v-if="profile.MemberCredit != null">
                     <div class="col-sm-4 col-4">
-                        <h6 class="floatRight">信用卡號</h6>
+                        <h6 class="floatRight">信用卡</h6>
                     </div>
                     <div class="col-sm-8 col-8 userProfileDisplay">
                         <h6>@{{profile.MemberCredit}}</h6>
                     </div>
-                    <div class="input-group input-group-sm creditInputWidth userProfileHidden col-sm-8 col-8" id="creditInputGroup">
-                        <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" placeholder="輸入卡號16個數字" required>
-                        <div class="invalid-feedback">
-                            @{{ creditCardErrMsg }}
+                    <div class="d-flex flex-column container-fluid col-sm-8 col-8">
+                        <div class="input-group input-group-sm creditInputWidth userProfileHidden mb-1 col-12 noPad" id="creditInputGroup">
+                            <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" placeholder="輸入卡號16個數字" required>
+                            <div class="invalid-feedback">
+                                @{{ creditCardErrMsg }}
+                            </div>   
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="input-group input-group-sm creditInputWidth userProfileHidden mb-1 mr-1 noPad" id="creditInputGroup1">
+                                <input type="text" class="form-control" name="creditInputDate" 
+                                    v-on:blur="creditInputDateBlur" 
+                                    v-bind:class="{ 'is-invalid': creditInputDateError }" 
+                                    v-model="creditInputDate" id="creditInputDate" size="5" maxlength="5" required placeholder="MM/YY">
+                                <div class="invalid-feedback">
+                                    @{{ creditInputDateErrMsg }}
+                                </div>   
+                            </div>
+                            <div class="input-group input-group-sm creditInputWidth userProfileHidden noPad" id="creditInputGroup1">
+                                <input type="password" class="form-control" name="creditInputSafe" 
+                                    v-on:blur="creditInputSafeBlur" 
+                                    v-bind:class="{ 'is-invalid': creditInputSafeError }" 
+                                    v-model="creditInputSafe" id="creditInputSafe" size="3" maxlength="3" required placeholder="安全碼">
+                                <div class="invalid-feedback">
+                                    @{{ creditInputSafeErrMsg }}
+                                </div>   
+                            </div>
                         </div>
                     </div>
                 </div>
+                
                 {{-- 確認 Btn --}}
                 <div>
                     <button type="button" class="btn btn-warning floatRight changeProfileBtn mt-3" id="changeProfileBtn" v-on:click="clickDispayProfileBtn">變更資料</button>
@@ -152,13 +175,21 @@
                     memberEmailError:false,
                     creditInput: '',
                     creditInputError: false,
-                    creditInputCorrect: false,
                     creditCardErrMsg: '',
+                    creditInputDate: '',
+                    creditInputSafe: '',
+                    creditInputDateError: false,
+                    creditInputDateErrMsg: '',
+                    creditInputSafeError: false,
+                    creditInputSafeErrMsg: '',
                 },
                 watch: {
                     creditInput: function () {
                         // 四字元補空格
                         this.creditInput = this.creditInput.replace(/(\d{4})(?=\d)/g, "$1-");                
+                    },
+                    creditInputDate: function () {
+                        this.creditInputDate = this.creditInputDate.replace(/(\d{2})(?=\d)/g, "$1/");
                     },
                 },
                 methods:{
@@ -189,10 +220,9 @@
                     },
                     profileChange: function(){
                         let self = this;
-                        axios.put('/api/member/'+this.profile.MemberID, 
+                        axios.put('/api/member/changeprofile/'+this.profile.MemberID, 
                             {
                                 MemberName:this.MemberName,
-                                MemberEmail:this.MemberEmail,
                                 MemberPhone:this.MemberPhone,
                                 MemberCredit:this.creditInput,
                                 MemberPermission:0
@@ -212,6 +242,8 @@
                                             self.MemberEmail="";
                                             self.MemberPhone="";
                                             self.creditInput="";
+                                            self.creditInputDate='';
+                                            self.creditInputSafe='';
                                         }
                                     })   
                                 }
@@ -270,6 +302,43 @@
                             return;
                         }
                         this.memberEmailError = false;
+                    },
+                    creditInputDateBlur: function () {
+                        let checkCredit = this.creditInputDate.replace(/\//g, '');
+                        let isCredit =  /^[0-9\s]*$/;
+                        let checkMonth = checkCredit.substring(0,2);
+                        if ( checkCredit == "" ){
+                            this.creditInputDateError = false;
+                        } else {
+                                if (!isCredit.test(checkCredit)) {
+                                this.creditInputDateError = true;
+                                this.creditInputDateErrMsg = '請輸入數字';
+                            } else if (checkCredit.length < 4) {
+                                this.creditInputDateError = true;
+                                this.creditInputDateErrMsg = '請再確認有效期限';
+                            } else if (parseInt(checkMonth) >= 13 ||  checkMonth == 00) {
+                                this.creditInputDateError = true;
+                                this.creditInputDateErrMsg = '請正確輸入月份';
+                            } else {
+                                this.creditInputDateError = false;
+                            }
+                        }
+                    },
+                    creditInputSafeBlur: function () {
+                        let isCredit =  /^[0-9\s]*$/;
+                        if ( this.creditInputSafe == "" ){
+                            this.creditInputSafeError = false;
+                        } else {
+                                if (!isCredit.test(this.creditInputSafe)) {
+                                this.creditInputSafeError = true;
+                                this.creditInputSafeErrMsg = '請輸入數字';
+                            } else if (this.creditInputSafe.length < 3) {
+                                this.creditInputSafeError = true;
+                                this.creditInputSafeErrMsg = '請完整輸入安全碼';
+                            } else {
+                                this.creditInputSafeError = false;
+                            }
+                        }
                     },
                 },
                 mounted: function (){

@@ -45,7 +45,6 @@
                                         <input type="radio" class="form-check-input" name="optradio">信用卡
                                     </label>
                                     <select class="form-control form-control-sm" style="width:83%">
-                                        {{-- <option>選擇信用卡</option> --}}
                                         <option>@{{profile.MemberCredit}}</option>
                                     </select>
                                 </div>
@@ -156,9 +155,31 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">卡號</label>
-                <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
+                    <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
                     <div class="invalid-feedback">
                         @{{ creditCardErrMsg }}
+                    </div>
+                </div>
+                <div class="d-flex flex-row container-fluid noPad">
+                    <div class="form-group noPad mr-2" style="width:100%">
+                        <label for="exampleInputEmail">有效期限</label>
+                        <input type="text" class="form-control" name="creditInputDate" 
+                            v-on:blur="creditInputDateBlur" 
+                            v-bind:class="{ 'is-invalid': creditInputDateError }" 
+                            v-model="creditInputDate" id="creditCardInput" size="5" maxlength="5" required placeholder="MM/YY">
+                        <div class="invalid-feedback">
+                            @{{ creditInputDateErrMsg }}
+                        </div>
+                    </div>
+                    <div class="form-group noPad" style="width:100%">
+                        <label for="exampleInputEmail">安全碼</label>
+                        <input type="password" class="form-control" name="creditInputSafe" 
+                            v-on:blur="creditInputSafeBlur" 
+                            v-bind:class="{ 'is-invalid': creditInputSafeError }" 
+                            v-model="creditInputSafe" id="creditCardInput" size="3" maxlength="3" required>
+                        <div class="invalid-feedback">
+                            @{{ creditInputSafeErrMsg }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -435,48 +456,116 @@
                 creditInputCorrect: false,
                 creditCardErrMsg: '',
                 memberID:'',
+                creditInputDate: '',
+                creditInputSafe: '',
+                creditInputDateError: false,
+                creditInputDateErrMsg: '',
+                creditInputSafeError: false,
+                creditInputSafeErrMsg: '',
             },
             watch: {
                 creditInput: function () {
                     // 四字元補空格
                     this.creditInput = this.creditInput.replace(/(\d{4})(?=\d)/g, "$1-");                
                 },
+                creditInputDate: function () {
+                    this.creditInputDate = this.creditInputDate.replace(/(\d{2})(?=\d)/g, "$1/");
+                },
             },
             methods: {
                 // input 失去焦點後 驗證格式
                 creditInputBlur: function () {
                     let checkCredit = this.creditInput.replace(/-/g, '');
-                    let isCredit = /^\d+$/;
-                    if (!isCredit.test(checkCredit)) {
-                        this.creditInputError = true;
-                        this.creditCardErrMsg = '請輸入數字';
-                    } else if (checkCredit.length < 16) {
+                    let isCredit =  /^[0-9\s]*$/;
+                    if ( checkCredit == "" ){
+                        this.creditInputError = false;
+                    } else {
+                            if (!isCredit.test(checkCredit)) {
+                            this.creditInputError = true;
+                            this.creditCardErrMsg = '請輸入數字';
+                        } else if (checkCredit.length < 16) {
+                            this.creditInputError = true;
+                            this.creditCardErrMsg = '請完整輸入卡號';
+                        } else {
+                            this.creditInputError = false;
+                        }
+                    }
+                },
+                creditInputDateBlur: function () {
+                    let checkCredit = this.creditInputDate.replace(/\//g, '');
+                    let isCredit =  /^[0-9\s]*$/;
+                    let checkMonth = checkCredit.substring(0,2);
+                    if ( checkCredit == "" ){
+                        this.creditInputDateError = false;
+                    } else {
+                            if (!isCredit.test(checkCredit)) {
+                            this.creditInputDateError = true;
+                            this.creditInputDateErrMsg = '請輸入數字';
+                        } else if (checkCredit.length < 4) {
+                            this.creditInputDateError = true;
+                            this.creditInputDateErrMsg = '請完整輸入有效期限';
+                        } else if (parseInt(checkMonth) >= 13 ||  checkMonth == 00) {
+                            this.creditInputDateError = true;
+                            this.creditInputDateErrMsg = '請正確輸入月份';
+                        } else {
+                            this.creditInputDateError = false;
+                        }
+                    }
+                },
+                creditInputSafeBlur: function () {
+                    let isCredit =  /^[0-9\s]*$/;
+                    if ( this.creditInputSafe == "" ){
+                        this.creditInputSafeError = false;
+                    } else {
+                            if (!isCredit.test(this.creditInputSafe)) {
+                            this.creditInputSafeError = true;
+                            this.creditInputSafeErrMsg = '請輸入數字';
+                        } else if (this.creditInputSafe.length < 3) {
+                            this.creditInputSafeError = true;
+                            this.creditInputSafeErrMsg = '請完整輸入安全碼';
+                        } else {
+                            this.creditInputSafeError = false;
+                        }
+                    }
+                },
+                // 送出信用卡號至DB
+                addCreditCardBtnClick: function (){
+                    if ( this.creditInput.length >= 19 ) {
+                        if ( this.creditInputSafe.length < 3 ) {
+                            this.creditInputSafeError = true;
+                            this.creditInputSafeErrMsg = '請完整輸入安全碼';
+                        }
+                        if ( this.creditInputDate.length < 5 ) {
+                            this.creditInputDateError = true;
+                            this.creditInputDateErrMsg = '請完整輸入有效期限';
+                        }
+                        if ( this.creditInputSafe.length >= 3 && this.creditInputDate.length >= 5) {
+                            let _this = this;
+                            axios.put('/api/member/changecredit/'+this.memberID, {
+                                MemberCredit:this.creditInput,
+                            })
+                            .then(function (response) {
+                                if (response.data['ok']) {
+                                    Swal.fire({
+                                        type: 'success',
+                                        title: '新增成功',
+                                    }).then((result) => {
+                                        console.log(result.value);
+                                        if (result.value) {
+                                            orderDetailDivApp.init();
+                                            $('#addCreditCardModal').modal('toggle');
+                                            _this.creditInput="";
+                                            _this.creditInputDate="";
+                                            _this.creditInputSafe="";
+                                        }
+                                    })   
+                                }               
+                            })
+                        }
+                    } else {
                         this.creditInputError = true;
                         this.creditCardErrMsg = '請完整輸入卡號';
-                    } else {
-                        this.creditInputError = false;
-                    }  
-                },
-                addCreditCardBtnClick: function (){
-                    let _this = this;
-                    axios.put('/api/member/changecredit/'+this.memberID, {
-                        MemberCredit:this.creditInput,
-                    })
-                    .then(function (response) {
-                        if (response.data['ok']) {
-                            Swal.fire({
-                                type: 'success',
-                                title: '新增成功',
-                            }).then((result) => {
-                                console.log(result.value);
-                                if (result.value) {
-                                    orderDetailDivApp.init();
-                                    $('#addCreditCardModal').modal('toggle');
-                                    _this.creditInput="";
-                                }
-                            })   
-                        }               
-                    })
+                    }
                 },
             }
         })
