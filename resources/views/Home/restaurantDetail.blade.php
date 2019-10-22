@@ -367,10 +367,12 @@
                     if(element.type == '1'){
                         orderModal.mealtype1 = true;
                         orderModal.mealtype2 = false;
-                    }else if (element.type == '2'){
+                    }
+                    if (element.type == '2'){
                         orderModal.mealtype1 = false;
                         orderModal.mealtype2 = true;
-                    }else{
+                    }
+                    if(element.type == '0'){
                         orderModal.mealtype1 = false;
                         orderModal.mealtype2 = false;
                     }
