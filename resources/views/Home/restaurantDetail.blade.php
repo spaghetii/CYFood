@@ -101,10 +101,10 @@
         </div>
         {{-- 餐點細項 --}}
         <div>
-            <ul style="list-style: none;" class="noPad noMarg ">
-                <li>
+            <ul style="list-style: none;" class="noPad noMarg">
+                <li v-if="mealtype2">
                     {{-- 細項抬頭 --}}
-                    <div id="orderDetailTitleDiv">
+                    <div id="orderDetailTitleDiv" >
                         <div>
                             <h6 class="noMarg">份量 Size</h6>
                         </div>
@@ -113,94 +113,17 @@
                         </div>
                     </div>
                     {{-- 細項選項 --}}
-                    <div>
+                    <div v-for="meal,index in mealDetail" >
                         <p class="noMarg">
-                            <input type="radio" id="test1" name="radio-group" class="orangeRad">
-                            <label for="test1" class="d-flex flex-row" id="orederDetailDescDiv">
-                                中 Medium 
-                                <span class="ml-auto mr-4"></span>
+                            <input type="radio" :id="meal.detailName" name="mealtype2" class="orangeRad">
+                            <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
+                                @{{meal.detailName}} 
+                                <span class="ml-auto mr-4" v-if="meal.price != 0">+$@{{meal.price}}</span>
                             </label>
-                        </p>
-                        <p class="noMarg">
-                            <input type="radio" id="test2" name="radio-group" class="orangeRad">
-                            <label for="test2" class="d-flex flex-row" id="orederDetailDescDiv">
-                                大 Large
-                                <span class="ml-auto mr-4">+$10</span>
-                            </label>  
                         </p>
                     </div>
                 </li>
-                <li>
-                    {{-- 細項抬頭 --}}
-                    <div id="orderDetailTitleDiv">
-                        <div>
-                            <h6 class="noMarg">飲品溫度 Beverage Temperature</h6>
-                        </div>
-                        <div>
-                            <small>必填</small>
-                        </div>
-                    </div>
-                    {{-- 細項選項 --}}
-                    <div>
-                        <p class="noMarg">
-                            <input type="radio" id="test3" name="radio-group1" class="orangeRad">
-                            <label for="test3" class="d-flex flex-row" id="orederDetailDescDiv">
-                                正常冰 Regular Ice 
-                                <span class="ml-auto mr-4"></span>
-                            </label>
-                        </p>
-                        <p class="noMarg">
-                            <input type="radio" id="test4" name="radio-group1" class="orangeRad">
-                            <label for="test4" class="d-flex flex-row" id="orederDetailDescDiv">
-                                常溫 Room Temperature
-                                <span class="ml-auto mr-4"></span>
-                            </label>  
-                        </p>
-                        <p class="noMarg">
-                            <input type="radio" id="test5" name="radio-group1" class="orangeRad">
-                            <label for="test5" class="d-flex flex-row" id="orederDetailDescDiv">
-                                熱 Hot
-                                <span class="ml-auto mr-4"></span>
-                            </label>  
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    {{-- 細項抬頭 --}}
-                    <div id="orderDetailTitleDiv">
-                        <div>
-                            <h6 class="noMarg">甜度 Sweetness Level</h6>
-                        </div>
-                        <div>
-                            <small>必填</small>
-                        </div>
-                    </div>
-                    {{-- 細項選項 --}}
-                    <div>
-                        <p class="noMarg">
-                            <input type="radio" id="test6" name="radio-group2" class="orangeRad">
-                            <label for="test6" class="d-flex flex-row" id="orederDetailDescDiv">
-                                正常糖 Regular Sugar
-                                <span class="ml-auto mr-4"></span>
-                            </label>
-                        </p>
-                        <p class="noMarg">
-                            <input type="radio" id="test7" name="radio-group2" class="orangeRad">
-                            <label for="test7" class="d-flex flex-row" id="orederDetailDescDiv">
-                                半糖 Half Sugar
-                                <span class="ml-auto mr-4"></span>
-                            </label>  
-                        </p>
-                        <p class="noMarg">
-                            <input type="radio" id="test8" name="radio-group2" class="orangeRad">
-                            <label for="test8" class="d-flex flex-row" id="orederDetailDescDiv">
-                                無糖 Sugar-Free
-                                <span class="ml-auto mr-4"></span>
-                            </label>  
-                        </p>
-                    </div>
-                </li>
-                <li>
+                <li v-if="mealtype1">
                     {{-- 細項抬頭 --}}
                     <div id="orderDetailTitleDiv">
                         <div>
@@ -211,27 +134,13 @@
                         </div>
                     </div>
                     {{-- 細項選項 --}}
-                    <div>
+                    <div v-for="meal,index in mealDetail">
                         <p class="noMarg">
-                            <input type="checkbox" id="test9" name="radio-group3" class="orangeRad">
-                            <label for="test9" class="d-flex flex-row" id="orederDetailDescDiv">
-                                珍珠 Tapioca
-                                <span class="ml-auto mr-4">+$10</span>
+                            <input type="checkbox" :id="meal.detailName" name="mealtype1" class="orangeRad">
+                            <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
+                                @{{meal.detailName}} 
+                                <span class="ml-auto mr-4" v-if="meal.price != 0">+$@{{meal.price}}</span>
                             </label>
-                        </p>
-                        <p class="noMarg">
-                            <input type="checkbox" id="test10" name="radio-group3" class="orangeRad">
-                            <label for="test10" class="d-flex flex-row" id="orederDetailDescDiv">
-                                仙草凍 Herb Jelly
-                                <span class="ml-auto mr-4">+$10</span>
-                            </label>  
-                        </p>
-                        <p class="noMarg">
-                            <input type="checkbox" id="test11" name="radio-group3" class="orangeRad">
-                            <label for="test11" class="d-flex flex-row" id="orederDetailDescDiv">
-                                紅豆 Red Bean
-                                <span class="ml-auto mr-4">+$10</span>
-                            </label>  
                         </p>
                     </div>
                 </li>
@@ -351,6 +260,12 @@
                 count: 1,
                 totalPrice: null,
                 shop:[],
+                // 餐廳細項
+                mealDetail:[],
+                mealtype1:false,
+                mealtype2:false,
+                test: true,
+
             },
             methods: {
                 subButton: function () {
@@ -426,7 +341,7 @@
                 axios.get("/api/meal/"+this.shopID)
                     .then(function (response) {
                         _this.list = response.data;
-                        // console.log(_this.list);
+                        console.log(_this.list);
                         //取出餐點種類
                         for(i= 0;i<_this.list.length;i++){
                             _this.temp[i] = _this.list[i].MealType;
@@ -446,7 +361,21 @@
                 orderModal.meals = this.list[e];
                 orderModal.totalPrice = this.list[e].MealPrice;
                 $("#orderModalCenter").modal( { show: true } );
-                // console.log(orderModal.meals);
+                orderModal.mealDetail = JSON.parse(orderModal.meals.MealDetails).detail;
+                orderModal.mealDetail.forEach(element => {
+                    console.log(element.type);
+                    if(element.type == '1'){
+                        orderModal.mealtype1 = true;
+                        orderModal.mealtype2 = false;
+                    }else if (element.type == '2'){
+                        orderModal.mealtype1 = false;
+                        orderModal.mealtype2 = true;
+                    }else{
+                        orderModal.mealtype1 = false;
+                        orderModal.mealtype2 = false;
+                    }
+                });
+                // console.log(orderModal.mealDetail);
             }
         },
         mounted: function () {

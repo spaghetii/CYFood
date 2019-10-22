@@ -1,5 +1,8 @@
 /* 整個畫面 */
-body {font-family:"Microsoft JhengHei";}
+body {
+    font-family:"Microsoft JhengHei";
+    -webkit-user-select: none;
+}
 
 .wrapper {
     height: 100vh;
