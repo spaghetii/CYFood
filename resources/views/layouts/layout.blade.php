@@ -87,11 +87,11 @@
                         <img src="/img/logo.png" alt="">
                     </div>
                     <div class="col-sm-3 col-6 mt-4 mt-sm-0">
-                        <p><a href="#">關於 CY Food</a></p>
+                        <p><a href="/about">關於 CY Food</a></p>
                         <p><a href="#">意見箱</a></p>
                     </div>
                     <div class="col-sm-4 col-6 mt-4 mt-sm-0">
-                        <p><a href="#">常見 Q&A</a></p>
+                        <p><a href="/QA">常見 Q&A</a></p>
                     </div>
                 </div>
                 <div class="row mt-4 footerBottom alignCenter">

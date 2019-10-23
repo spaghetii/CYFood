@@ -38,6 +38,10 @@ Route::get('/trackingOrder', "HomeController@trackingOrder");                   
 
 Route::get('/session',"HomeController@checkMemberSession" );                        // 檢查會員session
 
+Route::get('/QA',"HomeController@QandApage");                                        // 會員登入
+
+Route::get('/about',"HomeController@aboutPage");                                        // 會員登入
+
 
 
 //===============店家端======================

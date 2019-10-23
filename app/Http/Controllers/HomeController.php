@@ -25,6 +25,14 @@ class HomeController extends Controller
         return view('home.loginHomepage');
     }
 
+    function QandApage() {
+        return view('home.Q&A');
+    }
+
+    function aboutPage() {
+        return view('home.about');
+    }
+
     function restaurantDetail($id,Request $request) {
         
         $shopCount = DB::table('shops')->count();
