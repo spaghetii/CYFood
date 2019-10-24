@@ -115,7 +115,7 @@
                     {{-- 細項選項 --}}
                     <div v-for="meal,index in mealDetail" >
                         <p class="noMarg">
-                            <input type="radio" :id="meal.detailName" name="mealtype2" class="orangeRad">
+                            <input type="radio" :id="meal.detailName" v-model="Size" name="Size" class="orangeRad" :value="index">
                             <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
                                 @{{meal.detailName}} 
                                 <span class="ml-auto mr-4" v-if="meal.price != 0">+$@{{meal.price}}</span>
@@ -136,7 +136,7 @@
                     {{-- 細項選項 --}}
                     <div v-for="meal,index in mealDetail">
                         <p class="noMarg">
-                            <input type="checkbox" :id="meal.detailName" name="mealtype1" class="orangeRad">
+                            <input type="checkbox" :id="meal.detailName" v-model="addOns" name="addOns[]" class="orangeRad" :value="index">
                             <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
                                 @{{meal.detailName}} 
                                 <span class="ml-auto mr-4" v-if="meal.price != 0">+$@{{meal.price}}</span>
@@ -264,7 +264,9 @@
                 mealDetail:[],
                 mealtype1:false,
                 mealtype2:false,
-                test: true,
+                getHref: true,
+                addOns:[],
+                Size:'',
 
             },
             methods: {
@@ -322,9 +324,20 @@
                     }
                 }
             },
+            watch:{
+                Size:function(index){
+                    // console.log(this.mealDetail[index].price);
+                    this.totalPrice = this.count * parseInt(this.meals.MealPrice);
+                    this.totalPrice += parseInt(this.mealDetail[index].price);
+                },
+                addOns:function(index){
+                    console.log(index[0]);
+                    // console.log(this.mealDetail[index].price);
+                }
+            }
         })
 
-        var meals = new Vue({
+    var meals = new Vue({
         el: "#meallist",
         data: {
             list: [],
@@ -381,8 +394,8 @@
             }
         },
         mounted: function () {
-            let test = (location.href).split("/");
-            this.shopID = test[test.length-1];
+            let getHref = (location.href).split("/");
+            this.shopID = getHref[getHref.length-1];
             this.init();
         }
     });
