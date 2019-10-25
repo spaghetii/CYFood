@@ -139,11 +139,13 @@
                                     </div>  
                                     <div style="padding:0px 20px;margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
                                             v-for="in1,dindex in shoppingBagMealDetail[0]" >
-                                        <div v-for="in2 in in1" v-if="index == dindex">       
-                                            <div v-if="in2[0].type == 1" style="font-weight:bold">加點 Add-ons</div>
-                                            <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
-                                            <div v-if="in2[0].type == 2" style="font-weight:bold">份量 Size</div>
-                                            <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                        <div v-for="in2,key,i in in1" v-if="index == dindex">  
+                                            <div v-if="in2[i] != null">
+                                                <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
+                                                <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
+                                                <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
+                                                <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                            </div>
                                         </div>
                                     </div> 
                                 </div>    
@@ -245,6 +247,7 @@
 
                 // 餐點細項
                 shoppingBagMealDetail: [],
+                storedUnitMealDetailTotalArray: [], //儲存的資料
             },
             watch: {
                 // watch 餐點數量變化
@@ -355,8 +358,9 @@
                 this.shoppingBagMealTotalPrice = storedMealTotalPriceArray;
                 // console.log(this.shoppingBagMealQuantity);
 
-                let storedUnitMealDetailTotalArray = JSON.parse(localStorage.getItem('unitMealDetailTotalArray'));
-                this.shoppingBagMealDetail = {0:storedUnitMealDetailTotalArray};
+                this.storedUnitMealDetailTotalArray = JSON.parse(localStorage.getItem('unitMealDetailTotalArray'));
+                // console.log(storedUnitMealDetailTotalArray);
+                this.shoppingBagMealDetail = {0:this.storedUnitMealDetailTotalArray};
                 console.log(this.shoppingBagMealDetail);
                 }
             },

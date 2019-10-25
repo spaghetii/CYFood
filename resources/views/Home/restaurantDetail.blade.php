@@ -319,7 +319,10 @@
                         
                         // 餐點細項 20191025
                         this.unitMealDetailTotal.push({Size:this.unitMealDetailSize,Add:this.unitMealDetailAdd});
-                        shoppingBagModalApp.shoppingBagMealDetail.push(this.unitMealDetailTotal);
+                        // console.log(typeof shoppingBagModalApp.shoppingBagMealDetail);
+                        // console.log(shoppingBagModalApp.shoppingBagMealDetail);
+                        shoppingBagModalApp.storedUnitMealDetailTotalArray.push(this.unitMealDetailTotal);
+                        shoppingBagModalApp.shoppingBagMealDetail = shoppingBagModalApp.storedUnitMealDetailTotalArray;
                         // console.log(shoppingBagModalApp.shoppingBagMealDetail);
                         // console.log(this.unitMealDetailTotal);
                         localStorage.setItem("unitMealDetailTotalArray", JSON.stringify(this.unitMealDetailTotal));
@@ -334,7 +337,9 @@
                         newOrderMadalApp.mealName = this.meals.MealName;
                         newOrderMadalApp.mealPrice = this.meals.MealPrice;
                         newOrderMadalApp.count = this.count;
-                        newOrderMadalApp.shoppingBagMealDetail = shoppingBagModalApp.shoppingBagMealDetail;
+                        this.unitMealDetailTotal.push({Size:this.unitMealDetailSize,Add:this.unitMealDetailAdd});
+                        newOrderMadalApp.shoppingBagMealDetail = this.unitMealDetailTotal;
+                        console.log(this.unitMealDetailTotal);
                     }
                 }
             },
@@ -552,9 +557,9 @@
                 localStorage.setItem("shipTime", JSON.stringify(this.shipTime)); 
                 localStorage.setItem("shopImage", JSON.stringify(this.shopImage));     //多塞一個餐廳圖片  歷史訂單要用 by 林培誠
 
-                // shoppingBagModalApp.shoppingBagMealDetail = [];
-                // shoppingBagModalApp.shoppingBagMealDetail.push(this.shoppingBagMealDetail);
-
+                shoppingBagModalApp.shoppingBagMealDetail = [];
+                shoppingBagModalApp.shoppingBagMealDetail.push(this.shoppingBagMealDetail);
+                localStorage.setItem("unitMealDetailTotalArray", JSON.stringify(this.shoppingBagMealDetail));
             },
         },
     })
