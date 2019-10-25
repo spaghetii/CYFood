@@ -108,7 +108,7 @@
                             <tr style="border: 1px solid black;" >
                                 <th scope="col" style="width: 28%;">餐點名稱</th>
                                 <th scope="col" style="width: 28%;">下單數量</th>
-                                <th scope="col" style="width: 28%;">餐點單價</th>
+                                <th scope="col" style="width: 28%;">餐點價格</th>
                                 <th style="width: 15%;"></th>
                             </tr>
                         </thead>
@@ -140,23 +140,23 @@
                                 <div  v-for="mealDetailItem in item.mealDetail">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <select class="custom-select" v-model="mealDetailItem.type" >
+                                            <select class="custom-select" v-model="mealDetailItem.type" disabled >
                                                 <option value="0" selected disabled hidden>請選擇種類</option>
                                                 <option value="1">加點</option>
                                                 <option value="2">份量</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6 text-right">
-                                            <input type="checkbox" aria-label="Checkbox for following text input" v-model="mealDetailItem.check" >
+                                            <input type="checkbox" aria-label="Checkbox for following text input" v-model="mealDetailItem.check" disabled>
                                             <label class="col-form-label text-center">是否為必選? </label>
                                         </div>
                                     </div>
                                     <!-- detail row 2 -->
                                     <div class="row" style="margin:20px 0px ;">
                                         <label class="col-form-label col-sm-2 text-right">細項內容: </label>
-                                        <input type="text" placeholder="請輸入細項內容" class="form-control col-sm-4" v-model="mealDetailItem.detail">
+                                        <input type="text" placeholder="請輸入細項內容" class="form-control col-sm-4" v-model="mealDetailItem.detail" disabled>
                                         <label class="col-form-label col-sm-2 text-right">細項單價: </label>
-                                        <input type="text" placeholder="請輸入細項單價" class="form-control col-sm-4" v-model="mealDetailItem.price">
+                                        <input type="text" placeholder="請輸入細項單價" class="form-control col-sm-4" v-model="mealDetailItem.price" disabled>
                                     </div>
                                 </div>
                                 {{-- <div class="row text-center">
@@ -316,18 +316,6 @@
                             _this.recombind[index] = "#" + ele.mealNum;  //boostrap
                         })
                     });
-                },
-                addDetail:function(detailIndex){
-                    this.list.OrdersDetails.meal.forEach((element,index) => {
-                        element.mealDetail.push({"type":0,"mealNum":"meal0","detail": "","price":"","check":false})
-                    });
-                },
-                addMeal:function(){
-                    // console.log(this.list.OrdersDetails.meal[lastNum]);
-                    var temp = 'meal'+ (++lastNum);
-                    // console.log(this.list);
-                    this.list.OrdersDetails.meal.push({"mealQuantity":"","mealName":"","mealUnitPrice":"","mealDetail":[{"type":0,"detail": "","mealNum":temp,"price":"","check":false}] })
-                    this.init();
                 },
                 modalOK: function(){
                     if (currentIndex >= 0){

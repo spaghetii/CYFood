@@ -74,7 +74,7 @@
                     <div>
                         <ul class="noPad">
                             <li style="list-style-type:none" v-for="MealItem,index in shoppingBagMealName">
-                                <div class="d-flex alignCenter noPad">
+                                <div class="d-flex  noPad">
                                     <div class="shoppingBagModalItemQuantity noPad mr-3" >
                                         <div class="form-group noMarg" v-cloak style="width:100px">
                                             <select class="form-control" v-model="shoppingBagMealQuantity[index]">
@@ -83,9 +83,20 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div v-cloak class="noPad">
-                                        @{{shoppingBagMealName[index]}}
-                                    </div>       
+                                    <div>
+                                        <div v-cloak class="noPad">
+                                            @{{shoppingBagMealName[index]}}
+                                        </div>   
+                                        <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                                v-for="in1,dindex in shoppingBagMealDetail[0]" >
+                                            <div v-for="in2 in in1" v-if="index == dindex">       
+                                                <div v-if="in2[0].type == 1" style="font-weight:bold">加點 Add-ons</div>
+                                                <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
+                                                <div v-if="in2[0].type == 2" style="font-weight:bold">份量 Size</div>
+                                                <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                            </div>
+                                        </div> 
+                                    </div>   
                                     <div class="noPad ml-auto" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex" v-cloak>
                                         $@{{item}}
                                     </div> 
@@ -226,7 +237,9 @@
                 //優惠券
                 coupon:"",
                 couponError:false,
-                couponOK:false
+                couponOK:false,
+
+                shoppingBagMealDetail:[],
             },
             methods:{
                 init: function(){
@@ -235,7 +248,7 @@
                     axios.get('/api/member/'+this.memberID)
                     .then(function (response) {
                         _this.profile = response.data;
-                        console.log(_this.profile);
+                        // console.log(_this.profile);
                         addCreditCardModalnApp.memberID = _this.profile.MemberID;
                         // console.log(addCreditCardModalnApp.memberID);
                     })
@@ -262,7 +275,7 @@
                         cancelButtonText: '再考慮一下'
                         }).then((result) => {
                             _this.memberName = sessionStorage.getItem('memberName');
-                            console.log(_this.memberName);
+                            // console.log(_this.memberName);
                             if (result.value){
 
                                 let dataToSever = {
@@ -278,16 +291,29 @@
                                     MemberID: _this.memberID,
                                     ShopID: _this.ShopID,
                                 }
+                                // [{"type":0,"mealNum":"meal0","detail": "","price":"","check":false}]
                                 
                                 _this.shoppingBagMealQuantity.forEach((element,index) => {
+                                    let mealDetailTemp = [];
+
+                                    // console.log(index);
+                                    // console.log(_this.shoppingBagMealDetail[0][index]);
+                                    
+                                    _this.shoppingBagMealDetail[0][index].Add.forEach(dAddElement => {
+                                        mealDetailTemp.push(dAddElement);
+                                    });
+                                    _this.shoppingBagMealDetail[0][index].Size.forEach(dSizeElement => {
+                                        mealDetailTemp.push(dSizeElement);
+                                    });
+                                    // console.log(mealDetailTemp);
                                     dataToSever.OrdersDetails.meal.push({   mealQuantity:element,
                                                                             mealName:_this.shoppingBagMealName[index],
                                                                             mealUnitPrice:_this.shoppingBagMealPrice[index],
-                                                                            mealDetail:[{type:0,mealNum:"meal0",detail:"",price:"",check:false}]
+                                                                            mealDetail:mealDetailTemp
                                                                         });      
                                 });
                                 dataToSever.OrdersDetails = JSON.stringify(dataToSever.OrdersDetails);
-                                console.log(dataToSever);
+                                // console.log(dataToSever);
 
 
                                 axios.post('/api/order', dataToSever)
@@ -432,6 +458,10 @@
                 this.memberID = memberID;
                 this.memberName = memberName;
                 // console.log(this.restaurantName);
+
+                let storedUnitMealDetailTotalArray = JSON.parse(localStorage.getItem('unitMealDetailTotalArray'));
+                this.shoppingBagMealDetail = {0:storedUnitMealDetailTotalArray};
+
                 this.init();
                 }
                 
@@ -445,6 +475,7 @@
         localStorage.removeItem('mealTotalPriceArray');
         localStorage.removeItem('restautantName');
         localStorage.removeItem('shopID');
+        localStorage.removeItem('unitMealDetailTotalArray');
         localStorage.removeItem('shopImage');         //新增的
     }
         // 新增信用卡 modal

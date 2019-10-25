@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     {{-- 細項選項 --}}
-                    <div v-for="meal,index in mealDetail" >
+                    <div v-for="meal,index in mealDetail" v-if="meal.type==2">
                         <p class="noMarg">
                             <input type="radio" :id="meal.detailName" v-model="Size" name="Size" class="orangeRad" :value="index">
                             <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     {{-- 細項選項 --}}
-                    <div v-for="meal,index in mealDetail">
+                    <div v-for="meal,index in mealDetail" v-if="meal.type==1">
                         <p class="noMarg">
                             <input type="checkbox" :id="meal.detailName" v-model="addOns" name="addOns[]" class="orangeRad" :value="index">
                             <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
@@ -234,9 +234,9 @@
 @section('script')
     <script>
         // checkbox select one at a time 20191020
-        $(document).on('click', 'input[type="checkbox"]', function() {      
-            $('input[type="checkbox"]').not(this).prop('checked', false);      
-        });
+        // $(document).on('click', 'input[type="checkbox"]', function() {      
+        //     $('input[type="checkbox"]').not(this).prop('checked', false);      
+        // });
 
         //滾輪滾到navbar
         $(document).ready().scroll(function () {
@@ -258,7 +258,7 @@
             data: {
                 meals:[],
                 count: 1,
-                totalPrice: null,
+                totalPrice: 0,
                 shop:[],
                 // 餐廳細項
                 mealDetail:[],
@@ -266,8 +266,14 @@
                 mealtype2:false,
                 getHref: true,
                 addOns:[],
-                Size:'',
+                Size:-1,
 
+                sizePrice:0,
+                addPrice:0,
+                unitMealDetailSize:[],
+                unitMealDetailAdd:[],
+                unitMealDetailTotal:[],
+                mealPriceArray2:[],
             },
             methods: {
                 subButton: function () {
@@ -288,8 +294,9 @@
                     let firstShopID = localStorage.getItem('shopID');
                     if ( firstShopID == null || firstShopID == this.shop.ShopID ) {
                          // 餐點資料 存入 localStorage 
+                        //  console.log(this.totalPrice);
                         mealNameArray.push(this.meals.MealName);
-                        mealPriceArray.push(this.meals.MealPrice);
+                        mealPriceArray.push(this.totalPrice);
                         mealQuantityArray.push(this.count);
                         localStorage.setItem("mealNameArray", JSON.stringify(mealNameArray));
                         localStorage.setItem("mealPriceArray", JSON.stringify(mealPriceArray));
@@ -297,9 +304,9 @@
 
                         // 資料傳入到 shoppingBagModalApp-Vue
                         shoppingBagModalApp.shoppingBagMealName.push(this.meals.MealName);
-                        shoppingBagModalApp.shoppingBagMealPrice.push(this.meals.MealPrice);
+                        shoppingBagModalApp.shoppingBagMealPrice.push(this.totalPrice);
                         shoppingBagModalApp.shoppingBagMealQuantity.push(this.count);  
-                        shoppingBagModalApp.shoppingBagMealTotalPrice.push(this.meals.MealPrice * this.count);  
+                        shoppingBagModalApp.shoppingBagMealTotalPrice.push(this.totalPrice * this.count);  
                         // 餐點總金額 傳入 local
                         localStorage.setItem("mealTotalPriceArray", JSON.stringify(shoppingBagModalApp.shoppingBagMealTotalPrice));
 
@@ -310,6 +317,15 @@
                         localStorage.setItem("shopImage", JSON.stringify(this.shop.ShopImage));     //多塞一個餐廳圖片  歷史訂單要用 by 林培誠
                         // console.log(this.shop);
                         
+                        // 餐點細項 20191025
+                        this.unitMealDetailTotal.push({Size:this.unitMealDetailSize,Add:this.unitMealDetailAdd});
+                        // console.log(typeof shoppingBagModalApp.shoppingBagMealDetail);
+                        // console.log(shoppingBagModalApp.shoppingBagMealDetail);
+                        shoppingBagModalApp.storedUnitMealDetailTotalArray.push(this.unitMealDetailTotal);
+                        shoppingBagModalApp.shoppingBagMealDetail = shoppingBagModalApp.storedUnitMealDetailTotalArray;
+                        // console.log(shoppingBagModalApp.shoppingBagMealDetail);
+                        // console.log(this.unitMealDetailTotal);
+                        localStorage.setItem("unitMealDetailTotalArray", JSON.stringify(this.unitMealDetailTotal));
                     }else if ( firstShopID != this.shop.ShopID) {
                         $('#newOrderMadal').modal('toggle');
                         let restautantName = JSON.parse(localStorage.getItem('restautantName'));
@@ -321,18 +337,42 @@
                         newOrderMadalApp.mealName = this.meals.MealName;
                         newOrderMadalApp.mealPrice = this.meals.MealPrice;
                         newOrderMadalApp.count = this.count;
+                        this.unitMealDetailTotal.push({Size:this.unitMealDetailSize,Add:this.unitMealDetailAdd});
+                        newOrderMadalApp.shoppingBagMealDetail = this.unitMealDetailTotal;
+                        console.log(this.unitMealDetailTotal);
                     }
                 }
             },
             watch:{
                 Size:function(index){
+                    // console.log(index);
                     // console.log(this.mealDetail[index].price);
                     this.totalPrice = this.count * parseInt(this.meals.MealPrice);
-                    this.totalPrice += parseInt(this.mealDetail[index].price);
+                    if(index !== -1){
+                        this.sizePrice = parseInt(this.mealDetail[index].price);
+
+                        let mealDetaillist = this.mealDetail[index];
+                        // console.log(this.meals);
+                        this.unitMealDetailSize= [{type:mealDetaillist.type, mealNum:"meal"+this.meals.MealID, detail:mealDetaillist.detailName, price:mealDetaillist.price}];
+                        // console.log(this.unitMealDetailSize);
+                    }
+                    this.totalPrice += this.sizePrice + this.addPrice;
+
                 },
                 addOns:function(index){
-                    console.log(index[0]);
-                    // console.log(this.mealDetail[index].price);
+                    // console.log(index);
+                    this.totalPrice = this.count * parseInt(this.meals.MealPrice);
+                    let _this = this;
+                    this.addPrice = 0;
+                    this.unitMealDetailAdd = [];
+                    index.forEach(element => {
+                        _this.addPrice = _this.addPrice + parseInt(_this.mealDetail[element].price);
+                        // console.log(_this.mealDetail[element]);
+                        let mealDetaillist = _this.mealDetail[element];
+                        _this.unitMealDetailAdd.push({type:mealDetaillist.type, mealNum:"meal"+this.meals.MealID, detail:mealDetaillist.detailName, price:mealDetaillist.price});
+                        // console.log(_this.unitMealDetailAdd);
+                    });
+                    _this.totalPrice += _this.sizePrice + _this.addPrice;
                 }
             }
         })
@@ -344,8 +384,7 @@
             shop: [],
             temp: [],
             types:[],
-            shopID:-1
-            
+            shopID:-1,
         },
         methods: {
             init: function () {
@@ -354,7 +393,7 @@
                 axios.get("/api/meal/"+this.shopID)
                     .then(function (response) {
                         _this.list = response.data;
-                        console.log(_this.list);
+                        // console.log(_this.list);
                         //取出餐點種類
                         for(i= 0;i<_this.list.length;i++){
                             _this.temp[i] = _this.list[i].MealType;
@@ -365,7 +404,7 @@
                         
                     })
                     .catch(function (response) {
-                        console.log(response);
+                        // console.log(response);
                     });
                 
             },
@@ -373,23 +412,26 @@
                 orderModal.count = 1;
                 orderModal.meals = this.list[e];
                 orderModal.totalPrice = this.list[e].MealPrice;
+                orderModal.addOns = [];
+                orderModal.Size = -1;
                 $("#orderModalCenter").modal( { show: true } );
-                orderModal.mealDetail = JSON.parse(orderModal.meals.MealDetails).detail;
-                orderModal.mealDetail.forEach(element => {
-                    console.log(element.type);
-                    if(element.type == '1'){
-                        orderModal.mealtype1 = true;
-                        orderModal.mealtype2 = false;
-                    }
-                    if (element.type == '2'){
-                        orderModal.mealtype1 = false;
-                        orderModal.mealtype2 = true;
-                    }
-                    if(element.type == '0'){
-                        orderModal.mealtype1 = false;
-                        orderModal.mealtype2 = false;
-                    }
-                });
+                // console.log(orderModal.meals);
+                if ( orderModal.meals.MealDetails !== null) {
+                    orderModal.mealDetail = JSON.parse(orderModal.meals.MealDetails).detail;
+                    orderModal.mealDetail.forEach(element => {
+                        // console.log(element.type);
+                        if(element.type == '1'){
+                            orderModal.mealtype1 = true;
+                        }
+                        if (element.type == '2'){
+                            orderModal.mealtype2 = true;
+                        }
+                        if(element.type == '0'){
+                            orderModal.mealtype1 = false;
+                            orderModal.mealtype2 = false;
+                        }
+                    });
+                }
                 // console.log(orderModal.mealDetail);
             }
         },
@@ -485,6 +527,7 @@
             mealName:'',
             mealPrice:'',
             count:'',
+            shoppingBagMealDetail:[],
         },
         methods: {
             newOrderMadalBtn: function () {
@@ -513,6 +556,10 @@
                 localStorage.setItem("shopID", JSON.stringify(this.shopID));
                 localStorage.setItem("shipTime", JSON.stringify(this.shipTime)); 
                 localStorage.setItem("shopImage", JSON.stringify(this.shopImage));     //多塞一個餐廳圖片  歷史訂單要用 by 林培誠
+
+                shoppingBagModalApp.shoppingBagMealDetail = [];
+                shoppingBagModalApp.shoppingBagMealDetail.push(this.shoppingBagMealDetail);
+                localStorage.setItem("unitMealDetailTotalArray", JSON.stringify(this.shoppingBagMealDetail));
             },
         },
     })
