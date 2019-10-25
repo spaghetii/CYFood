@@ -19,15 +19,36 @@ body {
     width: 300px;
     height: 120px;
     margin: 10px auto;
+    border-radius: 8px;
 }
 .fixedItem:hover{
-    background-color: #F49F05;
     width: 302px;
     height: 122px;
 }
 
-img {
+.iconImg  {
     width: 70px;
     height: 80px;
     margin: 20px 115px;
+}
+@media (min-width: 1300px) and (max-width: 1600px){
+    #fixedDiv{
+        height: 170px;
+    }
+    .fixedItem {
+        width: 350px;
+        height: 140px;
+        margin: 15px auto;
+        border-radius: 15px;
+    }
+    .fixedItem:hover{
+        width: 354px;
+        height: 144px;
+    }
+    .iconImg {
+        width: 87.5px;
+        height: 100px;
+        margin: 20px 135px;
+    }
+
 }

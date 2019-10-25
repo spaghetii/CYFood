@@ -5,11 +5,12 @@
     width: 400px;
     height: 500px;
     margin: 25px auto;
+    /* border: 2px solid black; */
 }
 #orderBtn {
     height: 80px;
     font-size: 25px;
-    font-weight: bold;
+    font-weight: bolder;
     margin: 10px auto;
     color:#3c3c3c;
     text-align: center;
@@ -54,16 +55,30 @@
     font-weight: bold;
 }
 @media (min-width: 1300px) and (max-width: 1600px){
+    #leftButtom {
+        width: 475px;
+        height: 554px;
+        margin: 10px auto;
+    }
     #buttomDiv {
-        height: 614px;
+        height: 584px;
     }
     #rightButtom{
-        width: 966px;
+        width: 1006px;
         height: 564px;
+        margin: 10px auto;
     }
     .jumbotron {
-        width: 926px;
+        width: 966px;
         min-height: 544px;
+    }
+    .detailsBtn{
+        margin: 25% auto -25% auto;
+    }
+    #orderBtn {
+        height: 95px;
+        font-size: 30px;
+        margin: 15px auto;
     }
 }
 .modal{

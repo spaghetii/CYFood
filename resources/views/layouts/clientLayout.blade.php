@@ -39,39 +39,40 @@
         <div class="row no-gutters sticky-top" id="fixedDiv">
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/shop/newOrder/{{$id}}">
-                    <div class="fixedItem rounded">
-                        <img src="/img/client/neworder.png" alt="">
+                    <div class="fixedItem" v-on:mouseover="mouseOver">
+                        <img class="iconImg" src="/img/client/newOrder.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/shop/processing/{{$id}}">
-                    <div class="fixedItem rounded">
-                        <img src="/img/client/processing.png" alt="">
+                    <div class="fixedItem">
+                        <img class="iconImg" src="/img/client/processing.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/shop/takeout/{{$id}}">
-                    <div class="fixedItem rounded">
-                        <img src="/img/client/takeout.png" alt="">
+                    <div class="fixedItem">
+                        <img class="iconImg" src="/img/client/takeout.png" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <a href="/shop/user/{{$id}}">
-                    <div class="fixedItem rounded">
-                        <img src="/img/client/user.png" alt="">
+                    <div class="fixedItem">
+                        <img class="iconImg" src="/img/client/user.png" alt="">
                     </div>
                 </a>
             </div>
         </div>
-
         {{-- bottom --}}
         @yield('content')
 
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+
+
     @yield('script')
 
 </body>
