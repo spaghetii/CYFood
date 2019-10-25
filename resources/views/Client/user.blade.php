@@ -5,11 +5,11 @@
 {{-- bottom --}} 
 <div class="no-gutters" id="buttomDiv">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#delay" role="tab" aria-controls="delay" aria-selected="true">暫停接單</a>
-        </li>
+        </li> --}}
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#restOrder" role="tab" aria-controls="restOrder" aria-selected="false">歷史訂單</a>
+            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#restOrder" role="tab" aria-controls="restOrder" aria-selected="true">歷史訂單</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#restSales" role="tab" aria-controls="restSales" aria-selected="false">銷售統計</a>
@@ -21,17 +21,14 @@
     {{-- 標籤內容 --}}
     <div class="tab-content" id="myTabContent">
         {{-- 暫停接單 --}}
-        <div class="tab-pane fade show active" id="delay" role="tabpanel" aria-labelledby="home-tab">
-            {{-- 卡片 --}}
+        {{-- <div class="tab-pane fade show active" id="delay" role="tabpanel" aria-labelledby="home-tab">
             <div class="card text-center">
-                {{-- v-if="headerShow" --}}
                 <div class="card-header" v-if="headerShow">
                     停止受理新訂單
                 </div>
                 <div class="card-header" v-if="!headerShow">
                     您的餐廳將於
                 </div>
-                {{-- v-if="bodyShow" --}}
                 <div class="card-body" v-if="bodyShow">
                     您希望暫停多久？<br><br>
                     <div class="form-check form-check-inline">
@@ -55,15 +52,14 @@
                 <div class="card-body" v-if="!bodyShow">
                     @{{delayOptions}}分鐘後開始營業
                 </div>
-                {{--  --}}
                 <div class="card-footer text-muted">
                     <button type="button" class="btn btn-outline-dark" id="delaySubmit" v-on:click="delaySubmit" v-if="btnShow">送出</button>
                     <button type="button" class="btn btn-outline-dark" id="delayReset" v-on:click="delayReset" v-if="!btnShow">重新營業</button>
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{-- 歷史訂單 --}}
-        <div class="tab-pane fade" id="restOrder" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade show active" id="restOrder" role="tabpanel" aria-labelledby="home-tab">
             {{-- 搜尋 --}}
             <div class="input-group">
                 <select class="col-sm-4 form-control" id="orderSelect" name="orderSelect" v-model="orderSelect">
