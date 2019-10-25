@@ -67,16 +67,30 @@
 }
 
 @media (min-width: 1300px) and (max-width: 1600px){
+    #leftButtom {
+        width: 480px;
+        height: 564px;
+        margin: 10px auto;
+    }
     #buttomDiv {
         height: 614px;
     }
     #rightButtom{
-        width: 966px;
+        width: 1006px;
         height: 564px;
+        margin: 10px auto;
     }
     .jumbotron {
-        width: 926px;
+        width: 966px;
         min-height: 544px;
+    }
+    .detailsBtn{
+        margin: 5% auto -5% auto;
+    }
+    #orderBtn {
+        height: 95px;
+        font-size: 28px;
+        margin: 15px auto;
     }
 }
 [v-cloak] {
