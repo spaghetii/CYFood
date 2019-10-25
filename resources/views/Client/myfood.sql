@@ -90,7 +90,7 @@ values ('CY20191004029',
 '2019/10/05','2019/10/05','1',1,1);
 insert into orders 
 (ordersNum,ordersDetails,ordersCreate,ordersUpdate,OrdersStatus,memberId,shopId) 
-values ('CY20191025006',
+values ('CY20191025000',
 '{"restaurant":"CY2","memberName":"彼特","meal":[{"mealQuantity":"1","mealName":"蛋餅","mealUnitPrice":"10",
     "mealDetail":[{"type":0,"mealNum":"meal0","detail": "","price":"","check":false}] },
    {"mealQuantity":"1","mealName":"大冰奶","mealUnitPrice":"20",
