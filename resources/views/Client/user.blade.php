@@ -149,12 +149,12 @@
                             <input type="text" class="form-control-plaintext" id="restTel" v-model="shop.ShopPhone">
                         </div>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label for="restTime" class="col-sm-3 col-form-label">營業時間</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control-plaintext" id="restTime" value="11:00 - 20:00">
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group row">
                         <label for="restCategory" class="col-sm-3 col-form-label">餐廳種類</label>
                         <select v-model="shop.ShopType" class="col-sm-5 form-control">
