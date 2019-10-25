@@ -85,11 +85,11 @@
         min-height: 544px;
     }
     .detailsBtn{
-        margin: 5% auto -5% auto;
+        margin: 2.5% auto -2.5% auto;
     }
     #orderBtn {
         height: 95px;
-        font-size: 28px;
+        font-size: 30px;
         margin: 15px auto;
     }
 }
