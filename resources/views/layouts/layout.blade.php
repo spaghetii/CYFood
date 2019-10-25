@@ -124,7 +124,7 @@
                 <div class="modal-body" id="shoppingBagModalBody">
                     <ul>
                         <li style="list-style-type:none" v-for="MealItem,index in shoppingBagMealName">
-                            <div class="d-flex alignCenter noPad">
+                            <div class="d-flex noPad">
                                 <div class="shoppingBagModalItemQuantity noPad" >
                                     <div class="form-group noMarg mr-3" v-cloak style="width:80px">
                                         <select class="form-control" v-model="shoppingBagMealQuantity[index]">
@@ -133,9 +133,20 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div v-cloak class="noPad" style="padding:0px 20px;">
-                                    @{{shoppingBagMealName[index]}}
-                                </div>       
+                                <div>
+                                    <div v-cloak class="noPad" style="padding:0px 20px;">
+                                        @{{shoppingBagMealName[index]}}
+                                    </div>  
+                                    <div style="padding:0px 20px;margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                            v-for="in1,dindex in shoppingBagMealDetail[0]" >
+                                        <div v-for="in2 in in1" v-if="index == dindex">       
+                                            <div v-if="in2[0].type == 1" style="font-weight:bold">加點 Add-ons</div>
+                                            <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
+                                            <div v-if="in2[0].type == 2" style="font-weight:bold">份量 Size</div>
+                                            <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                        </div>
+                                    </div> 
+                                </div>    
                                 <div class="noPad ml-auto" v-for="item,sindex in shoppingBagMealTotalPrice" v-if="index == sindex" v-cloak>
                                     $@{{item}}
                                 </div> 
@@ -231,6 +242,9 @@
                 shoppingBagMealTotalPrice: [],
                 shoppingBagMealName: [],
                 shoppingBagMealPrice: [],
+
+                // 餐點細項
+                shoppingBagMealDetail: [],
             },
             watch: {
                 // watch 餐點數量變化
@@ -275,6 +289,7 @@
                         localStorage.removeItem('shipTime');
                         localStorage.removeItem('shopID');
                         localStorage.removeItem('shopImage'); 
+                        localStorage.removeItem('unitMealDetailTotalArray'); 
                     }
 
                     // 總價 更新
@@ -339,6 +354,10 @@
                 this.shoppingBagMealQuantity = storedMealQuantityArray;
                 this.shoppingBagMealTotalPrice = storedMealTotalPriceArray;
                 // console.log(this.shoppingBagMealQuantity);
+
+                let storedUnitMealDetailTotalArray = JSON.parse(localStorage.getItem('unitMealDetailTotalArray'));
+                this.shoppingBagMealDetail = {0:storedUnitMealDetailTotalArray};
+                console.log(this.shoppingBagMealDetail);
                 }
             },
         })
