@@ -331,7 +331,7 @@
                     this.totalPrice += parseInt(this.mealDetail[index].price);
                 },
                 addOns:function(index){
-                    console.log(index[0]);
+                    console.log(index[0`]);
                     // console.log(this.mealDetail[index].price);
                 }
             }

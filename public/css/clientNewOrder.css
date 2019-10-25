@@ -56,12 +56,12 @@
 }
 @media (min-width: 1300px) and (max-width: 1600px){
     #leftButtom {
-        width: 480px;
-        height: 564px;
+        width: 475px;
+        height: 554px;
         margin: 10px auto;
     }
     #buttomDiv {
-        height: 614px;
+        height: 584px;
     }
     #rightButtom{
         width: 1006px;
