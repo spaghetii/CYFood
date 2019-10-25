@@ -2,7 +2,7 @@
 
 @section('content')
 <link rel="stylesheet" href="/css/clientUser.css">
-{{-- bottom --}}
+{{-- bottom --}} 
 <div class="no-gutters" id="buttomDiv">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">

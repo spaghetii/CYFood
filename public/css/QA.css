@@ -1,0 +1,59 @@
+/* 整個畫面 */
+body {
+    font-family: "Microsoft JhengHei";
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.container12 {
+    width: 50%;
+    margin: auto;
+}
+
+.line47 {
+    font-size: 1.2cm;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.line48 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.line49 {
+    opacity: 0.8;
+    margin: 20px 0px 20px;
+}
+
+.line50 {
+    opacity: 0.8;
+    margin: -20px 0px 0px;
+    right: 22px;
+}
+
+.line51 {
+    opacity: 0.8;
+    margin: 20px 0px 20px;
+    right: 22px;
+}
+
+.line52 {
+    opacity: 0.8;
+    margin: 20px 0px 0px;
+}
+
+.line53 {
+    opacity: 0.8;
+    margin: 10px 0px 0px;
+}
+
+.line54 {
+    opacity: 0.8;
+    margin: 10px 0px 20px;
+}
+
+.line55 {
+    opacity: 0.8;
+    margin: -20px 0px 20px;
+}

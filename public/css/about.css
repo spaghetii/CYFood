@@ -1,0 +1,94 @@
+/* 整個畫面 */
+body {
+    font-family: "Microsoft JhengHei";
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.container10 {
+    width: 100%;
+    height: 500px;
+    line-height: 40px;
+    margin: auto;
+    padding: 10px 0px;
+}
+
+#back7 {
+    background-image: url("../img/bgimg3.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.line36 {
+    top: 200px;
+    font-size: 68px;
+    line-height: 1;
+    left: 100px;
+    font-weight: 700;
+}
+
+.line37 {
+    top: 250px;
+    font-size: 35px;
+    line-height: 1;
+    left: 60px;
+    bottom: 300px;
+}
+
+.container11 {
+    width: 100%;
+    height: 500px;
+    line-height: 40px;
+    margin-top: 150px;
+    padding: 10px 0px;
+}
+
+.line38 {
+    width: 400px;
+    height: 200px;
+    background-image: url("../img/bgimg4.jpg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.line39 {
+    width: 400px;
+    height: 200px;
+    background-image: url("../img/bgimg5.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.line40 {
+    width: 400px;
+    height: 200px;
+    background-image: url("../img/bgimg6.jpg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.line41,
+.line42,
+.line43 {
+    width: 400px;
+    margin: 50px 80px 10px 80px;
+    font-weight: bold;
+    font-size: 1cm;
+}
+
+.line44,
+.line45,
+.line46 {
+    width: 400px;
+    margin: 15px 80px;
+    line-height: 25px;
+    font-size: 15px;
+}
