@@ -19,6 +19,7 @@ body {
     width: 300px;
     height: 120px;
     margin: 10px auto;
+    border-radius: 8px;
 }
 .fixedItem:hover{
     background-color: #F49F05;
@@ -30,4 +31,44 @@ img {
     width: 70px;
     height: 80px;
     margin: 20px 115px;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+.showFont{
+    font-size: 80px;
+    color: white;
+    font-weight: bold;
+    font-family:Microsoft JhengHei;
+    position: absolute;
+    top:10px;
+    left: 40px;
+}
+@media (min-width: 1300px) and (max-width: 1600px){
+    #fixedDiv{
+        height: 170px;
+    }
+    .fixedItem {
+        width: 350px;
+        height: 140px;
+        margin: 15px auto;
+        border-radius: 15px;
+    }
+    .fixedItem:hover{
+        background-color: #F49F05;
+        width: 354px;
+        height: 144px;
+    }
+    img {
+        width: 87.5px;
+        height: 100px;
+        margin: 20px 135px;
+    }
+
+}
+[v-cloak] {
+    display: none;
 }
