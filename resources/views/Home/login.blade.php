@@ -28,7 +28,7 @@
     {{-- sweetalert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     {{-- 網頁CSS --}}
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 
 <body>

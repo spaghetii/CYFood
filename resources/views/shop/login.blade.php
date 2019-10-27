@@ -24,50 +24,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
     {{-- sweetalert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    {{-- 網頁CSS --}}
+    <link rel="stylesheet" href="/css/shopLogin.css">
     <title>CYFood</title>
-    <style>
-        body{
-            background: center/cover no-repeat  url("../img/chairs-dining-room-dinner-460537.jpg") ;
-            font-family:"Microsoft JhengHei";
-        }
-
-        .login {
-            
-            margin-top: 18%;
-            padding: 20px 30px 30px 30px;
-            /* border:1px solid rgba(255, 166, 0, 0.856) ; */
-            background-color: rgba(255, 255, 255, 0.856) ;
-            box-shadow: 0.5px 1px 2px 1px rgba(145, 139, 139, 0.7);
-        }
-
-        .logintitle {
-            color: #333;
-            font-size: 2rem;
-            line-height: 1em;
-            padding: 16px 0;
-            text-align: center;
-            border-bottom: 1px solid #c2c2c2;
-        }
-
-        .btn {
-            background-color: orange;
-            border-color: orange;
-            font-weight: bold;
-            font-family: fantasy;
-        }
-
-        .btn:hover {
-            background-color: rgba(255, 166, 0, 0.856);
-            border-color: rgba(255, 166, 0, 0.856);
-        }
-
-        .resetalert{
-            color:red;
-            font-size: 20px;
-        }
-
-
-    </style>
 </head>
 
 <body>

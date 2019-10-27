@@ -90,7 +90,7 @@
                                         <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
                                                 v-for="in1,dindex in shoppingBagMealDetail[0]" >
                                             <div v-for="in2,key,i in in1" v-if="index == dindex">  
-                                                <div v-if="in2[i] != null">
+                                                <div v-if="in2[i] != null">                   
                                                     <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
                                                     <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
                                                     <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
@@ -311,7 +311,7 @@
                                     dataToSever.OrdersDetails.meal.push({   mealQuantity:element,
                                                                             mealName:_this.shoppingBagMealName[index],
                                                                             mealUnitPrice:_this.shoppingBagMealPrice[index],
-                                                                            mealDetail:mealDetailTemp
+                                                                            mealDetail:_this.shoppingBagMealDetail[0]
                                                                         });      
                                 });
                                 dataToSever.OrdersDetails = JSON.stringify(dataToSever.OrdersDetails);
@@ -463,7 +463,7 @@
 
                 let storedUnitMealDetailTotalArray = JSON.parse(localStorage.getItem('unitMealDetailTotalArray'));
                 this.shoppingBagMealDetail = {0:storedUnitMealDetailTotalArray};
-
+                console.log(this.shoppingBagMealDetail);
                 this.init();
                 }
                 

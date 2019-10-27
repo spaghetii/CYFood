@@ -60,9 +60,17 @@
                                     <div v-cloak>
                                         @{{item.mealName}}
                                     </div>
-                                    <div>
-                                        <small></small>
-                                    </div>
+                                    <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                            v-for="in1 in mealDetail[0]" >
+                                        <div v-for="in2,key,i in in1" >  
+                                            <div v-if="in2[i] != null">                   
+                                                <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
+                                                <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
+                                                <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
+                                                <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                            </div>
+                                        </div>
+                                    </div> 
                                 </div>
                             </div>
                         </li>
@@ -127,6 +135,7 @@
                 details:[],
                 // 會員
                 memberID:0,
+                mealDetail:[]
             },
             methods:{
                 init:function(){
@@ -137,7 +146,9 @@
                             _this.list = response.data;
                             _this.details = JSON.parse(_this.list.OrdersDetails);
                             _this.memberID = _this.list.MemberID;
-                            console.log(_this.list);
+                            _this.mealDetail = {0:_this.details.meal[0].mealDetail};
+                            console.log(_this.details);
+                            console.log(_this.mealDetail);
                         })
                         .catch(function (response) {
                         console.log(response);

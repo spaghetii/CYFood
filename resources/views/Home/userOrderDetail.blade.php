@@ -33,7 +33,17 @@
                                             @{{odDetail.mealName}}
                                         </div>
                                         <div v-cloak>
-                                            <small>@{{odDetail.mealDetail.detail}}</small>
+                                            <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                                v-for="in1 in mealDetail[index]" >
+                                                <div v-for="in2,key,i in in1" >  
+                                                    <div v-if="in2[i] != null">                   
+                                                        <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
+                                                        <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
+                                                        <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
+                                                        <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                                    </div>
+                                                </div>
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +100,17 @@
                                             @{{odDetail.mealName}}
                                         </div>
                                         <div v-cloak>
-                                            <small>@{{odDetail.mealDetail.detail}}</small>
+                                            <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                                v-for="in1 in mealDetail[index]" >
+                                                <div v-for="in2,key,i in in1" >  
+                                                    <div v-if="in2[i] != null">                   
+                                                        <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
+                                                        <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
+                                                        <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
+                                                        <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                                    </div>
+                                                </div>
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +141,8 @@
                 updateMonth:[],
                 updateDay:[],
                 updateTime:[],
-                totalCount:[]
+                totalCount:[],
+                mealDetail:[]
             },
             methods:{
                 clickDispayDiv: function(){
@@ -134,6 +155,7 @@
                         .then(function (response) {
                             
                             _this.list = response.data;
+                            console.log(_this.list);
                             _this.list.forEach((element,index) => {
                                 
                                 _this.list[index].OrdersDetails = JSON.parse(_this.list[index].OrdersDetails);
@@ -150,13 +172,14 @@
                                 //每個訂單餐點總數量
                                 _this.totalCount[index] = 0;
                                 _this.list[index].OrdersDetails.meal.forEach(ele => {
-                                    console.log(ele.mealQuantity);
+
                                     _this.totalCount[index] += parseInt(ele.mealQuantity);
-                                    console.log(_this.totalCount);
+                                    _this.mealDetail[index] = ele.mealDetail;
+                                    
                                 })
                                 
                             });
-                            
+                            console.log(_this.mealDetail);
                         })
                         .catch(function (response) {
                             console.log(response);
