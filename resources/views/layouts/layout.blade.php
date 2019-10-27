@@ -211,7 +211,7 @@
                     axios.get('/logout')
                         .then(function (response) {
                             if (response.data['ok']) {
-                                localStorage.removeItem('memberID');
+                                clearStorage();
                                 sessionStorage.clear();
                                 window.location.href="/";
                             }
@@ -227,7 +227,18 @@
             }
         });  
 
-
+        function clearStorage(){
+            localStorage.removeItem('memberID');
+            localStorage.removeItem('mealNameArray');
+            localStorage.removeItem('mealPriceArray');
+            localStorage.removeItem('mealQuantityArray');
+            localStorage.removeItem('mealTotalPriceArray');
+            localStorage.removeItem('restautantName');
+            localStorage.removeItem('shopID');
+            localStorage.removeItem('unitMealDetailTotalArray');
+            localStorage.removeItem('shopImage');        
+            localStorage.removeItem('shipTime');  //新增的
+        }
 
         var shoppingBagModalApp = new Vue ({
             el:"#shoppingBagModal",
