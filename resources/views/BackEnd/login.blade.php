@@ -21,55 +21,8 @@
     </script>
     {{-- fontawesome --}}
     <script src="https://kit.fontawesome.com/e4b794bd40.js" crossorigin="anonymous"></script>
-    <style> 
-        body{
-            height: 100%;
-            background:  no-repeat  url("/img/BE-5.jpg");
-            background-size:cover;
-            
-        }
-        .login {
-            background:rgba(255, 255, 255, 0.5);
-            border-style: solid;
-            border-color: white;
-            border-width: thick;
-            width: 650px;
-            height: 270px;
-            margin: 80px 10px 0px 40%;
-            padding: 10px 20px 20px 20px;
-        }
-
-        .loginform{
-            margin-top: 10px;
-            margin-left: 50px
-        }
-
-        .title{
-            margin-bottom: 20px;
-            /* color: orange; */
-            text-shadow: 2px 3px 3px rgba(0,0,0,0.3);
-        }
-
-        .row{
-            margin-bottom: 10px;
-        }
-
-        #inputArea {
-            width: 500px;
-            height: 40px;
-            font-size: 20px;
-        }
-
-        .icon {
-            width: 45px;
-            height: 45px;
-        }
-
-        .btn{
-            margin-right: 5px;
-        }
-
-    </style>
+    {{-- 網頁CSS --}}
+    <link rel="stylesheet" href="/css/backendLogin.css">
     
 </head>
 
