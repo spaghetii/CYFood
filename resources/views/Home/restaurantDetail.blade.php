@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     {{-- 細項選項 --}}
-                    <div v-for="meal,index in mealDetail" v-if="meal.type==2">
+                    <div v-for="meal,index in mealDetail" v-if="meal.type==2" v-cloak>
                         <p class="noMarg">
                             <input type="radio" :id="meal.detailName" v-model="Size" name="Size" class="orangeRad" :value="index">
                             <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     {{-- 細項選項 --}}
-                    <div v-for="meal,index in mealDetail" v-if="meal.type==1">
+                    <div v-for="meal,index in mealDetail" v-if="meal.type==1" v-cloak>
                         <p class="noMarg">
                             <input type="checkbox" :id="meal.detailName" v-model="addOns" name="addOns[]" class="orangeRad" :value="index">
                             <label :for="meal.detailName" class="d-flex flex-row" id="orederDetailDescDiv">
@@ -163,10 +163,10 @@
             <button type="button" class="btn btn-lg" v-on:click="subButton">-</button>
             <span class="badge badge-white">@{{count}}</span>
             <button type="button" class="btn btn-lg" v-on:click="plusButton">+</button>
-            <button type="button" class="btn btn-lg btn-block" v-on:click="orderBtn">
-                <div class="" v-cloak>
+            <button type="button" class="btn btn-lg btn-block" v-on:click="orderBtn" :disabled="isDisabled">
+                <div class="">
                     新增&nbsp;@{{count}}&nbsp;份餐點至訂單                    
-                    <div class="floatRight" v-cloak>
+                    <div class="floatRight">
                         $@{{totalPrice}}
                     </div>
                 </div>
@@ -233,11 +233,6 @@
 
 @section('script')
     <script>
-        // checkbox select one at a time 20191020
-        // $(document).on('click', 'input[type="checkbox"]', function() {      
-        //     $('input[type="checkbox"]').not(this).prop('checked', false);      
-        // });
-
         //滾輪滾到navbar
         $(document).ready().scroll(function () {
             var winTop = $("#restaurantDetailHeaderSearchLarge").offset().top;
@@ -274,6 +269,8 @@
                 unitMealDetailAdd:[],
                 unitMealDetailTotal:[],
                 mealPriceArray2:[],
+
+                isDisabled:false,
             },
             methods: {
                 subButton: function () {
@@ -355,9 +352,11 @@
                         // console.log(this.meals);
                         this.unitMealDetailSize= [{type:mealDetaillist.type, mealNum:"meal"+this.meals.MealID, detail:mealDetaillist.detailName, price:mealDetaillist.price}];
                         // console.log(this.unitMealDetailSize);
+                        this.isDisabled = false;
                     }
                     this.totalPrice += this.sizePrice + this.addPrice;
 
+                    // console.log(this.totalPrice);
                 },
                 addOns:function(index){
                     // console.log(index);
@@ -372,7 +371,7 @@
                         _this.unitMealDetailAdd.push({type:mealDetaillist.type, mealNum:"meal"+this.meals.MealID, detail:mealDetaillist.detailName, price:mealDetaillist.price});
                         // console.log(_this.unitMealDetailAdd);
                     });
-                    _this.totalPrice += _this.sizePrice + _this.addPrice;
+                    this.totalPrice += this.sizePrice + this.addPrice;
                 }
             }
         })
@@ -409,30 +408,36 @@
                 
             },
             selection: function(e){
-                orderModal.count = 1;
-                orderModal.meals = this.list[e];
-                orderModal.totalPrice = this.list[e].MealPrice;
+                orderModal.mealtype1 = false;
+                orderModal.mealtype2 = false;
+                orderModal.isDisabled = false;
                 orderModal.addOns = [];
                 orderModal.Size = -1;
-                $("#orderModalCenter").modal( { show: true } );
+                orderModal.count = 1;
+                orderModal.meals = this.list[e];
+                orderModal.totalPrice = this.list[e].MealPrice;  
                 // console.log(orderModal.meals);
                 if ( orderModal.meals.MealDetails !== null) {
                     orderModal.mealDetail = JSON.parse(orderModal.meals.MealDetails).detail;
                     orderModal.mealDetail.forEach(element => {
                         // console.log(element.type);
-                        if(element.type == '1'){
+                        if (element.type == '1'){
                             orderModal.mealtype1 = true;
                         }
-                        if (element.type == '2'){
-                            orderModal.mealtype2 = true;
-                        }
-                        if(element.type == '0'){
+                        if (element.type == '0'){
                             orderModal.mealtype1 = false;
                             orderModal.mealtype2 = false;
                         }
+                        if (element.type == '2'){
+                            orderModal.mealtype2 = true;                       
+                        }
                     });
                 }
+                if ( orderModal.mealtype2 == true ) {
+                    orderModal.isDisabled = true;
+                }
                 // console.log(orderModal.mealDetail);
+                $("#orderModalCenter").modal( { show: true } );
             }
         },
         mounted: function () {

@@ -83,13 +83,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div v-cloak>
                                         <div v-cloak class="noPad">
                                             @{{shoppingBagMealName[index]}}
                                         </div>   
                                         <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
                                                 v-for="in1,dindex in shoppingBagMealDetail[0]" >
-                                            <div v-for="in2 in in1" v-if="index == dindex">       
+                                            <div v-for="in2 in in1" v-if="index == dindex" v-cloak>       
                                                 <div v-if="in2[0].type == 1" style="font-weight:bold">加點 Add-ons</div>
                                                 <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
                                                 <div v-if="in2[0].type == 2" style="font-weight:bold">份量 Size</div>
@@ -166,18 +166,18 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">卡號</label>
-                    <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
+                    <input type="text" class="form-control" v-cloak name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" required>
                     <div class="invalid-feedback">
                         @{{ creditCardErrMsg }}
                     </div>
                 </div>
-                <div class="d-flex flex-row container-fluid noPad">
+                <div class="d-flex flex-row container-fluid noPad" v-cloak>
                     <div class="form-group noPad mr-2" style="width:100%">
                         <label for="exampleInputEmail">有效期限</label>
                         <input type="text" class="form-control" name="creditInputDate" 
                             v-on:blur="creditInputDateBlur" 
                             v-bind:class="{ 'is-invalid': creditInputDateError }" 
-                            v-model="creditInputDate" id="creditCardInput" size="5" maxlength="5" required placeholder="MM/YY">
+                            v-model="creditInputDate" id="creditCardInput" size="5" maxlength="5" required placeholder="MM/YY" >
                         <div class="invalid-feedback">
                             @{{ creditInputDateErrMsg }}
                         </div>
