@@ -130,7 +130,7 @@
                             <h6 class="noMarg">加點 Add-ons</h6>
                         </div>
                         <div>
-                            <small>最多可選擇 1 個項目</small>
+                            {{-- <small>最多可選擇 1 個項目</small> --}}
                         </div>
                     </div>
                     {{-- 細項選項 --}}
