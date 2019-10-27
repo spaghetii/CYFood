@@ -134,11 +134,11 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div v-cloak class="noPad" style="padding:0px 20px;">
+                                    <div v-cloak class="noPad" style="padding:0px 20px;" >
                                         @{{shoppingBagMealName[index]}}
                                     </div>  
                                     <div style="padding:0px 20px;margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                            v-for="in1,dindex in shoppingBagMealDetail[0]" >
+                                            v-for="in1,dindex in shoppingBagMealDetail[0]" v-cloak >
                                         <div v-for="in2,key,i in in1" v-if="index == dindex">  
                                             <div v-if="in2[i] != null">
                                                 <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
