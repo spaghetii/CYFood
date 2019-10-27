@@ -84,16 +84,18 @@
                                         </div>
                                     </div>
                                     <div v-cloak>
-                                        <div v-cloak class="noPad">
+                                        <div class="noPad">
                                             @{{shoppingBagMealName[index]}}
                                         </div>   
                                         <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
                                                 v-for="in1,dindex in shoppingBagMealDetail[0]" >
-                                            <div v-for="in2 in in1" v-if="index == dindex" v-cloak>       
-                                                <div v-if="in2[0].type == 1" style="font-weight:bold">加點 Add-ons</div>
-                                                <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
-                                                <div v-if="in2[0].type == 2" style="font-weight:bold">份量 Size</div>
-                                                <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                            <div v-for="in2,key,i in in1" v-if="index == dindex">  
+                                                <div v-if="in2[i] != null">
+                                                    <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
+                                                    <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
+                                                    <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
+                                                    <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
+                                                </div>
                                             </div>
                                         </div> 
                                     </div>   
