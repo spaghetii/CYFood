@@ -410,7 +410,7 @@
             selection: function(e){
                 orderModal.mealtype1 = false;
                 orderModal.mealtype2 = false;
-                orderModal.isDisabled = false;
+                orderModal.isDisabled = false; //20191027 order Btn disabled
                 orderModal.addOns = [];
                 orderModal.Size = -1;
                 orderModal.count = 1;
