@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div class="container-fluid alignCenter" id="userProfileBgDiv">
+    <div class="container-fluid alignCenter" id="userProfileBgDiv"> 
         <div class="col-sm-6" id="blankDiv">
         </div>
         <div class="col-sm-4 col-12 displayProfileDivApp" id="userProfileOuterDiv">
@@ -63,14 +63,14 @@
                             id="userProfilePhone" placeholder="例 : 0987654321" required>
                     </div>
                 </div>
-                <div class="container-fluid alignCenter mb-3" v-if="profile.MemberCredit != null">
+                <div class="container-fluid alignCenter mb-3" v-if="profile.MemberCredit != null"  v-cloak>
                     <div class="col-sm-4 col-4">
                         <h6 class="floatRight">信用卡</h6>
                     </div>
                     <div class="col-sm-8 col-8 userProfileDisplay">
                         <h6>@{{profile.MemberCredit}}</h6>
                     </div>
-                    <div class="d-flex flex-column container-fluid col-sm-8 col-8">
+                    <div class="d-flex flex-column container-fluid col-sm-8 col-8" v-cloak>
                         <div class="input-group input-group-sm creditInputWidth userProfileHidden mb-1 col-12 noPad" id="creditInputGroup">
                             <input type="text" class="form-control" name="creditInput" v-on:blur="creditInputBlur" v-bind:class="{ 'is-invalid': creditInputError }" v-model="creditInput" id="creditCardInput" size="19" maxlength="19" placeholder="輸入卡號16個數字" required>
                             <div class="invalid-feedback">
@@ -125,7 +125,7 @@
               </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                <div class="form-group" v-cloak>
                     <div>
                         <label>舊密碼</label>
                         <input type="password" class="form-control" name="oldPasswd" v-on:blur="oldPasswdCheckBlur" v-bind:class="{ 'is-invalid': oldPasswdError }" v-model="oldPasswd" required>

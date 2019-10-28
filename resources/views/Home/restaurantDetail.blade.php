@@ -276,12 +276,14 @@
                 subButton: function () {
                     if (this.count > 1) {
                         this.count--;
-                        this.totalPrice -= parseInt(this.meals.MealPrice);
+                        // this.totalPrice -= parseInt(this.meals.MealPrice);
+                        this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count ;
                     }
                 },  
                 plusButton: function () {
                     this.count++;
-                    this.totalPrice += parseInt(this.meals.MealPrice);
+                    // this.totalPrice += parseInt(this.meals.MealPrice);
+                    this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count ;
                 },
                 orderBtn: function () {
                     // 跳出 model
