@@ -3,7 +3,7 @@
 {{-- 隱藏式 header 地址搜尋 --}}
 @section('headerSearchLarge')
 <!-- 區域選擇 -->
-    <div class="form-group navbar-nav col-sm-1" id="headerAreaLarge">
+    {{-- <div class="form-group navbar-nav col-sm-1" id="headerAreaLarge">
         <select class="form-control">
             <option selected disabled hidden>區域</option>
             <option>西區</option>
@@ -15,9 +15,9 @@
             <option>南屯區</option>
             <option>北屯區</option>
         </select>
-    </div>  
+    </div>   --}}
     <!-- 類別篩選 -->
-    <div class="form-group navbar-nav col-sm-1" id="headerCategoryLarge">
+    {{-- <div class="form-group navbar-nav col-sm-1" id="headerCategoryLarge">
         <select class="form-control">
             <option selected disabled hidden>類別</option>
             <option>中式美食</option>
@@ -29,7 +29,7 @@
             <option>甜點</option>
             <option>飲料</option>
         </select>
-    </div>  
+    </div>   --}}
     <!-- 地址搜尋 -->
     <div class="input-group navbar-nav col-sm-4" id="headerSearchLarge">
         <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
@@ -48,7 +48,7 @@
             </div>
             <div class="container">
                 <!-- 區域選擇 -->
-                <div class="form-group col-sm-2 col-12" id="selectArea">
+                {{-- <div class="form-group col-sm-2 col-12" id="selectArea">
                     <select class="form-control">
                         <option selected disabled hidden>選擇區域</option>
                         <option>西區</option>
@@ -60,9 +60,9 @@
                         <option>南屯區</option>
                         <option>北屯區</option>
                     </select>
-                </div>  
+                </div>   --}}
                 <!-- 類別篩選 -->
-                <div class="form-group col-sm-2 col-12" id="selectCategory">
+                {{-- <div class="form-group col-sm-2 col-12" id="selectCategory">
                     <select class="form-control">
                         <option selected disabled hidden>選擇類別</option>
                         <option>中式美食</option>
@@ -71,9 +71,9 @@
                         <option>美式美食</option>
                         <option>飲料</option>
                     </select>
-                </div>  
+                </div>   --}}
                 <!-- 地址搜尋 -->
-                <div class="input-group col-sm-8 col-12" id="SearchAddress">
+                <div class="input-group col-sm-12 col-12" id="SearchAddress">
                     <input type="text" class="form-control" placeholder="請輸入地址" value="台中市南屯區公益路二段51號">
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="submit" id="mainSearchAddressButton">Go</button>
@@ -151,9 +151,9 @@
 
 @section('script')
     <script>
-        $("#headerSearchAddressButton,#mainSearchAddressButton").on("click",function(){
-            alert('oops!');
-        });  
+        // $("#headerSearchAddressButton,#mainSearchAddressButton").on("click",function(){
+        //     alert('oops!');
+        // });  
         
         // 隱藏式 header 地址搜尋 顯示判斷
         $(document).ready().scroll(function () {
