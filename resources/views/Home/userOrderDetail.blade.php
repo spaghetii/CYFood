@@ -5,7 +5,7 @@
         {{-- 目前訂單 --}}
         <div class="mt-5 mb-5" id="currentOrder">
            <h3>目前訂單</h3><br>
-            <div class="row mb-5" v-for="item,index in list"  v-if="item.OrdersStatus == 1 || item.OrdersStatus == 2">
+            <div class="row mb-5" v-for="item,index in list"  v-if="item.OrdersStatus == 1 || item.OrdersStatus == 2 || item.OrdersStatus == 3">
                 <div class="col-sm-3 col-12 mb-4">
                     <img :src="item.OrdersDetails.ShopImage" class="userOrderDetailrestaurantImg" alt="">
                 </div>
@@ -33,17 +33,17 @@
                                             @{{odDetail.mealName}}
                                         </div>
                                         <div v-cloak>
+                                            <b v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 2">份量</b>
                                             <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                                v-for="in1,dindex in mealDetail[index]" >
-                                                <div v-for="in2,key,i in in1" v-if="dindex == odIndex">  
-                                                    <div v-if="in2[i] != null">                   
-                                                        <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
-                                                        <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
-                                                        <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
-                                                        <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
-                                                    </div>
-                                                </div>
+                                                    v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 2">
+                                                <div>@{{dItem.detail}}</div>
                                             </div> 
+                                            <b v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 1 && dIndex == 0">加點</b>                                    
+                                            <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                                    v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 1">
+                                                
+                                                <div>@{{dItem.detail}}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
         {{-- 歷史訂單 --}}
         <div class="mt-5 mb-5">
            <h3>歷史訂單</h3><br>
-            <div class="row mb-5" v-for="item,index in list"  v-if="item.OrdersStatus == 3 || item.OrdersStatus == 4">
+            <div class="row mb-5" v-for="item,index in list"  v-if="item.OrdersStatus == 4 || item.OrdersStatus == 5">
                 <div class="col-sm-3 col-12 mb-4">
                     <img :src="item.OrdersDetails.ShopImage" class="userOrderDetailrestaurantImg" alt="">
                 </div>
@@ -100,17 +100,17 @@
                                             @{{odDetail.mealName}}
                                         </div>
                                         <div v-cloak>
+                                            <b v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 2">份量</b>
                                             <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                                v-for="in1,index in mealDetail[index]" >
-                                                <div v-for="in2,key,i in in1" v-if="index == odIndex">  
-                                                    <div v-if="in2[i] != null">                   
-                                                        <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
-                                                        <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
-                                                        <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
-                                                        <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
-                                                    </div>
-                                                </div>
+                                                    v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 2">
+                                                <div>@{{dItem.detail}}</div>
                                             </div> 
+                                            <b v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 1 && dIndex == 0">加點</b>                                    
+                                            <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                                    v-for="dItem,dIndex in odDetail.mealDetail" v-if="dItem.type == 1">
+                                                
+                                                <div>@{{dItem.detail}}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +142,6 @@
                 updateDay:[],
                 updateTime:[],
                 totalCount:[],
-                mealDetail:[]
             },
             methods:{
                 clickDispayDiv: function(){
@@ -162,24 +161,24 @@
                                 //訂單建立時機
                                 let createTime = element.OrdersCreate.split(" ");
                                 _this.createMonth[index] = createTime[0].substr(5,2);
-                                _this.createDay[index] = createTime[0].substr(9,2);
+                                _this.createDay[index] = createTime[0].substr(8,2);
                                 _this.createTime[index] = createTime[1].substr(0,5);
                                 //訂單修改時機
                                 let updateTime = element.OrdersUpdate.split(" ");
                                 _this.updateMonth[index] = updateTime[0].substr(5,2);
-                                _this.updateDay[index] = updateTime[0].substr(9,2);
+                                _this.updateDay[index] = updateTime[0].substr(8,2);
                                 _this.updateTime[index] = updateTime[1].substr(0,5);
                                 //每個訂單餐點總數量
                                 _this.totalCount[index] = 0;
-                                _this.list[index].OrdersDetails.meal.forEach(ele => {
+                                _this.list[index].OrdersDetails.meal.forEach((ele,index) => {
 
                                     _this.totalCount[index] += parseInt(ele.mealQuantity);
-                                    _this.mealDetail[index] = ele.mealDetail;
-                                    
+                                    // _this.mealDetail[index] = ele.mealDetail;
+                                    // console.log(ele);
                                 })
                                 
                             });
-                            console.log(_this.mealDetail);
+                            // console.log(_this.mealDetail);
                         })
                         .catch(function (response) {
                             console.log(response);

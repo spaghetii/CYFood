@@ -60,17 +60,17 @@
                                     <div v-cloak>
                                         @{{item.mealName}}
                                     </div>
+                                    <b v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 2">份量</b>
                                     <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                            v-for="in1,dindex in mealDetail[0]" >
-                                        <div v-for="in2,key,i in in1" v-if="dindex == index">  
-                                            <div v-if="in2[i] != null">                   
-                                                <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
-                                                <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
-                                                <div v-if="in2[i].type == 2" style="font-weight:bold">份量 Size</div>
-                                                <div v-for="item in in2" v-if="item.type == 2">@{{item.detail}}</div>
-                                            </div>
-                                        </div>
+                                            v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 2">
+                                        <div>@{{dItem.detail}}</div>
                                     </div> 
+                                    <b v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 1 && dIndex == 0">加點</b>                                    
+                                    <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
+                                            v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 1">
+                                        
+                                        <div>@{{dItem.detail}}</div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -135,7 +135,10 @@
                 details:[],
                 // 會員
                 memberID:0,
-                mealDetail:[]
+                mealDetail:[],
+                title1:"加點",
+                title2:"份量",
+
             },
             methods:{
                 init:function(){
@@ -146,7 +149,7 @@
                             _this.list = response.data;
                             _this.details = JSON.parse(_this.list.OrdersDetails);
                             _this.memberID = _this.list.MemberID;
-                            _this.mealDetail = {0:_this.details.meal[0].mealDetail};
+                            _this.mealDetail = _this.details.meal[0].mealDetail;
                             console.log(_this.details);
                             console.log(_this.mealDetail);
                         })
@@ -163,9 +166,7 @@
                 this.init();
                 
             },
-            beforeCreate:function(){
-                
-            }
+
         })
 
     
