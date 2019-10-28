@@ -105,6 +105,7 @@
                 let _this = this;
                 
                 this.list[index].OrdersStatus = 4;
+                this.remainingTime = '';
                 axios.put('/api/order/'+_this.list[index].OrdersID,_this.list[index])
                     .then(function(response){
                         console.log(response.data['ok']);
@@ -116,6 +117,7 @@
             },
             delivertime :function(index){
                 _this = this;
+                this.remainingTime = '';
                     this.flag = setInterval(() => {
                         
                         let temp = (10*60) - Math.ceil((new Date().getTime()-new Date(_this.list[index].OrdersUpdate).getTime())/(1000));

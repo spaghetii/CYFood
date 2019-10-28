@@ -293,6 +293,7 @@
                                     MemberID: _this.memberID,
                                     ShopID: _this.ShopID,
                                 }
+                                // console.log(dataToSever);
                                 // [{"type":0,"mealNum":"meal0","detail": "","price":"","check":false}]
                                 
                                 _this.shoppingBagMealQuantity.forEach((element,index) => {
@@ -311,9 +312,10 @@
                                     dataToSever.OrdersDetails.meal.push({   mealQuantity:element,
                                                                             mealName:_this.shoppingBagMealName[index],
                                                                             mealUnitPrice:_this.shoppingBagMealPrice[index],
-                                                                            mealDetail:_this.shoppingBagMealDetail[0]
+                                                                            mealDetail:mealDetailTemp
                                                                         });      
                                 });
+                                // console.log(dataToSever);
                                 dataToSever.OrdersDetails = JSON.stringify(dataToSever.OrdersDetails);
                                 // console.log(dataToSever);
 
