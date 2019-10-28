@@ -23,7 +23,7 @@
                     </div>
                     <div>
                         <ul class="noPad noMarg" style="list-style:none;">
-                            <li v-for="odDetail in item.OrdersDetails.meal">
+                            <li v-for="odDetail,odIndex in item.OrdersDetails.meal">
                                 <div class="d-flex flex-row mb-3">
                                     <div class="mr-3" id="foodItemQuantity" v-cloak>
                                         @{{odDetail.mealQuantity}}
@@ -34,8 +34,8 @@
                                         </div>
                                         <div v-cloak>
                                             <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                                v-for="in1 in mealDetail[index]" >
-                                                <div v-for="in2,key,i in in1" >  
+                                                v-for="in1,dindex in mealDetail[index]" >
+                                                <div v-for="in2,key,i in in1" v-if="dindex == odIndex">  
                                                     <div v-if="in2[i] != null">                   
                                                         <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
                                                         <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
@@ -90,7 +90,7 @@
                     </div>
                     <div>
                         <ul class="noPad noMarg" style="list-style:none;">
-                            <li v-for="odDetail in item.OrdersDetails.meal">
+                            <li v-for="odDetail,odIndex in item.OrdersDetails.meal">
                                 <div class="d-flex flex-row mb-3">
                                     <div class="mr-3" id="foodItemQuantity" v-cloak>
                                         @{{odDetail.mealQuantity}}
@@ -101,8 +101,8 @@
                                         </div>
                                         <div v-cloak>
                                             <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                                v-for="in1 in mealDetail[index]" >
-                                                <div v-for="in2,key,i in in1" >  
+                                                v-for="in1,index in mealDetail[index]" >
+                                                <div v-for="in2,key,i in in1" v-if="index == odIndex">  
                                                     <div v-if="in2[i] != null">                   
                                                         <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
                                                         <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
