@@ -50,7 +50,7 @@
                     <h6>@{{details.restaurant}}</h6>    
                 </div>
                 <div id="trackingOrderSummary">
-                    <ul class="noPad noMarg ml-2 mr-2" style="list-style:none;" v-for="item in details.meal">
+                    <ul class="noPad noMarg ml-2 mr-2" style="list-style:none;" v-for="item,index in details.meal">
                         <li >
                             <div class="d-flex flex-row mb-3">
                                 <div v-cloak class="mr-3" id="foodItemQuantity" v-cloak>
@@ -61,8 +61,8 @@
                                         @{{item.mealName}}
                                     </div>
                                     <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                            v-for="in1 in mealDetail[0]" >
-                                        <div v-for="in2,key,i in in1" >  
+                                            v-for="in1,dindex in mealDetail[0]" >
+                                        <div v-for="in2,key,i in in1" v-if="dindex == index">  
                                             <div v-if="in2[i] != null">                   
                                                 <div v-if="in2[i].type == 1" style="font-weight:bold">加點 Add-ons</div>
                                                 <div v-for="item in in2" v-if="item.type == 1">@{{item.detail}}</div>
