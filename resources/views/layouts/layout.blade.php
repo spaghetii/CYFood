@@ -55,7 +55,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" :href="'/userOrderDetail/'+userID"><img src="/img/bill.png" alt="">&emsp;訂單</a>
                                     <a class="dropdown-item" :href="'/userProfile/'+userID"><img src="/img/user.png" alt="">&emsp;帳戶</a>
-                                    <a class="dropdown-item" href="#"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
+                                    <a class="dropdown-item" href="/QA"><img src="/img/qa.png" alt="">&emsp;Q&A</a>
                                     <a class="dropdown-item" href="javascript:void(0);" v-on:click="logout"><img src="/img/logout.png" alt="">&emsp;登出</a>
                                 </div>
                             </div>
