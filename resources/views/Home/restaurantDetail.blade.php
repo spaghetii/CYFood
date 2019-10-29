@@ -277,13 +277,13 @@
                     if (this.count > 1) {
                         this.count--;
                         // this.totalPrice -= parseInt(this.meals.MealPrice);
-                        this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count ;
+                        this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count;
                     }
                 },  
                 plusButton: function () {
                     this.count++;
                     // this.totalPrice += parseInt(this.meals.MealPrice);
-                    this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count ;
+                    this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count;
                 },
                 orderBtn: function () {
                     // 跳出 model
@@ -303,7 +303,7 @@
 
                         // 資料傳入到 shoppingBagModalApp-Vue
                         shoppingBagModalApp.shoppingBagMealName.push(this.meals.MealName);
-                        shoppingBagModalApp.shoppingBagMealPrice.push(this.totalPrice);
+                        shoppingBagModalApp.shoppingBagMealPrice.push(this.meals.MealPrice + this.sizePrice + this.addPrice);
                         shoppingBagModalApp.shoppingBagMealQuantity.push(this.count);  
                         shoppingBagModalApp.shoppingBagMealTotalPrice.push(this.totalPrice * this.count);  
                         // 餐點總金額 傳入 local
@@ -356,12 +356,12 @@
                         // console.log(this.unitMealDetailSize);
                         this.isDisabled = false;
                     }
-                    this.totalPrice += this.sizePrice + this.addPrice;
+                    this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count;
 
                     // console.log(this.totalPrice);
                 },
                 addOns:function(index){
-                    // console.log(index);
+                    console.log(index);
                     this.totalPrice = this.count * parseInt(this.meals.MealPrice);
                     let _this = this;
                     this.addPrice = 0;
@@ -373,7 +373,7 @@
                         _this.unitMealDetailAdd.push({type:mealDetaillist.type, mealNum:"meal"+this.meals.MealID, detail:mealDetaillist.detailName, price:mealDetaillist.price});
                         // console.log(_this.unitMealDetailAdd);
                     });
-                    this.totalPrice += this.sizePrice + this.addPrice;
+                    this.totalPrice = parseInt(this.meals.MealPrice + this.sizePrice + this.addPrice) * this.count;
                 }
             }
         })
