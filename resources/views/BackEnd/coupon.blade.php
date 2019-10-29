@@ -91,10 +91,10 @@
                         <div class="invalid-tooltip">
                             請選擇種類
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" v-if="CouponType == 'discount'">
                             <label class="col-form-label col-sm-4 text-center">優惠折扣: </label>
                             <input type="text" class="form-control col-sm-6" 
-                             v-model="CouponDiscount">
+                             v-model="CouponDiscount" >
                         </div>
                         <div class="invalid-tooltip">
                             請輸入折扣
