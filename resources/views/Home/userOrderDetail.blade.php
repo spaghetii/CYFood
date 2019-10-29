@@ -170,7 +170,7 @@
                                 _this.updateTime[index] = updateTime[1].substr(0,5);
                                 //每個訂單餐點總數量
                                 _this.totalCount[index] = 0;
-                                _this.list[index].OrdersDetails.meal.forEach((ele,index) => {
+                                _this.list[index].OrdersDetails.meal.forEach(ele => {
 
                                     _this.totalCount[index] += parseInt(ele.mealQuantity);
                                     // _this.mealDetail[index] = ele.mealDetail;
