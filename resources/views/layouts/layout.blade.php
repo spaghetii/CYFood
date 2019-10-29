@@ -285,6 +285,9 @@
                             this.shoppingBagMealName.splice(index, 1);
                             this.shoppingBagMealPrice.splice(index, 1);
                             this.shoppingBagMealDetail[0].splice(index, 1);
+                            if (this.shoppingBagMealDetail[0].length === 0){
+                                this.shoppingBagMealDetail = [];
+                            }
                         }  
                     });
 
