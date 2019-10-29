@@ -60,14 +60,14 @@
                                     <div v-cloak>
                                         @{{item.mealName}}
                                     </div>
-                                    <b v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 2">份量</b>
+                                    <b v-for="dItem,dIndex in item.mealDetail" v-if="dItem.type == 2">份量</b>
                                     <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                            v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 2">
+                                            v-for="dItem,dIndex in item.mealDetail" v-if="dItem.type == 2">
                                         <div>@{{dItem.detail}}</div>
                                     </div> 
-                                    <b v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 1 && dIndex == 0">加點</b>                                    
+                                    <b v-for="dItem,dIndex in item.mealDetail" v-if="dItem.type == 1 && dIndex == 0">加點</b>                                    
                                     <div style="margin:8px 0px 4px;font-size: 14px;line-height: 16px;"
-                                            v-for="dItem,dIndex in mealDetail" v-if="dItem.type == 1">
+                                            v-for="dItem,dIndex in item.mealDetail" v-if="dItem.type == 1">
                                         
                                         <div>@{{dItem.detail}}</div>
                                     </div>
