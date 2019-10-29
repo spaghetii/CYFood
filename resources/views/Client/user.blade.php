@@ -113,8 +113,6 @@
                             <option value="default" selected hidden disabled>請選擇月份</option>
                             <option value="09">9月</option>
                             <option value="10">10月</option>
-                            <option value="11">11月</option>
-                            <option value="12">12月</option>
                         </select>
                         <button type="button" class="btn btn-outline-secondary" id="chartSearchBtn" v-on:click="chartSearchClick">搜尋</button>
                     </div>
