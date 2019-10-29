@@ -1,31 +1,31 @@
 #buttomDiv {
-    height: 550px;
+    height: 470px;
 }
 #leftButtom {
     width: 400px;
-    height: 500px;
-    margin: 25px auto;
-    /* border: 2px solid black; */
+    height: 450px;
+    margin: 8px auto;
 }
 #orderBtn {
     height: 80px;
     font-size: 25px;
     font-weight: bolder;
-    margin: 10px auto;
+    margin: 8px auto;
     color:#3c3c3c;
     text-align: center;
     padding: 0px;
 }
 #rightButtom {
     width: 840px;
-    height: 500px;
-    margin: 25px auto;
+    height: 450px;
+    margin: 12px auto;
     position: fixed;
     overflow: auto;
 }
 .jumbotron {
     width: 800px;
-    min-height: 480px;
+    min-height: 430px;
+    /* min-height: 480px; */
     margin: 10px 20px; 
     font-family: Microsoft JhengHei;
     display: none;
