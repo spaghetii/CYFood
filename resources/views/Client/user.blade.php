@@ -207,38 +207,38 @@
 
 @section('script')
 <script>
-    var delay = new Vue({
-        el:"#delay",
-        data:{
-            delayOptions:"",
-            headerShow:true,
-            bodyShow:true,
-            btnShow:true,
-            delayHelpShow:false
-        },
-        methods:{
-            delaySubmit:function(){
-                if(this.delayOptions != ""){
-                    this.headerShow = false;
-                    this.bodyShow = false;
-                    this.btnShow = false;
-                    let flag = setInterval(goBack, 1000);
-                    function goBack(){
-                        delay.delayOptions--;
-                        if(delay.delayOptions<=0){
-                            clearInterval(flag);
-                            location.reload();
-                        }
-                    }
-                }else{
-                    this.delayHelpShow=true;
-                }
-            },
-            delayReset:function(){
-                location.reload();
-            }
-        }
-    })
+    // var delay = new Vue({
+    //     el:"#delay",
+    //     data:{
+    //         delayOptions:"",
+    //         headerShow:true,
+    //         bodyShow:true,
+    //         btnShow:true,
+    //         delayHelpShow:false
+    //     },
+    //     methods:{
+    //         delaySubmit:function(){
+    //             if(this.delayOptions != ""){
+    //                 this.headerShow = false;
+    //                 this.bodyShow = false;
+    //                 this.btnShow = false;
+    //                 let flag = setInterval(goBack, 1000);
+    //                 function goBack(){
+    //                     delay.delayOptions--;
+    //                     if(delay.delayOptions<=0){
+    //                         clearInterval(flag);
+    //                         location.reload();
+    //                     }
+    //                 }
+    //             }else{
+    //                 this.delayHelpShow=true;
+    //             }
+    //         },
+    //         delayReset:function(){
+    //             location.reload();
+    //         }
+    //     }
+    // })
 
     var restOrder = new Vue({
         el:"#restOrder",
