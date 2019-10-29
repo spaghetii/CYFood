@@ -79,10 +79,10 @@
                             <label class="col-form-label col-sm-4 text-center">會員電話: </label>
                             <input type="text" class="form-control col-sm-6" v-model="MemberPhone" >
                         </div>
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label class="col-form-label col-sm-4 text-center">會員密碼: </label>
                             <input type="password" disabled title="管理員無權更改會員密碼" class="form-control col-sm-6" v-model="MemberPassword">
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary form-control" v-on:click="modalOK">確定</button>
