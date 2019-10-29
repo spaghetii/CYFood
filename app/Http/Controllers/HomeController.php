@@ -46,6 +46,11 @@ class HomeController extends Controller
     }
 
     function orderDetail() {
+        $userName = Session::get("userName" , "Guest");
+        // dd($userID);
+        if($userName == "Guest"){
+            return redirect("/login");
+        }
         return view('home.orderDetail');
     }
 
