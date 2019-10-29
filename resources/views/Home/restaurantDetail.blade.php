@@ -345,6 +345,7 @@
             watch:{
                 Size:function(index){
                     // console.log(index);
+                    this.unitMealDetailSize = [];
                     // console.log(this.mealDetail[index].price);
                     this.totalPrice = this.count * parseInt(this.meals.MealPrice);
                     if(index !== -1){
@@ -361,7 +362,7 @@
                     // console.log(this.totalPrice);
                 },
                 addOns:function(index){
-                    console.log(index);
+                    // console.log(index);
                     this.totalPrice = this.count * parseInt(this.meals.MealPrice);
                     let _this = this;
                     this.addPrice = 0;
@@ -410,6 +411,8 @@
                 
             },
             selection: function(e){
+                orderModal.sizePrice = 0;
+                orderModal.addPrice = 0;
                 orderModal.mealtype1 = false;
                 orderModal.mealtype2 = false;
                 orderModal.isDisabled = false; //20191027 order Btn disabled ---
@@ -418,7 +421,7 @@
                 orderModal.count = 1;
                 orderModal.meals = this.list[e];
                 orderModal.totalPrice = this.list[e].MealPrice;  
-                // console.log(orderModal.meals);
+                // console.log(this.list[e].MealPrice);
                 if ( orderModal.meals.MealDetails !== null) {
                     orderModal.mealDetail = JSON.parse(orderModal.meals.MealDetails).detail;
                     orderModal.mealDetail.forEach(element => {
@@ -439,7 +442,7 @@
                     orderModal.isDisabled = true;
                 }
                 // console.log(orderModal.mealDetail);
-                $("#orderModalCenter").modal( { show: true } );
+                $("#orderModalCenter").modal('toggle');
             }
         },
         mounted: function () {
